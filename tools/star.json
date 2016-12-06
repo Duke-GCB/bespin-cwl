@@ -1,0 +1,23 @@
+{
+    "genomeDir": {
+      "path":"/path/to/genomedir",
+      "class": "File"
+    },
+    "runThreadN": 4,
+    "outFilterMultimapNmax": 1,
+    "outSAMattributes": "Standard",
+    "outSAMstrandField": "intronMOtif",
+    "outSAMtype": ["BAM","SortedByCoordinate"],
+    "alignSJoverhangMin": 500,
+    "outFileNamePrefix": "Bespin_STAR",
+    "readFilesIn": [
+        {
+            "path": "/Users/dcl9/Code/yaml/bespin-cwl/tools/Control1_R1_val_1.fq",
+            "class": "File"
+        },
+        {
+            "path": "/Users/dcl9/Code/yaml/bespin-cwl/tools/Control1_R2_val_2.fq",
+            "class": "File"
+        }
+    ]
+}
