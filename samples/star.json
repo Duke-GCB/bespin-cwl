@@ -3,10 +3,10 @@
       "path":"/home/ubuntu/GCBA_RO/generated_data/GenomeIndex",
       "class": "Directory"
     },
-    "runThreadN": 14,
+    "runThreadN": 20,
     "outFilterMultimapNmax": 1,
     "outSAMattributes": "Standard",
-    "outSAMstrandField": "intronMOtif",
+    "outSAMstrandField": "intronMotif",
     "outSAMtype": ["BAM","SortedByCoordinate"],
     "alignSJoverhangMin": 500,
     "outFileNamePrefix": "Bespin_STAR",
