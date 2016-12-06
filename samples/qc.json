@@ -1,4 +1,4 @@
 {
   "input_fastq_file":
-    {"class":"File", "path":"/Users/dcl9/Data/rna-seq-course/GCBA_RO/raw_data/fastq_files/Control1_R1.fastq"}
+    {"class":"File", "path":"/home/ubuntu/GCBA_RO/raw_data/fastq_files/Control1_R1.fastq"}
 }
