@@ -1,9 +1,9 @@
 {
     "genomeDir": {
-      "path":"/path/to/genomedir",
-      "class": "File"
+      "path":"/Users/dcl9/Data/rna-seq-course/GCBA_RO/generated_data/GenomeIndex",
+      "class": "Directory"
     },
-    "runThreadN": 4,
+    "runThreadN": 14,
     "outFilterMultimapNmax": 1,
     "outSAMattributes": "Standard",
     "outSAMstrandField": "intronMOtif",
