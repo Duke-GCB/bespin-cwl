@@ -1,0 +1,3 @@
+[submodule "community-workflows"]
+	path = community-workflows
+	url = git@github.com:common-workflow-language/workflows.git
