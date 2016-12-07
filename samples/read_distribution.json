@@ -1,0 +1,10 @@
+{
+    "input": {
+        "path": "/home/ubuntu/bespin-cwl/data/Bespin_RNAseq_Aligned.sortedByCoord.out.bam",
+        "class": "File"
+    },
+    "ref_gene_model": {
+        "path": "/home/ubuntu/GCBA_RO/raw_data/genome_files/dm3_flyBase.bed",
+        "class": "File"
+    }
+}
