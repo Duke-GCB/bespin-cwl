@@ -1,0 +1,15 @@
+{
+  "featuretype": "mRNA",
+  "idattr": "Parent",
+  "stranded": "no",
+  "samtype": "bam",
+  "order": "pos",
+  "alignment_file": {
+    "class": "File",
+    "path": "/home/ubuntu/bespin-cwl/data/Bespin_RNAseq_Aligned.sortedByCoord.out.bam"
+  },
+  "gff_file": {
+    "class": "File",
+    "path": "/home/ubuntu/GCBA_RO/raw_data/genome_files/dmel-all-r5.53.gff"
+  }
+}
