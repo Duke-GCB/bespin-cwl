@@ -9,7 +9,7 @@
     "outSAMstrandField": "intronMotif",
     "outSAMtype": ["BAM","SortedByCoordinate"],
     "alignSJoverhangMin": 500,
-    "outFileNamePrefix": "Bespin_STAR",
+    "outFileNamePrefix": "Bespin_RNAseq_",
     "readFilesIn": [
         {
             "path": "/home/ubuntu/bespin-cwl/data/Control1_R1_val_1.fq",
