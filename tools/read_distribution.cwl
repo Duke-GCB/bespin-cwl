@@ -4,7 +4,7 @@ cwlVersion: v1.0
 class: CommandLineTool
 hints:
   - class: DockerRequirement
-    dockerPull: 'dukegcb/RSeQC'
+    dockerPull: 'quay.io/dukegcb/rseqc'
     # cwl supports a dockerFile here, but it is only read if dockerImageId is specified
     # and the image is not present. Also, the file must have a blank line in between
     # each instruction to build correctly. So this is here for informational purposes
