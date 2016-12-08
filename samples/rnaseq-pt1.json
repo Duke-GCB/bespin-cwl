@@ -18,9 +18,13 @@
       "path": "/home/ubuntu/GCBA_RO/raw_data/fastq_files/Control1_R2.fastq"
     }
   ],
+  "ref_gene_model": {
+    "class": "File",
+    "path" : "/home/ubuntu/GCBA_RO/raw_data/genome_files/dm3_flyBase.bed"
+  },
   "star_genome": {
     "class": "Directory",
     "path": "/home/ubuntu/GCBA_RO/generated_data/GenomeIndex"
   },
-  "threads": 4
+  "threads": 20
 }
