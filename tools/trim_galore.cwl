@@ -26,7 +26,7 @@ outputs:
       items: File
     outputBinding:
       glob: "*_val_*.fq"
-  reports:
+  trim_reports:
     type:
       type: array
       items: File
