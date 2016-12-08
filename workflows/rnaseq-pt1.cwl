@@ -82,17 +82,24 @@ steps:
         default: true
     out:
       - index
+  merge_index:
+    run: ../tools/merge-secondary-files.cwl
+    in:
+      primary: align/aligned
+      secondary: index/index
+    out:
+      - merged
   read_distribution:
     run: ../tools/read_distribution.cwl
     in:
-      input: align/aligned
+      input: merge_index/merged
       ref_gene_model: ref_gene_model
     out:
       - output
   quantification:
     run: ../tools/htseq-count.cwl
     in:
-      alignment_file: align/aligned
+      alignment_file: merge_index/merged
       gff_file: gff_file
       idattr:
         default: "Parent"
