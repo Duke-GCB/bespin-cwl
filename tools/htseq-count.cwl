@@ -13,12 +13,11 @@ hints:
 
 inputs:
   alignment_file:
+    # Must have bai index as secondaryFile
     type: File
     label: ""
     inputBinding:
       position: 2
-    secondaryFiles:
-      - '.bai'
   gff_file:
     type: File
     label: ""

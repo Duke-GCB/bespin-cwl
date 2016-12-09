@@ -13,12 +13,11 @@ hints:
 
 inputs:
   input:
+    # Must have bai index as secondaryFile
     type: File
     label: 'Alignment file in BAM or SAM format'
     inputBinding:
       prefix: '-i'
-    secondaryFiles:
-      - ".bai"
   ref_gene_model:
     type: File
     label: 'Reference gene model in bed format'
