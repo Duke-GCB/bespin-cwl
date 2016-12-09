@@ -83,7 +83,7 @@ steps:
     out:
       - index
   merge_index:
-    run: ../tools/merge-secondary-files.cwl
+    run: ../tools/merge-secondary-file.cwl
     in:
       primary: align/aligned
       secondary: index/index
