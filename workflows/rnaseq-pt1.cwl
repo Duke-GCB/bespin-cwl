@@ -29,7 +29,7 @@ outputs:
     outputSource: quantification/output
   trimmed_reads:
     type: File[]
-    outputSource: trim/reads
+    outputSource: trim/trimmed_reads
   aligned_read:
     type: File
     outputSource: align/aligned
