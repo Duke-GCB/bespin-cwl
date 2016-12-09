@@ -2,25 +2,25 @@
   "align_out_prefix": "bespin-rna-seq-0001_",
   "gff_file": {
     "class": "File",
-    "path": "/home/ubuntu/GCBA_RO/raw_data/genome_files/dmel-all-r5.53.gff"
+    "path": "/data/GCBA_RO/raw_data/genome_files/dmel-all-r5.53.gff"
   },
   "reads": [
     {
       "class": "File",
-      "path": "/home/ubuntu/GCBA_RO/raw_data/fastq_files/Control1_R1.fastq"
+      "path": "/data/GCBA_RO/raw_data/fastq_files/Control1_R1.fastq"
     },
     {
       "class": "File",
-      "path": "/home/ubuntu/GCBA_RO/raw_data/fastq_files/Control1_R2.fastq"
+      "path": "/data/GCBA_RO/raw_data/fastq_files/Control1_R2.fastq"
     }
   ],
   "ref_gene_model": {
     "class": "File",
-    "path" : "/home/ubuntu/GCBA_RO/raw_data/genome_files/dm3_flyBase.bed"
+    "path" : "/data/GCBA_RO/raw_data/genome_files/dm3_flyBase.bed"
   },
   "star_genome": {
     "class": "Directory",
-    "path": "/home/ubuntu/GCBA_RO/generated_data/GenomeIndex"
+    "path": "/data/GCBA_RO/generated_data/GenomeIndex"
   },
   "threads": 20
 }
