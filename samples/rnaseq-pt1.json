@@ -1,9 +1,5 @@
 {
   "align_out_prefix": "bespin-rna-seq-0001_",
-  "alignment_file": {
-    "class": "File",
-    "path": "/home/ubuntu/GCBA_RO/generated_data/alignment_data/Control1_Aligned.sortedByCoord.out.bam"
-  },
   "gff_file": {
     "class": "File",
     "path": "/home/ubuntu/GCBA_RO/raw_data/genome_files/dmel-all-r5.53.gff"
