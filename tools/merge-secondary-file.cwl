@@ -11,9 +11,7 @@ inputs:
   primary:
     type: File
   secondary:
-    type:
-      type: array
-      items: File
+    type: File
 outputs:
   merged:
     type: File
@@ -21,6 +19,6 @@ outputs:
 expression: >
   ${
     var ret = inputs.primary;
-    ret["secondaryFiles"] = inputs.secondary;
+    ret["secondaryFiles"] = [inputs.secondary];
     return {"merged": ret };
   }
