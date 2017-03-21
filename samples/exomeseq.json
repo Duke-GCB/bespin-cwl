@@ -1,0 +1,17 @@
+{
+    "map_reference_genome": {
+        "class": "File",
+        "path": "/Users/dcl9/Data/genomes/hg38.fa"
+    },
+    "map_threads": 4,
+    "reads": [
+        {
+            "class": "File",
+            "path": "/Users/dcl9/Data/exome-seq/SRR099967/SRR099967_1.fastq.gz"
+        },
+        {
+            "class": "File",
+            "path": "/Users/dcl9/Data/exome-seq/SRR099967/SRR099967_2.fastq.gz"
+        }
+    ]
+}
