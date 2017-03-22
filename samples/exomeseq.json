@@ -3,7 +3,7 @@
         "class": "File",
         "path": "/home/ubuntu/genomes/hg38.fa"
     },
-    "threads": 4,
+    "threads": 8,
     "reads": [
         {
             "class": "File",
