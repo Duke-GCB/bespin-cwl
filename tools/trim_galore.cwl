@@ -25,7 +25,7 @@ outputs:
       type: array
       items: File
     outputBinding:
-      glob: "*_val_*.fq"
+      glob: "*_val_*.fq*"
   trim_reports:
     type:
       type: array
