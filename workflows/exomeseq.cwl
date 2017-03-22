@@ -16,8 +16,11 @@ outputs:
     type: File[]
     outputSource: trim/trim_reports
   mapped:
-    type: File[]
+    type: File
     outputSource: map/output
+  trimmed_reads:
+    type: File[]
+    outputSource: trim/trimmed_reads
 steps:
   qc:
     run: ../tools/fastqc.cwl
