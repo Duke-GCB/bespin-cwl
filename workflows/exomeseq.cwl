@@ -45,7 +45,20 @@ steps:
       reads: trim/trimmed_reads
       reference: map_reference_genome
       output_filename:
-        default: "mapped.sam"
+        default: "mapped.bam"
       threads: threads
     out:
       - output
+  sort:
+    run: ../tools/picard-SortSam.cwl
+    in:
+      input_file: map/output
+    out:
+      - sorted
+  mark_duplicates:
+    run: ../tools/picard-MarkDuplicates.cwl
+    in:
+      input_file: sort/sorted
+    out:
+      - output_metrics_file
+      - output_dedup_bam_file
