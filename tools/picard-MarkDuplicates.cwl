@@ -233,7 +233,7 @@ outputs:
 
 baseCommand: [java]
 arguments:
-- valueFrom: /usr/local/bin/picard.jar
+- valueFrom: /usr/picard/picard.jar
   position: 2
   prefix: -jar
 - valueFrom: MarkDuplicates
