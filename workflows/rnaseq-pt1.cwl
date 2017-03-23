@@ -2,40 +2,61 @@
 
 cwlVersion: v1.0
 class: Workflow
+doc: "Star/HTSeq RNA Seq Pipeline"
 requirements:
   - class: ScatterFeatureRequirement
 inputs:
-  reads: File[]
-  gff_file: File
-  ref_gene_model: File
-  star_genome: Directory
-  threads: int
-  align_out_prefix: string
+  reads:
+    type: File[]
+    doc: "Sequences to be mapped (e.g. RNA-seq FASTQ files)"
+  gff_file:
+    type: File
+    doc: "Genomic features in the GFF format"
+  ref_gene_model:
+    type: File
+    doc: "Reference gene model in bed format"
+  star_genome:
+    type: Directory
+    doc: "Genome directory containing STAR genome indices"
+  threads:
+    type: int
+    doc: "Number of threads"
+  align_out_prefix:
+    type: string
+    doc: "STAR output files name prefix"
 outputs:
   qc_reports:
     type: File[]
     outputSource: qc/output_qc_report
+    doc: "FastQC reports for input sequences"
   trim_reports:
     type: File[]
     outputSource: trim/trim_reports
+    doc: "Trim Galore! summary reports"
   align_logs:
     type: File[]
     outputSource: align/logs
+    doc: "STAR alignment log files"
   read_distribution_report:
     type: File
     outputSource: read_distribution/output
+    doc: "RSeQC read distribution report"
   quantification_report:
     type: File
     outputSource: quantification/output
+    doc: "HTSeq feature counts report"
   trimmed_reads:
     type: File[]
     outputSource: trim/trimmed_reads
+    doc: "Input reads trimmed by Trim Galore!"
   aligned_read:
     type: File
     outputSource: align/aligned
+    doc: "STAR alignments in SAM format"
   aligned_read_index:
     type: File
     outputSource: index/index
+    doc: "BAM files indexed by samtools"
 steps:
   qc:
     run: ../tools/fastqc.cwl
