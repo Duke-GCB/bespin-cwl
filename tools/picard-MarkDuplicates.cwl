@@ -40,11 +40,11 @@ outputs:
   output_metrics_file:
     type: File
     outputBinding:
-      glob: $(inputs.metrics_filename.path)
+      glob: $(inputs.metrics_filename)
   output_dedup_bam_file:
     type: File
     outputBinding:
-      glob: $(inputs.output_filename.path)
+      glob: $(inputs.output_filename)
 
 baseCommand: [java]
 arguments:
