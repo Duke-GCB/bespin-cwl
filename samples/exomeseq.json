@@ -1,7 +1,7 @@
 {
     "map_reference_genome": {
         "class": "File",
-        "path": "/home/ubuntu/genomes/hg38.fa"
+        "path": "/home/ubuntu/data/b37/human_g1k_v37.fasta.gz"
     },
     "threads": 8,
     "reads": [
