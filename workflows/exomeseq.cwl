@@ -12,15 +12,24 @@ outputs:
   qc_reports:
     type: File[]
     outputSource: qc/output_qc_report
+  trimmed_reads:
+    type: File[]
+    outputSource: trim/trimmed_reads
   trim_reports:
     type: File[]
     outputSource: trim/trim_reports
   mapped:
     type: File
     outputSource: map/output
-  trimmed_reads:
-    type: File[]
-    outputSource: trim/trimmed_reads
+  mapped_sorted:
+    type: File
+    outputSource: sort/sorted
+  duplicate_metrics:
+    type: File
+    outputSource: mark_duplicates/output_metrics_file
+  deduplicated:
+    type: File
+    outputSource: mark_duplicates/output_dedup_bam_file
 steps:
   qc:
     run: ../tools/fastqc.cwl
