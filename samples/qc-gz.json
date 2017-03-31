@@ -1,0 +1,4 @@
+{
+  "input_fastq_file":
+    {"class":"File", "path":"/home/ubuntu/exome-seq/tiny/SRR099967_1_first_100000.fastq.gz"}
+}
