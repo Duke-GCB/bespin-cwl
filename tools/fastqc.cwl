@@ -38,7 +38,7 @@ outputs:
   output_qc_report:
     type: File
     outputBinding:
-      glob: $(inputs.input_fastq_file.path.replace(/^.*[\\\/]/, "").replace(/\.[^/.]+$/, '') + "_fastqc.zip")
+      glob: "*_fastqc.zip"
 
 baseCommand: fastqc
 arguments:
