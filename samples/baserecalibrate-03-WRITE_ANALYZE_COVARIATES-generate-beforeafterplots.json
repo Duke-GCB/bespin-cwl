@@ -1,0 +1,20 @@
+{
+    "GATKJar": {
+        "class": "File",
+        "path": "/home/ubuntu/GenomeAnalysisTK-3.7/GenomeAnalysisTK.jar"
+    },
+    "before": {
+        "class": "File",
+        "path": "/home/ubuntu/bespin-cwl/data/recal_data.table"
+    },
+    "after": {
+        "class": "File",
+        "path": "/home/ubuntu/bespin-cwl/data/post_recal_data.table"
+    },
+    "out": "recalibration_plots.pdf",
+    "intervals": ["20"],
+    "reference": {
+        "class": "File",
+        "path": "/home/ubuntu/data/b37/human_g1k_v37.fasta.gz"
+    }
+}
