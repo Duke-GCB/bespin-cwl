@@ -52,7 +52,7 @@ inputs:
     inputBinding:
       prefix: "RGPU="
       shellQuote: false
-  reed_group_sample_name:
+  read_group_sample_name:
     type: string
     doc: "Read Group sample name  Required."
     inputBinding:
