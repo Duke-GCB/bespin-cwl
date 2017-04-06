@@ -15,6 +15,6 @@
     "intervals": ["20"],
     "reference": {
         "class": "File",
-        "path": "/home/ubuntu/data/b37/human_g1k_v37.fasta.gz"
+        "path": "/home/ubuntu/data/b37/human_g1k_v37.fasta"
     }
 }

@@ -5,7 +5,7 @@
     },
     "inputBam_BaseRecalibrator": {
         "class": "File",
-        "path": "/home/ubuntu/bespin-cwl/data/mapped-duplicates-removed.bam"
+        "path": "/home/ubuntu/bespin-cwl/data/with-read-groups.bam"
     },
     "bqsr": {
         "class": "File",
@@ -15,6 +15,6 @@
     "intervals": ["20"],
     "reference": {
         "class": "File",
-        "path": "/home/ubuntu/data/b37/human_g1k_v37.fasta.gz"
+        "path": "/home/ubuntu/data/b37/human_g1k_v37.fasta"
     }
 }
