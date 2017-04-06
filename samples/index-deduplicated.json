@@ -1,0 +1,7 @@
+{
+    "input": {
+        "path": "/home/ubuntu/bespin-cwl/data/marked_duplicates.bam",
+        "class": "File"
+    },
+    "bai": true
+}
