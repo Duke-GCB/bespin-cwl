@@ -1,0 +1,7 @@
+{
+    "input": {
+        "path": "/home/ubuntu/bespin-cwl/data/with-read-groups.bam",
+        "class": "File"
+    },
+    "bai": true
+}
