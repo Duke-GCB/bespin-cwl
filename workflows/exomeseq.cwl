@@ -8,6 +8,10 @@ inputs:
   reads: File[]
   map_reference_genome: File
   threads: int?
+  read_group_library: string
+  read_group_sample_name: string
+  read_group_platform: string
+  read_group_platform_unit: string
 outputs:
   qc_reports:
     type: File[]
@@ -30,6 +34,9 @@ outputs:
   deduplicated:
     type: File
     outputSource: mark_duplicates/output_dedup_bam_file
+  with_read_groups:
+    type: File
+    outputSource: add_read_groups/output
 steps:
   qc:
     run: ../tools/fastqc.cwl
@@ -71,3 +78,13 @@ steps:
     out:
       - output_metrics_file
       - output_dedup_bam_file
+  add_read_groups:
+    run: ../tools/picard-AddReadGroups.cwl
+    in:
+      read_group_library: read_group_library
+      read_group_sample_name: read_group_sample_name
+      read_group_platform: read_group_platform
+      read_group_platform_unit: read_group_platform_unit
+      input_file: mark_duplicates/output_dedup_bam_file
+    out:
+      - output
