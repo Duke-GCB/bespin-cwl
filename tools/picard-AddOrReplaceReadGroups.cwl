@@ -68,6 +68,8 @@ inputs:
 outputs:
   output:
     type: File
+    secondaryFiles:
+      - ^.bai
     outputBinding:
       glob: $(inputs.output_filename)
 
