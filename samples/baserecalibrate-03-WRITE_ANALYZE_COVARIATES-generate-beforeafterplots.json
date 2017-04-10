@@ -3,15 +3,15 @@
         "class": "File",
         "path": "/home/ubuntu/GenomeAnalysisTK-3.7/GenomeAnalysisTK.jar"
     },
-    "before": {
+    "inputTable_before": {
         "class": "File",
         "path": "/home/ubuntu/bespin-cwl/data/recal_data.table"
     },
-    "after": {
+    "inputTable_after": {
         "class": "File",
         "path": "/home/ubuntu/bespin-cwl/data/post_recal_data.table"
     },
-    "out": "recalibration_plots.pdf",
+    "outputfile_recalibrationPlots": "recalibration_plots.pdf",
     "intervals": ["20"],
     "reference": {
         "class": "File",
