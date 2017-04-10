@@ -15,8 +15,8 @@
                             "envValue": "/usr/local/bin/:/usr/bin:/bin"
                         }
                     ], 
-                    "name": "#envvar-global.yml", 
-                    "id": "#envvar-global.yml"
+                    "id": "#envvar-global.yml", 
+                    "name": "#envvar-global.yml"
                 }, 
                 {
                     "class": "InlineJavascriptRequirement"
@@ -1785,22 +1785,14 @@
             "class": "CommandLineTool", 
             "requirements": [
                 {
-                    "class": "EnvVarRequirement", 
-                    "envDef": [
-                        {
-                            "envName": "PATH", 
-                            "envValue": "/usr/local/bin/:/usr/bin:/bin"
-                        }
-                    ], 
-                    "name": "#envvar-global.yml", 
-                    "id": "#envvar-global.yml"
+                    "$import": "#envvar-global.yml"
                 }, 
                 {
                     "class": "DockerRequirement", 
                     "dockerPull": "scidap/samtools:v1.2-242-4d56437", 
                     "dockerFile": "$import: samtools-Dockerfile\n", 
-                    "name": "#samtools-docker.yml", 
-                    "id": "#samtools-docker.yml"
+                    "id": "#samtools-docker.yml", 
+                    "name": "#samtools-docker.yml"
                 }, 
                 {
                     "class": "InlineJavascriptRequirement", 
@@ -1888,7 +1880,7 @@
                 "http://schema.org/name": "Andrey Kartashov", 
                 "http://schema.org/sameAs": [
                     {
-                        "id": "#0000-0001-9102-5681"
+                        "$import": "#0000-0001-9102-5681"
                     }
                 ]
             }, 
@@ -1968,8 +1960,8 @@
                         "http://schema.org/name": "Petr Danecek"
                     }
                 ], 
-                "name": "#samtools-metadata.yaml", 
                 "id": "#samtools-metadata.yaml", 
+                "name": "#samtools-metadata.yaml", 
                 "http://schema.org/name": "samtools", 
                 "http://schema.org/url": "http://www.htslib.org/", 
                 "http://schema.org/license": [
