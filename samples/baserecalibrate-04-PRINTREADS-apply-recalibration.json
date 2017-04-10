@@ -3,15 +3,15 @@
         "class": "File",
         "path": "/home/ubuntu/GenomeAnalysisTK-3.7/GenomeAnalysisTK.jar"
     },
-    "inputBam_BaseRecalibrator": {
+    "inputBam_printReads": {
         "class": "File",
         "path": "/home/ubuntu/bespin-cwl/data/with-read-groups.bam"
     },
-    "bqsr": {
+    "input_baseRecalibrator": {
         "class": "File",
         "path": "/home/ubuntu/bespin-cwl/data/recal_data.table"
     },
-    "out": "recal_reads.bam",
+    "outputfile_printReads": "recal_reads.bam",
     "intervals": ["20"],
     "reference": {
         "class": "File",
