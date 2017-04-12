@@ -149,8 +149,7 @@ steps:
     in:
       GATKJar: GATKJar
       inputBam_printReads: add_read_groups/output
-      inputBam_baseRecalibrator: recalibrate_01_analyze/output_baseRecalibrator
-      inputTable_after: recalibrate_02_covariation/output_baseRecalibrator
+      input_baseRecalibrator: recalibrate_01_analyze/output_baseRecalibrator
       outputfile_printReads:
         default: "recal_reads.bam"
       reference: reference_genome
