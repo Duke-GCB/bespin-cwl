@@ -56,7 +56,7 @@ outputs:
     outputSource: recalibrate_03_plots/output_recalibrationPlots
   recalibrated_reads:
     type: File
-    outputSource: recalibrate_04_apply/outputfile_printReads
+    outputSource: recalibrate_04_apply/output_printReads
 steps:
   qc:
     run: ../tools/fastqc.cwl
