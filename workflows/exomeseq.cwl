@@ -5,6 +5,8 @@ class: Workflow
 requirements:
   - class: ScatterFeatureRequirement
 inputs:
+  # For testing, intervals on reference genome
+  intervals: string[]?
   # Read samples, fastq format
   reads: File[]
   # reference genome, fasta
@@ -114,6 +116,7 @@ steps:
     in:
       GATKJar: GATKJar
       inputBam_BaseRecalibrator: add_read_groups/output
+      intervals: intervals
       knownSites: knownSites
       outputfile_BaseRecalibrator:
         default: "recal_data.table"
@@ -125,6 +128,7 @@ steps:
     in:
       GATKJar: GATKJar
       inputBam_BaseRecalibrator: add_read_groups/output
+      intervals: intervals
       knownSites: knownSites
       bqsr: recalibrate_01_analyze/output_baseRecalibrator
       outputfile_BaseRecalibrator:
@@ -137,6 +141,7 @@ steps:
     in:
       GATKJar: GATKJar
       inputBam_BaseRecalibrator: add_read_groups/output
+      intervals: intervals
       inputTable_before: recalibrate_01_analyze/output_baseRecalibrator
       inputTable_after: recalibrate_02_covariation/output_baseRecalibrator
       outputfile_recalibrationPlots:
@@ -149,6 +154,7 @@ steps:
     in:
       GATKJar: GATKJar
       inputBam_printReads: add_read_groups/output
+      intervals: intervals
       input_baseRecalibrator: recalibrate_01_analyze/output_baseRecalibrator
       outputfile_printReads:
         default: "recal_reads.bam"
