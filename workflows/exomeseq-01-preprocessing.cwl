@@ -59,6 +59,9 @@ outputs:
   recalibrated_reads:
     type: File
     outputSource: recalibrate_04_apply/output_printReads
+  recalibrated_reads_index:
+    type: File
+    outputSource: index_recalibrated/index
 steps:
   qc:
     run: ../tools/fastqc.cwl
@@ -109,7 +112,7 @@ steps:
       read_group_platform_unit: read_group_platform_unit
       input_file: mark_duplicates/output_dedup_bam_file
     out:
-      - output
+      - output # Includes a bai index by default
   # Now recalibrate
   recalibrate_01_analyze:
     run: ../community-workflows/tools/GATK-BaseRecalibrator.cwl
@@ -161,3 +164,11 @@ steps:
       reference: reference_genome
     out:
       - output_printReads
+  index_recalibrated: # Explicitly create an index because recalibrate doesn't include secondaryFiles
+    run: ../community-workflows/samtools-index.cwl
+    in:
+      input: recalibrate_04_apply/output_printReads
+      bai:
+        default: true
+    out:
+      - index # Unfortunately the GATK tools expect file.bam + file.bai, and this produces file.bam.bai
