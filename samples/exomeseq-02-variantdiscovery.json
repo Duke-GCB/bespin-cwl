@@ -1,0 +1,21 @@
+{
+  "reference_genome": {
+    "path": "/home/ubuntu/data/b37/human_g1k_v37.fasta",
+    "class": "File"
+  },
+  "recalibrated_reads": [
+  {
+    "path": "/home/ubuntu/bespin-cwl/data/recalibrate/recal_reads.bam",
+    "class": "File"
+  }]
+  ,
+  "stand_emit_conf": 10.0,
+  "stand_call_conf": 30.0,
+  "intervals": [
+    "20"
+  ],
+  "GATKJar": {
+    "path": "/home/ubuntu/GenomeAnalysisTK-3.7/GenomeAnalysisTK.jar",
+    "class": "File"
+  }
+}
