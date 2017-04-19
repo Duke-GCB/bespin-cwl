@@ -9,7 +9,6 @@
     "class": "File"
   }]
   ,
-  "stand_emit_conf": 10.0,
   "stand_call_conf": 30.0,
   "intervals": [
     "20"

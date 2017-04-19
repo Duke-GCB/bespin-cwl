@@ -16,15 +16,19 @@ inputs:
   # GATK
   GATKJar: File
   # Variant calling
-  # Confidence threshold for emitting a possible variant - 10
-  stand_emit_conf: double
   # Confidence threshold for calling a variant - 30
   stand_call_conf: double
+
 outputs:
-  per_sample_calls:
+  per_sample_raw_variants:
     type: File[]
     outputSource: discover_variants_01_haplotype_caller/output_HaplotypeCaller
     doc: "VCF files from per sample variant calling"
+  joint_raw_variants:
+    type: File
+    outputSource: discover_variants_02_joint_genotyping/output_GenotypeGVCFs
+    doc: "VCF files from joint genotyping calling"
+
 steps:
   discover_variants_01_haplotype_caller:
     run: ../community-workflows/tools/GATK-HaplotypeCaller.cwl
@@ -36,11 +40,25 @@ steps:
       reference: reference_genome
       genotyping_mode:
         default: "DISCOVERY"
-      stand_emit_conf: stand_emit_conf
       stand_call_conf: stand_call_conf
+      emitRefConfidence:
+        default: "GVCF"
+      variant_index_type:
+        default: "LINEAR"
+      variant_index_parameter:
+        default: 128000
       outputfile_HaplotypeCaller:
         default: "raw_variants.vcf"
     out:
       - output_HaplotypeCaller
-
-
+  discover_variants_02_joint_genotyping:
+    run: ../community-workflows/tools/GATK-GenotypeGVCFs.cwl
+    in:
+      GATKJar: GATKJar
+      intervals: intervals
+      variants: discover_variants_01_haplotype_caller/output_HaplotypeCaller
+      reference: reference_genome
+      outputfile_GenotypeGVCFs:
+        default: "joint_genotype_raw_variants.vcf"
+    out:
+      - output_GenotypeGVCFs
