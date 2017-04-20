@@ -5,15 +5,23 @@ class: Workflow
 requirements:
   - class: ScatterFeatureRequirement
 inputs:
+  # NOTE: How long is this expected to take?
   # For testing, intervals on reference genome
   intervals: string[]?
   # Read samples, fastq format
+  # NOTE: Broad recommends the illumina basecalls and converts to unmapped SAM
+  #   but do we typically have fastq?
   reads: File[]
   # reference genome, fasta
+  # NOTE: GATK can't handle compressed fasta reference genome
+  # NOTE: is b37 appropriate to use?
+  # NOTE: Indexed with bwa and avoided .64 files
+  # NOTE: For mapping, they recommend a merge step, but this may only apply to having raw basecalls
   reference_genome: File
   # Number of threads to use
   threads: int?
   # Read Group annotation
+  # NOTE: Does each sample get a read group?
   read_group_library: string
   read_group_sample_name: string
   read_group_platform: string
@@ -91,12 +99,15 @@ steps:
     out:
       - output
   sort:
+    # TODO: Can bwa-mem sort?
+    # TODO: Does picard support threads?
     run: ../tools/picard-SortSam.cwl
     in:
       input_file: map/output
     out:
       - sorted
   mark_duplicates:
+    # TODO: Does picard support threads?
     run: ../tools/picard-MarkDuplicates.cwl
     in:
       input_file: sort/sorted
@@ -153,6 +164,7 @@ steps:
     out:
       - output_recalibrationPlots
   recalibrate_04_apply:
+    # TODO: can printreads include a secondary file?
     run: ../community-workflows/tools/GATK-PrintReads.cwl
     in:
       GATKJar: GATKJar

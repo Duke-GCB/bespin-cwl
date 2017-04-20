@@ -45,7 +45,6 @@ outputs:
     type: File
     outputSource: variant_recalibration_snps/vqsr_rscript
     doc: "VQSR Rscript"
-
 steps:
   variant_calling:
     # Does not support multiple threads
@@ -66,12 +65,15 @@ steps:
         default: "raw_variants.g.vcf"
     out:
       - output_HaplotypeCaller
+  # TODO: At this point, should merge VCFs if we had lots of them
+  # See Merge (optional) on https://software.broadinstitute.org/gatk/best-practices/bp_3step.php?case=GermShortWGS&p=2
   joint_genotyping:
     run: ../community-workflows/tools/GATK-GenotypeGVCFs.cwl
     in:
       GATKJar: GATKJar
       threads: threads
       intervals: intervals
+      # NOTE: GATK best practices recommends at least 30 samples for exome - how to deal?
       variants: variant_calling/output_HaplotypeCaller
       reference: reference_genome
       outputfile_GenotypeGVCFs:
