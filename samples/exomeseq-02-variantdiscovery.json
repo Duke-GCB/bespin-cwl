@@ -1,20 +1,37 @@
 {
-  "reference_genome": {
-    "path": "/home/ubuntu/data/b37/human_g1k_v37.fasta",
-    "class": "File"
+  "GATKJar": {
+    "class": "File",
+    "path": "/home/ubuntu/GenomeAnalysisTK-3.7/GenomeAnalysisTK.jar"
   },
-  "recalibrated_reads": [
-  {
-    "path": "/home/ubuntu/bespin-cwl/data/recalibrate/recal_reads.bam",
-    "class": "File"
-  }]
-  ,
-  "stand_call_conf": 30.0,
   "intervals": [
     "20"
   ],
-  "GATKJar": {
-    "path": "/home/ubuntu/GenomeAnalysisTK-3.7/GenomeAnalysisTK.jar",
-    "class": "File"
-  }
+  "recalibrated_reads": [
+    {
+      "class": "File",
+      "path": "/home/ubuntu/bespin-cwl/data/recalibrate/recal_reads.bam"
+    }
+  ],
+  "reference_genome": {
+    "class": "File",
+    "path": "/home/ubuntu/data/b37/human_g1k_v37.fasta"
+  },
+  "snp_resource_1kg": {
+    "class": "File",
+    "path": "/home/ubuntu/data/b37/1000G_phase1.snps.high_confidence.b37.vcf"
+  },
+  "snp_resource_dbsnp": {
+    "class": "File",
+    "path": "/home/ubuntu/data/b37/dbsnp_138.b37.vcf"
+  },
+  "snp_resource_hapmap": {
+    "class": "File",
+    "path": "/home/ubuntu/data/b37/hapmap/hapmap_3.3.b37.vcf"
+  },
+  "snp_resource_omni": {
+    "class": "File",
+    "path": "/home/ubuntu/data/b37/omni/1000G_omni2.5.b37.vcf"
+  },
+  "stand_call_conf": 30.0,
+  "threads": 8
 }
