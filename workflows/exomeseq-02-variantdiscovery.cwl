@@ -22,7 +22,10 @@ inputs:
   snp_resource_hapmap: File
   snp_resource_omni: File
   snp_resource_1kg: File
-  snp_resource_dbsnp: File
+  # Variant Recalibration - Common
+  resource_dbsnp: File
+  # Variant Recalibration - Indels
+  indel_resource_mills: File
 
 outputs:
   per_sample_raw_variants:
@@ -36,15 +39,33 @@ outputs:
   variant_recalibration_snps_tranches:
     type: File
     outputSource: variant_recalibration_snps/tranches_File
-    doc: "Tranches file TBD"
+    # TODO: Update this doc
+    doc: "SNP Tranches file TBD"
   variant_recalibration_snps_recal:
     type: File
     outputSource: variant_recalibration_snps/recal_File
-    doc: "Recal file TBD"
+    # TODO: Update this doc
+    doc: "SNP Recal file TBD"
   variant_recalibration_snps_rscript:
     type: File
     outputSource: variant_recalibration_snps/vqsr_rscript
-    doc: "VQSR Rscript"
+    # TODO: Update this doc
+    doc: "SNP VQSR Rscript"
+  variant_recalibration_indels_tranches:
+    type: File
+    outputSource: variant_recalibration_indels/tranches_File
+    # TODO: Update this doc
+    doc: "Indel Tranches file TBD"
+  variant_recalibration_indels_recal:
+    type: File
+    outputSource: variant_recalibration_indels/recal_File
+    # TODO: Update this doc
+    doc: "Indel Recal file TBD"
+  variant_recalibration_indels_rscript:
+    type: File
+    outputSource: variant_recalibration_indels/vqsr_rscript
+    # TODO: Update this doc
+    doc: "Indel VQSR Rscript"
 steps:
   variant_calling:
     # Does not support multiple threads
@@ -77,9 +98,10 @@ steps:
       variants: variant_calling/output_HaplotypeCaller
       reference: reference_genome
       outputfile_GenotypeGVCFs:
-        default: "joint_genotype_raw_variants.vcf"
+        default: "joint_genotype_raw_variants.g.vcf"
     out:
       - output_GenotypeGVCFs
+  # Recommendations from https://software.broadinstitute.org/gatk/documentation/article?id=1259
   variant_recalibration_snps:
     run: ../community-workflows/tools/GATK-VariantRecalibrator-SNPs.cwl
     in:
@@ -89,24 +111,54 @@ steps:
       haplotypecaller_snps_vcf: joint_genotyping/output_GenotypeGVCFs
       threads: threads
       outputfile_recal:
-        default: "vqsr_recal.out"
+        default: "snps_vqsr_recal.out"
       outputfile_tranches:
-        default: "vqsr_tranches.out"
+        default: "snps_vqsr_tranches.out"
       outputfile_rscript:
-        default: "vqsr.R"
+        default: "snps_vqsr.R"
       resource_hapmap: snp_resource_hapmap
       resource_omni: snp_resource_omni
       resource_1kg: snp_resource_1kg
-      resource_dbsnp: snp_resource_dbsnp
-      # annotations
+      resource_dbsnp: resource_dbsnp
+      # annotations, See https://software.broadinstitute.org/gatk/documentation/article?id=1259
+      # Removed DP and InbreedingCoeff
       # Please note that these recommendations are formulated for whole-genome datasets.
       # For exomes, we do not recommend using DP for variant recalibration (see below for details of why).
-      # https://software.broadinstitute.org/gatk/documentation/article?id=1259
       annotations:
-        # Removed "InbreedingCoeff", would need to annotate this and only valid for >10 samples
-        # http://gatkforums.broadinstitute.org/gatk/discussion/1406/error-values-for-inbreedingcoeff-annotation-not-detected-for-any-training-variant-in-the-input
+        # The InbreedingCoeff is a population level statistic that requires at least 10 samples in order to be computed. For projects with fewer samples, or that includes many closely related samples (such as a family) please omit this annotation from the command line.
+        # NOTE: InbreedingCoeff would need to be annotated separately
         default: ["QD","MQ","MQRankSum","ReadPosRankSum","FS","SOR"]
     out:
       - tranches_File
       - recal_File
       - vqsr_rscript
+  variant_recalibration_indels:
+    run: ../community-workflows/tools/GATK-VariantRecalibrator-Indels.cwl
+    in:
+      GATKJar: GATKJar
+      intervals: intervals
+      reference: reference_genome
+      haplotypecaller_snps_vcf: joint_genotyping/output_GenotypeGVCFs
+      threads: threads
+      outputfile_recal:
+        default: "indels_vqsr_recal.out"
+      outputfile_tranches:
+        default: "indels_vqsr_tranches.out"
+      outputfile_rscript:
+        default: "indels_vqsr.R"
+      resource_mills: indel_resource_mills
+      resource_dbsnp: resource_dbsnp
+      # annotations, See https://software.broadinstitute.org/gatk/documentation/article?id=1259
+      # Removed DP and InbreedingCoeff
+      # Please note that these recommendations are formulated for whole-genome datasets.
+      # For exomes, we do not recommend using DP for variant recalibration (see below for details of why).
+      annotations:
+        # The InbreedingCoeff is a population level statistic that requires at least 10 samples in order to be computed. For projects with fewer samples, or that includes many closely related samples (such as a family) please omit this annotation from the command line.
+        # NOTE: InbreedingCoeff would need to be annotated separately
+                default: ["QD","FS","SOR","ReadPosRankSum","MQRankSum"]
+    out:
+      - tranches_File
+      - recal_File
+      - vqsr_rscript
+# Next, apply the recals
+
