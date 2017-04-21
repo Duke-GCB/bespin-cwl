@@ -7,8 +7,9 @@ requirements:
 inputs:
   # For testing, intervals on reference genome
   intervals: string[]?
-  # Read samples, fastq format
-  recalibrated_reads: File[]
+  # Read samples, bam format
+  # NOTE: Should be at least 20 samples for exome
+  mapped_reads: File[]
   # reference genome, fasta
   reference_genome: File
   # Number of threads to use
@@ -73,7 +74,7 @@ steps:
     scatter: inputBam_HaplotypeCaller
     in:
       GATKJar: GATKJar
-      inputBam_HaplotypeCaller: recalibrated_reads
+      inputBam_HaplotypeCaller: mapped_reads
       intervals: intervals
       reference: reference_genome
       genotyping_mode:
