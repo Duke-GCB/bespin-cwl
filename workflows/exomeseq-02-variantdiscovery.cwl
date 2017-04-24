@@ -93,7 +93,10 @@ steps:
     run: ../community-workflows/tools/GATK-GenotypeGVCFs.cwl
     in:
       GATKJar: GATKJar
-      threads: threads
+      # https://gatkforums.broadinstitute.org/wdl/discussion/8718/concurrentmodificationexception-in-gatk-3-7-genotypegvcfs
+      # Hi all, it looks like some race conditions were introduced in 3.7. Unfortunately we can't devote effort to addressing that since we are moving away from using this type of parallelism altogether
+      threads:
+        default: 1
       intervals: intervals
       # NOTE: GATK best practices recommends at least 30 samples for exome - how to deal?
       variants: variant_calling/output_HaplotypeCaller
