@@ -71,6 +71,11 @@ steps:
   variant_calling:
     # Does not support multiple threads
     run: ../community-workflows/tools/GATK-HaplotypeCaller.cwl
+    # Each step uses one core and about 2GB RAM
+    requirements:
+      - class: ResourceRequirement
+        coresMin: 1
+        ramMin: 2560
     scatter: inputBam_HaplotypeCaller
     in:
       GATKJar: GATKJar
@@ -91,6 +96,10 @@ steps:
   # See Merge (optional) on https://software.broadinstitute.org/gatk/best-practices/bp_3step.php?case=GermShortWGS&p=2
   joint_genotyping:
     run: ../community-workflows/tools/GATK-GenotypeGVCFs.cwl
+    requirements:
+      - class: ResourceRequirement
+        coresMin: 1
+        ramMin: 12288
     in:
       GATKJar: GATKJar
       # https://gatkforums.broadinstitute.org/wdl/discussion/8718/concurrentmodificationexception-in-gatk-3-7-genotypegvcfs
@@ -113,7 +122,8 @@ steps:
       intervals: intervals
       reference: reference_genome
       haplotypecaller_snps_vcf: joint_genotyping/output_GenotypeGVCFs
-      threads: threads
+      threads:
+        default: 1
       outputfile_recal:
         default: "snps_vqsr_recal.out"
       outputfile_tranches:
@@ -143,7 +153,8 @@ steps:
       intervals: intervals
       reference: reference_genome
       haplotypecaller_snps_vcf: joint_genotyping/output_GenotypeGVCFs
-      threads: threads
+      threads:
+        default: 1
       outputfile_recal:
         default: "indels_vqsr_recal.out"
       outputfile_tranches:
