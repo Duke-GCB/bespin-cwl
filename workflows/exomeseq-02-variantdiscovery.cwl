@@ -156,9 +156,9 @@ steps:
       reference: reference_genome
       variants: joint_genotyping/output_GenotypeGVCFs
       threads: threads
-      tranches_file: variant_recalibration_snps/outputfile_tranches
-      recal_file: variant_recalibration_snps/outputfile_tranches
-      outputfile_recalibrated_vcf::
+      tranches_file: variant_recalibration_snps/tranches_File
+      recal_file: variant_recalibration_snps/recal_File
+      outputfile_recalibrated_vcf:
         default: "snps_recalibrated.vcf"
       ts_filter_level:
         default: 99.5
@@ -203,9 +203,9 @@ steps:
       reference: reference_genome
       variants: joint_genotyping/output_GenotypeGVCFs
       threads: threads
-      tranches_file: variant_recalibration_indels/outputfile_tranches
-      recal_file: variant_recalibration_indels/outputfile_tranches
-      outputfile_recalibrated_vcf::
+      tranches_file: variant_recalibration_indels/tranches_File
+      recal_file: variant_recalibration_indels/recal_File
+      outputfile_recalibrated_vcf:
         default: "indels_recalibrated.vcf"
       ts_filter_level:
         default: 99.0
