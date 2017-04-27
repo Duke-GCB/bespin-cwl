@@ -123,7 +123,7 @@ steps:
       GATKJar: GATKJar
       intervals: intervals
       reference: reference_genome
-      haplotypecaller_snps_vcf: joint_genotyping/output_GenotypeGVCFs
+      variants: joint_genotyping/output_GenotypeGVCFs
       threads:
         default: 1
       outputfile_recal:
@@ -154,7 +154,7 @@ steps:
       GATKJar: GATKJar
       intervals: intervals
       reference: reference_genome
-      input_variants: joint_genotyping/output_GenotypeGVCFs
+      variants: joint_genotyping/output_GenotypeGVCFs
       threads: threads
       tranches_file: variant_recalibration_snps/outputfile_tranches
       recal_file: variant_recalibration_snps/outputfile_tranches
@@ -172,7 +172,7 @@ steps:
       GATKJar: GATKJar
       intervals: intervals
       reference: reference_genome
-      haplotypecaller_snps_vcf: joint_genotyping/output_GenotypeGVCFs
+      variants: joint_genotyping/output_GenotypeGVCFs
       threads:
         default: 1
       outputfile_recal:
@@ -201,7 +201,7 @@ steps:
       GATKJar: GATKJar
       intervals: intervals
       reference: reference_genome
-      input_variants: joint_genotyping/output_GenotypeGVCFs
+      variants: joint_genotyping/output_GenotypeGVCFs
       threads: threads
       tranches_file: variant_recalibration_indels/outputfile_tranches
       recal_file: variant_recalibration_indels/outputfile_tranches
