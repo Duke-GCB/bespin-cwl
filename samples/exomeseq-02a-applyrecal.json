@@ -1,0 +1,38 @@
+{
+  "GATKJar": {
+    "class": "File",
+    "path": "/home/ubuntu/GenomeAnalysisTK-3.7/GenomeAnalysisTK.jar"
+  },
+  "indel_resource_mills": {
+    "class": "File",
+    "path": "/home/ubuntu/data/b37/Mills_and_1000G_gold_standard.indels.b37.vcf"
+  },
+  "intervals": [
+    "20"
+  ],
+  "reference_genome": {
+    "class": "File",
+    "path": "/home/ubuntu/data/b37/human_g1k_v37.fasta"
+  },
+  "resource_dbsnp": {
+    "class": "File",
+    "path": "/home/ubuntu/data/b37/dbsnp_138.b37.vcf"
+  },
+  "snp_resource_1kg": {
+    "class": "File",
+    "path": "/home/ubuntu/data/b37/1000G_phase1.snps.high_confidence.b37.vcf"
+  },
+  "snp_resource_hapmap": {
+    "class": "File",
+    "path": "/home/ubuntu/data/b37/hapmap/hapmap_3.3.b37.vcf"
+  },
+  "snp_resource_omni": {
+    "class": "File",
+    "path": "/home/ubuntu/data/b37/omni/1000G_omni2.5.b37.vcf"
+  },
+  "threads": 8,
+  "variants": {
+    "class": "File",
+    "path": "/home/ubuntu/bespin-cwl/data/variant_discovery_toil/joint_genotype_raw_variants.g.vcf"
+  }
+}
