@@ -177,7 +177,7 @@ steps:
     out:
       - output_printReads
   index_recalibrated: # Explicitly create an index because recalibrate doesn't include secondaryFiles
-    run: ../community-workflows/samtools-index.cwl
+    run: ../community-workflows/tools/samtools-index.cwl
     in:
       input: recalibrate_04_apply/output_printReads
       bai:
