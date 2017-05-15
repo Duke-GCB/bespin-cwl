@@ -164,7 +164,7 @@ steps:
     out:
       - output_recalibrationPlots
   recalibrate_04_apply:
-    # TODO: can printreads include a secondary file?
+    # TODO: can printreads include a secondary file in the output?
     run: ../community-workflows/tools/GATK-PrintReads.cwl
     in:
       GATKJar: GATKJar

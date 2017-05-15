@@ -36,7 +36,7 @@ outputs:
   joint_raw_variants:
     type: File
     outputSource: joint_genotyping/output_GenotypeGVCFs
-    doc: "VCF files from joint genotyping calling"
+    doc: "VCF file from joint genotyping calling"
   variant_recalibration_snps_tranches:
     type: File
     outputSource: variant_recalibration_snps/tranches_File
