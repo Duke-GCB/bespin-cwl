@@ -16,10 +16,6 @@
       "path": "/home/ubuntu/data/b37/Mills_and_1000G_gold_standard.indels.b37.vcf"
     }
   ],
-  "output_dedup_bam_file": {
-    "class": "File",
-    "path": "/home/ubuntu/bespin-cwl/data/marked_duplicates.bam"
-  },
   "read_group_library": "LIBRARY",
   "read_group_platform": "illumina",
   "read_group_platform_unit": "AB1234",
