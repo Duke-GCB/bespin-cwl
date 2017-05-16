@@ -67,9 +67,6 @@ outputs:
   recalibrated_reads:
     type: File
     outputSource: recalibrate_04_apply/output_printReads
-  recalibrated_reads_index:
-    type: File
-    outputSource: index_recalibrated/index
 steps:
   qc:
     run: ../tools/fastqc.cwl
