@@ -164,7 +164,6 @@ steps:
     out:
       - output_recalibrationPlots
   recalibrate_04_apply:
-    # TODO: can printreads include a secondary file in the output?
     run: ../community-workflows/tools/GATK-PrintReads.cwl
     in:
       GATKJar: GATKJar
@@ -176,11 +175,3 @@ steps:
       reference: reference_genome
     out:
       - output_printReads
-  index_recalibrated: # Explicitly create an index because recalibrate doesn't include secondaryFiles
-    run: ../community-workflows/tools/samtools-index.cwl
-    in:
-      input: recalibrate_04_apply/output_printReads
-      bai:
-        default: true
-    out:
-      - index # Unfortunately the GATK tools expect file.bam + file.bai, and this produces file.bam.bai
