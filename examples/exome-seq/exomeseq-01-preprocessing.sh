@@ -15,6 +15,7 @@ echo $JOB_NAME
 
 OUT_DIR=${DATA_ROOT}/${JOB_NAME}/
 LOG_DIR=${LOG_ROOT}/${JOB_NAME}/
+TMP_DIR=${DATA_ROOT}/tmp/tmp
 
 mkdir -p $OUT_DIR
 mkdir -p $LOG_DIR
@@ -22,6 +23,8 @@ echo "Starting on $(date)..."
 cwltool \
   --debug \
   --outdir ${OUT_DIR} \
+  --tmpdir-prefix ${TMP_DIR} \
+  --tmp-outdir-prefix ${TMP_DIR} \
   ${WORKFLOWS_DIR}/exomeseq-01-preprocessing.cwl \
   exomeseq-01-preprocessing.json \
   > >(tee ${LOG_DIR}/${SCRIPT_NAME_TRIMMED}-out.log) \
