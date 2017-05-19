@@ -27,7 +27,6 @@ mkdir -p $LOG_DIR
 
 echo "Starting toil on $(date)..." >(tee ${LOG_DIR}/${WORKFLOW_NAME}-err.log)
 cwltoil \
-  --logDebug \
   --realTimeLogging \
   --outdir ${OUT_DIR} \
   --jobStore ${JOBSTORE_DIR} \
