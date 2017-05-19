@@ -70,6 +70,10 @@ outputs:
 steps:
   qc:
     run: ../tools/fastqc.cwl
+    requirements:
+      - class: ResourceRequirement
+        coresMin: 4
+        ramMin: 2500
     scatter: input_fastq_file
     in:
       input_fastq_file: reads
@@ -78,6 +82,10 @@ steps:
       - output_qc_report
   trim:
     run: ../tools/trim_galore.cwl
+    requirements:
+      - class: ResourceRequirement
+        coresMin: 4
+        ramMin: 8000
     in:
       reads: reads
       paired:
@@ -87,6 +95,10 @@ steps:
       - trim_reports
   map:
     run: ../community-workflows/tools/bwa-mem.cwl
+    requirements:
+      - class: ResourceRequirement
+        coresMin: 8
+        ramMin: 16000
     in:
       reads: trim/trimmed_reads
       reference: reference_genome
@@ -99,6 +111,10 @@ steps:
     # TODO: Can bwa-mem sort?
     # TODO: Does picard support threads?
     run: ../tools/picard-SortSam.cwl
+    requirements:
+      - class: ResourceRequirement
+        coresMin: 1
+        ramMin: 2500
     in:
       input_file: map/output
     out:
@@ -106,6 +122,10 @@ steps:
   mark_duplicates:
     # TODO: Does picard support threads?
     run: ../tools/picard-MarkDuplicates.cwl
+    requirements:
+      - class: ResourceRequirement
+        coresMin: 1
+        ramMin: 2500
     in:
       input_file: sort/sorted
     out:
@@ -113,6 +133,10 @@ steps:
       - output_dedup_bam_file
   add_read_groups:
     run: ../tools/picard-AddOrReplaceReadGroups.cwl
+    requirements:
+      - class: ResourceRequirement
+        coresMin: 1
+        ramMin: 2500
     in:
       read_group_library: read_group_library
       read_group_sample_name: read_group_sample_name
@@ -124,6 +148,10 @@ steps:
   # Now recalibrate
   recalibrate_01_analyze:
     run: ../community-workflows/tools/GATK-BaseRecalibrator.cwl
+    requirements:
+      - class: ResourceRequirement
+        coresMin: 1
+        ramMin: 2500
     in:
       GATKJar: GATKJar
       inputBam_BaseRecalibrator: add_read_groups/output
@@ -136,6 +164,10 @@ steps:
       - output_baseRecalibrator
   recalibrate_02_covariation:
     run: ../community-workflows/tools/GATK-BaseRecalibrator.cwl
+    requirements:
+      - class: ResourceRequirement
+        coresMin: 1
+        ramMin: 2500
     in:
       GATKJar: GATKJar
       inputBam_BaseRecalibrator: add_read_groups/output
@@ -149,6 +181,10 @@ steps:
       - output_baseRecalibrator
   recalibrate_03_plots:
     run: ../community-workflows/tools/GATK-AnalyzeCovariates.cwl
+    requirements:
+      - class: ResourceRequirement
+        coresMin: 1
+        ramMin: 2500
     in:
       GATKJar: GATKJar
       inputBam_BaseRecalibrator: add_read_groups/output
@@ -162,6 +198,10 @@ steps:
       - output_recalibrationPlots
   recalibrate_04_apply:
     run: ../community-workflows/tools/GATK-PrintReads.cwl
+    requirements:
+      - class: ResourceRequirement
+        coresMin: 1
+        ramMin: 2500
     in:
       GATKJar: GATKJar
       inputBam_printReads: add_read_groups/output
