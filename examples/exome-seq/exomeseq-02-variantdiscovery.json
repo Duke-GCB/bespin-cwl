@@ -12,8 +12,24 @@
   ],
   "mapped_reads": [
     {
-      "class": "File",
-      "path": "/home/ubuntu/bespin-cwl/data/recalibrate/recal_reads.bam"
+        "checksum": "sha1$fe26a1074884a4d55c96b46aa62dfe3022598718",
+        "basename": "recal_reads.bam",
+        "http://commonwl.org/cwltool#generation": 0,
+        "location": "file:///home/ubuntu/bespin-cwl/data/exomeseq-01-preprocessing-20170517-142828/recal_reads.bam",
+        "path": "/home/ubuntu/bespin-cwl/data/exomeseq-01-preprocessing-20170517-142828/recal_reads.bam",
+        "secondaryFiles": [
+            {
+                "checksum": "sha1$c24af7f9455bfed926df8c1ad995f6c7381619d3",
+                "basename": "recal_reads.bai",
+                "http://commonwl.org/cwltool#generation": 0,
+                "location": "file:///home/ubuntu/bespin-cwl/data/exomeseq-01-preprocessing-20170517-142828/recal_reads.bai",
+                "path": "/home/ubuntu/bespin-cwl/data/exomeseq-01-preprocessing-20170517-142828/recal_reads.bai",
+                "class": "File",
+                "size": 173984
+            }
+        ],
+        "class": "File",
+        "size": 513546873
     },
     {
       "class": "File",
