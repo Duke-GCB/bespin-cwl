@@ -65,7 +65,7 @@ Produces 97G:
 
 During testing, the `intervals` was set to `20`, which filters the reads in the resultant `recal_reads.bam` to chr20, but not before. So the 44G `mapped.bam` and 13-14G `marked_duplicates.bam`, `sorted.bam`, and `with_read_groups.bam` are whole-exome.
 
-Inputs:
+### Inputs
 
 - intervals: `string[]?` - genomic interval over which to operate. optional.
 - reads: `File[]` - pair of fastq reads
@@ -74,7 +74,7 @@ Inputs:
 - read\_group\_{library,sample\_name,platform,platform\_unit}: read group information. likely derived from file name
 - GATKJar: `File` - the GATK Jar file (must be supplied at runtime)
 
-Outputs:
+### Outputs
 
 - QC Reports: `File[]` - pair of zipped QC reports from fastqc
 - trimmed\_reads: `File[]` - pair of trimmed reads
@@ -85,15 +85,26 @@ Outputs:
 - deduplicated: `File`: BAM file of reads mapped, with duplicates marked by picard MarkDuplicates
 - with\_read\_groups: `File`: BAM file of reads mapped, with duplicates marked by picard MarkDuplicates and read\_groups annotated
 - recalibration\_before: `File`: Analysis before recalibration
-- recalibration\_plots: `File`: Plots produced by recalibration comparison **Single file?**
-- recalibrated\_reads: `File`: BAM file of recalibrated reads, ultimate product of this workflow. **NEEDS INDEX**
+- recalibration\_plots: `File`: Plots produced by recalibration comparison **This output is a single PDF file containing multple plots**
+- recalibrated\_reads: `File`: BAM file of recalibrated reads, ultimate product of this workflow.
 
-Steps:
+### Steps
+
+Computational requirements noted below. Tested on `m1.xlarge` instance (8CPU, 16GB RAM). GATK tools offer a threads argument but it mostly has to be disabled. Picard tools used here do not support multiple threads.
+
+Total run time was **6h13m**
 
 - Runs fastqc on input reads
+  - For each read: 8CPU, 2GB, 0h10m
 - Runs trim_galore on input reads
+  - 2 CPU, ? GB, 1h30m
 - maps trimmed reads to reference genome (produces BAM file)
+  - 8 CPU, 16GB, 1h40m (will scale beyond 8 CPU)
 - sorts mapped BAM by genomic coordinate
+  - 1 CPU, ? GB, 1h00m
 - marks duplicate mapped reads
+  - 1 CPU, ? GB, 0h54m
 - adds read groups to deduplicated BAM
+  - 1 CPU, ? GB, 0h38m
 - Recalibrates the scores using GATK 4 step process
+  - 1 CPU, ? GB, 0h13m (limited to chr20)
