@@ -13,8 +13,57 @@ Questions:
 
 Tasks:
 
-- Ensure preprocessing guarantees an indexed BAM file
-- Update example JSON - current json is piecemeal and needs to be condensed.
+- Document file storage questions
+- Write toil version of script
+
+### Storage Requirements
+
+With a sample paired-end 15G, exome-targeted read from 1000 genomes:
+
+```
+-rw-r--r-- 1 ubuntu ubuntu 7.5G Jun 23  2015 SRR099967_1.fastq.gz
+-rw-r--r-- 1 ubuntu ubuntu 7.6G Jun 23  2015 SRR099967_2.fastq.gz
+```
+
+Reference Genome 8.9G (common):
+
+```
+-rw-r--r-- 1 ubuntu ubuntu  12K Mar 24 15:56 human_g1k_v37.dict
+-rw-r--r-- 1 ubuntu ubuntu 2.6K Mar 24 15:56 human_g1k_v37.dict.gz
+-rw-r--r-- 1 ubuntu ubuntu 3.0G Mar 24 15:59 human_g1k_v37.fasta
+-rw-rw-r-- 1 ubuntu ubuntu 6.5K Mar 24 18:07 human_g1k_v37.fasta.amb
+-rw-rw-r-- 1 ubuntu ubuntu 6.7K Mar 24 18:07 human_g1k_v37.fasta.ann
+-rw-rw-r-- 1 ubuntu ubuntu 2.9G Mar 24 18:06 human_g1k_v37.fasta.bwt
+-rw-r--r-- 1 ubuntu ubuntu 2.7K Mar 24 15:56 human_g1k_v37.fasta.fai
+-rw-r--r-- 1 ubuntu ubuntu 1.1K Mar 24 15:56 human_g1k_v37.fasta.fai.gz
+-rw-r--r-- 1 ubuntu ubuntu 830M Mar 24 15:59 human_g1k_v37.fasta.gz
+-rw-rw-r-- 1 ubuntu ubuntu 740M Mar 24 18:07 human_g1k_v37.fasta.pac
+-rw-rw-r-- 1 ubuntu ubuntu 1.5G Mar 24 18:28 human_g1k_v37.fasta.sa
+```
+
+Produces 97G:
+
+```
+-rw-rw-r-- 1 ubuntu ubuntu  44G May 17 17:56 mapped.bam
+-rw-r--r-- 1 ubuntu root    14G May 17 19:50 marked_duplicates.bam
+-rw-r--r-- 1 ubuntu root   2.7K May 17 19:50 marked_dup_metrics.txt
+-rw-r--r-- 1 ubuntu root   854K May 17 20:36 post_recal_data.table
+-rw-r--r-- 1 ubuntu root   663K May 17 20:31 recal_data.table
+-rw-r--r-- 1 ubuntu root   148K May 17 20:36 recalibration_plots.pdf
+-rw-r--r-- 1 ubuntu root   170K May 17 20:41 recal_reads.bai
+-rw-r--r-- 1 ubuntu root   490M May 17 20:41 recal_reads.bam
+-rw-r--r-- 1 ubuntu root    13G May 17 18:56 sorted.bam
+-rw-r--r-- 1 ubuntu root   418K May 17 14:39 SRR099967_1_fastqc.zip
+-rw-r--r-- 1 ubuntu root   3.4K May 17 15:17 SRR099967_1.fastq.gz_trimming_report.txt
+-rw-r--r-- 1 ubuntu root   6.3G May 17 16:15 SRR099967_1_val_1.fq.gz
+-rw-r--r-- 1 ubuntu root   405K May 17 14:50 SRR099967_2_fastqc.zip
+-rw-r--r-- 1 ubuntu root   3.6K May 17 16:16 SRR099967_2.fastq.gz_trimming_report.txt
+-rw-r--r-- 1 ubuntu root   6.4G May 17 16:15 SRR099967_2_val_2.fq.gz
+-rw-r--r-- 1 ubuntu root   7.9M May 17 20:28 with_read_groups.bai
+-rw-r--r-- 1 ubuntu root    14G May 17 20:28 with_read_groups.bam
+```
+
+During testing, the `intervals` was set to `20`, which filters the reads in the resultant `recal_reads.bam` to chr20, but not before. So the 44G `mapped.bam` and 13-14G `marked_duplicates.bam`, `sorted.bam`, and `with_read_groups.bam` are whole-exome.
 
 Inputs:
 
