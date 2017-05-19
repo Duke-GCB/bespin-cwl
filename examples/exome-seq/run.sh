@@ -22,7 +22,7 @@ TMP_DIR=${DATA_ROOT}/tmp/tmp
 
 mkdir -p $OUT_DIR
 mkdir -p $LOG_DIR
-echo "Starting on $(date)..." > (tee ${LOG_DIR}/${WORKFLOW_NAME}-err.log)
+echo "Starting on $(date)..." >(tee ${LOG_DIR}/${WORKFLOW_NAME}-err.log)
 cwltool \
   --debug \
   --outdir ${OUT_DIR} \
@@ -32,4 +32,4 @@ cwltool \
   ${WORKFLOW_NAME}.json \
   > >(tee ${LOG_DIR}/${WORKFLOW_NAME}-out.log) \
   2> >(tee ${LOG_DIR}/${WORKFLOW_NAME}-err.log >&2)
-echo "Finished on $(date)..." > (tee ${LOG_DIR}/${WORKFLOW_NAME}-err.log)
+echo "Finished on $(date)..." >(tee ${LOG_DIR}/${WORKFLOW_NAME}-err.log)
