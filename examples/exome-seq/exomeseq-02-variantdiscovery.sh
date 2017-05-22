@@ -1,3 +1,3 @@
 #!/bin/bash
 
-./run.sh exomeseq-02-variantdiscovery
+./run-toil.sh exomeseq-02-variantdiscovery

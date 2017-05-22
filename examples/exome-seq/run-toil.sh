@@ -6,7 +6,7 @@
 WORKFLOW_NAME="$1"
 
 SCRIPT_DIR=$(dirname "$0")
-ROOT_DIR=${SCRIPT_DIR}/../..
+ROOT_DIR=$(readlink -f "${SCRIPT_DIR}/../..")
 RUN_DATE=$(date +"%Y%m%d-%k%M%S")
 
 WORKFLOWS_DIR=${ROOT_DIR}/workflows
