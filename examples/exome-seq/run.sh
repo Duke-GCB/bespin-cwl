@@ -31,5 +31,5 @@ cwltool \
   ${WORKFLOWS_DIR}/${WORKFLOW_NAME}.cwl \
   ${WORKFLOW_NAME}.json \
   > >(tee ${LOG_DIR}/${WORKFLOW_NAME}-out.log) \
-  2> >(tee ${LOG_DIR}/${WORKFLOW_NAME}-err.log >&2)
-echo "Finished on $(date)..." >(tee ${LOG_DIR}/${WORKFLOW_NAME}-err.log)
+  2> >(tee -a ${LOG_DIR}/${WORKFLOW_NAME}-err.log >&2)
+echo "Finished on $(date)..." >(tee -a ${LOG_DIR}/${WORKFLOW_NAME}-err.log)
