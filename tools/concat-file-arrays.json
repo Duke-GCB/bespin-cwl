@@ -1,0 +1,10 @@
+{
+  "array1": [
+    { "class": "File", "path": "./concat-file-arrays.cwl" },
+    { "class": "File", "path": "./concat-file-arrays.json" }
+  ],
+  "array2": [
+    { "class": "File", "path": "./merge-secondary-file.cwl" }
+  ]
+}
+
