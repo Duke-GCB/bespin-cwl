@@ -116,7 +116,7 @@ steps:
       array1: preprocessing/recalibrated_reads
       array2: reference_reads
     out:
-      output
+      - output
   variant_discovery:
     run: exomeseq-02-variantdiscovery.cwl
     in:
