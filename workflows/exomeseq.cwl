@@ -11,6 +11,7 @@ inputs:
   # Read pairs, fastq format
   read_pairs:
       type: { type: array, items: { type: array, items: File } }
+  reference_reads: File[]
   # reference genome, fasta
   reference_genome: File
   # Number of threads to use
@@ -109,11 +110,18 @@ steps:
       - recalibration_after
       - recalibration_plots
       - recalibrated_reads
+  add_samples:
+    run: ../tools/concat-file-arrays.cwl
+    in:
+      array1: preprocessing/recalibrated_reads
+      array2: reference_reads
+    out:
+      output
   variant_discovery:
     run: exomeseq-02-variantdiscovery.cwl
     in:
       intervals: intervals
-      mapped_reads: preprocessing/recalibrated_reads
+      mapped_reads: add_samples/output
       reference_genome: reference_genome
       threads: threads
       GATKJar: GATKJar
