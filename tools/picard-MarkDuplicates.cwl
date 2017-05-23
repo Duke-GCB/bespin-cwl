@@ -45,6 +45,8 @@ outputs:
     type: File
     outputBinding:
       glob: $(inputs.output_filename)
+    secondaryFiles:
+      - ^.bai
 
 baseCommand: [java]
 arguments:
