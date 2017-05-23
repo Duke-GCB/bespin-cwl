@@ -21,11 +21,7 @@ inputs:
   # Number of threads to use
   threads: int?
   # Read Group annotation
-  # NOTE: Does each sample get a read group?
-  read_group_library: string
-  read_group_sample_name: string
-  read_group_platform: string
-  read_group_platform_unit: string
+  read_group_header: string
   # GATK
   GATKJar: File
   knownSites: File[] # vcf files of known sites, with indexing
@@ -33,27 +29,9 @@ outputs:
   qc_reports:
     type: File[]
     outputSource: qc/output_qc_report
-  trimmed_reads:
-    type: File[]
-    outputSource: trim/trimmed_reads
   trim_reports:
     type: File[]
     outputSource: trim/trim_reports
-  mapped:
-    type: File
-    outputSource: map/output
-  mapped_sorted:
-    type: File
-    outputSource: sort/sorted
-  duplicate_metrics:
-    type: File
-    outputSource: mark_duplicates/output_metrics_file
-  deduplicated:
-    type: File
-    outputSource: mark_duplicates/output_dedup_bam_file
-  with_read_groups:
-    type: File
-    outputSource: add_read_groups/output
   # Recalibration
   recalibration_before:
     type: File
@@ -102,14 +80,13 @@ steps:
     in:
       reads: trim/trimmed_reads
       reference: reference_genome
+      read_group_header: read_group_header
       output_filename:
         default: "mapped.bam"
       threads: threads
     out:
       - output
   sort:
-    # TODO: Can bwa-mem sort?
-    # TODO: Does picard support threads?
     run: ../tools/picard-SortSam.cwl
     requirements:
       - class: ResourceRequirement
@@ -120,7 +97,6 @@ steps:
     out:
       - sorted
   mark_duplicates:
-    # TODO: Does picard support threads?
     run: ../tools/picard-MarkDuplicates.cwl
     requirements:
       - class: ResourceRequirement
@@ -131,20 +107,6 @@ steps:
     out:
       - output_metrics_file
       - output_dedup_bam_file
-  add_read_groups:
-    run: ../tools/picard-AddOrReplaceReadGroups.cwl
-    requirements:
-      - class: ResourceRequirement
-        coresMin: 1
-        ramMin: 2500
-    in:
-      read_group_library: read_group_library
-      read_group_sample_name: read_group_sample_name
-      read_group_platform: read_group_platform
-      read_group_platform_unit: read_group_platform_unit
-      input_file: mark_duplicates/output_dedup_bam_file
-    out:
-      - output # Includes a bai index by default
   # Now recalibrate
   recalibrate_01_analyze:
     run: ../community-workflows/tools/GATK-BaseRecalibrator.cwl
@@ -154,7 +116,7 @@ steps:
         ramMin: 2500
     in:
       GATKJar: GATKJar
-      inputBam_BaseRecalibrator: add_read_groups/output
+      inputBam_BaseRecalibrator: mark_duplicates/output_dedup_bam_file
       intervals: intervals
       knownSites: knownSites
       outputfile_BaseRecalibrator:
@@ -170,7 +132,7 @@ steps:
         ramMin: 2500
     in:
       GATKJar: GATKJar
-      inputBam_BaseRecalibrator: add_read_groups/output
+      inputBam_BaseRecalibrator: mark_duplicates/output_dedup_bam_file
       intervals: intervals
       knownSites: knownSites
       bqsr: recalibrate_01_analyze/output_baseRecalibrator
@@ -187,7 +149,7 @@ steps:
         ramMin: 2500
     in:
       GATKJar: GATKJar
-      inputBam_BaseRecalibrator: add_read_groups/output
+      inputBam_BaseRecalibrator: mark_duplicates/output_dedup_bam_file
       intervals: intervals
       inputTable_before: recalibrate_01_analyze/output_baseRecalibrator
       inputTable_after: recalibrate_02_covariation/output_baseRecalibrator
@@ -204,7 +166,7 @@ steps:
         ramMin: 2500
     in:
       GATKJar: GATKJar
-      inputBam_printReads: add_read_groups/output
+      inputBam_printReads: mark_duplicates/output_dedup_bam_file
       intervals: intervals
       input_baseRecalibrator: recalibrate_01_analyze/output_baseRecalibrator
       outputfile_printReads:
