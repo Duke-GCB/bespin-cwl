@@ -2,6 +2,9 @@
 
 cwlVersion: v1.0
 class: Workflow
+label: Whole Exome Sequencing
+doc: |
+  Whole Exome Sequence analysis using GATK best practices - Germline SNP & Indel Discovery
 requirements:
   - class: ScatterFeatureRequirement
   - class: SubworkflowFeatureRequirement

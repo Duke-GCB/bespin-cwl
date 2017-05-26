@@ -3733,6 +3733,8 @@
         }, 
         {
             "class": "Workflow", 
+            "label": "Whole Exome Sequencing", 
+            "doc": "Whole Exome Sequence analysis using GATK best practices - Germline SNP & Indel Discovery\n", 
             "requirements": [
                 {
                     "class": "ScatterFeatureRequirement"
