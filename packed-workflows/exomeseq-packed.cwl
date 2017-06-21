@@ -2753,6 +2753,10 @@
                 {
                     "valueFrom": "MarkDuplicates", 
                     "position": 0
+                }, 
+                {
+                    "valueFrom": "CREATE_INDEX=True", 
+                    "position": 0
                 }
             ], 
             "id": "#picard-MarkDuplicates.cwl"
