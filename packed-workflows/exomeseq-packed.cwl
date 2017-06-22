@@ -3771,6 +3771,9 @@
                         "type": "array", 
                         "items": "File"
                     }, 
+                    "secondaryFiles": [
+                        ".idx"
+                    ], 
                     "id": "#main/knownSites"
                 }, 
                 {
@@ -3789,6 +3792,15 @@
                 }, 
                 {
                     "type": "File", 
+                    "secondaryFiles": [
+                        ".amb", 
+                        ".ann", 
+                        ".bwt", 
+                        ".pac", 
+                        ".sa", 
+                        ".fai", 
+                        "^.dict"
+                    ], 
                     "id": "#main/reference_genome"
                 }, 
                 {
@@ -3796,6 +3808,9 @@
                         "type": "array", 
                         "items": "File"
                     }, 
+                    "secondaryFiles": [
+                        "^.bai"
+                    ], 
                     "id": "#main/reference_reads"
                 }, 
                 {

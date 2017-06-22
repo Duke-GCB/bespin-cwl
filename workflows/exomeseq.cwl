@@ -14,16 +14,31 @@ inputs:
   # Read pairs, fastq format
   read_pairs:
       type: { type: array, items: { type: array, items: File } }
-  reference_reads: File[]
+  reference_reads:
+    type: File[]
+    secondaryFiles:
+    - ^.bai
   # reference genome, fasta
-  reference_genome: File
+  reference_genome:
+    type: File
+    secondaryFiles:
+    - .amb
+    - .ann
+    - .bwt
+    - .pac
+    - .sa
+    - .fai
+    - ^.dict
   # Number of threads to use
   threads: int?
   # Read Group annotation
   read_group_header: string
   # GATK
   GATKJar: File
-  knownSites: File[] # vcf files of known sites, with indexing
+  knownSites:
+    type: File[] # vcf files of known sites, with indexing
+    secondaryFiles:
+      - .idx
   # Confidence threshold for calling a variant - 30
   stand_call_conf: double
   # Variant Recalibration - SNPs
