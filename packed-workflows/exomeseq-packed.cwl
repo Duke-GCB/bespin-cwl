@@ -3754,6 +3754,9 @@
                 }, 
                 {
                     "type": "File", 
+                    "secondaryFiles": [
+                        ".idx"
+                    ], 
                     "id": "#main/indel_resource_mills"
                 }, 
                 {
@@ -3815,18 +3818,30 @@
                 }, 
                 {
                     "type": "File", 
+                    "secondaryFiles": [
+                        ".idx"
+                    ], 
                     "id": "#main/resource_dbsnp"
                 }, 
                 {
                     "type": "File", 
+                    "secondaryFiles": [
+                        ".idx"
+                    ], 
                     "id": "#main/snp_resource_1kg"
                 }, 
                 {
                     "type": "File", 
+                    "secondaryFiles": [
+                        ".idx"
+                    ], 
                     "id": "#main/snp_resource_hapmap"
                 }, 
                 {
                     "type": "File", 
+                    "secondaryFiles": [
+                        ".idx"
+                    ], 
                     "id": "#main/snp_resource_omni"
                 }, 
                 {
