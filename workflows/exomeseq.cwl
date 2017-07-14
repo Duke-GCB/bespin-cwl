@@ -14,26 +14,57 @@ inputs:
   # Read pairs, fastq format
   read_pairs:
       type: { type: array, items: { type: array, items: File } }
-  reference_reads: File[]
+  reference_reads:
+    type: File[]
+    secondaryFiles:
+    - ^.bai
   # reference genome, fasta
-  reference_genome: File
+  reference_genome:
+    type: File
+    secondaryFiles:
+    - .amb
+    - .ann
+    - .bwt
+    - .pac
+    - .sa
+    - .fai
+    - ^.dict
   # Number of threads to use
   threads: int?
   # Read Group annotation
   read_group_header: string
   # GATK
-  GATKJar: File
-  knownSites: File[] # vcf files of known sites, with indexing
+  GATKJar:
+    type: File
+  knownSites:
+    type: File[] # vcf files of known sites, with indexing
+    secondaryFiles:
+    - .idx
   # Confidence threshold for calling a variant - 30
   stand_call_conf: double
   # Variant Recalibration - SNPs
-  snp_resource_hapmap: File
-  snp_resource_omni: File
-  snp_resource_1kg: File
+  snp_resource_hapmap:
+    type: File
+    secondaryFiles:
+    - .idx
+  snp_resource_omni:
+    type: File
+    secondaryFiles:
+    - .idx
+  snp_resource_1kg: 
+    type: File
+    secondaryFiles:
+      - .idx
   # Variant Recalibration - Common
-  resource_dbsnp: File
+  resource_dbsnp:
+    type: File
+    secondaryFiles:
+    - .idx
   # Variant Recalibration - Indels
-  indel_resource_mills: File
+  indel_resource_mills:
+    type: File
+    secondaryFiles:
+    - .idx
 outputs:
   qc_reports:
     type: { type: array, items: { type: array, items: File } }

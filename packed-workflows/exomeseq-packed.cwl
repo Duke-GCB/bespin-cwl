@@ -2753,6 +2753,10 @@
                 {
                     "valueFrom": "MarkDuplicates", 
                     "position": 0
+                }, 
+                {
+                    "valueFrom": "CREATE_INDEX=True", 
+                    "position": 0
                 }
             ], 
             "id": "#picard-MarkDuplicates.cwl"
@@ -3750,6 +3754,9 @@
                 }, 
                 {
                     "type": "File", 
+                    "secondaryFiles": [
+                        ".idx"
+                    ], 
                     "id": "#main/indel_resource_mills"
                 }, 
                 {
@@ -3767,6 +3774,9 @@
                         "type": "array", 
                         "items": "File"
                     }, 
+                    "secondaryFiles": [
+                        ".idx"
+                    ], 
                     "id": "#main/knownSites"
                 }, 
                 {
@@ -3785,6 +3795,15 @@
                 }, 
                 {
                     "type": "File", 
+                    "secondaryFiles": [
+                        ".amb", 
+                        ".ann", 
+                        ".bwt", 
+                        ".pac", 
+                        ".sa", 
+                        ".fai", 
+                        "^.dict"
+                    ], 
                     "id": "#main/reference_genome"
                 }, 
                 {
@@ -3792,22 +3811,37 @@
                         "type": "array", 
                         "items": "File"
                     }, 
+                    "secondaryFiles": [
+                        "^.bai"
+                    ], 
                     "id": "#main/reference_reads"
                 }, 
                 {
                     "type": "File", 
+                    "secondaryFiles": [
+                        ".idx"
+                    ], 
                     "id": "#main/resource_dbsnp"
                 }, 
                 {
                     "type": "File", 
+                    "secondaryFiles": [
+                        ".idx"
+                    ], 
                     "id": "#main/snp_resource_1kg"
                 }, 
                 {
                     "type": "File", 
+                    "secondaryFiles": [
+                        ".idx"
+                    ], 
                     "id": "#main/snp_resource_hapmap"
                 }, 
                 {
                     "type": "File", 
+                    "secondaryFiles": [
+                        ".idx"
+                    ], 
                     "id": "#main/snp_resource_omni"
                 }, 
                 {
