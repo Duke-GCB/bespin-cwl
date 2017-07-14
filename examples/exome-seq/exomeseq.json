@@ -10,7 +10,7 @@
   "intervals": [
     {
       "class": "File",
-      "path": "/home/ubuntu/data/SeqCap_EZ_Exome_v3_capture.noChr.bed"
+      "path": "/home/ubuntu/data/capture/SeqCap_EZ_Exome_v3_capture.noChr.bed"
     }
   ],
   "knownSites": [
