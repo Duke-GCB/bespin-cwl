@@ -32,7 +32,11 @@ inputs:
   # Number of threads to use
   threads: int?
   # Read Group annotation
-  read_group_header: string
+  # Can be the project name
+  library: string
+  # e.g. Illumina
+  platform: string
+  field_order: string[]?
   # GATK
   GATKJar:
     type: File
@@ -51,7 +55,7 @@ inputs:
     type: File
     secondaryFiles:
     - .idx
-  snp_resource_1kg: 
+  snp_resource_1kg:
     type: File
     secondaryFiles:
       - .idx
@@ -134,7 +138,9 @@ steps:
       reads: read_pairs
       reference_genome: reference_genome
       threads: threads
-      read_group_header: read_group_header
+      library: library
+      platform: platform
+      field_order: field_order
       GATKJar: GATKJar
       knownSites: knownSites
     out:

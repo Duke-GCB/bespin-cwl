@@ -13,8 +13,8 @@ inputs:
     type: string
   platform:
     type: string
-  fieldOrder:
-    type: string[]
+  field_order:
+    type: string[]?
     default:
       - sample
       - barcode
@@ -63,7 +63,7 @@ expression: >
     var filename = inputs.reads[0].basename;
     var base = removeExtension(filename);
     var components = splitFields(base, inputs.separator);
-    var fields = zip(inputs.fieldOrder, components);
+    var fields = zip(inputs.field_order, components);
     fields['library'] = inputs.library;
     fields['platform'] = inputs.platform;
     var read_group_header = makeReadGroupsString(fields);

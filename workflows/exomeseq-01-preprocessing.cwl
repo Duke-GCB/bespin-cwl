@@ -20,8 +20,13 @@ inputs:
   reference_genome: File
   # Number of threads to use
   threads: int?
-  # Read Group annotation
-  read_group_header: string
+  # Read Group annotations
+  # Can be the project name
+  library: string
+  # e.g. Illumina
+  platform: string
+  # Must include "sample" at minimum
+  field_order: string[]?
   # GATK
   GATKJar: File
   knownSites: File[] # vcf files of known sites, with indexing
@@ -71,6 +76,15 @@ steps:
     out:
       - trimmed_reads
       - trim_reports
+  parse_read_group_header:
+    run: ../tools/parse-read-group-header.cwl
+    in:
+      reads: reads
+      field_order: field_order
+      library: library
+      platform: platform
+    out:
+      - read_group_header
   map:
     run: ../community-workflows/tools/bwa-mem.cwl
     requirements:
@@ -80,7 +94,7 @@ steps:
     in:
       reads: trim/trimmed_reads
       reference: reference_genome
-      read_group_header: read_group_header
+      read_group_header: parse_read_group_header/read_group_header
       output_filename:
         default: "mapped.bam"
       threads: threads
