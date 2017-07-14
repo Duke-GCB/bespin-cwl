@@ -63,11 +63,11 @@ Produces 97G:
 -rw-r--r-- 1 ubuntu root    14G May 17 20:28 with_read_groups.bam
 ```
 
-During testing, the `intervals` was set to `20`, which filters the reads in the resultant `recal_reads.bam` to chr20, but not before. So the 44G `mapped.bam` and 13-14G `marked_duplicates.bam`, `sorted.bam`, and `with_read_groups.bam` are whole-exome.
+While intervals is now a File[]?, in early testing it was a string: '20'. This filtered the reads in the resultant `recal_reads.bam` to chr20, but not before. So the 44G `mapped.bam` and 13-14G `marked_duplicates.bam`, `sorted.bam`, and `with_read_groups.bam` are whole-exome.
 
 ### Inputs
 
-- intervals: `string[]?` - genomic interval over which to operate. optional.
+- intervals: `File[]?` - genomic intervals over which to operate. optional.
 - reads: `File[]` - pair of fastq reads
 - reference\_genome: `File` (with secondaryFiles of the bwa index.) Using bwa 0.7.x, 64 bit indexes are default and we do NOT use the `.64` file suffix.
 - threads: `int?`

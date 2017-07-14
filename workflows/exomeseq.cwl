@@ -10,7 +10,7 @@ requirements:
   - class: SubworkflowFeatureRequirement
 inputs:
   # Intervals should come from capture kit
-  intervals: string[]?
+  intervals: File[]?
   # Read pairs, fastq format
   read_pairs:
       type: { type: array, items: { type: array, items: File } }

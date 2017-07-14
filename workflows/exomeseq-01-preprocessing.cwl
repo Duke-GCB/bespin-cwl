@@ -6,8 +6,7 @@ requirements:
   - class: ScatterFeatureRequirement
 inputs:
   # NOTE: How long is this expected to take?
-  # For testing, intervals on reference genome
-  intervals: string[]?
+  intervals: File[]?
   # Read samples, fastq format
   # NOTE: Broad recommends the illumina basecalls and converts to unmapped SAM
   #   but do we typically have fastq?

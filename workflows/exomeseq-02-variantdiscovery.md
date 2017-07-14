@@ -11,7 +11,6 @@ Questions:
 - What confidence and sensitivety to use
 - Recalibration annotations must differ based on the type of analysis being done (e.g. population with >10 samples or family with 3 samples)
 
-
 Datasets (from b37):
 
 - SNP resources: Hapmap, omni, 1000genomes
@@ -24,7 +23,7 @@ Tasks:
 
 Inputs:
 
-- intervals: `string[]?` - genomic interval over which to operate. optional.
+- intervals: `File[]?` - genomic interval over which to operate. optional.
 - mapped_reads: `File[]` - array of input samples, in BAM format from pre-processing step, with indexes
 - reference\_genome: `File` (with secondaryFiles of the bwa index.) Using bwa 0.7.x, 64 bit indexes are default and we do NOT use the `.64` file suffix.
   - `b37/human_g1k_v37.fasta`

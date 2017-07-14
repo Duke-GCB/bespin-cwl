@@ -5,8 +5,7 @@ class: Workflow
 requirements:
   - class: ScatterFeatureRequirement
 inputs:
-  # For testing, intervals on reference genome
-  intervals: string[]?
+  intervals: File[]?
   # TODO: Index this file beforehand. Does the previous workflow not index it?
   variants_snps: File
   # TODO: Index this file beforehand. Does the previous workflow not index it?

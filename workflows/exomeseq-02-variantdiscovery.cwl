@@ -5,8 +5,7 @@ class: Workflow
 requirements:
   - class: ScatterFeatureRequirement
 inputs:
-  # For testing, intervals on reference genome
-  intervals: string[]?
+  intervals: File[]?
   # Read samples, bam format
   # NOTE: Should be at least 20 samples for exome
   mapped_reads: File[]
