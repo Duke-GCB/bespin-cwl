@@ -2665,6 +2665,62 @@
             "id": "#fastqc.cwl"
         }, 
         {
+            "class": "ExpressionTool", 
+            "label": "Extracts a read group header from the first file name in an array of files", 
+            "requirements": [
+                {
+                    "class": "InlineJavascriptRequirement"
+                }
+            ], 
+            "inputs": [
+                {
+                    "type": [
+                        "null", 
+                        {
+                            "type": "array", 
+                            "items": "string"
+                        }
+                    ], 
+                    "default": [
+                        "sample", 
+                        "barcode", 
+                        "lane", 
+                        "read", 
+                        "part"
+                    ], 
+                    "id": "#parse-read-group-header.cwl/field_order"
+                }, 
+                {
+                    "type": "string", 
+                    "id": "#parse-read-group-header.cwl/library"
+                }, 
+                {
+                    "type": "string", 
+                    "id": "#parse-read-group-header.cwl/platform"
+                }, 
+                {
+                    "type": {
+                        "type": "array", 
+                        "items": "File"
+                    }, 
+                    "id": "#parse-read-group-header.cwl/reads"
+                }, 
+                {
+                    "type": "string", 
+                    "default": "_", 
+                    "id": "#parse-read-group-header.cwl/separator"
+                }
+            ], 
+            "outputs": [
+                {
+                    "type": "string", 
+                    "id": "#parse-read-group-header.cwl/read_group_header"
+                }
+            ], 
+            "expression": "${\n  // Returns the part of the filename before the extension\n  function removeExtension(name) {\n    return name.split('.')[0];\n  }\n\n  // Given an array of keys and values, creates an object mapping keys to values\n  function zip(keys, values) {\n    var object = {};\n    for (var i=0;i<keys.length;i++) {\n      object[keys[i]] = values[i]\n    }\n    return object;\n  }\n\n  // Split the string name on the separator\n  function splitFields(name, separator) {\n  \treturn name.split(separator);\n  }\n\n  // Makes a string with a read group header that can be provided to bwa as SAM metadata\n  function makeReadGroupsString(fields) {\n    \tvar readGroups = \"@RG\" +\n    \t  \"\\\\tID:\" + fields['sample'] +\n    \t  \"\\\\tLB:\" + fields['library'] +\n    \t  \"\\\\tPL:\" + fields['platform'] +\n    \t  \"\\\\tPU:\" + fields['sample'] +\n    \t  \"\\\\tSM:\" + fields['sample'];\n      return readGroups;\n  }\n\n  var filename = inputs.reads[0].basename;\n  var base = removeExtension(filename);\n  var components = splitFields(base, inputs.separator);\n  var fields = zip(inputs.field_order, components);\n  fields['library'] = inputs.library;\n  fields['platform'] = inputs.platform;\n  var read_group_header = makeReadGroupsString(fields);\n\n  return {\n    read_group_header: read_group_header\n  };\n}\n", 
+            "id": "#parse-read-group-header.cwl"
+        }, 
+        {
             "class": "CommandLineTool", 
             "requirements": [
                 {
@@ -2914,6 +2970,16 @@
                             "items": "string"
                         }
                     ], 
+                    "id": "#exomeseq-01-preprocessing.cwl/field_order"
+                }, 
+                {
+                    "type": [
+                        "null", 
+                        {
+                            "type": "array", 
+                            "items": "string"
+                        }
+                    ], 
                     "id": "#exomeseq-01-preprocessing.cwl/intervals"
                 }, 
                 {
@@ -2925,7 +2991,11 @@
                 }, 
                 {
                     "type": "string", 
-                    "id": "#exomeseq-01-preprocessing.cwl/read_group_header"
+                    "id": "#exomeseq-01-preprocessing.cwl/library"
+                }, 
+                {
+                    "type": "string", 
+                    "id": "#exomeseq-01-preprocessing.cwl/platform"
                 }, 
                 {
                     "type": {
@@ -3000,7 +3070,7 @@
                             "id": "#exomeseq-01-preprocessing.cwl/map/output_filename"
                         }, 
                         {
-                            "source": "#exomeseq-01-preprocessing.cwl/read_group_header", 
+                            "source": "#exomeseq-01-preprocessing.cwl/parse_read_group_header/read_group_header", 
                             "id": "#exomeseq-01-preprocessing.cwl/map/read_group_header"
                         }, 
                         {
@@ -3041,6 +3111,31 @@
                         "#exomeseq-01-preprocessing.cwl/mark_duplicates/output_dedup_bam_file"
                     ], 
                     "id": "#exomeseq-01-preprocessing.cwl/mark_duplicates"
+                }, 
+                {
+                    "run": "#parse-read-group-header.cwl", 
+                    "in": [
+                        {
+                            "source": "#exomeseq-01-preprocessing.cwl/field_order", 
+                            "id": "#exomeseq-01-preprocessing.cwl/parse_read_group_header/field_order"
+                        }, 
+                        {
+                            "source": "#exomeseq-01-preprocessing.cwl/library", 
+                            "id": "#exomeseq-01-preprocessing.cwl/parse_read_group_header/library"
+                        }, 
+                        {
+                            "source": "#exomeseq-01-preprocessing.cwl/platform", 
+                            "id": "#exomeseq-01-preprocessing.cwl/parse_read_group_header/platform"
+                        }, 
+                        {
+                            "source": "#exomeseq-01-preprocessing.cwl/reads", 
+                            "id": "#exomeseq-01-preprocessing.cwl/parse_read_group_header/reads"
+                        }
+                    ], 
+                    "out": [
+                        "#exomeseq-01-preprocessing.cwl/parse_read_group_header/read_group_header"
+                    ], 
+                    "id": "#exomeseq-01-preprocessing.cwl/parse_read_group_header"
                 }, 
                 {
                     "run": "#fastqc.cwl", 
@@ -3753,6 +3848,16 @@
                     "id": "#main/GATKJar"
                 }, 
                 {
+                    "type": [
+                        "null", 
+                        {
+                            "type": "array", 
+                            "items": "string"
+                        }
+                    ], 
+                    "id": "#main/field_order"
+                }, 
+                {
                     "type": "File", 
                     "secondaryFiles": [
                         ".idx"
@@ -3781,7 +3886,11 @@
                 }, 
                 {
                     "type": "string", 
-                    "id": "#main/read_group_header"
+                    "id": "#main/library"
+                }, 
+                {
+                    "type": "string", 
+                    "id": "#main/platform"
                 }, 
                 {
                     "type": {
@@ -4002,6 +4111,10 @@
                             "id": "#main/preprocessing/GATKJar"
                         }, 
                         {
+                            "source": "#main/field_order", 
+                            "id": "#main/preprocessing/field_order"
+                        }, 
+                        {
                             "source": "#main/intervals", 
                             "id": "#main/preprocessing/intervals"
                         }, 
@@ -4010,8 +4123,12 @@
                             "id": "#main/preprocessing/knownSites"
                         }, 
                         {
-                            "source": "#main/read_group_header", 
-                            "id": "#main/preprocessing/read_group_header"
+                            "source": "#main/library", 
+                            "id": "#main/preprocessing/library"
+                        }, 
+                        {
+                            "source": "#main/platform", 
+                            "id": "#main/preprocessing/platform"
                         }, 
                         {
                             "source": "#main/read_pairs", 
