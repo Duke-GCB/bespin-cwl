@@ -90,12 +90,14 @@ steps:
       - class: ResourceRequirement
         coresMin: 8
         ramMin: 16000
+        outdirMin: 40000
+        tmpdirMin: 40000
     in:
       reads: trim/trimmed_reads
       reference: reference_genome
       read_group_header: parse_read_group_header/read_group_header
       output_filename:
-        default: "mapped.bam"
+        default: "mapped.sam"
       threads: threads
     out:
       - output
@@ -105,6 +107,8 @@ steps:
       - class: ResourceRequirement
         coresMin: 1
         ramMin: 2500
+        outdirMin: 35000
+        tmpdirMin: 35000
     in:
       input_file: map/output
     out:
