@@ -1,3 +1,0 @@
-[submodule "community-workflows"]
-	path = community-workflows
-	url = git@github.com:Duke-GCB/workflows.git
