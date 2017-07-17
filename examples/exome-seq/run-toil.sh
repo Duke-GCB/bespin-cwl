@@ -19,6 +19,7 @@ echo $JOB_NAME
 OUT_DIR=${DATA_ROOT}/${JOB_NAME}/
 LOG_DIR=${LOG_ROOT}/${JOB_NAME}/
 JOBSTORE_DIR=$(mktemp -u -p ${DATA_ROOT}/tmp/)
+WORK_DIR=$(mktemp -u -p ${DATA_ROOT/work/)
 
 mkdir -p $OUT_DIR
 mkdir -p $LOG_DIR
@@ -27,9 +28,13 @@ mkdir -p $LOG_DIR
 
 echo "Starting toil on $(date)..." >(tee ${LOG_DIR}/${WORKFLOW_NAME}-err.log)
 cwltoil \
+  --writeLogs \
+  --logFile ${LOG_DIR}/${WORKFLOW_NAME}-toil.log \
   --realTimeLogging \
+  --logDebug \
   --outdir ${OUT_DIR} \
   --jobStore ${JOBSTORE_DIR} \
+  --workDir ${WORK_DIR} \
   ${WORKFLOWS_DIR}/${WORKFLOW_NAME}.cwl \
   ${WORKFLOW_NAME}.json \
   > >(tee ${LOG_DIR}/${WORKFLOW_NAME}-out.log) \
