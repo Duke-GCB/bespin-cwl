@@ -19,7 +19,7 @@ echo $JOB_NAME
 OUT_DIR=${DATA_ROOT}/${JOB_NAME}/
 LOG_DIR=${LOG_ROOT}/${JOB_NAME}/
 JOBSTORE_DIR=$(mktemp -u -p ${DATA_ROOT}/tmp/)
-WORK_DIR=$(mktemp -u -p ${DATA_ROOT/work/)
+WORK_DIR=$(mktemp -u -p ${DATA_ROOT}/work/)
 
 mkdir -p $OUT_DIR
 mkdir -p $LOG_DIR
