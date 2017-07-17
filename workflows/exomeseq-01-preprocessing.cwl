@@ -17,7 +17,7 @@ inputs:
   # NOTE: Indexed with bwa and avoided .64 files
   # NOTE: For mapping, they recommend a merge step, but this may only apply to having raw basecalls
   reference_genome: File
-  # Number of threads to use
+  # Number of threads to use for mapping
   threads: int?
   # Read Group annotations
   # Can be the project name
@@ -129,13 +129,15 @@ steps:
     run: ../tools/GATK-BaseRecalibrator.cwl
     requirements:
       - class: ResourceRequirement
-        coresMin: 1
-        ramMin: 2500
+        coresMin: 8
+        ramMin: 4096
     in:
       GATKJar: GATKJar
       inputBam_BaseRecalibrator: mark_duplicates/output_dedup_bam_file
       intervals: intervals
       knownSites: knownSites
+      cpu_threads:
+        default: 8
       outputfile_BaseRecalibrator:
         default: "recal_data.table"
       reference: reference_genome
@@ -145,14 +147,16 @@ steps:
     run: ../tools/GATK-BaseRecalibrator.cwl
     requirements:
       - class: ResourceRequirement
-        coresMin: 1
-        ramMin: 2500
+        coresMin: 8
+        ramMin: 4096
     in:
       GATKJar: GATKJar
       inputBam_BaseRecalibrator: mark_duplicates/output_dedup_bam_file
       intervals: intervals
       knownSites: knownSites
       bqsr: recalibrate_01_analyze/output_baseRecalibrator
+      cpu_threads:
+        default: 8
       outputfile_BaseRecalibrator:
         default: "post_recal_data.table"
       reference: reference_genome
@@ -179,13 +183,15 @@ steps:
     run: ../tools/GATK-PrintReads.cwl
     requirements:
       - class: ResourceRequirement
-        coresMin: 1
-        ramMin: 2500
+        coresMin: 8
+        ramMin: 4096
     in:
       GATKJar: GATKJar
       inputBam_printReads: mark_duplicates/output_dedup_bam_file
       intervals: intervals
       input_baseRecalibrator: recalibrate_01_analyze/output_baseRecalibrator
+      cpu_threads:
+        default: 8
       outputfile_printReads:
         default: "recal_reads.bam"
       reference: reference_genome

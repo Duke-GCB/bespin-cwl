@@ -63,7 +63,13 @@ inputs: # position 0, for java args, 1 for the jar, 2 for the tool itself
     default: -Xmx4g
     inputBinding:
       position: 0
-
+  cpu_threads:
+    type: int?
+    doc: controls the number of CPU threads allocated to each data thread
+    default: 8 # Recommended by https://software.broadinstitute.org/gatk/documentation/article?id=1975
+    inputBinding:
+      position: 2
+      prefix: -nct
   out:
     type: File?
     inputBinding:

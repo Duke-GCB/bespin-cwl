@@ -95,6 +95,13 @@ inputs: # position 0, for java args, 1 for the jar, 2 for the tool itself
     inputBinding:
       position: 2
     doc: One or more genomic intervals over which to operate
+  cpu_threads:
+    type: int?
+    doc: controls the number of CPU threads allocated to each data thread
+    default: 8 # Recommended by https://software.broadinstitute.org/gatk/documentation/article?id=1975
+    inputBinding:
+      position: 2
+      prefix: -nct
 
 outputs:
   output_printReads:

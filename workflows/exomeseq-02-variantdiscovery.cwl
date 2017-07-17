@@ -70,19 +70,19 @@ outputs:
     doc: "The output filtered and recalibrated VCF file in INDEL mode in which each variant is annotated with its VQSLOD value"
 steps:
   variant_calling:
-    # Does not support multiple threads
     run: ../tools/GATK-HaplotypeCaller.cwl
-    # Each step uses one core and about 2GB RAM
     requirements:
       - class: ResourceRequirement
-        coresMin: 1
-        ramMin: 2560
+        coresMin: 4
+        ramMin: 16384
     scatter: inputBam_HaplotypeCaller
     in:
       GATKJar: GATKJar
       inputBam_HaplotypeCaller: mapped_reads
       intervals: intervals
       reference: reference_genome
+      cpu_threads:
+        default: 8
       genotyping_mode:
         default: "DISCOVERY"
       stand_call_conf: stand_call_conf
