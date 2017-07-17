@@ -71,7 +71,7 @@ outputs:
 steps:
   variant_calling:
     # Does not support multiple threads
-    run: ../community-workflows/tools/GATK-HaplotypeCaller.cwl
+    run: ../tools/GATK-HaplotypeCaller.cwl
     # Each step uses one core and about 2GB RAM
     requirements:
       - class: ResourceRequirement
@@ -96,7 +96,7 @@ steps:
   # TODO: At this point, should merge VCFs if we had lots of them
   # See Merge (optional) on https://software.broadinstitute.org/gatk/best-practices/bp_3step.php?case=GermShortWGS&p=2
   joint_genotyping:
-    run: ../community-workflows/tools/GATK-GenotypeGVCFs.cwl
+    run: ../tools/GATK-GenotypeGVCFs.cwl
     requirements:
       - class: ResourceRequirement
         coresMin: 1
@@ -117,7 +117,7 @@ steps:
       - output_GenotypeGVCFs
   # Recommendations from https://software.broadinstitute.org/gatk/documentation/article?id=1259
   variant_recalibration_snps:
-    run: ../community-workflows/tools/GATK-VariantRecalibrator-SNPs.cwl
+    run: ../tools/GATK-VariantRecalibrator-SNPs.cwl
     in:
       GATKJar: GATKJar
       intervals: intervals
@@ -148,7 +148,7 @@ steps:
       - recal_File
       - vqsr_rscript
   apply_recalibration_snps:
-    run: ../community-workflows/tools/GATK-ApplyRecalibration.cwl
+    run: ../tools/GATK-ApplyRecalibration.cwl
     in:
       GATKJar: GATKJar
       intervals: intervals
@@ -166,7 +166,7 @@ steps:
     out:
       - output_recalibrated_vcf
   variant_recalibration_indels:
-    run: ../community-workflows/tools/GATK-VariantRecalibrator-Indels.cwl
+    run: ../tools/GATK-VariantRecalibrator-Indels.cwl
     in:
       GATKJar: GATKJar
       intervals: intervals
@@ -195,7 +195,7 @@ steps:
       - recal_File
       - vqsr_rscript
   apply_recalibration_indels:
-    run: ../community-workflows/tools/GATK-ApplyRecalibration.cwl
+    run: ../tools/GATK-ApplyRecalibration.cwl
     in:
       GATKJar: GATKJar
       intervals: intervals

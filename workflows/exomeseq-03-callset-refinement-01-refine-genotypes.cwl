@@ -38,7 +38,7 @@ outputs:
 
 steps:
   genotype_posteriors:
-    run: ../community-workflows/tools/GATK-CalculateGenotypePosteriors.cwl
+    run: ../tools/GATK-CalculateGenotypePosteriors.cwl
     in:
       GATKJar: GATKJar
       intervals: intervals
@@ -51,7 +51,7 @@ steps:
     out:
       - output_cgp_vcf
   filter_low_quality:
-    run: ../community-workflows/tools/GATK-VariantFiltration.cwl
+    run: ../tools/GATK-VariantFiltration.cwl
     in:
       GATKJar: GATKJar
       intervals: intervals
@@ -68,7 +68,7 @@ steps:
     out:
       - output_filtered_vcf
   annotate_denovo_mutations:
-    run: ../community-workflows/tools/GATK-VariantAnnotator.cwl
+    run: ../tools/GATK-VariantAnnotator.cwl
     in:
       GATKJar: GATKJar
       intervals: intervals

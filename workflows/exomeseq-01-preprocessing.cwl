@@ -85,7 +85,7 @@ steps:
     out:
       - read_group_header
   map:
-    run: ../community-workflows/tools/bwa-mem.cwl
+    run: ../tools/bwa-mem.cwl
     requirements:
       - class: ResourceRequirement
         coresMin: 8
@@ -126,7 +126,7 @@ steps:
       - output_dedup_bam_file
   # Now recalibrate
   recalibrate_01_analyze:
-    run: ../community-workflows/tools/GATK-BaseRecalibrator.cwl
+    run: ../tools/GATK-BaseRecalibrator.cwl
     requirements:
       - class: ResourceRequirement
         coresMin: 1
@@ -142,7 +142,7 @@ steps:
     out:
       - output_baseRecalibrator
   recalibrate_02_covariation:
-    run: ../community-workflows/tools/GATK-BaseRecalibrator.cwl
+    run: ../tools/GATK-BaseRecalibrator.cwl
     requirements:
       - class: ResourceRequirement
         coresMin: 1
@@ -159,7 +159,7 @@ steps:
     out:
       - output_baseRecalibrator
   recalibrate_03_plots:
-    run: ../community-workflows/tools/GATK-AnalyzeCovariates.cwl
+    run: ../tools/GATK-AnalyzeCovariates.cwl
     requirements:
       - class: ResourceRequirement
         coresMin: 1
@@ -176,7 +176,7 @@ steps:
     out:
       - output_recalibrationPlots
   recalibrate_04_apply:
-    run: ../community-workflows/tools/GATK-PrintReads.cwl
+    run: ../tools/GATK-PrintReads.cwl
     requirements:
       - class: ResourceRequirement
         coresMin: 1
