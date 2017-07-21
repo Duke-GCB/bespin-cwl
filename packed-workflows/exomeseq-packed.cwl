@@ -3775,16 +3775,6 @@
                     "id": "#main/reference_genome"
                 }, 
                 {
-                    "type": {
-                        "type": "array", 
-                        "items": "File"
-                    }, 
-                    "secondaryFiles": [
-                        "^.bai"
-                    ], 
-                    "id": "#main/reference_reads"
-                }, 
-                {
                     "type": "File", 
                     "secondaryFiles": [
                         ".idx"
