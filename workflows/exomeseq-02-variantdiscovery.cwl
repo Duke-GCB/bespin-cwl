@@ -17,8 +17,6 @@ inputs:
   # GATK
   GATKJar: File
   # Variant calling
-  # Confidence threshold for calling a variant - 30
-  stand_call_conf: double
   # Variant Recalibration - SNPs
   snp_resource_hapmap: File
   snp_resource_omni: File

@@ -45,8 +45,6 @@ inputs:
     type: File[] # vcf files of known sites, with indexing
     secondaryFiles:
     - .idx
-  # Confidence threshold for calling a variant - 30
-  stand_call_conf: double
   # Variant Recalibration - SNPs
   snp_resource_hapmap:
     type: File
@@ -153,7 +151,6 @@ steps:
       reference_genome: reference_genome
       threads: threads
       GATKJar: GATKJar
-      stand_call_conf: stand_call_conf
       snp_resource_hapmap: snp_resource_hapmap
       snp_resource_omni: snp_resource_omni
       snp_resource_1kg: snp_resource_1kg
