@@ -33,8 +33,7 @@
   "field_order": ["sample","read"],
   "reference_genome": {
     "class": "File",
-    "path": "/data/exome-seq/b37/human_g1k_v37.fasta",
-
+    "path": "/data/exome-seq/b37/human_g1k_v37.fasta"
   },
   "resource_dbsnp": {
     "class": "File",
