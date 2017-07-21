@@ -15,10 +15,6 @@ inputs:
   # Read pairs, fastq format
   read_pairs:
       type: { type: array, items: { type: array, items: File } }
-  reference_reads:
-    type: File[]
-    secondaryFiles:
-    - ^.bai
   # reference genome, fasta
   reference_genome:
     type: File
