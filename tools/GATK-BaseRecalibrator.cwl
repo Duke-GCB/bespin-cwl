@@ -198,6 +198,12 @@ inputs: # position 0, for java args, 1 for the jar, 2 for the tool itself
     inputBinding:
       position: 2
     doc: One or more genomic intervals over which to operate
+  interval_padding:
+    type: int?
+    inputBinding:
+      position: 2
+      prefix: --interval_padding
+    doc: Amount of padding (in bp) to add to each interval
   bqsr:
     type: File?
     inputBinding:

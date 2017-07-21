@@ -391,6 +391,12 @@ inputs: # position 0, for java args, 1 for the jar, 2 for the tool itself
       position: 2
       prefix: --intervals
     doc: One or more genomic intervals over which to operate
+  interval_padding:
+    type: int?
+    inputBinding:
+      position: 2
+      prefix: --interval_padding
+    doc: Amount of padding (in bp) to add to each interval
   cpu_threads:
     type: int?
     doc: controls the number of CPU threads allocated to each data thread

@@ -7,6 +7,7 @@ requirements:
 inputs:
   # NOTE: How long is this expected to take?
   intervals: File[]?
+  interval_padding: int?
   # Read samples, fastq format
   # NOTE: Broad recommends the illumina basecalls and converts to unmapped SAM
   #   but do we typically have fastq?
@@ -135,6 +136,7 @@ steps:
       GATKJar: GATKJar
       inputBam_BaseRecalibrator: mark_duplicates/output_dedup_bam_file
       intervals: intervals
+      interval_padding: interval_padding
       knownSites: knownSites
       cpu_threads:
         default: 8
@@ -143,43 +145,7 @@ steps:
       reference: reference_genome
     out:
       - output_baseRecalibrator
-  recalibrate_02_covariation:
-    run: ../tools/GATK-BaseRecalibrator.cwl
-    requirements:
-      - class: ResourceRequirement
-        coresMin: 8
-        ramMin: 4096
-    in:
-      GATKJar: GATKJar
-      inputBam_BaseRecalibrator: mark_duplicates/output_dedup_bam_file
-      intervals: intervals
-      knownSites: knownSites
-      bqsr: recalibrate_01_analyze/output_baseRecalibrator
-      cpu_threads:
-        default: 8
-      outputfile_BaseRecalibrator:
-        default: "post_recal_data.table"
-      reference: reference_genome
-    out:
-      - output_baseRecalibrator
-  recalibrate_03_plots:
-    run: ../tools/GATK-AnalyzeCovariates.cwl
-    requirements:
-      - class: ResourceRequirement
-        coresMin: 1
-        ramMin: 2500
-    in:
-      GATKJar: GATKJar
-      inputBam_BaseRecalibrator: mark_duplicates/output_dedup_bam_file
-      intervals: intervals
-      inputTable_before: recalibrate_01_analyze/output_baseRecalibrator
-      inputTable_after: recalibrate_02_covariation/output_baseRecalibrator
-      outputfile_recalibrationPlots:
-        default: "recalibration_plots.pdf"
-      reference: reference_genome
-    out:
-      - output_recalibrationPlots
-  recalibrate_04_apply:
+  recalibrate_02_apply:
     run: ../tools/GATK-PrintReads.cwl
     requirements:
       - class: ResourceRequirement

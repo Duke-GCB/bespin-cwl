@@ -6,6 +6,7 @@ requirements:
   - class: ScatterFeatureRequirement
 inputs:
   intervals: File[]?
+  interval_padding: int?
   # Read samples, bam format
   # NOTE: Should be at least 20 samples for exome
   mapped_reads: File[]
@@ -80,6 +81,7 @@ steps:
       GATKJar: GATKJar
       inputBam_HaplotypeCaller: mapped_reads
       intervals: intervals
+      interval_padding: interval_padding
       reference: reference_genome
       cpu_threads:
         default: 8
@@ -108,6 +110,7 @@ steps:
       threads:
         default: 1
       intervals: intervals
+      interval_padding: interval_padding
       # NOTE: GATK best practices recommends at least 30 samples for exome - how to deal?
       variants: variant_calling/output_HaplotypeCaller
       reference: reference_genome
