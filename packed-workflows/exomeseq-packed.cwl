@@ -3277,10 +3277,6 @@
                     "id": "#exomeseq-02-variantdiscovery.cwl/snp_resource_omni"
                 }, 
                 {
-                    "type": "double", 
-                    "id": "#exomeseq-02-variantdiscovery.cwl/stand_call_conf"
-                }, 
-                {
                     "type": [
                         "null", 
                         "int"
@@ -3817,10 +3813,6 @@
                     "id": "#main/snp_resource_omni"
                 }, 
                 {
-                    "type": "double", 
-                    "id": "#main/stand_call_conf"
-                }, 
-                {
                     "type": [
                         "null", 
                         "int"
@@ -4027,10 +4019,6 @@
                         {
                             "source": "#main/snp_resource_omni", 
                             "id": "#main/variant_discovery/snp_resource_omni"
-                        }, 
-                        {
-                            "source": "#main/stand_call_conf", 
-                            "id": "#main/variant_discovery/stand_call_conf"
                         }, 
                         {
                             "source": "#main/threads", 
