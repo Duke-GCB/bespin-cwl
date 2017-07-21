@@ -78,15 +78,9 @@ outputs:
     type: { type: array, items: { type: array, items: File } }
     outputSource: preprocessing/trim_reports
   # Recalibration
-  recalibration_before:
+  recalibration_table:
     type: File[]
-    outputSource: preprocessing/recalibration_before
-  recalibration_after:
-    type: File[]
-    outputSource: preprocessing/recalibration_after
-  recalibration_plots:
-    type: File[]
-    outputSource: preprocessing/recalibration_plots
+    outputSource: preprocessing/recalibration_table
   recalibrated_reads:
     type: File[]
     outputSource: preprocessing/recalibrated_reads
