@@ -148,9 +148,7 @@ steps:
     out:
       - qc_reports
       - trim_reports
-      - recalibration_before
-      - recalibration_after
-      - recalibration_plots
+      - recalibration_table
       - recalibrated_reads
   variant_discovery:
     run: exomeseq-02-variantdiscovery.cwl

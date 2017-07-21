@@ -38,18 +38,12 @@ outputs:
     type: File[]
     outputSource: trim/trim_reports
   # Recalibration
-  recalibration_before:
+  recalibration_table:
     type: File
     outputSource: recalibrate_01_analyze/output_baseRecalibrator
-  recalibration_after:
-    type: File
-    outputSource: recalibrate_02_covariation/output_baseRecalibrator
-  recalibration_plots:
-    type: File
-    outputSource: recalibrate_03_plots/output_recalibrationPlots
   recalibrated_reads:
     type: File
-    outputSource: recalibrate_04_apply/output_printReads
+    outputSource: recalibrate_02_apply/output_printReads
 steps:
   qc:
     run: ../tools/fastqc.cwl
