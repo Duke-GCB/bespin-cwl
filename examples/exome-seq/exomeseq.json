@@ -1,0 +1,150 @@
+{
+  "GATKJar": {
+    "class": "File",
+    "path": "/home/ubuntu/GenomeAnalysisTK-3.7/GenomeAnalysisTK.jar"
+  },
+  "indel_resource_mills": {
+    "class": "File",
+    "path": "/home/ubuntu/data/b37/Mills_and_1000G_gold_standard.indels.b37.vcf"
+  },
+  "intervals": [
+    {
+      "class": "File",
+      "path": "/home/ubuntu/data/capture/SeqCap_EZ_Exome_v3_capture.noChr.bed"
+    }
+  ],
+  "interval_padding": 100,
+  "knownSites": [
+    {
+      "class": "File",
+      "path": "/home/ubuntu/data/b37/dbsnp_138.b37.vcf"
+    },
+    {
+      "class": "File",
+      "path": "/home/ubuntu/data/b37/Mills_and_1000G_gold_standard.indels.b37.vcf"
+    },
+    {
+      "class": "File",
+      "path": "/home/ubuntu/data/b37/1000G_phase1.indels.b37.vcf"
+    }
+  ],
+  "read_pairs": [
+    [
+      {
+        "class": "File",
+        "path": "/home/ubuntu/exome-seq/SRR099967/SRR099967_1.fastq.gz"
+      },
+      {
+        "class": "File",
+        "path": "/home/ubuntu/exome-seq/SRR099967/SRR099967_2.fastq.gz"
+      }
+    ]
+  ],
+  "library": "testproj",
+  "platform": "Illumina",
+  "field_order": ["sample","read"],
+  "reference_genome": {
+    "class": "File",
+    "path": "/home/ubuntu/data/b37/human_g1k_v37.fasta"
+  },
+  "reference_reads": [
+    {
+      "class": "File",
+      "path": "/home/ubuntu/data/1000genomes/phase3/data/HG00100/exome_alignment/HG00100.chrom20.ILLUMINA.bwa.GBR.exome.20121211.bam"
+    },
+    {
+      "class": "File",
+      "path": "/home/ubuntu/data/1000genomes/phase3/data/HG00101/exome_alignment/HG00101.chrom20.ILLUMINA.bwa.GBR.exome.20121211.bam"
+    },
+    {
+      "class": "File",
+      "path": "/home/ubuntu/data/1000genomes/phase3/data/HG00102/exome_alignment/HG00102.chrom20.ILLUMINA.bwa.GBR.exome.20121211.bam"
+    },
+    {
+      "class": "File",
+      "path": "/home/ubuntu/data/1000genomes/phase3/data/HG00103/exome_alignment/HG00103.chrom20.ILLUMINA.bwa.GBR.exome.20120522.bam"
+    },
+    {
+      "class": "File",
+      "path": "/home/ubuntu/data/1000genomes/phase3/data/HG00105/exome_alignment/HG00105.chrom20.ILLUMINA.bwa.GBR.exome.20130415.bam"
+    },
+    {
+      "class": "File",
+      "path": "/home/ubuntu/data/1000genomes/phase3/data/HG00106/exome_alignment/HG00106.chrom20.ILLUMINA.bwa.GBR.exome.20130415.bam"
+    },
+    {
+      "class": "File",
+      "path": "/home/ubuntu/data/1000genomes/phase3/data/HG00107/exome_alignment/HG00107.chrom20.ILLUMINA.bwa.GBR.exome.20121211.bam"
+    },
+    {
+      "class": "File",
+      "path": "/home/ubuntu/data/1000genomes/phase3/data/HG00108/exome_alignment/HG00108.chrom20.ILLUMINA.bwa.GBR.exome.20120522.bam"
+    },
+    {
+      "class": "File",
+      "path": "/home/ubuntu/data/1000genomes/phase3/data/HG00109/exome_alignment/HG00109.chrom20.ILLUMINA.bwa.GBR.exome.20121211.bam"
+    },
+    {
+      "class": "File",
+      "path": "/home/ubuntu/data/1000genomes/phase3/data/HG00110/exome_alignment/HG00110.chrom20.ILLUMINA.bwa.GBR.exome.20121211.bam"
+    },
+    {
+      "class": "File",
+      "path": "/home/ubuntu/data/1000genomes/phase3/data/HG00111/exome_alignment/HG00111.chrom20.ILLUMINA.bwa.GBR.exome.20120522.bam"
+    },
+    {
+      "class": "File",
+      "path": "/home/ubuntu/data/1000genomes/phase3/data/HG00112/exome_alignment/HG00112.chrom20.ILLUMINA.bwa.GBR.exome.20130415.bam"
+    },
+    {
+      "class": "File",
+      "path": "/home/ubuntu/data/1000genomes/phase3/data/HG00113/exome_alignment/HG00113.chrom20.ILLUMINA.bwa.GBR.exome.20121211.bam"
+    },
+    {
+      "class": "File",
+      "path": "/home/ubuntu/data/1000genomes/phase3/data/HG00114/exome_alignment/HG00114.chrom20.ILLUMINA.bwa.GBR.exome.20120522.bam"
+    },
+    {
+      "class": "File",
+      "path": "/home/ubuntu/data/1000genomes/phase3/data/HG00115/exome_alignment/HG00115.chrom20.ILLUMINA.bwa.GBR.exome.20130415.bam"
+    },
+    {
+      "class": "File",
+      "path": "/home/ubuntu/data/1000genomes/phase3/data/HG00116/exome_alignment/HG00116.chrom20.ILLUMINA.bwa.GBR.exome.20120522.bam"
+    },
+    {
+      "class": "File",
+      "path": "/home/ubuntu/data/1000genomes/phase3/data/HG00117/exome_alignment/HG00117.chrom20.ILLUMINA.bwa.GBR.exome.20120522.bam"
+    },
+    {
+      "class": "File",
+      "path": "/home/ubuntu/data/1000genomes/phase3/data/HG00118/exome_alignment/HG00118.chrom20.ILLUMINA.bwa.GBR.exome.20130415.bam"
+    },
+    {
+      "class": "File",
+      "path": "/home/ubuntu/data/1000genomes/phase3/data/HG00119/exome_alignment/HG00119.chrom20.ILLUMINA.bwa.GBR.exome.20120522.bam"
+    },
+    {
+      "class": "File",
+      "path": "/home/ubuntu/data/1000genomes/phase3/data/HG00120/exome_alignment/HG00120.chrom20.ILLUMINA.bwa.GBR.exome.20120522.bam"
+    }
+  ],
+  "resource_dbsnp": {
+    "class": "File",
+    "path": "/home/ubuntu/data/b37/dbsnp_138.b37.vcf"
+  },
+  "snp_resource_1kg": {
+    "class": "File",
+    "path": "/home/ubuntu/data/b37/1000G_phase1.snps.high_confidence.b37.vcf"
+  },
+  "snp_resource_hapmap": {
+    "class": "File",
+    "path": "/home/ubuntu/data/b37/hapmap/hapmap_3.3.b37.vcf"
+  },
+  "snp_resource_omni": {
+    "class": "File",
+    "path": "/home/ubuntu/data/b37/omni/1000G_omni2.5.b37.vcf"
+  },
+  "stand_call_conf": 30.0,
+  "threads": 30
+}
