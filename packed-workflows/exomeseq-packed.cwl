@@ -30,147 +30,6 @@
                         "position": 1, 
                         "prefix": "-jar"
                     }, 
-                    "id": "#GATK-AnalyzeCovariates.cwl/GATKJar"
-                }, 
-                {
-                    "type": [
-                        "null", 
-                        "File"
-                    ], 
-                    "inputBinding": {
-                        "position": 2, 
-                        "prefix": "--before"
-                    }, 
-                    "doc": "Input covariates table file for on-the-fly base quality score recalibration", 
-                    "id": "#GATK-AnalyzeCovariates.cwl/before"
-                }, 
-                {
-                    "type": "File", 
-                    "inputBinding": {
-                        "position": 2, 
-                        "prefix": "-after"
-                    }, 
-                    "doc": "Data table after recalibration", 
-                    "id": "#GATK-AnalyzeCovariates.cwl/inputTable_after"
-                }, 
-                {
-                    "type": "File", 
-                    "inputBinding": {
-                        "position": 2, 
-                        "prefix": "-before"
-                    }, 
-                    "doc": "Data table before recalibration", 
-                    "id": "#GATK-AnalyzeCovariates.cwl/inputTable_before"
-                }, 
-                {
-                    "type": [
-                        "null", 
-                        {
-                            "type": "array", 
-                            "items": "string", 
-                            "inputBinding": {
-                                "prefix": "--intervals"
-                            }
-                        }
-                    ], 
-                    "inputBinding": {
-                        "position": 2
-                    }, 
-                    "doc": "One or more genomic intervals over which to operate", 
-                    "id": "#GATK-AnalyzeCovariates.cwl/intervals"
-                }, 
-                {
-                    "type": "string", 
-                    "default": "-Xmx4g", 
-                    "inputBinding": {
-                        "position": 0
-                    }, 
-                    "id": "#GATK-AnalyzeCovariates.cwl/java_arg"
-                }, 
-                {
-                    "type": [
-                        "null", 
-                        "boolean"
-                    ], 
-                    "inputBinding": {
-                        "position": 2, 
-                        "prefix": "--lowMemoryMode"
-                    }, 
-                    "doc": "Reduce memory usage in multi-threaded code at the expense of threading efficiency", 
-                    "id": "#GATK-AnalyzeCovariates.cwl/lowMemoryMode"
-                }, 
-                {
-                    "type": "string", 
-                    "inputBinding": {
-                        "position": 2, 
-                        "prefix": "-plots"
-                    }, 
-                    "doc": "name of the output plots file from analyzeCovariates", 
-                    "id": "#GATK-AnalyzeCovariates.cwl/outputfile_recalibrationPlots"
-                }, 
-                {
-                    "type": "File", 
-                    "inputBinding": {
-                        "position": 2, 
-                        "prefix": "-R"
-                    }, 
-                    "secondaryFiles": [
-                        ".amb", 
-                        ".ann", 
-                        ".bwt", 
-                        ".pac", 
-                        ".sa", 
-                        ".fai", 
-                        "^.dict"
-                    ], 
-                    "id": "#GATK-AnalyzeCovariates.cwl/reference"
-                }
-            ], 
-            "outputs": [
-                {
-                    "type": "File", 
-                    "outputBinding": {
-                        "glob": "$(inputs.outputfile_recalibrationPlots)"
-                    }, 
-                    "id": "#GATK-AnalyzeCovariates.cwl/output_recalibrationPlots"
-                }
-            ], 
-            "arguments": [
-                {
-                    "valueFrom": "$(runtime.tmpdir)", 
-                    "position": 0, 
-                    "separate": false, 
-                    "prefix": "-Djava.io.tmpdir="
-                }, 
-                {
-                    "valueFrom": "AnalyzeCovariates", 
-                    "position": 2, 
-                    "prefix": "-T"
-                }
-            ], 
-            "baseCommand": [
-                "java"
-            ], 
-            "doc": "GATK-AnalyzeCovariates.cwl is developed for CWL consortium\nIt generates a document called recalibration_plots.pdf containing plots that show how the reported base qualities match up to the\nempirical qualities calculated by the BaseRecalibrator.\n  Usage: java -jar GenomeAnalysisTK.jar -T AnalyzeCovariates -R reference.fa -before recal_data.table -after post_recal_data.table \\\n    -plots recalibration_plots.pdf\n", 
-            "id": "#GATK-AnalyzeCovariates.cwl"
-        }, 
-        {
-            "class": "CommandLineTool", 
-            "requirements": [
-                {
-                    "$import": "#envvar-global.yml"
-                }, 
-                {
-                    "$import": "#GATK-docker.yml"
-                }
-            ], 
-            "inputs": [
-                {
-                    "type": "File", 
-                    "inputBinding": {
-                        "position": 1, 
-                        "prefix": "-jar"
-                    }, 
                     "id": "#GATK-ApplyRecalibration.cwl/GATKJar"
                 }, 
                 {
@@ -178,7 +37,7 @@
                         "null", 
                         {
                             "type": "array", 
-                            "items": "string"
+                            "items": "File"
                         }
                     ], 
                     "inputBinding": {
@@ -382,6 +241,19 @@
                         "null", 
                         "int"
                     ], 
+                    "doc": "controls the number of CPU threads allocated to each data thread", 
+                    "default": 8, 
+                    "inputBinding": {
+                        "position": 2, 
+                        "prefix": "-nct"
+                    }, 
+                    "id": "#GATK-BaseRecalibrator.cwl/cpu_threads"
+                }, 
+                {
+                    "type": [
+                        "null", 
+                        "int"
+                    ], 
                     "inputBinding": {
                         "position": 2, 
                         "prefix": "--deletions_default_quality"
@@ -428,9 +300,21 @@
                 {
                     "type": [
                         "null", 
+                        "int"
+                    ], 
+                    "inputBinding": {
+                        "position": 2, 
+                        "prefix": "--interval_padding"
+                    }, 
+                    "doc": "Amount of padding (in bp) to add to each interval", 
+                    "id": "#GATK-BaseRecalibrator.cwl/interval_padding"
+                }, 
+                {
+                    "type": [
+                        "null", 
                         {
                             "type": "array", 
-                            "items": "string", 
+                            "items": "File", 
                             "inputBinding": {
                                 "prefix": "--intervals"
                             }
@@ -748,9 +632,10 @@
                         }
                     ], 
                     "inputBinding": {
-                        "position": 2
+                        "position": 2, 
+                        "prefix": "--group"
                     }, 
-                    "doc": "Input prior for calls", 
+                    "doc": "One or more classes/groups of annotations to apply to variant calls", 
                     "id": "#GATK-GenotypeGVCFs.cwl/group"
                 }, 
                 {
@@ -819,9 +704,21 @@
                 {
                     "type": [
                         "null", 
+                        "int"
+                    ], 
+                    "inputBinding": {
+                        "position": 2, 
+                        "prefix": "--interval_padding"
+                    }, 
+                    "doc": "Amount of padding (in bp) to add to each interval", 
+                    "id": "#GATK-GenotypeGVCFs.cwl/interval_padding"
+                }, 
+                {
+                    "type": [
+                        "null", 
                         {
                             "type": "array", 
-                            "items": "string"
+                            "items": "File"
                         }
                     ], 
                     "inputBinding": {
@@ -1245,6 +1142,19 @@
                 {
                     "type": [
                         "null", 
+                        "int"
+                    ], 
+                    "doc": "controls the number of CPU threads allocated to each data thread", 
+                    "default": 4, 
+                    "inputBinding": {
+                        "position": 2, 
+                        "prefix": "-nct"
+                    }, 
+                    "id": "#GATK-HaplotypeCaller.cwl/cpu_threads"
+                }, 
+                {
+                    "type": [
+                        "null", 
                         "File"
                     ], 
                     "inputBinding": {
@@ -1409,9 +1319,10 @@
                         }
                     ], 
                     "inputBinding": {
-                        "position": 2
+                        "position": 2, 
+                        "prefix": "--group"
                     }, 
-                    "doc": "Input prior for calls", 
+                    "doc": "One or more classes/groups of annotations to apply to variant calls", 
                     "id": "#GATK-HaplotypeCaller.cwl/group"
                 }, 
                 {
@@ -1467,9 +1378,21 @@
                 {
                     "type": [
                         "null", 
+                        "int"
+                    ], 
+                    "inputBinding": {
+                        "position": 2, 
+                        "prefix": "--interval_padding"
+                    }, 
+                    "doc": "Amount of padding (in bp) to add to each interval", 
+                    "id": "#GATK-HaplotypeCaller.cwl/interval_padding"
+                }, 
+                {
+                    "type": [
+                        "null", 
                         {
                             "type": "array", 
-                            "items": "string"
+                            "items": "File"
                         }
                     ], 
                     "inputBinding": {
@@ -1798,6 +1721,19 @@
                     "id": "#GATK-PrintReads.cwl/GATKJar"
                 }, 
                 {
+                    "type": [
+                        "null", 
+                        "int"
+                    ], 
+                    "doc": "controls the number of CPU threads allocated to each data thread", 
+                    "default": 8, 
+                    "inputBinding": {
+                        "position": 2, 
+                        "prefix": "-nct"
+                    }, 
+                    "id": "#GATK-PrintReads.cwl/cpu_threads"
+                }, 
+                {
                     "type": "File", 
                     "inputBinding": {
                         "position": 2, 
@@ -1821,9 +1757,21 @@
                 {
                     "type": [
                         "null", 
+                        "int"
+                    ], 
+                    "inputBinding": {
+                        "position": 2, 
+                        "prefix": "--interval_padding"
+                    }, 
+                    "doc": "Amount of padding (in bp) to add to each interval", 
+                    "id": "#GATK-PrintReads.cwl/interval_padding"
+                }, 
+                {
+                    "type": [
+                        "null", 
                         {
                             "type": "array", 
-                            "items": "string", 
+                            "items": "File", 
                             "inputBinding": {
                                 "prefix": "--intervals"
                             }
@@ -2018,7 +1966,7 @@
                         "null", 
                         {
                             "type": "array", 
-                            "items": "string"
+                            "items": "File"
                         }
                     ], 
                     "inputBinding": {
@@ -2237,7 +2185,7 @@
                         "null", 
                         {
                             "type": "array", 
-                            "items": "string"
+                            "items": "File"
                         }
                     ], 
                     "inputBinding": {
@@ -2555,41 +2503,6 @@
             ], 
             "doc": "Usage: bwa mem [options] <idxbase> <in1.fq> [in2.fq]\n\nAlgorithm options:\n       -w INT        band width for banded alignment [100]\n       -d INT        off-diagonal X-dropoff [100]\n       -r FLOAT      look for internal seeds inside a seed longer than {-k} * FLOAT [1.5]\n       -y INT        seed occurrence for the 3rd round seeding [20]\n       -c INT        skip seeds with more than INT occurrences [500]\n       -D FLOAT      drop chains shorter than FLOAT fraction of the longest overlapping chain [0.50]\n       -W INT        discard a chain if seeded bases shorter than INT [0]\n       -m INT        perform at most INT rounds of mate rescues for each read [50]\n       -S            skip mate rescue\n       -P            skip pairing; mate rescue performed unless -S also in use\n       -e            discard full-length exact matches\n\nScoring options:\n\n       -A INT        score for a sequence match, which scales options -TdBOELU unless overridden [1]\n       -B INT        penalty for a mismatch [4]\n       -O INT[,INT]  gap open penalties for deletions and insertions [6,6]\n       -E INT[,INT]  gap extension penalty; a gap of size k cost '{-O} + {-E}*k' [1,1]\n       -L INT[,INT]  penalty for 5'- and 3'-end clipping [5,5]\n       -U INT        penalty for an unpaired read pair [17]\n\n       -x STR        read type. Setting -x changes multiple parameters unless overriden [null]\n                     pacbio: -k17 -W40 -r10 -A1 -B1 -O1 -E1 -L0  (PacBio reads to ref)\n                     ont2d: -k14 -W20 -r10 -A1 -B1 -O1 -E1 -L0  (Oxford Nanopore 2D-reads to ref)\n                     intractg: -B9 -O16 -L5  (intra-species contigs to ref)\n\nInput/output options:\n\n       -p            smart pairing (ignoring in2.fq)\n       -R STR        read group header line such as '@RG\\tID:foo\\tSM:bar' [null]\n       -H STR/FILE   insert STR to header if it starts with @; or insert lines in FILE [null]\n       -j            treat ALT contigs as part of the primary assembly (i.e. ignore <idxbase>.alt file)\n\n       -v INT        verbose level: 1=error, 2=warning, 3=message, 4+=debugging [3]\n       -T INT        minimum score to output [30]\n       -h INT[,INT]  if there are <INT hits with score >80% of the max score, output all in XA [5,200]\n       -a            output all alignments for SE or unpaired PE\n       -C            append FASTA/FASTQ comment to SAM output\n       -V            output the reference FASTA header in the XR tag\n       -Y            use soft clipping for supplementary alignments\n       -M            mark shorter split hits as secondary\n\n       -I FLOAT[,FLOAT[,INT[,INT]]]\n                     specify the mean, standard deviation (10% of the mean if absent), max\n                     (4 sigma from the mean if absent) and min of the insert size distribution.\n                     FR orientation only. [inferred]\n\nNote: Please read the man page for detailed description of the command line and options.\n", 
             "id": "#bwa-mem.cwl"
-        }, 
-        {
-            "class": "ExpressionTool", 
-            "requirements": [
-                {
-                    "class": "InlineJavascriptRequirement"
-                }
-            ], 
-            "inputs": [
-                {
-                    "type": {
-                        "type": "array", 
-                        "items": "File"
-                    }, 
-                    "id": "#concat-file-arrays.cwl/array1"
-                }, 
-                {
-                    "type": {
-                        "type": "array", 
-                        "items": "File"
-                    }, 
-                    "id": "#concat-file-arrays.cwl/array2"
-                }
-            ], 
-            "outputs": [
-                {
-                    "type": {
-                        "type": "array", 
-                        "items": "File"
-                    }, 
-                    "id": "#concat-file-arrays.cwl/output"
-                }
-            ], 
-            "expression": "${\n  var output = inputs.array1.concat(inputs.array2);\n  return { \"output\": output };\n}\n", 
-            "id": "#concat-file-arrays.cwl"
         }, 
         {
             "class": "CommandLineTool", 
@@ -2975,9 +2888,16 @@
                 {
                     "type": [
                         "null", 
+                        "int"
+                    ], 
+                    "id": "#exomeseq-01-preprocessing.cwl/interval_padding"
+                }, 
+                {
+                    "type": [
+                        "null", 
                         {
                             "type": "array", 
-                            "items": "string"
+                            "items": "File"
                         }
                     ], 
                     "id": "#exomeseq-01-preprocessing.cwl/intervals"
@@ -3027,23 +2947,13 @@
                 }, 
                 {
                     "type": "File", 
-                    "outputSource": "#exomeseq-01-preprocessing.cwl/recalibrate_04_apply/output_printReads", 
+                    "outputSource": "#exomeseq-01-preprocessing.cwl/recalibrate_02_apply/output_printReads", 
                     "id": "#exomeseq-01-preprocessing.cwl/recalibrated_reads"
                 }, 
                 {
                     "type": "File", 
-                    "outputSource": "#exomeseq-01-preprocessing.cwl/recalibrate_02_covariation/output_baseRecalibrator", 
-                    "id": "#exomeseq-01-preprocessing.cwl/recalibration_after"
-                }, 
-                {
-                    "type": "File", 
                     "outputSource": "#exomeseq-01-preprocessing.cwl/recalibrate_01_analyze/output_baseRecalibrator", 
-                    "id": "#exomeseq-01-preprocessing.cwl/recalibration_before"
-                }, 
-                {
-                    "type": "File", 
-                    "outputSource": "#exomeseq-01-preprocessing.cwl/recalibrate_03_plots/output_recalibrationPlots", 
-                    "id": "#exomeseq-01-preprocessing.cwl/recalibration_plots"
+                    "id": "#exomeseq-01-preprocessing.cwl/recalibration_table"
                 }, 
                 {
                     "type": {
@@ -3061,12 +2971,14 @@
                         {
                             "class": "ResourceRequirement", 
                             "coresMin": 8, 
-                            "ramMin": 16000
+                            "ramMin": 16000, 
+                            "outdirMin": 40000, 
+                            "tmpdirMin": 40000
                         }
                     ], 
                     "in": [
                         {
-                            "default": "mapped.bam", 
+                            "default": "mapped.sam", 
                             "id": "#exomeseq-01-preprocessing.cwl/map/output_filename"
                         }, 
                         {
@@ -3167,8 +3079,8 @@
                     "requirements": [
                         {
                             "class": "ResourceRequirement", 
-                            "coresMin": 1, 
-                            "ramMin": 2500
+                            "coresMin": 8, 
+                            "ramMin": 4096
                         }
                     ], 
                     "in": [
@@ -3177,8 +3089,16 @@
                             "id": "#exomeseq-01-preprocessing.cwl/recalibrate_01_analyze/GATKJar"
                         }, 
                         {
+                            "default": 8, 
+                            "id": "#exomeseq-01-preprocessing.cwl/recalibrate_01_analyze/cpu_threads"
+                        }, 
+                        {
                             "source": "#exomeseq-01-preprocessing.cwl/mark_duplicates/output_dedup_bam_file", 
                             "id": "#exomeseq-01-preprocessing.cwl/recalibrate_01_analyze/inputBam_BaseRecalibrator"
+                        }, 
+                        {
+                            "source": "#exomeseq-01-preprocessing.cwl/interval_padding", 
+                            "id": "#exomeseq-01-preprocessing.cwl/recalibrate_01_analyze/interval_padding"
                         }, 
                         {
                             "source": "#exomeseq-01-preprocessing.cwl/intervals", 
@@ -3203,132 +3123,48 @@
                     "id": "#exomeseq-01-preprocessing.cwl/recalibrate_01_analyze"
                 }, 
                 {
-                    "run": "#GATK-BaseRecalibrator.cwl", 
-                    "requirements": [
-                        {
-                            "class": "ResourceRequirement", 
-                            "coresMin": 1, 
-                            "ramMin": 2500
-                        }
-                    ], 
-                    "in": [
-                        {
-                            "source": "#exomeseq-01-preprocessing.cwl/GATKJar", 
-                            "id": "#exomeseq-01-preprocessing.cwl/recalibrate_02_covariation/GATKJar"
-                        }, 
-                        {
-                            "source": "#exomeseq-01-preprocessing.cwl/recalibrate_01_analyze/output_baseRecalibrator", 
-                            "id": "#exomeseq-01-preprocessing.cwl/recalibrate_02_covariation/bqsr"
-                        }, 
-                        {
-                            "source": "#exomeseq-01-preprocessing.cwl/mark_duplicates/output_dedup_bam_file", 
-                            "id": "#exomeseq-01-preprocessing.cwl/recalibrate_02_covariation/inputBam_BaseRecalibrator"
-                        }, 
-                        {
-                            "source": "#exomeseq-01-preprocessing.cwl/intervals", 
-                            "id": "#exomeseq-01-preprocessing.cwl/recalibrate_02_covariation/intervals"
-                        }, 
-                        {
-                            "source": "#exomeseq-01-preprocessing.cwl/knownSites", 
-                            "id": "#exomeseq-01-preprocessing.cwl/recalibrate_02_covariation/knownSites"
-                        }, 
-                        {
-                            "default": "post_recal_data.table", 
-                            "id": "#exomeseq-01-preprocessing.cwl/recalibrate_02_covariation/outputfile_BaseRecalibrator"
-                        }, 
-                        {
-                            "source": "#exomeseq-01-preprocessing.cwl/reference_genome", 
-                            "id": "#exomeseq-01-preprocessing.cwl/recalibrate_02_covariation/reference"
-                        }
-                    ], 
-                    "out": [
-                        "#exomeseq-01-preprocessing.cwl/recalibrate_02_covariation/output_baseRecalibrator"
-                    ], 
-                    "id": "#exomeseq-01-preprocessing.cwl/recalibrate_02_covariation"
-                }, 
-                {
-                    "run": "#GATK-AnalyzeCovariates.cwl", 
-                    "requirements": [
-                        {
-                            "class": "ResourceRequirement", 
-                            "coresMin": 1, 
-                            "ramMin": 2500
-                        }
-                    ], 
-                    "in": [
-                        {
-                            "source": "#exomeseq-01-preprocessing.cwl/GATKJar", 
-                            "id": "#exomeseq-01-preprocessing.cwl/recalibrate_03_plots/GATKJar"
-                        }, 
-                        {
-                            "source": "#exomeseq-01-preprocessing.cwl/mark_duplicates/output_dedup_bam_file", 
-                            "id": "#exomeseq-01-preprocessing.cwl/recalibrate_03_plots/inputBam_BaseRecalibrator"
-                        }, 
-                        {
-                            "source": "#exomeseq-01-preprocessing.cwl/recalibrate_02_covariation/output_baseRecalibrator", 
-                            "id": "#exomeseq-01-preprocessing.cwl/recalibrate_03_plots/inputTable_after"
-                        }, 
-                        {
-                            "source": "#exomeseq-01-preprocessing.cwl/recalibrate_01_analyze/output_baseRecalibrator", 
-                            "id": "#exomeseq-01-preprocessing.cwl/recalibrate_03_plots/inputTable_before"
-                        }, 
-                        {
-                            "source": "#exomeseq-01-preprocessing.cwl/intervals", 
-                            "id": "#exomeseq-01-preprocessing.cwl/recalibrate_03_plots/intervals"
-                        }, 
-                        {
-                            "default": "recalibration_plots.pdf", 
-                            "id": "#exomeseq-01-preprocessing.cwl/recalibrate_03_plots/outputfile_recalibrationPlots"
-                        }, 
-                        {
-                            "source": "#exomeseq-01-preprocessing.cwl/reference_genome", 
-                            "id": "#exomeseq-01-preprocessing.cwl/recalibrate_03_plots/reference"
-                        }
-                    ], 
-                    "out": [
-                        "#exomeseq-01-preprocessing.cwl/recalibrate_03_plots/output_recalibrationPlots"
-                    ], 
-                    "id": "#exomeseq-01-preprocessing.cwl/recalibrate_03_plots"
-                }, 
-                {
                     "run": "#GATK-PrintReads.cwl", 
                     "requirements": [
                         {
                             "class": "ResourceRequirement", 
-                            "coresMin": 1, 
-                            "ramMin": 2500
+                            "coresMin": 8, 
+                            "ramMin": 4096
                         }
                     ], 
                     "in": [
                         {
                             "source": "#exomeseq-01-preprocessing.cwl/GATKJar", 
-                            "id": "#exomeseq-01-preprocessing.cwl/recalibrate_04_apply/GATKJar"
+                            "id": "#exomeseq-01-preprocessing.cwl/recalibrate_02_apply/GATKJar"
+                        }, 
+                        {
+                            "default": 8, 
+                            "id": "#exomeseq-01-preprocessing.cwl/recalibrate_02_apply/cpu_threads"
                         }, 
                         {
                             "source": "#exomeseq-01-preprocessing.cwl/mark_duplicates/output_dedup_bam_file", 
-                            "id": "#exomeseq-01-preprocessing.cwl/recalibrate_04_apply/inputBam_printReads"
+                            "id": "#exomeseq-01-preprocessing.cwl/recalibrate_02_apply/inputBam_printReads"
                         }, 
                         {
                             "source": "#exomeseq-01-preprocessing.cwl/recalibrate_01_analyze/output_baseRecalibrator", 
-                            "id": "#exomeseq-01-preprocessing.cwl/recalibrate_04_apply/input_baseRecalibrator"
+                            "id": "#exomeseq-01-preprocessing.cwl/recalibrate_02_apply/input_baseRecalibrator"
                         }, 
                         {
                             "source": "#exomeseq-01-preprocessing.cwl/intervals", 
-                            "id": "#exomeseq-01-preprocessing.cwl/recalibrate_04_apply/intervals"
+                            "id": "#exomeseq-01-preprocessing.cwl/recalibrate_02_apply/intervals"
                         }, 
                         {
                             "default": "recal_reads.bam", 
-                            "id": "#exomeseq-01-preprocessing.cwl/recalibrate_04_apply/outputfile_printReads"
+                            "id": "#exomeseq-01-preprocessing.cwl/recalibrate_02_apply/outputfile_printReads"
                         }, 
                         {
                             "source": "#exomeseq-01-preprocessing.cwl/reference_genome", 
-                            "id": "#exomeseq-01-preprocessing.cwl/recalibrate_04_apply/reference"
+                            "id": "#exomeseq-01-preprocessing.cwl/recalibrate_02_apply/reference"
                         }
                     ], 
                     "out": [
-                        "#exomeseq-01-preprocessing.cwl/recalibrate_04_apply/output_printReads"
+                        "#exomeseq-01-preprocessing.cwl/recalibrate_02_apply/output_printReads"
                     ], 
-                    "id": "#exomeseq-01-preprocessing.cwl/recalibrate_04_apply"
+                    "id": "#exomeseq-01-preprocessing.cwl/recalibrate_02_apply"
                 }, 
                 {
                     "run": "#picard-SortSam.cwl", 
@@ -3336,7 +3172,9 @@
                         {
                             "class": "ResourceRequirement", 
                             "coresMin": 1, 
-                            "ramMin": 2500
+                            "ramMin": 2500, 
+                            "outdirMin": 35000, 
+                            "tmpdirMin": 35000
                         }
                     ], 
                     "in": [
@@ -3397,9 +3235,16 @@
                 {
                     "type": [
                         "null", 
+                        "int"
+                    ], 
+                    "id": "#exomeseq-02-variantdiscovery.cwl/interval_padding"
+                }, 
+                {
+                    "type": [
+                        "null", 
                         {
                             "type": "array", 
-                            "items": "string"
+                            "items": "File"
                         }
                     ], 
                     "id": "#exomeseq-02-variantdiscovery.cwl/intervals"
@@ -3517,10 +3362,6 @@
                             "id": "#exomeseq-02-variantdiscovery.cwl/apply_recalibration_indels/GATKJar"
                         }, 
                         {
-                            "source": "#exomeseq-02-variantdiscovery.cwl/intervals", 
-                            "id": "#exomeseq-02-variantdiscovery.cwl/apply_recalibration_indels/intervals"
-                        }, 
-                        {
                             "default": "INDEL", 
                             "id": "#exomeseq-02-variantdiscovery.cwl/apply_recalibration_indels/mode"
                         }, 
@@ -3566,10 +3407,6 @@
                             "id": "#exomeseq-02-variantdiscovery.cwl/apply_recalibration_snps/GATKJar"
                         }, 
                         {
-                            "source": "#exomeseq-02-variantdiscovery.cwl/intervals", 
-                            "id": "#exomeseq-02-variantdiscovery.cwl/apply_recalibration_snps/intervals"
-                        }, 
-                        {
                             "default": "SNP", 
                             "id": "#exomeseq-02-variantdiscovery.cwl/apply_recalibration_snps/mode"
                         }, 
@@ -3594,7 +3431,7 @@
                             "id": "#exomeseq-02-variantdiscovery.cwl/apply_recalibration_snps/tranches_file"
                         }, 
                         {
-                            "default": 99.5, 
+                            "default": 99.0, 
                             "id": "#exomeseq-02-variantdiscovery.cwl/apply_recalibration_snps/ts_filter_level"
                         }, 
                         {
@@ -3620,6 +3457,20 @@
                         {
                             "source": "#exomeseq-02-variantdiscovery.cwl/GATKJar", 
                             "id": "#exomeseq-02-variantdiscovery.cwl/joint_genotyping/GATKJar"
+                        }, 
+                        {
+                            "source": "#exomeseq-02-variantdiscovery.cwl/resource_dbsnp", 
+                            "id": "#exomeseq-02-variantdiscovery.cwl/joint_genotyping/dbsnp"
+                        }, 
+                        {
+                            "default": [
+                                "StandardAnnotation"
+                            ], 
+                            "id": "#exomeseq-02-variantdiscovery.cwl/joint_genotyping/group"
+                        }, 
+                        {
+                            "source": "#exomeseq-02-variantdiscovery.cwl/interval_padding", 
+                            "id": "#exomeseq-02-variantdiscovery.cwl/joint_genotyping/interval_padding"
                         }, 
                         {
                             "source": "#exomeseq-02-variantdiscovery.cwl/intervals", 
@@ -3652,8 +3503,8 @@
                     "requirements": [
                         {
                             "class": "ResourceRequirement", 
-                            "coresMin": 1, 
-                            "ramMin": 2560
+                            "coresMin": 4, 
+                            "ramMin": 16384
                         }
                     ], 
                     "scatter": "#exomeseq-02-variantdiscovery.cwl/variant_calling/inputBam_HaplotypeCaller", 
@@ -3663,16 +3514,31 @@
                             "id": "#exomeseq-02-variantdiscovery.cwl/variant_calling/GATKJar"
                         }, 
                         {
+                            "default": 8, 
+                            "id": "#exomeseq-02-variantdiscovery.cwl/variant_calling/cpu_threads"
+                        }, 
+                        {
+                            "source": "#exomeseq-02-variantdiscovery.cwl/resource_dbsnp", 
+                            "id": "#exomeseq-02-variantdiscovery.cwl/variant_calling/dbsnp"
+                        }, 
+                        {
                             "default": "GVCF", 
                             "id": "#exomeseq-02-variantdiscovery.cwl/variant_calling/emitRefConfidence"
                         }, 
                         {
-                            "default": "DISCOVERY", 
-                            "id": "#exomeseq-02-variantdiscovery.cwl/variant_calling/genotyping_mode"
+                            "default": [
+                                "StandardAnnotation", 
+                                "AS_StandardAnnotation"
+                            ], 
+                            "id": "#exomeseq-02-variantdiscovery.cwl/variant_calling/group"
                         }, 
                         {
                             "source": "#exomeseq-02-variantdiscovery.cwl/mapped_reads", 
                             "id": "#exomeseq-02-variantdiscovery.cwl/variant_calling/inputBam_HaplotypeCaller"
+                        }, 
+                        {
+                            "source": "#exomeseq-02-variantdiscovery.cwl/interval_padding", 
+                            "id": "#exomeseq-02-variantdiscovery.cwl/variant_calling/interval_padding"
                         }, 
                         {
                             "source": "#exomeseq-02-variantdiscovery.cwl/intervals", 
@@ -3685,10 +3551,6 @@
                         {
                             "source": "#exomeseq-02-variantdiscovery.cwl/reference_genome", 
                             "id": "#exomeseq-02-variantdiscovery.cwl/variant_calling/reference"
-                        }, 
-                        {
-                            "source": "#exomeseq-02-variantdiscovery.cwl/stand_call_conf", 
-                            "id": "#exomeseq-02-variantdiscovery.cwl/variant_calling/stand_call_conf"
                         }
                     ], 
                     "out": [
@@ -3707,15 +3569,12 @@
                             "default": [
                                 "QD", 
                                 "FS", 
-                                "SOR", 
+                                "MQ", 
+                                "MQRankSum", 
                                 "ReadPosRankSum", 
-                                "MQRankSum"
+                                "InbreedingCoeff"
                             ], 
                             "id": "#exomeseq-02-variantdiscovery.cwl/variant_recalibration_indels/annotations"
-                        }, 
-                        {
-                            "source": "#exomeseq-02-variantdiscovery.cwl/intervals", 
-                            "id": "#exomeseq-02-variantdiscovery.cwl/variant_recalibration_indels/intervals"
                         }, 
                         {
                             "default": "indels_vqsr_recal.out", 
@@ -3767,17 +3626,14 @@
                         {
                             "default": [
                                 "QD", 
+                                "FS", 
                                 "MQ", 
+                                "SOR", 
                                 "MQRankSum", 
                                 "ReadPosRankSum", 
-                                "FS", 
-                                "SOR"
+                                "InbreedingCoeff"
                             ], 
                             "id": "#exomeseq-02-variantdiscovery.cwl/variant_recalibration_snps/annotations"
-                        }, 
-                        {
-                            "source": "#exomeseq-02-variantdiscovery.cwl/intervals", 
-                            "id": "#exomeseq-02-variantdiscovery.cwl/variant_recalibration_snps/intervals"
                         }, 
                         {
                             "default": "snps_vqsr_recal.out", 
@@ -3867,9 +3723,16 @@
                 {
                     "type": [
                         "null", 
+                        "int"
+                    ], 
+                    "id": "#main/interval_padding"
+                }, 
+                {
+                    "type": [
+                        "null", 
                         {
                             "type": "array", 
-                            "items": "string"
+                            "items": "File"
                         }
                     ], 
                     "id": "#main/intervals"
@@ -4005,24 +3868,8 @@
                         "type": "array", 
                         "items": "File"
                     }, 
-                    "outputSource": "#main/preprocessing/recalibration_after", 
-                    "id": "#main/recalibration_after"
-                }, 
-                {
-                    "type": {
-                        "type": "array", 
-                        "items": "File"
-                    }, 
-                    "outputSource": "#main/preprocessing/recalibration_before", 
-                    "id": "#main/recalibration_before"
-                }, 
-                {
-                    "type": {
-                        "type": "array", 
-                        "items": "File"
-                    }, 
-                    "outputSource": "#main/preprocessing/recalibration_plots", 
-                    "id": "#main/recalibration_plots"
+                    "outputSource": "#main/preprocessing/recalibration_table", 
+                    "id": "#main/recalibration_table"
                 }, 
                 {
                     "type": {
@@ -4086,23 +3933,6 @@
             ], 
             "steps": [
                 {
-                    "run": "#concat-file-arrays.cwl", 
-                    "in": [
-                        {
-                            "source": "#main/preprocessing/recalibrated_reads", 
-                            "id": "#main/add_samples/array1"
-                        }, 
-                        {
-                            "source": "#main/reference_reads", 
-                            "id": "#main/add_samples/array2"
-                        }
-                    ], 
-                    "out": [
-                        "#main/add_samples/output"
-                    ], 
-                    "id": "#main/add_samples"
-                }, 
-                {
                     "run": "#exomeseq-01-preprocessing.cwl", 
                     "scatter": "#main/preprocessing/reads", 
                     "in": [
@@ -4113,6 +3943,10 @@
                         {
                             "source": "#main/field_order", 
                             "id": "#main/preprocessing/field_order"
+                        }, 
+                        {
+                            "source": "#main/interval_padding", 
+                            "id": "#main/preprocessing/interval_padding"
                         }, 
                         {
                             "source": "#main/intervals", 
@@ -4146,9 +3980,7 @@
                     "out": [
                         "#main/preprocessing/qc_reports", 
                         "#main/preprocessing/trim_reports", 
-                        "#main/preprocessing/recalibration_before", 
-                        "#main/preprocessing/recalibration_after", 
-                        "#main/preprocessing/recalibration_plots", 
+                        "#main/preprocessing/recalibration_table", 
                         "#main/preprocessing/recalibrated_reads"
                     ], 
                     "id": "#main/preprocessing"
@@ -4165,11 +3997,15 @@
                             "id": "#main/variant_discovery/indel_resource_mills"
                         }, 
                         {
+                            "source": "#main/interval_padding", 
+                            "id": "#main/variant_discovery/interval_padding"
+                        }, 
+                        {
                             "source": "#main/intervals", 
                             "id": "#main/variant_discovery/intervals"
                         }, 
                         {
-                            "source": "#main/add_samples/output", 
+                            "source": "#main/preprocessing/recalibrated_reads", 
                             "id": "#main/variant_discovery/mapped_reads"
                         }, 
                         {
