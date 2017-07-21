@@ -55,7 +55,8 @@ inputs: # position 0, for java args, 1 for the jar, 2 for the tool itself
     type: string[]?
     inputBinding:
       position: 2
-    doc: Input prior for calls
+      prefix: --group
+    doc: One or more classes/groups of annotations to apply to variant calls
   heterozygosity:
     type: double?
     inputBinding:

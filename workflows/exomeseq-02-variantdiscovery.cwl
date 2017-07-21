@@ -85,9 +85,9 @@ steps:
       reference: reference_genome
       cpu_threads:
         default: 8
-      genotyping_mode:
-        default: "DISCOVERY"
-      stand_call_conf: stand_call_conf
+      group:
+        default: ['StandardAnnotation','AS_StandardAnnotation']
+      dbsnp: resource_dbsnp
       emitRefConfidence:
         default: "GVCF"
       outputfile_HaplotypeCaller: #
@@ -114,6 +114,9 @@ steps:
       # NOTE: GATK best practices recommends at least 30 samples for exome - how to deal?
       variants: variant_calling/output_HaplotypeCaller
       reference: reference_genome
+      group:
+        default: ['StandardAnnotation']
+      dbsnp: resource_dbsnp
       outputfile_GenotypeGVCFs:
         default: "joint_genotype_raw_variants.g.vcf"
     out:
@@ -123,7 +126,6 @@ steps:
     run: ../tools/GATK-VariantRecalibrator-SNPs.cwl
     in:
       GATKJar: GATKJar
-      intervals: intervals
       reference: reference_genome
       variants: joint_genotyping/output_GenotypeGVCFs
       threads:
@@ -138,6 +140,7 @@ steps:
       resource_omni: snp_resource_omni
       resource_1kg: snp_resource_1kg
       resource_dbsnp: resource_dbsnp
+      # Check the values!
       # annotations, See https://software.broadinstitute.org/gatk/documentation/article?id=1259
       # Removed DP and InbreedingCoeff
       # Please note that these recommendations are formulated for whole-genome datasets.
@@ -145,7 +148,7 @@ steps:
       annotations:
         # The InbreedingCoeff is a population level statistic that requires at least 10 samples in order to be computed. For projects with fewer samples, or that includes many closely related samples (such as a family) please omit this annotation from the command line.
         # NOTE: InbreedingCoeff would need to be annotated separately
-        default: ["QD","MQ","MQRankSum","ReadPosRankSum","FS","SOR"]
+        default: ["QD","FS","MQ","SOR","MQRankSum","ReadPosRankSum","InbreedingCoeff"]
     out:
       - tranches_File
       - recal_File
@@ -154,7 +157,6 @@ steps:
     run: ../tools/GATK-ApplyRecalibration.cwl
     in:
       GATKJar: GATKJar
-      intervals: intervals
       reference: reference_genome
       variants: joint_genotyping/output_GenotypeGVCFs
       threads: threads
@@ -163,7 +165,7 @@ steps:
       outputfile_recalibrated_vcf:
         default: "snps_recalibrated.vcf"
       ts_filter_level:
-        default: 99.5
+        default: 99.0
       mode:
         default: "SNP"
     out:
@@ -172,7 +174,6 @@ steps:
     run: ../tools/GATK-VariantRecalibrator-Indels.cwl
     in:
       GATKJar: GATKJar
-      intervals: intervals
       reference: reference_genome
       variants: joint_genotyping/output_GenotypeGVCFs
       threads:
@@ -192,7 +193,7 @@ steps:
       annotations:
         # The InbreedingCoeff is a population level statistic that requires at least 10 samples in order to be computed. For projects with fewer samples, or that includes many closely related samples (such as a family) please omit this annotation from the command line.
         # NOTE: InbreedingCoeff would need to be annotated separately
-                default: ["QD","FS","SOR","ReadPosRankSum","MQRankSum"]
+                default: ["QD","FS","MQ","MQRankSum","ReadPosRankSum","InbreedingCoeff"]
     out:
       - tranches_File
       - recal_File
@@ -201,7 +202,6 @@ steps:
     run: ../tools/GATK-ApplyRecalibration.cwl
     in:
       GATKJar: GATKJar
-      intervals: intervals
       reference: reference_genome
       variants: joint_genotyping/output_GenotypeGVCFs
       threads: threads
