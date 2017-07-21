@@ -51,6 +51,5 @@
     "class": "File",
     "path": "/data/exome-seq/b37/omni/1000G_omni2.5.b37.vcf"
   },
-  "stand_call_conf": 30.0,
   "threads": 30
 }
