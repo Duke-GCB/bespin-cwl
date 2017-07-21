@@ -46,7 +46,7 @@
   "reference_genome": {
     "class": "File",
     "path": "/home/ubuntu/data/b37/human_g1k_v37.fasta"
-  }
+  },
   "resource_dbsnp": {
     "class": "File",
     "path": "/home/ubuntu/data/b37/dbsnp_138.b37.vcf"
