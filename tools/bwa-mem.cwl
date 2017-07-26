@@ -5,7 +5,7 @@ class: CommandLineTool
 
 requirements:
 - $import: envvar-global.yml
-- $import: bwa-docker.yml
+- $import: bwa-samtools-docker.yml
 - class: InlineJavascriptRequirement
 
 inputs:
@@ -64,8 +64,7 @@ outputs:
       glob: $(inputs.output_filename)
 
 baseCommand:
-- bwa
-- mem
+- bwamem-to-samtools.sh
 
 doc: |
   Usage: bwa mem [options] <idxbase> <in1.fq> [in2.fq]

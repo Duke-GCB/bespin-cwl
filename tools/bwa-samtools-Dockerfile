@@ -84,3 +84,8 @@ rm -rf ./${NAMEH}
 #strip /usr/local/bin/${NAME}; true && \
 #rm -rf ./${NAMEH}-${VERSIONH}/ && \
 #rm -rf ./${NAME}-${VERSION}/
+
+# Now add the wrapper script
+
+ADD bwamem-to-samtools.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/bwamem-to-samtools.sh
