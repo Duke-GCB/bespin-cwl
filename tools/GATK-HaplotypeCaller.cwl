@@ -127,7 +127,7 @@ inputs: # position 0, for java args, 1 for the jar, 2 for the tool itself
     doc: Allow graphs that have non-unique kmers in the reference
   group:
     type:
-      type: array?
+      type: array
       items: string
       inputBinding:
         prefix: --group

@@ -1312,10 +1312,7 @@
                 }, 
                 {
                     "type": {
-                        "type": [
-                            "null", 
-                            "array"
-                        ], 
+                        "type": "array", 
                         "items": "string", 
                         "inputBinding": {
                             "prefix": "--group"
