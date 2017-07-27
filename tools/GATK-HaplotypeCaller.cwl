@@ -126,10 +126,13 @@ inputs: # position 0, for java args, 1 for the jar, 2 for the tool itself
       prefix: --allowNonUniqueKmersInRef
     doc: Allow graphs that have non-unique kmers in the reference
   group:
-    type: string[]?
+    type:
+      type: array?
+      items: string
+      inputBinding:
+        prefix: --group
     inputBinding:
       position: 2
-      prefix: --group
     doc: One or more classes/groups of annotations to apply to variant calls
   pcr_indel_model:
     type: string?
