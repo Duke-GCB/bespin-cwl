@@ -1311,16 +1311,18 @@
                     "id": "#GATK-HaplotypeCaller.cwl/graphOutput"
                 }, 
                 {
-                    "type": [
-                        "null", 
-                        {
-                            "type": "array", 
-                            "items": "string"
+                    "type": {
+                        "type": [
+                            "null", 
+                            "array"
+                        ], 
+                        "items": "string", 
+                        "inputBinding": {
+                            "prefix": "--group"
                         }
-                    ], 
+                    }, 
                     "inputBinding": {
-                        "position": 2, 
-                        "prefix": "--group"
+                        "position": 2
                     }, 
                     "doc": "One or more classes/groups of annotations to apply to variant calls", 
                     "id": "#GATK-HaplotypeCaller.cwl/group"
