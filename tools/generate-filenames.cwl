@@ -10,9 +10,9 @@ inputs:
   sample_name: string
 outputs:
   mapped_reads_output_filename: string
-  mapped_reads_output_filename: string
   sorted_reads_output_filename: string
   dedup_reads_output_filename: string
+  dedup_metrics_output_filename: string
   recal_reads_output_filename: string
   recal_table_output_filename: string
 
