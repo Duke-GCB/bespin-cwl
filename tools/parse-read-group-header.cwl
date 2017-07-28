@@ -25,8 +25,8 @@ inputs:
     type: string
     default: _
 outputs:
-  read_group_header:
-    type: string
+  read_group_header: string
+  sample_name: string
 
 expression: >
   ${
