@@ -2669,6 +2669,10 @@
                 {
                     "type": "string", 
                     "id": "#parse-read-group-header.cwl/read_group_header"
+                }, 
+                {
+                    "type": "string", 
+                    "id": "#parse-read-group-header.cwl/sample_name"
                 }
             ], 
             "expression": "${\n  // Returns the part of the filename before the extension\n  function removeExtension(name) {\n    return name.split('.')[0];\n  }\n\n  // Given an array of keys and values, creates an object mapping keys to values\n  function zip(keys, values) {\n    var object = {};\n    for (var i=0;i<keys.length;i++) {\n      object[keys[i]] = values[i]\n    }\n    return object;\n  }\n\n  // Split the string name on the separator\n  function splitFields(name, separator) {\n  \treturn name.split(separator);\n  }\n\n  // Makes a string with a read group header that can be provided to bwa as SAM metadata\n  function makeReadGroupsString(fields) {\n    \tvar readGroups = \"@RG\" +\n    \t  \"\\\\tID:\" + fields['sample'] +\n    \t  \"\\\\tLB:\" + fields['library'] +\n    \t  \"\\\\tPL:\" + fields['platform'] +\n    \t  \"\\\\tPU:\" + fields['sample'] +\n    \t  \"\\\\tSM:\" + fields['sample'];\n      return readGroups;\n  }\n\n  var filename = inputs.reads[0].basename;\n  var base = removeExtension(filename);\n  var components = splitFields(base, inputs.separator);\n  var fields = zip(inputs.field_order, components);\n  fields['library'] = inputs.library;\n  fields['platform'] = inputs.platform;\n  var read_group_header = makeReadGroupsString(fields);\n  return {\n    read_group_header: read_group_header,\n    sample_name: fields['sample']\n  };\n}\n", 
