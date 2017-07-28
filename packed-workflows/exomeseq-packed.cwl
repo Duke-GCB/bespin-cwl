@@ -2592,6 +2592,10 @@
             "outputs": [
                 {
                     "type": "string", 
+                    "id": "#generate-filenames.cwl/dedup_metrics_output_filename"
+                }, 
+                {
+                    "type": "string", 
                     "id": "#generate-filenames.cwl/dedup_reads_output_filename"
                 }, 
                 {
