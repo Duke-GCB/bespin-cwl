@@ -67,8 +67,8 @@ expression: >
     fields['library'] = inputs.library;
     fields['platform'] = inputs.platform;
     var read_group_header = makeReadGroupsString(fields);
-
     return {
-      read_group_header: read_group_header
+      read_group_header: read_group_header,
+      sample_name: fields['sample']
     };
   }
