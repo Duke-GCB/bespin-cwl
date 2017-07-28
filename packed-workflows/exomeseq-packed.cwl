@@ -2577,6 +2577,45 @@
         }, 
         {
             "class": "ExpressionTool", 
+            "label": "Generates a set of file names for preprocesisng steps based on an input sample name", 
+            "requirements": [
+                {
+                    "class": "InlineJavascriptRequirement"
+                }
+            ], 
+            "inputs": [
+                {
+                    "type": "string", 
+                    "id": "#generate-filenames.cwl/sample_name"
+                }
+            ], 
+            "outputs": [
+                {
+                    "type": "string", 
+                    "id": "#generate-filenames.cwl/dedup_reads_output_filename"
+                }, 
+                {
+                    "type": "string", 
+                    "id": "#generate-filenames.cwl/mapped_reads_output_filename"
+                }, 
+                {
+                    "type": "string", 
+                    "id": "#generate-filenames.cwl/recal_reads_output_filename"
+                }, 
+                {
+                    "type": "string", 
+                    "id": "#generate-filenames.cwl/recal_table_output_filename"
+                }, 
+                {
+                    "type": "string", 
+                    "id": "#generate-filenames.cwl/sorted_reads_output_filename"
+                }
+            ], 
+            "expression": "${\n  function makeFilename(base, suffix, extension) {\n    return base + '-' + suffix + '.' + extension;\n  }\n  var base = inputs.sample_name\n\n  return {\n    mapped_reads_output_filename: makeFilename(base, 'mapped', 'bam'),\n    sorted_reads_output_filename: makeFilename(base, 'sorted', 'bam'),\n    dedup_reads_output_filename: makeFilename(base, 'dedup', 'bam'),\n    dedup_metrics_output_filename: makeFilename(base, 'dedup-metrics', 'out'),\n    recal_reads_output_filename: makeFilename(base, 'recal', 'bam'),\n    recal_table_output_filename: makeFilename(base, 'recal', 'table')\n  };\n}\n", 
+            "id": "#generate-filenames.cwl"
+        }, 
+        {
+            "class": "ExpressionTool", 
             "label": "Extracts a read group header from the first file name in an array of files", 
             "requirements": [
                 {
@@ -2628,7 +2667,7 @@
                     "id": "#parse-read-group-header.cwl/read_group_header"
                 }
             ], 
-            "expression": "${\n  // Returns the part of the filename before the extension\n  function removeExtension(name) {\n    return name.split('.')[0];\n  }\n\n  // Given an array of keys and values, creates an object mapping keys to values\n  function zip(keys, values) {\n    var object = {};\n    for (var i=0;i<keys.length;i++) {\n      object[keys[i]] = values[i]\n    }\n    return object;\n  }\n\n  // Split the string name on the separator\n  function splitFields(name, separator) {\n  \treturn name.split(separator);\n  }\n\n  // Makes a string with a read group header that can be provided to bwa as SAM metadata\n  function makeReadGroupsString(fields) {\n    \tvar readGroups = \"@RG\" +\n    \t  \"\\\\tID:\" + fields['sample'] +\n    \t  \"\\\\tLB:\" + fields['library'] +\n    \t  \"\\\\tPL:\" + fields['platform'] +\n    \t  \"\\\\tPU:\" + fields['sample'] +\n    \t  \"\\\\tSM:\" + fields['sample'];\n      return readGroups;\n  }\n\n  var filename = inputs.reads[0].basename;\n  var base = removeExtension(filename);\n  var components = splitFields(base, inputs.separator);\n  var fields = zip(inputs.field_order, components);\n  fields['library'] = inputs.library;\n  fields['platform'] = inputs.platform;\n  var read_group_header = makeReadGroupsString(fields);\n\n  return {\n    read_group_header: read_group_header\n  };\n}\n", 
+            "expression": "${\n  // Returns the part of the filename before the extension\n  function removeExtension(name) {\n    return name.split('.')[0];\n  }\n\n  // Given an array of keys and values, creates an object mapping keys to values\n  function zip(keys, values) {\n    var object = {};\n    for (var i=0;i<keys.length;i++) {\n      object[keys[i]] = values[i]\n    }\n    return object;\n  }\n\n  // Split the string name on the separator\n  function splitFields(name, separator) {\n  \treturn name.split(separator);\n  }\n\n  // Makes a string with a read group header that can be provided to bwa as SAM metadata\n  function makeReadGroupsString(fields) {\n    \tvar readGroups = \"@RG\" +\n    \t  \"\\\\tID:\" + fields['sample'] +\n    \t  \"\\\\tLB:\" + fields['library'] +\n    \t  \"\\\\tPL:\" + fields['platform'] +\n    \t  \"\\\\tPU:\" + fields['sample'] +\n    \t  \"\\\\tSM:\" + fields['sample'];\n      return readGroups;\n  }\n\n  var filename = inputs.reads[0].basename;\n  var base = removeExtension(filename);\n  var components = splitFields(base, inputs.separator);\n  var fields = zip(inputs.field_order, components);\n  fields['library'] = inputs.library;\n  fields['platform'] = inputs.platform;\n  var read_group_header = makeReadGroupsString(fields);\n  return {\n    read_group_header: read_group_header,\n    sample_name: fields['sample']\n  };\n}\n", 
             "id": "#parse-read-group-header.cwl"
         }, 
         {
@@ -2964,6 +3003,24 @@
             ], 
             "steps": [
                 {
+                    "run": "#generate-filenames.cwl", 
+                    "in": [
+                        {
+                            "source": "#exomeseq-01-preprocessing.cwl/parse_read_group_header/sample_name", 
+                            "id": "#exomeseq-01-preprocessing.cwl/generate_filenames/sample_name"
+                        }
+                    ], 
+                    "out": [
+                        "#exomeseq-01-preprocessing.cwl/generate_filenames/mapped_reads_output_filename", 
+                        "#exomeseq-01-preprocessing.cwl/generate_filenames/sorted_reads_output_filename", 
+                        "#exomeseq-01-preprocessing.cwl/generate_filenames/dedup_reads_output_filename", 
+                        "#exomeseq-01-preprocessing.cwl/generate_filenames/dedup_metrics_output_filename", 
+                        "#exomeseq-01-preprocessing.cwl/generate_filenames/recal_reads_output_filename", 
+                        "#exomeseq-01-preprocessing.cwl/generate_filenames/recal_table_output_filename"
+                    ], 
+                    "id": "#exomeseq-01-preprocessing.cwl/generate_filenames"
+                }, 
+                {
                     "run": "#bwa-mem.cwl", 
                     "requirements": [
                         {
@@ -2976,7 +3033,7 @@
                     ], 
                     "in": [
                         {
-                            "default": "mapped.sam", 
+                            "source": "#exomeseq-01-preprocessing.cwl/generate_filenames/mapped_reads_output_filename", 
                             "id": "#exomeseq-01-preprocessing.cwl/map/output_filename"
                         }, 
                         {
@@ -3014,11 +3071,19 @@
                         {
                             "source": "#exomeseq-01-preprocessing.cwl/sort/sorted", 
                             "id": "#exomeseq-01-preprocessing.cwl/mark_duplicates/input_file"
+                        }, 
+                        {
+                            "source": "#exomeseq-01-preprocessing.cwl/generate_filenames/dedup_metrics_output_filename", 
+                            "id": "#exomeseq-01-preprocessing.cwl/mark_duplicates/metrics_filename"
+                        }, 
+                        {
+                            "source": "#exomeseq-01-preprocessing.cwl/generate_filenames/dedup_reads_output_filename", 
+                            "id": "#exomeseq-01-preprocessing.cwl/mark_duplicates/output_filename"
                         }
                     ], 
                     "out": [
-                        "#exomeseq-01-preprocessing.cwl/mark_duplicates/output_metrics_file", 
-                        "#exomeseq-01-preprocessing.cwl/mark_duplicates/output_dedup_bam_file"
+                        "#exomeseq-01-preprocessing.cwl/mark_duplicates/output_dedup_bam_file", 
+                        "#exomeseq-01-preprocessing.cwl/mark_duplicates/output_metrics_file"
                     ], 
                     "id": "#exomeseq-01-preprocessing.cwl/mark_duplicates"
                 }, 
@@ -3043,7 +3108,8 @@
                         }
                     ], 
                     "out": [
-                        "#exomeseq-01-preprocessing.cwl/parse_read_group_header/read_group_header"
+                        "#exomeseq-01-preprocessing.cwl/parse_read_group_header/read_group_header", 
+                        "#exomeseq-01-preprocessing.cwl/parse_read_group_header/sample_name"
                     ], 
                     "id": "#exomeseq-01-preprocessing.cwl/parse_read_group_header"
                 }, 
@@ -3107,7 +3173,7 @@
                             "id": "#exomeseq-01-preprocessing.cwl/recalibrate_01_analyze/knownSites"
                         }, 
                         {
-                            "default": "recal_data.table", 
+                            "source": "#exomeseq-01-preprocessing.cwl/generate_filenames/recal_table_output_filename", 
                             "id": "#exomeseq-01-preprocessing.cwl/recalibrate_01_analyze/outputfile_BaseRecalibrator"
                         }, 
                         {
@@ -3151,7 +3217,7 @@
                             "id": "#exomeseq-01-preprocessing.cwl/recalibrate_02_apply/intervals"
                         }, 
                         {
-                            "default": "recal_reads.bam", 
+                            "source": "#exomeseq-01-preprocessing.cwl/generate_filenames/recal_reads_output_filename", 
                             "id": "#exomeseq-01-preprocessing.cwl/recalibrate_02_apply/outputfile_printReads"
                         }, 
                         {
@@ -3179,6 +3245,10 @@
                         {
                             "source": "#exomeseq-01-preprocessing.cwl/map/output", 
                             "id": "#exomeseq-01-preprocessing.cwl/sort/input_file"
+                        }, 
+                        {
+                            "source": "#exomeseq-01-preprocessing.cwl/generate_filenames/sorted_reads_output_filename", 
+                            "id": "#exomeseq-01-preprocessing.cwl/sort/output_filename"
                         }
                     ], 
                     "out": [
