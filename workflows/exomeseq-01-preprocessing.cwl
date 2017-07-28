@@ -79,6 +79,18 @@ steps:
       platform: platform
     out:
       - read_group_header
+      - sample_name
+  generate_filenames:
+    run: ../tools/generate-filenames.cwl
+    in:
+      sample_name: parse_read_group_header/sample_name
+    out:
+      - mapped_reads_output_filename
+      - sorted_reads_output_filename
+      - dedup_reads_output_filename
+      - dedup_metrics_output_filename
+      - recal_reads_output_filename
+      - recal_table_output_filename
   map:
     run: ../tools/bwa-mem.cwl
     requirements:
@@ -91,8 +103,7 @@ steps:
       reads: trim/trimmed_reads
       reference: reference_genome
       read_group_header: parse_read_group_header/read_group_header
-      output_filename:
-        default: "mapped.sam"
+      output_filename: generate_filenames/mapped_reads_output_filename
       threads: threads
     out:
       - output
@@ -106,6 +117,7 @@ steps:
         tmpdirMin: 35000
     in:
       input_file: map/output
+      output_filename: generate_filenames/sorted_reads_output_filename
     out:
       - sorted
   mark_duplicates:
@@ -116,9 +128,11 @@ steps:
         ramMin: 2500
     in:
       input_file: sort/sorted
+      output_filename: generate_filenames/dedup_reads_output_filename
+      metrics_filename: generate_filenames/dedup_metrics_output_filename
     out:
-      - output_metrics_file
       - output_dedup_bam_file
+      - output_metrics_file
   # Now recalibrate
   recalibrate_01_analyze:
     run: ../tools/GATK-BaseRecalibrator.cwl
@@ -134,8 +148,7 @@ steps:
       knownSites: knownSites
       cpu_threads:
         default: 8
-      outputfile_BaseRecalibrator:
-        default: "recal_data.table"
+      outputfile_BaseRecalibrator: generate_filenames/recal_table_output_filename
       reference: reference_genome
     out:
       - output_baseRecalibrator
@@ -152,8 +165,7 @@ steps:
       input_baseRecalibrator: recalibrate_01_analyze/output_baseRecalibrator
       cpu_threads:
         default: 8
-      outputfile_printReads:
-        default: "recal_reads.bam"
+      outputfile_printReads: generate_filenames/recal_reads_output_filename
       reference: reference_genome
     out:
       - output_printReads
