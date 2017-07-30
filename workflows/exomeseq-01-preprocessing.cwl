@@ -97,8 +97,8 @@ steps:
       - class: ResourceRequirement
         coresMin: 8
         ramMin: 16000
-        outdirMin: 40000
-        tmpdirMin: 40000
+        outdirMin: 12000
+        tmpdirMin: 12000
     in:
       reads: trim/trimmed_reads
       reference: reference_genome
@@ -112,9 +112,9 @@ steps:
     requirements:
       - class: ResourceRequirement
         coresMin: 1
-        ramMin: 2500
-        outdirMin: 35000
-        tmpdirMin: 35000
+        ramMin: 4000
+        outdirMin: 12000
+        tmpdirMin: 12000
     in:
       input_file: map/output
       output_filename: generate_filenames/sorted_reads_output_filename
@@ -125,7 +125,9 @@ steps:
     requirements:
       - class: ResourceRequirement
         coresMin: 1
-        ramMin: 2500
+        ramMin: 4000
+        outdirMin: 12000
+        tmpdirMin: 12000
     in:
       input_file: sort/sorted
       output_filename: generate_filenames/dedup_reads_output_filename

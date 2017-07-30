@@ -50,6 +50,8 @@ outputs:
 
 baseCommand: [java]
 arguments:
+- valueFrom: "-Xmx4g"
+  position: -2
 - valueFrom: "/usr/picard/picard.jar"
   position: -1
   prefix: -jar
