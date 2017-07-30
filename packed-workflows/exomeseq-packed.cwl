@@ -2760,6 +2760,10 @@
             ], 
             "arguments": [
                 {
+                    "valueFrom": "-Xmx4g", 
+                    "position": -2
+                }, 
+                {
                     "valueFrom": "/usr/picard/picard.jar", 
                     "position": -1, 
                     "prefix": "-jar"
@@ -2840,6 +2844,10 @@
                     "valueFrom": "/usr/picard/picard.jar", 
                     "position": -1, 
                     "prefix": "-jar"
+                }, 
+                {
+                    "valueFrom": "-Xmx4g", 
+                    "position": -1
                 }, 
                 {
                     "valueFrom": "SortSam", 
@@ -3035,8 +3043,8 @@
                             "class": "ResourceRequirement", 
                             "coresMin": 8, 
                             "ramMin": 16000, 
-                            "outdirMin": 40000, 
-                            "tmpdirMin": 40000
+                            "outdirMin": 12000, 
+                            "tmpdirMin": 12000
                         }
                     ], 
                     "in": [
@@ -3072,7 +3080,9 @@
                         {
                             "class": "ResourceRequirement", 
                             "coresMin": 1, 
-                            "ramMin": 2500
+                            "ramMin": 4000, 
+                            "outdirMin": 12000, 
+                            "tmpdirMin": 12000
                         }
                     ], 
                     "in": [
@@ -3244,9 +3254,9 @@
                         {
                             "class": "ResourceRequirement", 
                             "coresMin": 1, 
-                            "ramMin": 2500, 
-                            "outdirMin": 35000, 
-                            "tmpdirMin": 35000
+                            "ramMin": 4000, 
+                            "outdirMin": 12000, 
+                            "tmpdirMin": 12000
                         }
                     ], 
                     "in": [
