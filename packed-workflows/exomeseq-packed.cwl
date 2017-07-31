@@ -2837,17 +2837,14 @@
                 }
             ], 
             "baseCommand": [
-                "java"
+                "java", 
+                "-Xmx4g"
             ], 
             "arguments": [
                 {
                     "valueFrom": "/usr/picard/picard.jar", 
                     "position": -1, 
                     "prefix": "-jar"
-                }, 
-                {
-                    "valueFrom": "-Xmx4g", 
-                    "position": -1
                 }, 
                 {
                     "valueFrom": "SortSam", 
