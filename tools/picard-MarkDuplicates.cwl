@@ -5,7 +5,7 @@ class: CommandLineTool
 
 requirements:
 - class: DockerRequirement
-  dockerPull: dukegcb/picard
+  dockerPull: dukegcb/picard:v2.5.0
 - class: InlineJavascriptRequirement
 
 inputs:
