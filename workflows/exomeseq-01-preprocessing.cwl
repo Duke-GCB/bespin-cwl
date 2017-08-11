@@ -92,7 +92,7 @@ steps:
       - recal_reads_output_filename
       - recal_table_output_filename
   map:
-    run: ../tools/bwa-mem.cwl
+    run: ../tools/bwa-mem-samtools.cwl
     requirements:
       - class: ResourceRequirement
         coresMin: 8

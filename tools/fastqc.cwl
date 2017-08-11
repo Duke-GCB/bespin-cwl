@@ -4,7 +4,7 @@ cwlVersion: v1.0
 class: CommandLineTool
 hints:
   - class: DockerRequirement
-    dockerPull: 'dukegcb/fastqc'
+    dockerPull: 'dukegcb/fastqc:0.11.4'
 
 requirements:
   - class: InlineJavascriptRequirement

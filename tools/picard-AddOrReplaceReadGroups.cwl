@@ -5,7 +5,7 @@ class: CommandLineTool
 
 requirements:
 - class: DockerRequirement
-  dockerPull: dukegcb/picard
+  dockerPull: dukegcb/picard:2.10.7
 - class: InlineJavascriptRequirement
 
 inputs:
@@ -57,7 +57,7 @@ inputs:
     doc: "Read Group sample name  Required."
     inputBinding:
       prefix: "RGSM="
-      shellQuote: false 
+      shellQuote: false
   create_index:
     type: boolean
     doc: "If true, create an index"
@@ -75,7 +75,7 @@ outputs:
 
 baseCommand: [java]
 arguments:
-- valueFrom: "/usr/picard/picard.jar"
+- valueFrom: "/opt/picard/picard.jar"
   position: -1
   prefix: -jar
 - valueFrom: AddOrReplaceReadGroups

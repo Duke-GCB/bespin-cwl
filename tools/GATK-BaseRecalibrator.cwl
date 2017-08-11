@@ -5,7 +5,8 @@ class: CommandLineTool
 
 requirements:
 - $import: envvar-global.yml
-- $import: GATK-docker.yml
+- class: DockerRequirement
+  dockerPull: 'dukegcb/gatk-base:3'
 
 inputs: # position 0, for java args, 1 for the jar, 2 for the tool itself
   GATKJar:

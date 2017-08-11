@@ -1,4 +1,0 @@
-class: DockerRequirement
-dockerPull: dukegcb/gatk_base
-dockerFile: >
-  $import: GATK-Dockerfile

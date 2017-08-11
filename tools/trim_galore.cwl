@@ -4,7 +4,7 @@ cwlVersion: v1.0
 class: CommandLineTool
 hints:
   - class: DockerRequirement
-    dockerPull: 'miasteinberg/trim-galore'
+    dockerPull: 'dukegcb/trim-galore:0.4.4'
 
 inputs:
   paired:

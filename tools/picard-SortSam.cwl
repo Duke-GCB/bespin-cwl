@@ -5,7 +5,7 @@ class: CommandLineTool
 
 requirements:
 - class: DockerRequirement
-  dockerPull: dukegcb/picard
+  dockerPull: dukegcb/picard:2.10.7
 - class: InlineJavascriptRequirement
 
 inputs:
@@ -39,7 +39,7 @@ outputs:
 
 baseCommand: ["java", "-Xmx4g"]
 arguments:
-- valueFrom: "/usr/picard/picard.jar"
+- valueFrom: "/opt/picard/picard.jar"
   position: -1
   prefix: -jar
 - valueFrom: SortSam

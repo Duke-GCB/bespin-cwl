@@ -5,7 +5,8 @@ class: CommandLineTool
 
 requirements:
 - $import: envvar-global.yml
-- $import: bwa-samtools-docker.yml
+- class: DockerRequirement
+  dockerPull: 'dukegcb/bwa-samtools:0.7.12_1.2.1-254-6462e34'
 - class: InlineJavascriptRequirement
 
 inputs:
