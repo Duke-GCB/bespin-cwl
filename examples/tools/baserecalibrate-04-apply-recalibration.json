@@ -1,0 +1,20 @@
+{
+    "GATKJar": {
+        "class": "File",
+        "path": "/home/ubuntu/GenomeAnalysisTK-3.8/GenomeAnalysisTK.jar"
+    },
+    "inputBam_printReads": {
+        "class": "File",
+        "path": "/home/ubuntu/bespin-cwl/data/with-read-groups.bam"
+    },
+    "input_baseRecalibrator": {
+        "class": "File",
+        "path": "/home/ubuntu/bespin-cwl/data/recal_data.table"
+    },
+    "outputfile_printReads": "recal_reads.bam",
+    "intervals": ["20"],
+    "reference": {
+        "class": "File",
+        "path": "/home/ubuntu/data/b37/human_g1k_v37.fasta"
+    }
+}

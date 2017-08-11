@@ -1,0 +1,31 @@
+{
+  "GATKJar": {
+    "class": "File",
+    "path": "/home/ubuntu/GenomeAnalysisTK-3.8/GenomeAnalysisTK.jar"
+  },
+  "intervals": [
+    {
+      "class": "File",
+      "path": "/home/ubuntu/data/capture/SeqCap_EZ_Exome_v3_capture.noChr.bed"
+    }
+  ],
+  "reference_genome": {
+    "class": "File",
+    "path": "/home/ubuntu/data/b37/human_g1k_v37.fasta"
+  },
+  "supporting_callsets": [
+    {
+      "class": "File",
+      "path": "/home/ubuntu/data/b37/1000G_phase3_v4_20130502.sites.vcf"
+    }
+  ],
+  "threads": 30,
+  "variants_indels": {
+    "class": "File",
+    "path": "/home/ubuntu/bespin-cwl/data/variant_discovery_applyrecal/indels_recalibrated.vcf"
+  },
+  "variants_snps": {
+    "class": "File",
+    "path": "/home/ubuntu/bespin-cwl/data/variant_discovery_applyrecal/snps_recalibrated.vcf"
+  }
+}

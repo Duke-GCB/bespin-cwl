@@ -1,0 +1,11 @@
+{
+  "read_group_library": "LIBRARY",
+  "read_group_sample_name": "sample1",
+  "read_group_platform": "illumina",
+  "read_group_platform_unit": "AB1234",
+  "output_filename": "with-read-groups.bam", 
+  "input_file": {
+    "path": "/home/ubuntu/bespin-cwl/data/marked_duplicates.bam", 
+    "class": "File"
+  }
+}

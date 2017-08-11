@@ -1,0 +1,7 @@
+{
+    "input": {
+        "path": "/home/ubuntu/bespin-cwl/data/recalibrate/recal_reads.bam",
+        "class": "File"
+    },
+    "bai": true
+}

@@ -76,7 +76,7 @@ steps:
       - trimmed_reads
       - trim_reports
   align:
-    run: ../community-workflows/tools/STAR.cwl
+    run: ../tools/STAR.cwl
     in:
       genomeDir: star_genome
       readFilesIn: trim/trimmed_reads
@@ -96,7 +96,7 @@ steps:
       - aligned
       - logs
   index:
-    run: ../community-workflows/tools/samtools-index.cwl
+    run: ../tools/samtools-index.cwl
     in:
       input: align/aligned
       bai:

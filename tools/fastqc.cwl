@@ -4,7 +4,7 @@ cwlVersion: v1.0
 class: CommandLineTool
 hints:
   - class: DockerRequirement
-    dockerPull: 'dukegcb/fastqc'
+    dockerPull: 'dukegcb/fastqc:0.11.4'
 
 requirements:
   - class: InlineJavascriptRequirement
@@ -38,7 +38,7 @@ outputs:
   output_qc_report:
     type: File
     outputBinding:
-      glob: $(inputs.input_fastq_file.path.replace(/^.*[\\\/]/, "").replace(/\.[^/.]+$/, '') + "_fastqc.zip")
+      glob: "*_fastqc.zip"
 
 baseCommand: fastqc
 arguments:

@@ -4,7 +4,7 @@ cwlVersion: v1.0
 class: CommandLineTool
 hints:
   - class: DockerRequirement
-    dockerPull: 'miasteinberg/trim-galore'
+    dockerPull: 'dukegcb/trim-galore:0.4.4'
 
 inputs:
   paired:
@@ -25,7 +25,7 @@ outputs:
       type: array
       items: File
     outputBinding:
-      glob: "*_val_*.fq"
+      glob: "*_val_*.fq*"
   trim_reports:
     type:
       type: array

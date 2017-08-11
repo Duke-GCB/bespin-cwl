@@ -1,0 +1,26 @@
+{
+    "GATKJar": {
+        "class": "File",
+        "path": "/home/ubuntu/GenomeAnalysisTK-3.8/GenomeAnalysisTK.jar"
+    },
+    "inputBam_BaseRecalibrator": {
+        "class": "File",
+        "path": "/home/ubuntu/bespin-cwl/data/with-read-groups.bam"
+    },
+    "knownSites": [
+        {
+            "class": "File",
+            "path": "/home/ubuntu/data/b37/dbsnp_138.b37.vcf"
+        },
+        {
+            "class": "File",
+            "path": "/home/ubuntu/data/b37/Mills_and_1000G_gold_standard.indels.b37.vcf"
+        }
+    ],
+    "outputfile_BaseRecalibrator": "recal_data.table",
+    "intervals": ["20"],
+    "reference": {
+        "class": "File",
+        "path": "/home/ubuntu/data/b37/human_g1k_v37.fasta"
+    }
+}

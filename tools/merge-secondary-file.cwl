@@ -1,6 +1,6 @@
 #!/usr/bin/env cwl-runner
 
-# This is not working with cwltool - see https://github.com/common-workflow-language/cwltool/issues/248
+# This tool works in workflows but not as a standalone cwltool - see https://github.com/common-workflow-language/cwltool/issues/248
 
 cwlVersion: v1.0
 class: ExpressionTool

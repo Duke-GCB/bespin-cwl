@@ -1,0 +1,6 @@
+{
+  "input_file": {
+    "path": "/home/ubuntu/bespin-cwl/data/mapped.bam", 
+    "class": "File"
+  }
+}
