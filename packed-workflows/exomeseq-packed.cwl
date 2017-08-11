@@ -17,10 +17,7 @@
                 }, 
                 {
                     "class": "DockerRequirement", 
-                    "dockerPull": "dukegcb/gatk_base", 
-                    "dockerFile": "$import: GATK-Dockerfile\n", 
-                    "id": "#GATK-docker.yml", 
-                    "name": "#GATK-docker.yml"
+                    "dockerPull": "dukegcb/gatk-base:3"
                 }
             ], 
             "inputs": [
@@ -176,7 +173,8 @@
                     "$import": "#envvar-global.yml"
                 }, 
                 {
-                    "$import": "#GATK-docker.yml"
+                    "class": "DockerRequirement", 
+                    "dockerPull": "dukegcb/gatk-base:3"
                 }
             ], 
             "inputs": [
@@ -572,7 +570,8 @@
                     "$import": "#envvar-global.yml"
                 }, 
                 {
-                    "$import": "#GATK-docker.yml"
+                    "class": "DockerRequirement", 
+                    "dockerPull": "dukegcb/gatk-base:3"
                 }
             ], 
             "inputs": [
@@ -903,7 +902,8 @@
                     "$import": "#envvar-global.yml"
                 }, 
                 {
-                    "$import": "#GATK-docker.yml"
+                    "class": "DockerRequirement", 
+                    "dockerPull": "dukegcb/gatk-base:3"
                 }
             ], 
             "inputs": [
@@ -1707,7 +1707,8 @@
                     "$import": "#envvar-global.yml"
                 }, 
                 {
-                    "$import": "#GATK-docker.yml"
+                    "class": "DockerRequirement", 
+                    "dockerPull": "dukegcb/gatk-base:3"
                 }
             ], 
             "inputs": [
@@ -1934,7 +1935,8 @@
                     "$import": "#envvar-global.yml"
                 }, 
                 {
-                    "$import": "#GATK-docker.yml"
+                    "class": "DockerRequirement", 
+                    "dockerPull": "dukegcb/gatk-base:3"
                 }
             ], 
             "inputs": [
@@ -2153,7 +2155,8 @@
                     "$import": "#envvar-global.yml"
                 }, 
                 {
-                    "$import": "#GATK-docker.yml"
+                    "class": "DockerRequirement", 
+                    "dockerPull": "dukegcb/gatk-base:3"
                 }
             ], 
             "inputs": [
@@ -2396,10 +2399,7 @@
                 }, 
                 {
                     "class": "DockerRequirement", 
-                    "dockerPull": "dukegcb/bwa_samtools:v0.7.12_1.2-242-4d56437", 
-                    "dockerFile": "$import: bwa-samtools-Dockerfile\n", 
-                    "id": "#bwa-samtools-docker.yml", 
-                    "name": "#bwa-samtools-docker.yml"
+                    "dockerPull": "dukegcb/bwa-samtools:0.7.12_1.2.1-254-6462e34"
                 }, 
                 {
                     "class": "InlineJavascriptRequirement"
@@ -2419,7 +2419,7 @@
                         "prefix": "-I", 
                         "itemSeparator": ","
                     }, 
-                    "id": "#bwa-mem.cwl/min_std_max_min"
+                    "id": "#bwa-mem-samtools.cwl/min_std_max_min"
                 }, 
                 {
                     "type": [
@@ -2431,11 +2431,11 @@
                         "prefix": "-k"
                     }, 
                     "doc": "-k INT        minimum seed length [19]", 
-                    "id": "#bwa-mem.cwl/minimum_seed_length"
+                    "id": "#bwa-mem-samtools.cwl/minimum_seed_length"
                 }, 
                 {
                     "type": "string", 
-                    "id": "#bwa-mem.cwl/output_filename"
+                    "id": "#bwa-mem-samtools.cwl/output_filename"
                 }, 
                 {
                     "type": [
@@ -2447,7 +2447,7 @@
                         "prefix": "-R"
                     }, 
                     "doc": "-R STR        read group header line such as '@RG\\tID:foo\\tSM:bar' [null]", 
-                    "id": "#bwa-mem.cwl/read_group_header"
+                    "id": "#bwa-mem-samtools.cwl/read_group_header"
                 }, 
                 {
                     "type": {
@@ -2457,7 +2457,7 @@
                     "inputBinding": {
                         "position": 3
                     }, 
-                    "id": "#bwa-mem.cwl/reads"
+                    "id": "#bwa-mem-samtools.cwl/reads"
                 }, 
                 {
                     "type": "File", 
@@ -2471,7 +2471,7 @@
                         ".pac", 
                         ".sa"
                     ], 
-                    "id": "#bwa-mem.cwl/reference"
+                    "id": "#bwa-mem-samtools.cwl/reference"
                 }, 
                 {
                     "type": [
@@ -2483,7 +2483,7 @@
                         "prefix": "-t"
                     }, 
                     "doc": "-t INT        number of threads [1]", 
-                    "id": "#bwa-mem.cwl/threads"
+                    "id": "#bwa-mem-samtools.cwl/threads"
                 }
             ], 
             "stdout": "$(inputs.output_filename)", 
@@ -2493,21 +2493,21 @@
                     "outputBinding": {
                         "glob": "$(inputs.output_filename)"
                     }, 
-                    "id": "#bwa-mem.cwl/output"
+                    "id": "#bwa-mem-samtools.cwl/output"
                 }
             ], 
             "baseCommand": [
                 "bwamem-to-samtools.sh"
             ], 
             "doc": "Usage: bwa mem [options] <idxbase> <in1.fq> [in2.fq]\n\nAlgorithm options:\n       -w INT        band width for banded alignment [100]\n       -d INT        off-diagonal X-dropoff [100]\n       -r FLOAT      look for internal seeds inside a seed longer than {-k} * FLOAT [1.5]\n       -y INT        seed occurrence for the 3rd round seeding [20]\n       -c INT        skip seeds with more than INT occurrences [500]\n       -D FLOAT      drop chains shorter than FLOAT fraction of the longest overlapping chain [0.50]\n       -W INT        discard a chain if seeded bases shorter than INT [0]\n       -m INT        perform at most INT rounds of mate rescues for each read [50]\n       -S            skip mate rescue\n       -P            skip pairing; mate rescue performed unless -S also in use\n       -e            discard full-length exact matches\n\nScoring options:\n\n       -A INT        score for a sequence match, which scales options -TdBOELU unless overridden [1]\n       -B INT        penalty for a mismatch [4]\n       -O INT[,INT]  gap open penalties for deletions and insertions [6,6]\n       -E INT[,INT]  gap extension penalty; a gap of size k cost '{-O} + {-E}*k' [1,1]\n       -L INT[,INT]  penalty for 5'- and 3'-end clipping [5,5]\n       -U INT        penalty for an unpaired read pair [17]\n\n       -x STR        read type. Setting -x changes multiple parameters unless overriden [null]\n                     pacbio: -k17 -W40 -r10 -A1 -B1 -O1 -E1 -L0  (PacBio reads to ref)\n                     ont2d: -k14 -W20 -r10 -A1 -B1 -O1 -E1 -L0  (Oxford Nanopore 2D-reads to ref)\n                     intractg: -B9 -O16 -L5  (intra-species contigs to ref)\n\nInput/output options:\n\n       -p            smart pairing (ignoring in2.fq)\n       -R STR        read group header line such as '@RG\\tID:foo\\tSM:bar' [null]\n       -H STR/FILE   insert STR to header if it starts with @; or insert lines in FILE [null]\n       -j            treat ALT contigs as part of the primary assembly (i.e. ignore <idxbase>.alt file)\n\n       -v INT        verbose level: 1=error, 2=warning, 3=message, 4+=debugging [3]\n       -T INT        minimum score to output [30]\n       -h INT[,INT]  if there are <INT hits with score >80% of the max score, output all in XA [5,200]\n       -a            output all alignments for SE or unpaired PE\n       -C            append FASTA/FASTQ comment to SAM output\n       -V            output the reference FASTA header in the XR tag\n       -Y            use soft clipping for supplementary alignments\n       -M            mark shorter split hits as secondary\n\n       -I FLOAT[,FLOAT[,INT[,INT]]]\n                     specify the mean, standard deviation (10% of the mean if absent), max\n                     (4 sigma from the mean if absent) and min of the insert size distribution.\n                     FR orientation only. [inferred]\n\nNote: Please read the man page for detailed description of the command line and options.\n", 
-            "id": "#bwa-mem.cwl"
+            "id": "#bwa-mem-samtools.cwl"
         }, 
         {
             "class": "CommandLineTool", 
             "hints": [
                 {
                     "class": "DockerRequirement", 
-                    "dockerPull": "dukegcb/fastqc"
+                    "dockerPull": "dukegcb/fastqc:0.11.4"
                 }
             ], 
             "requirements": [
@@ -2683,7 +2683,7 @@
             "requirements": [
                 {
                     "class": "DockerRequirement", 
-                    "dockerPull": "dukegcb/picard"
+                    "dockerPull": "dukegcb/picard:2.10.7"
                 }, 
                 {
                     "class": "InlineJavascriptRequirement"
@@ -2764,7 +2764,7 @@
                     "position": -2
                 }, 
                 {
-                    "valueFrom": "/usr/picard/picard.jar", 
+                    "valueFrom": "/opt/picard/picard.jar", 
                     "position": -1, 
                     "prefix": "-jar"
                 }, 
@@ -2784,7 +2784,7 @@
             "requirements": [
                 {
                     "class": "DockerRequirement", 
-                    "dockerPull": "dukegcb/picard"
+                    "dockerPull": "dukegcb/picard:2.10.7"
                 }, 
                 {
                     "class": "InlineJavascriptRequirement"
@@ -2842,7 +2842,7 @@
             ], 
             "arguments": [
                 {
-                    "valueFrom": "/usr/picard/picard.jar", 
+                    "valueFrom": "/opt/picard/picard.jar", 
                     "position": -1, 
                     "prefix": "-jar"
                 }, 
@@ -2858,7 +2858,7 @@
             "hints": [
                 {
                     "class": "DockerRequirement", 
-                    "dockerPull": "miasteinberg/trim-galore"
+                    "dockerPull": "dukegcb/trim-galore:0.4.4"
                 }
             ], 
             "inputs": [
@@ -3034,7 +3034,7 @@
                     "id": "#exomeseq-01-preprocessing.cwl/generate_filenames"
                 }, 
                 {
-                    "run": "#bwa-mem.cwl", 
+                    "run": "#bwa-mem-samtools.cwl", 
                     "requirements": [
                         {
                             "class": "ResourceRequirement", 
