@@ -1,7 +1,7 @@
 {
   "GATKJar": {
     "class": "File",
-    "path": "/data/exome-seq/GenomeAnalysisTK-3.7/GenomeAnalysisTK.jar"
+    "path": "/data/exome-seq/GenomeAnalysisTK-3.8/GenomeAnalysisTK.jar"
   },
   "indel_resource_mills": {
     "class": "File",

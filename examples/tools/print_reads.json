@@ -1,7 +1,7 @@
 {
   "GATKJar": {
     "class": "File",
-    "path": "/home/ubuntu/GenomeAnalysisTK-3.7/GenomeAnalysisTK.jar"
+    "path": "/home/ubuntu/GenomeAnalysisTK-3.8/GenomeAnalysisTK.jar"
   },
   "inputBam_printReads": {
     "class": "File",
