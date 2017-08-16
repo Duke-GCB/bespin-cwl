@@ -143,6 +143,7 @@ steps:
   variant_discovery:
     run: exomeseq-02-variantdiscovery.cwl
     in:
+      name: library
       intervals: intervals
       interval_padding: interval_padding
       raw_variants: preprocessing/raw_variants

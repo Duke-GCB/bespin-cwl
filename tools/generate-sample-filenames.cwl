@@ -2,7 +2,7 @@
 
 cwlVersion: v1.0
 class: ExpressionTool
-label: Generates a set of file names for preprocesisng steps based on an input sample name
+label: Generates a set of file names for preprocessing steps based on an input sample name
 requirements:
   - class: InlineJavascriptRequirement
 
@@ -15,7 +15,7 @@ outputs:
   dedup_metrics_output_filename: string
   recal_reads_output_filename: string
   recal_table_output_filename: string
-
+  raw_variants_output_filename: string
 
 expression: >
   ${
@@ -30,6 +30,7 @@ expression: >
       dedup_reads_output_filename: makeFilename(base, 'dedup', 'bam'),
       dedup_metrics_output_filename: makeFilename(base, 'dedup-metrics', 'out'),
       recal_reads_output_filename: makeFilename(base, 'recal', 'bam'),
-      recal_table_output_filename: makeFilename(base, 'recal', 'table')
+      recal_table_output_filename: makeFilename(base, 'recal', 'table'),
+      raw_variants_output_filename: makeFilename(base, 'raw_variants', 'g.vcf')
     };
   }

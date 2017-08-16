@@ -5,6 +5,7 @@ class: Workflow
 requirements:
   - class: ScatterFeatureRequirement
 inputs:
+  name: string
   intervals: File[]?
   interval_padding: int?
   # NOTE: Should be at least 20 samples for exome
@@ -63,7 +64,21 @@ outputs:
     outputSource: apply_recalibration_indels/output_recalibrated_vcf
     doc: "The output filtered and recalibrated VCF file in INDEL mode in which each variant is annotated with its VQSLOD value"
 steps:
-  # TODO: At this point, should merge VCFs if we had lots of them
+  generate_joint_filenames:
+    run: ../tools/generate-joint-filenames.cwl
+    in:
+      name: name
+    out:
+      - joint_genotype_raw_variants_output_filename
+      - snps_vqsr_recal_output_filename
+      - snps_vqsr_tranches_output_filename
+      - snps_vqsr_rscript_output_filename
+      - snps_recalibrated_output_filename
+      - indels_vqsr_recal_output_filename
+      - indels_vqsr_tranches_output_filename
+      - indels_vqsr_rscript_output_filename
+      - indels_recalibrated_output_filename
+  # TODO: We may want to merge VCFs if we had lots of them
   # See Merge (optional) on https://software.broadinstitute.org/gatk/best-practices/bp_3step.php?case=GermShortWGS&p=2
   joint_genotyping:
     run: ../tools/GATK-GenotypeGVCFs.cwl
@@ -85,8 +100,7 @@ steps:
       group:
         default: ['StandardAnnotation']
       dbsnp: resource_dbsnp
-      outputfile_GenotypeGVCFs:
-        default: "joint_genotype_raw_variants.g.vcf"
+      outputfile_GenotypeGVCFs: generate_joint_filenames/joint_genotype_raw_variants_output_filename
     out:
       - output_GenotypeGVCFs
   # Recommendations from https://software.broadinstitute.org/gatk/documentation/article?id=1259
@@ -98,12 +112,9 @@ steps:
       variants: joint_genotyping/output_GenotypeGVCFs
       threads:
         default: 1
-      outputfile_recal:
-        default: "snps_vqsr_recal.out"
-      outputfile_tranches:
-        default: "snps_vqsr_tranches.out"
-      outputfile_rscript:
-        default: "snps_vqsr.R"
+      outputfile_recal: generate_joint_filenames/snps_vqsr_recal_output_filename
+      outputfile_tranches: generate_joint_filenames/snps_vqsr_tranches_output_filename
+      outputfile_rscript: generate_joint_filenames/snps_vqsr_rscript_output_filename
       resource_hapmap: snp_resource_hapmap
       resource_omni: snp_resource_omni
       resource_1kg: snp_resource_1kg
@@ -130,8 +141,7 @@ steps:
       threads: threads
       tranches_file: variant_recalibration_snps/tranches_File
       recal_file: variant_recalibration_snps/recal_File
-      outputfile_recalibrated_vcf:
-        default: "snps_recalibrated.vcf"
+      outputfile_recalibrated_vcf: generate_joint_filenames/snps_recalibrated_output_filename
       ts_filter_level:
         default: 99.0
       mode:
@@ -146,12 +156,9 @@ steps:
       variants: joint_genotyping/output_GenotypeGVCFs
       threads:
         default: 1
-      outputfile_recal:
-        default: "indels_vqsr_recal.out"
-      outputfile_tranches:
-        default: "indels_vqsr_tranches.out"
-      outputfile_rscript:
-        default: "indels_vqsr.R"
+      outputfile_recal: generate_joint_filenames/indels_vqsr_recal_output_filename
+      outputfile_tranches: generate_joint_filenames/indels_vqsr_tranches_output_filename
+      outputfile_rscript: generate_joint_filenames/indels_vqsr_rscript_output_filename
       resource_mills: indel_resource_mills
       resource_dbsnp: resource_dbsnp
       # annotations, See https://software.broadinstitute.org/gatk/documentation/article?id=1259
@@ -175,8 +182,7 @@ steps:
       threads: threads
       tranches_file: variant_recalibration_indels/tranches_File
       recal_file: variant_recalibration_indels/recal_File
-      outputfile_recalibrated_vcf:
-        default: "indels_recalibrated.vcf"
+      outputfile_recalibrated_vcf: generate_joint_filenames/indels_recalibrated_output_filename
       ts_filter_level:
         default: 99.0
       mode:
