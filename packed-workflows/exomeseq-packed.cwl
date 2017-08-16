@@ -2577,7 +2577,7 @@
         }, 
         {
             "class": "ExpressionTool", 
-            "label": "Generates a set of file names for preprocesisng steps based on an input sample name", 
+            "label": "Generates a set of file names for joint steps based on an input name", 
             "requirements": [
                 {
                     "class": "InlineJavascriptRequirement"
@@ -2586,37 +2586,96 @@
             "inputs": [
                 {
                     "type": "string", 
-                    "id": "#generate-filenames.cwl/sample_name"
+                    "id": "#generate-joint-filenames.cwl/name"
                 }
             ], 
             "outputs": [
                 {
                     "type": "string", 
-                    "id": "#generate-filenames.cwl/dedup_metrics_output_filename"
+                    "id": "#generate-joint-filenames.cwl/indels_recalibrated_output_filename"
                 }, 
                 {
                     "type": "string", 
-                    "id": "#generate-filenames.cwl/dedup_reads_output_filename"
+                    "id": "#generate-joint-filenames.cwl/indels_vqsr_recal_output_filename"
                 }, 
                 {
                     "type": "string", 
-                    "id": "#generate-filenames.cwl/mapped_reads_output_filename"
+                    "id": "#generate-joint-filenames.cwl/indels_vqsr_rscript_output_filename"
                 }, 
                 {
                     "type": "string", 
-                    "id": "#generate-filenames.cwl/recal_reads_output_filename"
+                    "id": "#generate-joint-filenames.cwl/indels_vqsr_tranches_output_filename"
                 }, 
                 {
                     "type": "string", 
-                    "id": "#generate-filenames.cwl/recal_table_output_filename"
+                    "id": "#generate-joint-filenames.cwl/joint_genotype_raw_variants_output_filename"
                 }, 
                 {
                     "type": "string", 
-                    "id": "#generate-filenames.cwl/sorted_reads_output_filename"
+                    "id": "#generate-joint-filenames.cwl/snps_recalibrated_output_filename"
+                }, 
+                {
+                    "type": "string", 
+                    "id": "#generate-joint-filenames.cwl/snps_vqsr_recal_output_filename"
+                }, 
+                {
+                    "type": "string", 
+                    "id": "#generate-joint-filenames.cwl/snps_vqsr_rscript_output_filename"
+                }, 
+                {
+                    "type": "string", 
+                    "id": "#generate-joint-filenames.cwl/snps_vqsr_tranches_output_filename"
                 }
             ], 
-            "expression": "${\n  function makeFilename(base, suffix, extension) {\n    return base + '-' + suffix + '.' + extension;\n  }\n  var base = inputs.sample_name\n\n  return {\n    mapped_reads_output_filename: makeFilename(base, 'mapped', 'bam'),\n    sorted_reads_output_filename: makeFilename(base, 'sorted', 'bam'),\n    dedup_reads_output_filename: makeFilename(base, 'dedup', 'bam'),\n    dedup_metrics_output_filename: makeFilename(base, 'dedup-metrics', 'out'),\n    recal_reads_output_filename: makeFilename(base, 'recal', 'bam'),\n    recal_table_output_filename: makeFilename(base, 'recal', 'table')\n  };\n}\n", 
-            "id": "#generate-filenames.cwl"
+            "expression": "${\n  function makeFilename(base, suffix, extension) {\n    return base + '-' + suffix + '.' + extension;\n  }\n  var base = inputs.name\n\n  return {\n    joint_genotype_raw_variants_output_filename: makeFilename(base, 'raw_variants', 'g.vcf'),\n    snps_vqsr_recal_output_filename: makeFilename(base, 'snps_vqsr_recal', 'out'),\n    snps_vqsr_tranches_output_filename: makeFilename(base, 'snps_vqsr_tranches', 'out'),\n    snps_vqsr_rscript_output_filename: makeFilename(base, 'snps_vqsr', 'R'),\n    snps_recalibrated_output_filename: makeFilename(base, 'snps_recalibrated', 'vcf'),\n    indels_vqsr_recal_output_filename: makeFilename(base, 'indels_vqsr_recal', 'out'),\n    indels_vqsr_tranches_output_filename: makeFilename(base, 'indels_vqsr_tranches', 'out'),\n    indels_vqsr_rscript_output_filename: makeFilename(base, 'indels_vqsr', 'R'),\n    indels_recalibrated_output_filename: makeFilename(base, 'indels_recalibrated', 'vcf')\n  };\n}\n", 
+            "id": "#generate-joint-filenames.cwl"
+        }, 
+        {
+            "class": "ExpressionTool", 
+            "label": "Generates a set of file names for preprocessing steps based on an input sample name", 
+            "requirements": [
+                {
+                    "class": "InlineJavascriptRequirement"
+                }
+            ], 
+            "inputs": [
+                {
+                    "type": "string", 
+                    "id": "#generate-sample-filenames.cwl/sample_name"
+                }
+            ], 
+            "outputs": [
+                {
+                    "type": "string", 
+                    "id": "#generate-sample-filenames.cwl/dedup_metrics_output_filename"
+                }, 
+                {
+                    "type": "string", 
+                    "id": "#generate-sample-filenames.cwl/dedup_reads_output_filename"
+                }, 
+                {
+                    "type": "string", 
+                    "id": "#generate-sample-filenames.cwl/mapped_reads_output_filename"
+                }, 
+                {
+                    "type": "string", 
+                    "id": "#generate-sample-filenames.cwl/raw_variants_output_filename"
+                }, 
+                {
+                    "type": "string", 
+                    "id": "#generate-sample-filenames.cwl/recal_reads_output_filename"
+                }, 
+                {
+                    "type": "string", 
+                    "id": "#generate-sample-filenames.cwl/recal_table_output_filename"
+                }, 
+                {
+                    "type": "string", 
+                    "id": "#generate-sample-filenames.cwl/sorted_reads_output_filename"
+                }
+            ], 
+            "expression": "${\n  function makeFilename(base, suffix, extension) {\n    return base + '-' + suffix + '.' + extension;\n  }\n  var base = inputs.sample_name\n\n  return {\n    mapped_reads_output_filename: makeFilename(base, 'mapped', 'bam'),\n    sorted_reads_output_filename: makeFilename(base, 'sorted', 'bam'),\n    dedup_reads_output_filename: makeFilename(base, 'dedup', 'bam'),\n    dedup_metrics_output_filename: makeFilename(base, 'dedup-metrics', 'out'),\n    recal_reads_output_filename: makeFilename(base, 'recal', 'bam'),\n    recal_table_output_filename: makeFilename(base, 'recal', 'table'),\n    raw_variants_output_filename: makeFilename(base, 'raw_variants', 'g.vcf')\n  };\n}\n", 
+            "id": "#generate-sample-filenames.cwl"
         }, 
         {
             "class": "ExpressionTool", 
@@ -2979,6 +3038,10 @@
                     "id": "#exomeseq-01-preprocessing.cwl/reference_genome"
                 }, 
                 {
+                    "type": "File", 
+                    "id": "#exomeseq-01-preprocessing.cwl/resource_dbsnp"
+                }, 
+                {
                     "type": [
                         "null", 
                         "int"
@@ -2994,6 +3057,15 @@
                     }, 
                     "outputSource": "#exomeseq-01-preprocessing.cwl/qc/output_qc_report", 
                     "id": "#exomeseq-01-preprocessing.cwl/qc_reports"
+                }, 
+                {
+                    "type": {
+                        "type": "array", 
+                        "items": "File"
+                    }, 
+                    "outputSource": "#exomeseq-01-preprocessing.cwl/variant_calling/output_HaplotypeCaller", 
+                    "doc": "VCF files from per sample variant calling", 
+                    "id": "#exomeseq-01-preprocessing.cwl/raw_variants"
                 }, 
                 {
                     "type": "File", 
@@ -3016,22 +3088,23 @@
             ], 
             "steps": [
                 {
-                    "run": "#generate-filenames.cwl", 
+                    "run": "#generate-sample-filenames.cwl", 
                     "in": [
                         {
                             "source": "#exomeseq-01-preprocessing.cwl/parse_read_group_header/sample_name", 
-                            "id": "#exomeseq-01-preprocessing.cwl/generate_filenames/sample_name"
+                            "id": "#exomeseq-01-preprocessing.cwl/generate_sample_filenames/sample_name"
                         }
                     ], 
                     "out": [
-                        "#exomeseq-01-preprocessing.cwl/generate_filenames/mapped_reads_output_filename", 
-                        "#exomeseq-01-preprocessing.cwl/generate_filenames/sorted_reads_output_filename", 
-                        "#exomeseq-01-preprocessing.cwl/generate_filenames/dedup_reads_output_filename", 
-                        "#exomeseq-01-preprocessing.cwl/generate_filenames/dedup_metrics_output_filename", 
-                        "#exomeseq-01-preprocessing.cwl/generate_filenames/recal_reads_output_filename", 
-                        "#exomeseq-01-preprocessing.cwl/generate_filenames/recal_table_output_filename"
+                        "#exomeseq-01-preprocessing.cwl/generate_sample_filenames/mapped_reads_output_filename", 
+                        "#exomeseq-01-preprocessing.cwl/generate_sample_filenames/sorted_reads_output_filename", 
+                        "#exomeseq-01-preprocessing.cwl/generate_sample_filenames/dedup_reads_output_filename", 
+                        "#exomeseq-01-preprocessing.cwl/generate_sample_filenames/dedup_metrics_output_filename", 
+                        "#exomeseq-01-preprocessing.cwl/generate_sample_filenames/recal_reads_output_filename", 
+                        "#exomeseq-01-preprocessing.cwl/generate_sample_filenames/recal_table_output_filename", 
+                        "#exomeseq-01-preprocessing.cwl/generate_sample_filenames/raw_variants_output_filename"
                     ], 
-                    "id": "#exomeseq-01-preprocessing.cwl/generate_filenames"
+                    "id": "#exomeseq-01-preprocessing.cwl/generate_sample_filenames"
                 }, 
                 {
                     "run": "#bwa-mem-samtools.cwl", 
@@ -3046,7 +3119,7 @@
                     ], 
                     "in": [
                         {
-                            "source": "#exomeseq-01-preprocessing.cwl/generate_filenames/mapped_reads_output_filename", 
+                            "source": "#exomeseq-01-preprocessing.cwl/generate_sample_filenames/mapped_reads_output_filename", 
                             "id": "#exomeseq-01-preprocessing.cwl/map/output_filename"
                         }, 
                         {
@@ -3088,11 +3161,11 @@
                             "id": "#exomeseq-01-preprocessing.cwl/mark_duplicates/input_file"
                         }, 
                         {
-                            "source": "#exomeseq-01-preprocessing.cwl/generate_filenames/dedup_metrics_output_filename", 
+                            "source": "#exomeseq-01-preprocessing.cwl/generate_sample_filenames/dedup_metrics_output_filename", 
                             "id": "#exomeseq-01-preprocessing.cwl/mark_duplicates/metrics_filename"
                         }, 
                         {
-                            "source": "#exomeseq-01-preprocessing.cwl/generate_filenames/dedup_reads_output_filename", 
+                            "source": "#exomeseq-01-preprocessing.cwl/generate_sample_filenames/dedup_reads_output_filename", 
                             "id": "#exomeseq-01-preprocessing.cwl/mark_duplicates/output_filename"
                         }
                     ], 
@@ -3188,7 +3261,7 @@
                             "id": "#exomeseq-01-preprocessing.cwl/recalibrate_01_analyze/knownSites"
                         }, 
                         {
-                            "source": "#exomeseq-01-preprocessing.cwl/generate_filenames/recal_table_output_filename", 
+                            "source": "#exomeseq-01-preprocessing.cwl/generate_sample_filenames/recal_table_output_filename", 
                             "id": "#exomeseq-01-preprocessing.cwl/recalibrate_01_analyze/outputfile_BaseRecalibrator"
                         }, 
                         {
@@ -3232,7 +3305,7 @@
                             "id": "#exomeseq-01-preprocessing.cwl/recalibrate_02_apply/intervals"
                         }, 
                         {
-                            "source": "#exomeseq-01-preprocessing.cwl/generate_filenames/recal_reads_output_filename", 
+                            "source": "#exomeseq-01-preprocessing.cwl/generate_sample_filenames/recal_reads_output_filename", 
                             "id": "#exomeseq-01-preprocessing.cwl/recalibrate_02_apply/outputfile_printReads"
                         }, 
                         {
@@ -3262,7 +3335,7 @@
                             "id": "#exomeseq-01-preprocessing.cwl/sort/input_file"
                         }, 
                         {
-                            "source": "#exomeseq-01-preprocessing.cwl/generate_filenames/sorted_reads_output_filename", 
+                            "source": "#exomeseq-01-preprocessing.cwl/generate_sample_filenames/sorted_reads_output_filename", 
                             "id": "#exomeseq-01-preprocessing.cwl/sort/output_filename"
                         }
                     ], 
@@ -3295,6 +3368,65 @@
                         "#exomeseq-01-preprocessing.cwl/trim/trim_reports"
                     ], 
                     "id": "#exomeseq-01-preprocessing.cwl/trim"
+                }, 
+                {
+                    "run": "#GATK-HaplotypeCaller.cwl", 
+                    "requirements": [
+                        {
+                            "class": "ResourceRequirement", 
+                            "coresMin": 4, 
+                            "ramMin": 16384
+                        }
+                    ], 
+                    "in": [
+                        {
+                            "source": "#exomeseq-01-preprocessing.cwl/GATKJar", 
+                            "id": "#exomeseq-01-preprocessing.cwl/variant_calling/GATKJar"
+                        }, 
+                        {
+                            "default": 8, 
+                            "id": "#exomeseq-01-preprocessing.cwl/variant_calling/cpu_threads"
+                        }, 
+                        {
+                            "source": "#exomeseq-01-preprocessing.cwl/resource_dbsnp", 
+                            "id": "#exomeseq-01-preprocessing.cwl/variant_calling/dbsnp"
+                        }, 
+                        {
+                            "default": "GVCF", 
+                            "id": "#exomeseq-01-preprocessing.cwl/variant_calling/emitRefConfidence"
+                        }, 
+                        {
+                            "default": [
+                                "StandardAnnotation", 
+                                "AS_StandardAnnotation"
+                            ], 
+                            "id": "#exomeseq-01-preprocessing.cwl/variant_calling/group"
+                        }, 
+                        {
+                            "source": "#exomeseq-01-preprocessing.cwl/recalibrate_02_apply/output_printReads", 
+                            "id": "#exomeseq-01-preprocessing.cwl/variant_calling/inputBam_HaplotypeCaller"
+                        }, 
+                        {
+                            "source": "#exomeseq-01-preprocessing.cwl/interval_padding", 
+                            "id": "#exomeseq-01-preprocessing.cwl/variant_calling/interval_padding"
+                        }, 
+                        {
+                            "source": "#exomeseq-01-preprocessing.cwl/intervals", 
+                            "id": "#exomeseq-01-preprocessing.cwl/variant_calling/intervals"
+                        }, 
+                        {
+                            "source": "#exomeseq-01-preprocessing.cwl/generate_sample_filenames/raw_variants_output_filename", 
+                            "id": "#exomeseq-01-preprocessing.cwl/variant_calling/outputfile_HaplotypeCaller"
+                        }, 
+                        {
+                            "source": "#exomeseq-01-preprocessing.cwl/reference_genome", 
+                            "id": "#exomeseq-01-preprocessing.cwl/variant_calling/reference"
+                        }
+                    ], 
+                    "out": [
+                        "#exomeseq-01-preprocessing.cwl/variant_calling/output_HaplotypeCaller"
+                    ], 
+                    "id": "#exomeseq-01-preprocessing.cwl/variant_calling"
                 }
             ], 
             "id": "#exomeseq-01-preprocessing.cwl"
@@ -3333,11 +3465,15 @@
                     "id": "#exomeseq-02-variantdiscovery.cwl/intervals"
                 }, 
                 {
+                    "type": "string", 
+                    "id": "#exomeseq-02-variantdiscovery.cwl/name"
+                }, 
+                {
                     "type": {
                         "type": "array", 
                         "items": "File"
                     }, 
-                    "id": "#exomeseq-02-variantdiscovery.cwl/mapped_reads"
+                    "id": "#exomeseq-02-variantdiscovery.cwl/raw_variants"
                 }, 
                 {
                     "type": "File", 
@@ -3373,15 +3509,6 @@
                     "outputSource": "#exomeseq-02-variantdiscovery.cwl/joint_genotyping/output_GenotypeGVCFs", 
                     "doc": "VCF file from joint genotyping calling", 
                     "id": "#exomeseq-02-variantdiscovery.cwl/joint_raw_variants"
-                }, 
-                {
-                    "type": {
-                        "type": "array", 
-                        "items": "File"
-                    }, 
-                    "outputSource": "#exomeseq-02-variantdiscovery.cwl/variant_calling/output_HaplotypeCaller", 
-                    "doc": "VCF files from per sample variant calling", 
-                    "id": "#exomeseq-02-variantdiscovery.cwl/per_sample_raw_variants"
                 }, 
                 {
                     "type": "File", 
@@ -3445,7 +3572,7 @@
                             "id": "#exomeseq-02-variantdiscovery.cwl/apply_recalibration_indels/mode"
                         }, 
                         {
-                            "default": "indels_recalibrated.vcf", 
+                            "source": "#exomeseq-02-variantdiscovery.cwl/generate_joint_filenames/indels_recalibrated_output_filename", 
                             "id": "#exomeseq-02-variantdiscovery.cwl/apply_recalibration_indels/outputfile_recalibrated_vcf"
                         }, 
                         {
@@ -3490,7 +3617,7 @@
                             "id": "#exomeseq-02-variantdiscovery.cwl/apply_recalibration_snps/mode"
                         }, 
                         {
-                            "default": "snps_recalibrated.vcf", 
+                            "source": "#exomeseq-02-variantdiscovery.cwl/generate_joint_filenames/snps_recalibrated_output_filename", 
                             "id": "#exomeseq-02-variantdiscovery.cwl/apply_recalibration_snps/outputfile_recalibrated_vcf"
                         }, 
                         {
@@ -3522,6 +3649,27 @@
                         "#exomeseq-02-variantdiscovery.cwl/apply_recalibration_snps/output_recalibrated_vcf"
                     ], 
                     "id": "#exomeseq-02-variantdiscovery.cwl/apply_recalibration_snps"
+                }, 
+                {
+                    "run": "#generate-joint-filenames.cwl", 
+                    "in": [
+                        {
+                            "source": "#exomeseq-02-variantdiscovery.cwl/name", 
+                            "id": "#exomeseq-02-variantdiscovery.cwl/generate_joint_filenames/name"
+                        }
+                    ], 
+                    "out": [
+                        "#exomeseq-02-variantdiscovery.cwl/generate_joint_filenames/joint_genotype_raw_variants_output_filename", 
+                        "#exomeseq-02-variantdiscovery.cwl/generate_joint_filenames/snps_vqsr_recal_output_filename", 
+                        "#exomeseq-02-variantdiscovery.cwl/generate_joint_filenames/snps_vqsr_tranches_output_filename", 
+                        "#exomeseq-02-variantdiscovery.cwl/generate_joint_filenames/snps_vqsr_rscript_output_filename", 
+                        "#exomeseq-02-variantdiscovery.cwl/generate_joint_filenames/snps_recalibrated_output_filename", 
+                        "#exomeseq-02-variantdiscovery.cwl/generate_joint_filenames/indels_vqsr_recal_output_filename", 
+                        "#exomeseq-02-variantdiscovery.cwl/generate_joint_filenames/indels_vqsr_tranches_output_filename", 
+                        "#exomeseq-02-variantdiscovery.cwl/generate_joint_filenames/indels_vqsr_rscript_output_filename", 
+                        "#exomeseq-02-variantdiscovery.cwl/generate_joint_filenames/indels_recalibrated_output_filename"
+                    ], 
+                    "id": "#exomeseq-02-variantdiscovery.cwl/generate_joint_filenames"
                 }, 
                 {
                     "run": "#GATK-GenotypeGVCFs.cwl", 
@@ -3556,7 +3704,7 @@
                             "id": "#exomeseq-02-variantdiscovery.cwl/joint_genotyping/intervals"
                         }, 
                         {
-                            "default": "joint_genotype_raw_variants.g.vcf", 
+                            "source": "#exomeseq-02-variantdiscovery.cwl/generate_joint_filenames/joint_genotype_raw_variants_output_filename", 
                             "id": "#exomeseq-02-variantdiscovery.cwl/joint_genotyping/outputfile_GenotypeGVCFs"
                         }, 
                         {
@@ -3568,7 +3716,7 @@
                             "id": "#exomeseq-02-variantdiscovery.cwl/joint_genotyping/threads"
                         }, 
                         {
-                            "source": "#exomeseq-02-variantdiscovery.cwl/variant_calling/output_HaplotypeCaller", 
+                            "source": "#exomeseq-02-variantdiscovery.cwl/raw_variants", 
                             "id": "#exomeseq-02-variantdiscovery.cwl/joint_genotyping/variants"
                         }
                     ], 
@@ -3576,66 +3724,6 @@
                         "#exomeseq-02-variantdiscovery.cwl/joint_genotyping/output_GenotypeGVCFs"
                     ], 
                     "id": "#exomeseq-02-variantdiscovery.cwl/joint_genotyping"
-                }, 
-                {
-                    "run": "#GATK-HaplotypeCaller.cwl", 
-                    "requirements": [
-                        {
-                            "class": "ResourceRequirement", 
-                            "coresMin": 4, 
-                            "ramMin": 16384
-                        }
-                    ], 
-                    "scatter": "#exomeseq-02-variantdiscovery.cwl/variant_calling/inputBam_HaplotypeCaller", 
-                    "in": [
-                        {
-                            "source": "#exomeseq-02-variantdiscovery.cwl/GATKJar", 
-                            "id": "#exomeseq-02-variantdiscovery.cwl/variant_calling/GATKJar"
-                        }, 
-                        {
-                            "default": 8, 
-                            "id": "#exomeseq-02-variantdiscovery.cwl/variant_calling/cpu_threads"
-                        }, 
-                        {
-                            "source": "#exomeseq-02-variantdiscovery.cwl/resource_dbsnp", 
-                            "id": "#exomeseq-02-variantdiscovery.cwl/variant_calling/dbsnp"
-                        }, 
-                        {
-                            "default": "GVCF", 
-                            "id": "#exomeseq-02-variantdiscovery.cwl/variant_calling/emitRefConfidence"
-                        }, 
-                        {
-                            "default": [
-                                "StandardAnnotation", 
-                                "AS_StandardAnnotation"
-                            ], 
-                            "id": "#exomeseq-02-variantdiscovery.cwl/variant_calling/group"
-                        }, 
-                        {
-                            "source": "#exomeseq-02-variantdiscovery.cwl/mapped_reads", 
-                            "id": "#exomeseq-02-variantdiscovery.cwl/variant_calling/inputBam_HaplotypeCaller"
-                        }, 
-                        {
-                            "source": "#exomeseq-02-variantdiscovery.cwl/interval_padding", 
-                            "id": "#exomeseq-02-variantdiscovery.cwl/variant_calling/interval_padding"
-                        }, 
-                        {
-                            "source": "#exomeseq-02-variantdiscovery.cwl/intervals", 
-                            "id": "#exomeseq-02-variantdiscovery.cwl/variant_calling/intervals"
-                        }, 
-                        {
-                            "default": "raw_variants.g.vcf", 
-                            "id": "#exomeseq-02-variantdiscovery.cwl/variant_calling/outputfile_HaplotypeCaller"
-                        }, 
-                        {
-                            "source": "#exomeseq-02-variantdiscovery.cwl/reference_genome", 
-                            "id": "#exomeseq-02-variantdiscovery.cwl/variant_calling/reference"
-                        }
-                    ], 
-                    "out": [
-                        "#exomeseq-02-variantdiscovery.cwl/variant_calling/output_HaplotypeCaller"
-                    ], 
-                    "id": "#exomeseq-02-variantdiscovery.cwl/variant_calling"
                 }, 
                 {
                     "run": "#GATK-VariantRecalibrator-Indels.cwl", 
@@ -3656,15 +3744,15 @@
                             "id": "#exomeseq-02-variantdiscovery.cwl/variant_recalibration_indels/annotations"
                         }, 
                         {
-                            "default": "indels_vqsr_recal.out", 
+                            "source": "#exomeseq-02-variantdiscovery.cwl/generate_joint_filenames/indels_vqsr_recal_output_filename", 
                             "id": "#exomeseq-02-variantdiscovery.cwl/variant_recalibration_indels/outputfile_recal"
                         }, 
                         {
-                            "default": "indels_vqsr.R", 
+                            "source": "#exomeseq-02-variantdiscovery.cwl/generate_joint_filenames/indels_vqsr_rscript_output_filename", 
                             "id": "#exomeseq-02-variantdiscovery.cwl/variant_recalibration_indels/outputfile_rscript"
                         }, 
                         {
-                            "default": "indels_vqsr_tranches.out", 
+                            "source": "#exomeseq-02-variantdiscovery.cwl/generate_joint_filenames/indels_vqsr_tranches_output_filename", 
                             "id": "#exomeseq-02-variantdiscovery.cwl/variant_recalibration_indels/outputfile_tranches"
                         }, 
                         {
@@ -3715,15 +3803,15 @@
                             "id": "#exomeseq-02-variantdiscovery.cwl/variant_recalibration_snps/annotations"
                         }, 
                         {
-                            "default": "snps_vqsr_recal.out", 
+                            "source": "#exomeseq-02-variantdiscovery.cwl/generate_joint_filenames/snps_vqsr_recal_output_filename", 
                             "id": "#exomeseq-02-variantdiscovery.cwl/variant_recalibration_snps/outputfile_recal"
                         }, 
                         {
-                            "default": "snps_vqsr.R", 
+                            "source": "#exomeseq-02-variantdiscovery.cwl/generate_joint_filenames/snps_vqsr_rscript_output_filename", 
                             "id": "#exomeseq-02-variantdiscovery.cwl/variant_recalibration_snps/outputfile_rscript"
                         }, 
                         {
-                            "default": "snps_vqsr_tranches.out", 
+                            "source": "#exomeseq-02-variantdiscovery.cwl/generate_joint_filenames/snps_vqsr_tranches_output_filename", 
                             "id": "#exomeseq-02-variantdiscovery.cwl/variant_recalibration_snps/outputfile_tranches"
                         }, 
                         {
@@ -3903,15 +3991,6 @@
                 {
                     "type": {
                         "type": "array", 
-                        "items": "File"
-                    }, 
-                    "outputSource": "#main/variant_discovery/per_sample_raw_variants", 
-                    "doc": "VCF files from per sample variant calling", 
-                    "id": "#main/per_sample_raw_variants"
-                }, 
-                {
-                    "type": {
-                        "type": "array", 
                         "items": {
                             "type": "array", 
                             "items": "File"
@@ -3919,6 +3998,15 @@
                     }, 
                     "outputSource": "#main/preprocessing/qc_reports", 
                     "id": "#main/qc_reports"
+                }, 
+                {
+                    "type": {
+                        "type": "array", 
+                        "items": "File"
+                    }, 
+                    "outputSource": "#main/preprocessing/raw_variants", 
+                    "doc": "VCF files from per sample variant calling", 
+                    "id": "#main/raw_variants"
                 }, 
                 {
                     "type": {
@@ -4038,6 +4126,10 @@
                             "id": "#main/preprocessing/reference_genome"
                         }, 
                         {
+                            "source": "#main/resource_dbsnp", 
+                            "id": "#main/preprocessing/resource_dbsnp"
+                        }, 
+                        {
                             "source": "#main/threads", 
                             "id": "#main/preprocessing/threads"
                         }
@@ -4046,7 +4138,8 @@
                         "#main/preprocessing/qc_reports", 
                         "#main/preprocessing/trim_reports", 
                         "#main/preprocessing/recalibration_table", 
-                        "#main/preprocessing/recalibrated_reads"
+                        "#main/preprocessing/recalibrated_reads", 
+                        "#main/preprocessing/raw_variants"
                     ], 
                     "id": "#main/preprocessing"
                 }, 
@@ -4070,8 +4163,12 @@
                             "id": "#main/variant_discovery/intervals"
                         }, 
                         {
-                            "source": "#main/preprocessing/recalibrated_reads", 
-                            "id": "#main/variant_discovery/mapped_reads"
+                            "source": "#main/library", 
+                            "id": "#main/variant_discovery/name"
+                        }, 
+                        {
+                            "source": "#main/preprocessing/raw_variants", 
+                            "id": "#main/variant_discovery/raw_variants"
                         }, 
                         {
                             "source": "#main/reference_genome", 
@@ -4099,7 +4196,6 @@
                         }
                     ], 
                     "out": [
-                        "#main/variant_discovery/per_sample_raw_variants", 
                         "#main/variant_discovery/joint_raw_variants", 
                         "#main/variant_discovery/variant_recalibration_snps_tranches", 
                         "#main/variant_discovery/variant_recalibration_snps_recal", 
