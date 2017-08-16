@@ -7,9 +7,8 @@ requirements:
 inputs:
   intervals: File[]?
   interval_padding: int?
-  # Read samples, bam format
   # NOTE: Should be at least 20 samples for exome
-  mapped_reads: File[]
+  raw_variants: File[]
   # reference genome, fasta
   reference_genome: File
   # Number of threads to use
@@ -27,10 +26,6 @@ inputs:
   indel_resource_mills: File
 
 outputs:
-  per_sample_raw_variants:
-    type: File[]
-    outputSource: variant_calling/output_HaplotypeCaller
-    doc: "VCF files from per sample variant calling"
   joint_raw_variants:
     type: File
     outputSource: joint_genotyping/output_GenotypeGVCFs
@@ -68,31 +63,6 @@ outputs:
     outputSource: apply_recalibration_indels/output_recalibrated_vcf
     doc: "The output filtered and recalibrated VCF file in INDEL mode in which each variant is annotated with its VQSLOD value"
 steps:
-  variant_calling:
-    run: ../tools/GATK-HaplotypeCaller.cwl
-    requirements:
-      - class: ResourceRequirement
-        coresMin: 4
-        ramMin: 16384
-    scatter: inputBam_HaplotypeCaller
-    in:
-      GATKJar: GATKJar
-      inputBam_HaplotypeCaller: mapped_reads
-      intervals: intervals
-      interval_padding: interval_padding
-      reference: reference_genome
-      cpu_threads:
-        default: 8
-      group:
-        default: ['StandardAnnotation','AS_StandardAnnotation']
-      dbsnp: resource_dbsnp
-      emitRefConfidence:
-        default: "GVCF"
-      outputfile_HaplotypeCaller: #
-        # Naming your output file using the .g.vcf extension will automatically set the appropriate values  for --variant_index_type and --variant_index_parameter
-        default: "raw_variants.g.vcf"
-    out:
-      - output_HaplotypeCaller
   # TODO: At this point, should merge VCFs if we had lots of them
   # See Merge (optional) on https://software.broadinstitute.org/gatk/best-practices/bp_3step.php?case=GermShortWGS&p=2
   joint_genotyping:
@@ -110,7 +80,7 @@ steps:
       intervals: intervals
       interval_padding: interval_padding
       # NOTE: GATK best practices recommends at least 30 samples for exome - how to deal?
-      variants: variant_calling/output_HaplotypeCaller
+      variants: raw_variants
       reference: reference_genome
       group:
         default: ['StandardAnnotation']

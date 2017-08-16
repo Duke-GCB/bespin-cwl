@@ -30,6 +30,8 @@ inputs:
   # GATK
   GATKJar: File
   knownSites: File[] # vcf files of known sites, with indexing
+  # Variant Recalibration - Common
+  resource_dbsnp: File
 outputs:
   qc_reports:
     type: File[]
@@ -44,6 +46,10 @@ outputs:
   recalibrated_reads:
     type: File
     outputSource: recalibrate_02_apply/output_printReads
+  raw_variants:
+    type: File[]
+    outputSource: variant_calling/output_HaplotypeCaller
+    doc: "VCF files from per sample variant calling"
 steps:
   qc:
     run: ../tools/fastqc.cwl
@@ -171,3 +177,27 @@ steps:
       reference: reference_genome
     out:
       - output_printReads
+  variant_calling:
+    run: ../tools/GATK-HaplotypeCaller.cwl
+    requirements:
+      - class: ResourceRequirement
+        coresMin: 4
+        ramMin: 16384
+    in:
+      GATKJar: GATKJar
+      inputBam_HaplotypeCaller: recalibrate_02_apply/output_printReads
+      intervals: intervals
+      interval_padding: interval_padding
+      reference: reference_genome
+      cpu_threads:
+        default: 8
+      group:
+        default: ['StandardAnnotation','AS_StandardAnnotation']
+      dbsnp: resource_dbsnp
+      emitRefConfidence:
+        default: "GVCF"
+      outputfile_HaplotypeCaller: #
+        # Naming your output file using the .g.vcf extension will automatically set the appropriate values  for --variant_index_type and --variant_index_parameter
+        default: "raw_variants.g.vcf"
+    out:
+      - output_HaplotypeCaller
