@@ -78,9 +78,9 @@ outputs:
   recalibrated_reads:
     type: File[]
     outputSource: preprocessing/recalibrated_reads
-  per_sample_raw_variants:
+  raw_variants:
     type: File[]
-    outputSource: variant_discovery/per_sample_raw_variants
+    outputSource: preprocessing/raw_variants
     doc: "VCF files from per sample variant calling"
   joint_raw_variants:
     type: File
@@ -133,17 +133,20 @@ steps:
       field_order: field_order
       GATKJar: GATKJar
       knownSites: knownSites
+      resource_dbsnp: resource_dbsnp
     out:
       - qc_reports
       - trim_reports
       - recalibration_table
       - recalibrated_reads
+      - raw_variants
   variant_discovery:
     run: exomeseq-02-variantdiscovery.cwl
     in:
+      name: library
       intervals: intervals
       interval_padding: interval_padding
-      mapped_reads: preprocessing/recalibrated_reads
+      raw_variants: preprocessing/raw_variants
       reference_genome: reference_genome
       threads: threads
       GATKJar: GATKJar
@@ -153,7 +156,6 @@ steps:
       resource_dbsnp: resource_dbsnp
       indel_resource_mills: indel_resource_mills
     out:
-      - per_sample_raw_variants
       - joint_raw_variants
       - variant_recalibration_snps_tranches
       - variant_recalibration_snps_recal

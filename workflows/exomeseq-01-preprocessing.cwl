@@ -30,6 +30,8 @@ inputs:
   # GATK
   GATKJar: File
   knownSites: File[] # vcf files of known sites, with indexing
+  # Variant Recalibration - Common
+  resource_dbsnp: File
 outputs:
   qc_reports:
     type: File[]
@@ -44,6 +46,10 @@ outputs:
   recalibrated_reads:
     type: File
     outputSource: recalibrate_02_apply/output_printReads
+  raw_variants:
+    type: File[]
+    outputSource: variant_calling/output_HaplotypeCaller
+    doc: "VCF files from per sample variant calling"
 steps:
   qc:
     run: ../tools/fastqc.cwl
@@ -80,8 +86,8 @@ steps:
     out:
       - read_group_header
       - sample_name
-  generate_filenames:
-    run: ../tools/generate-filenames.cwl
+  generate_sample_filenames:
+    run: ../tools/generate-sample-filenames.cwl
     in:
       sample_name: parse_read_group_header/sample_name
     out:
@@ -91,6 +97,7 @@ steps:
       - dedup_metrics_output_filename
       - recal_reads_output_filename
       - recal_table_output_filename
+      - raw_variants_output_filename
   map:
     run: ../tools/bwa-mem-samtools.cwl
     requirements:
@@ -103,7 +110,7 @@ steps:
       reads: trim/trimmed_reads
       reference: reference_genome
       read_group_header: parse_read_group_header/read_group_header
-      output_filename: generate_filenames/mapped_reads_output_filename
+      output_filename: generate_sample_filenames/mapped_reads_output_filename
       threads: threads
     out:
       - output
@@ -117,7 +124,7 @@ steps:
         tmpdirMin: 12000
     in:
       input_file: map/output
-      output_filename: generate_filenames/sorted_reads_output_filename
+      output_filename: generate_sample_filenames/sorted_reads_output_filename
     out:
       - sorted
   mark_duplicates:
@@ -130,8 +137,8 @@ steps:
         tmpdirMin: 12000
     in:
       input_file: sort/sorted
-      output_filename: generate_filenames/dedup_reads_output_filename
-      metrics_filename: generate_filenames/dedup_metrics_output_filename
+      output_filename: generate_sample_filenames/dedup_reads_output_filename
+      metrics_filename: generate_sample_filenames/dedup_metrics_output_filename
     out:
       - output_dedup_bam_file
       - output_metrics_file
@@ -150,7 +157,7 @@ steps:
       knownSites: knownSites
       cpu_threads:
         default: 8
-      outputfile_BaseRecalibrator: generate_filenames/recal_table_output_filename
+      outputfile_BaseRecalibrator: generate_sample_filenames/recal_table_output_filename
       reference: reference_genome
     out:
       - output_baseRecalibrator
@@ -167,7 +174,30 @@ steps:
       input_baseRecalibrator: recalibrate_01_analyze/output_baseRecalibrator
       cpu_threads:
         default: 8
-      outputfile_printReads: generate_filenames/recal_reads_output_filename
+      outputfile_printReads: generate_sample_filenames/recal_reads_output_filename
       reference: reference_genome
     out:
       - output_printReads
+  variant_calling:
+    run: ../tools/GATK-HaplotypeCaller.cwl
+    requirements:
+      - class: ResourceRequirement
+        coresMin: 4
+        ramMin: 16384
+    in:
+      GATKJar: GATKJar
+      inputBam_HaplotypeCaller: recalibrate_02_apply/output_printReads
+      intervals: intervals
+      interval_padding: interval_padding
+      reference: reference_genome
+      cpu_threads:
+        default: 8
+      group:
+        default: ['StandardAnnotation','AS_StandardAnnotation']
+      dbsnp: resource_dbsnp
+      emitRefConfidence:
+        default: "GVCF"
+      outputfile_HaplotypeCaller: generate_sample_filenames/raw_variants_output_filename
+        # Naming your output file using the .g.vcf extension will automatically set the appropriate values  for --variant_index_type and --variant_index_parameter
+    out:
+      - output_HaplotypeCaller
