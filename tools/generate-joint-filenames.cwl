@@ -31,10 +31,10 @@ expression: >
       snps_vqsr_recal_output_filename: makeFilename(base, 'snps_vqsr_recal', 'out'),
       snps_vqsr_tranches_output_filename: makeFilename(base, 'snps_vqsr_tranches', 'out'),
       snps_vqsr_rscript_output_filename: makeFilename(base, 'snps_vqsr', 'R'),
-      snps_recalibrated_output_filename: makeFilename(base, 'snps_recalibrated', 'vcf'),
+      snps_recalibrated_output_filename: makeFilename(base, 'recalibrated_snps_raw_indels', 'vcf'),
       indels_vqsr_recal_output_filename: makeFilename(base, 'indels_vqsr_recal', 'out'),
       indels_vqsr_tranches_output_filename: makeFilename(base, 'indels_vqsr_tranches', 'out'),
       indels_vqsr_rscript_output_filename: makeFilename(base, 'indels_vqsr', 'R'),
-      indels_recalibrated_output_filename: makeFilename(base, 'indels_recalibrated', 'vcf')
+      indels_recalibrated_output_filename: makeFilename(base, 'recalibrated_variants', 'vcf')
     };
   }
