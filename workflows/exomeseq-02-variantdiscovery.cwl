@@ -153,7 +153,7 @@ steps:
     in:
       GATKJar: GATKJar
       reference: reference_genome
-      variants: joint_genotyping/output_GenotypeGVCFs
+      variants: apply_recalibration_snps/output_recalibrated_vcf
       threads:
         default: 1
       outputfile_recal: generate_joint_filenames/indels_vqsr_recal_output_filename
@@ -178,7 +178,7 @@ steps:
     in:
       GATKJar: GATKJar
       reference: reference_genome
-      variants: joint_genotyping/output_GenotypeGVCFs
+      variants: apply_recalibration_snps/output_recalibrated_vcf
       threads: threads
       tranches_file: variant_recalibration_indels/tranches_File
       recal_file: variant_recalibration_indels/recal_File

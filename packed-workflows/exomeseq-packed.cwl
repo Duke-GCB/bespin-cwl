@@ -2627,7 +2627,7 @@
                     "id": "#generate-joint-filenames.cwl/snps_vqsr_tranches_output_filename"
                 }
             ], 
-            "expression": "${\n  function makeFilename(base, suffix, extension) {\n    return base + '-' + suffix + '.' + extension;\n  }\n  var base = inputs.name\n\n  return {\n    joint_genotype_raw_variants_output_filename: makeFilename(base, 'raw_variants', 'g.vcf'),\n    snps_vqsr_recal_output_filename: makeFilename(base, 'snps_vqsr_recal', 'out'),\n    snps_vqsr_tranches_output_filename: makeFilename(base, 'snps_vqsr_tranches', 'out'),\n    snps_vqsr_rscript_output_filename: makeFilename(base, 'snps_vqsr', 'R'),\n    snps_recalibrated_output_filename: makeFilename(base, 'snps_recalibrated', 'vcf'),\n    indels_vqsr_recal_output_filename: makeFilename(base, 'indels_vqsr_recal', 'out'),\n    indels_vqsr_tranches_output_filename: makeFilename(base, 'indels_vqsr_tranches', 'out'),\n    indels_vqsr_rscript_output_filename: makeFilename(base, 'indels_vqsr', 'R'),\n    indels_recalibrated_output_filename: makeFilename(base, 'indels_recalibrated', 'vcf')\n  };\n}\n", 
+            "expression": "${\n  function makeFilename(base, suffix, extension) {\n    return base + '-' + suffix + '.' + extension;\n  }\n  var base = inputs.name\n\n  return {\n    joint_genotype_raw_variants_output_filename: makeFilename(base, 'raw_variants', 'g.vcf'),\n    snps_vqsr_recal_output_filename: makeFilename(base, 'snps_vqsr_recal', 'out'),\n    snps_vqsr_tranches_output_filename: makeFilename(base, 'snps_vqsr_tranches', 'out'),\n    snps_vqsr_rscript_output_filename: makeFilename(base, 'snps_vqsr', 'R'),\n    snps_recalibrated_output_filename: makeFilename(base, 'recalibrated_snps_raw_indels', 'vcf'),\n    indels_vqsr_recal_output_filename: makeFilename(base, 'indels_vqsr_recal', 'out'),\n    indels_vqsr_tranches_output_filename: makeFilename(base, 'indels_vqsr_tranches', 'out'),\n    indels_vqsr_rscript_output_filename: makeFilename(base, 'indels_vqsr', 'R'),\n    indels_recalibrated_output_filename: makeFilename(base, 'recalibrated_variants', 'vcf')\n  };\n}\n", 
             "id": "#generate-joint-filenames.cwl"
         }, 
         {
@@ -3596,7 +3596,7 @@
                             "id": "#exomeseq-02-variantdiscovery.cwl/apply_recalibration_indels/ts_filter_level"
                         }, 
                         {
-                            "source": "#exomeseq-02-variantdiscovery.cwl/joint_genotyping/output_GenotypeGVCFs", 
+                            "source": "#exomeseq-02-variantdiscovery.cwl/apply_recalibration_snps/output_recalibrated_vcf", 
                             "id": "#exomeseq-02-variantdiscovery.cwl/apply_recalibration_indels/variants"
                         }
                     ], 
@@ -3772,7 +3772,7 @@
                             "id": "#exomeseq-02-variantdiscovery.cwl/variant_recalibration_indels/threads"
                         }, 
                         {
-                            "source": "#exomeseq-02-variantdiscovery.cwl/joint_genotyping/output_GenotypeGVCFs", 
+                            "source": "#exomeseq-02-variantdiscovery.cwl/apply_recalibration_snps/output_recalibrated_vcf", 
                             "id": "#exomeseq-02-variantdiscovery.cwl/variant_recalibration_indels/variants"
                         }
                     ], 
