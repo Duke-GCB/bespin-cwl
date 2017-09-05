@@ -47,7 +47,7 @@ outputs:
     type: File
     outputSource: recalibrate_02_apply/output_printReads
   raw_variants:
-    type: File[]
+    type: File
     outputSource: variant_calling/output_HaplotypeCaller
     doc: "VCF files from per sample variant calling"
 steps:
