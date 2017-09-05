@@ -3927,10 +3927,10 @@
                         "type": "array", 
                         "items": {
                             "type": "array", 
-                            "items": "File", 
-                            "format": "http://edamontology.org/format_1930"
+                            "items": "File"
                         }
                     }, 
+                    "format": "http://edamontology.org/format_1930", 
                     "id": "#main/read_pairs"
                 }, 
                 {

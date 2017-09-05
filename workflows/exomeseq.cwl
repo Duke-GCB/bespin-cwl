@@ -13,7 +13,8 @@ inputs:
   interval_padding: int?
   # Read pairs, fastq format
   read_pairs:
-      type: { type: array, items: { type: array, items: File, format: http://edamontology.org/format_1930 } }
+      type: { type: array, items: { type: array, items: File }} 
+      format: http://edamontology.org/format_1930
   # reference genome, fasta
   reference_genome:
     type: File
