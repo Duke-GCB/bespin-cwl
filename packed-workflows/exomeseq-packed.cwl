@@ -3927,7 +3927,8 @@
                         "type": "array", 
                         "items": {
                             "type": "array", 
-                            "items": "File"
+                            "items": "File", 
+                            "format": "http://edamontology.org/format_1930"
                         }
                     }, 
                     "id": "#main/read_pairs"
