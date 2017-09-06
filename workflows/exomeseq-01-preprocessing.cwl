@@ -32,6 +32,8 @@ inputs:
   knownSites: File[] # vcf files of known sites, with indexing
   # Variant Recalibration - Common
   resource_dbsnp: File
+  bait_intervals: File
+  target_intervals: File
 outputs:
   qc_reports:
     type: File[]
@@ -98,6 +100,7 @@ steps:
       - recal_reads_output_filename
       - recal_table_output_filename
       - raw_variants_output_filename
+      - hs_metrics_output_filename
   map:
     run: ../tools/bwa-mem-samtools.cwl
     requirements:
@@ -142,6 +145,22 @@ steps:
     out:
       - output_dedup_bam_file
       - output_metrics_file
+  collect_hs_metrics:
+    run: ../tools/picard-CollectHsMetrics.cwl
+    requirements:
+      - class: ResourceRequirement
+        coresMin: 1
+        ramMin: 4000
+        outdirMin: 12000
+        tmpdirMin: 12000
+    in:
+      input_file: output_dedup_bam_file
+      reference_sequence: reference_genome
+      bait_intervals: bait_intervals
+      target_intervals: target_intervals
+      output_filename: generate_sample_filenames/hs_metrics_output_filename
+    out:
+      - output_hs_metrics_file
   # Now recalibrate
   recalibrate_01_analyze:
     run: ../tools/GATK-BaseRecalibrator.cwl

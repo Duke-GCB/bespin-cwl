@@ -64,6 +64,12 @@ inputs:
     type: File
     secondaryFiles:
     - .idx
+   # capture kit bait intervals - picard interval_list format
+   bait_intervals:
+     type: File
+   # capture kit target intervals - picard interval_list format
+   target_intervals:
+     type: File
 outputs:
   qc_reports:
     type: { type: array, items: { type: array, items: File } }
