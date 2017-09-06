@@ -9,8 +9,10 @@ requirements:
   - class: ScatterFeatureRequirement
   - class: SubworkflowFeatureRequirement
 inputs:
-  # Intervals should come from capture kit
+  # Intervals should come from capture kit (target intervals) bed format
   intervals: File[]?
+  # Intervals should come from capture kit (bait intervals) bed format
+  primary_intervals: File[]?
   interval_padding: int?
   # Read pairs, fastq format
   read_pairs:
@@ -64,16 +66,13 @@ inputs:
     type: File
     secondaryFiles:
     - .idx
-   # capture kit bait intervals - picard interval_list format
-   bait_intervals:
-     type: File
-   # capture kit target intervals - picard interval_list format
-   target_intervals:
-     type: File
 outputs:
   qc_reports:
     type: { type: array, items: { type: array, items: File } }
     outputSource: preprocessing/qc_reports
+  hs_metrics:
+    type: { type: array, items: { type: array, items: File } }
+    outputSource: preprocessing/hs_metrics
   trim_reports:
     type: { type: array, items: { type: array, items: File } }
     outputSource: preprocessing/trim_reports
@@ -146,6 +145,7 @@ steps:
       - recalibration_table
       - recalibrated_reads
       - raw_variants
+      - hs_metrics
   variant_discovery:
     run: exomeseq-02-variantdiscovery.cwl
     in:

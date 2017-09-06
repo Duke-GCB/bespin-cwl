@@ -6,7 +6,10 @@ requirements:
   - class: ScatterFeatureRequirement
 inputs:
   # NOTE: How long is this expected to take?
+  # Intervals should come from capture kit (target intervals) bed format
   intervals: File[]?
+  # Intervals should come from capture kit (bait intervals) bed format
+  primary_intervals: File[]?
   interval_padding: int?
   # Read samples, fastq format
   # NOTE: Broad recommends the illumina basecalls and converts to unmapped SAM
@@ -32,12 +35,13 @@ inputs:
   knownSites: File[] # vcf files of known sites, with indexing
   # Variant Recalibration - Common
   resource_dbsnp: File
-  bait_intervals: File
-  target_intervals: File
 outputs:
   qc_reports:
     type: File[]
     outputSource: qc/output_qc_report
+  hs_metrics:
+    type: File[]
+    outputSource: collect_hs_metrics/output_hs_metrics_file
   trim_reports:
     type: File[]
     outputSource: trim/trim_reports
@@ -49,7 +53,7 @@ outputs:
     type: File
     outputSource: recalibrate_02_apply/output_printReads
   raw_variants:
-    type: File[]
+    type: File
     outputSource: variant_calling/output_HaplotypeCaller
     doc: "VCF files from per sample variant calling"
 steps:
@@ -145,6 +149,32 @@ steps:
     out:
       - output_dedup_bam_file
       - output_metrics_file
+  make_target_interval_list:
+    run: ../tools/picard-BedToIntervalList.cwl
+    requirements:
+      - class: ResourceRequirement
+        coresMin: 1
+        ramMin: 4000
+        outdirMin: 12000
+        tmpdirMin: 12000
+    in:
+      input_file: intervals
+      reference_sequence: reference_genome
+    out:
+      - output_interval_list_file
+  make_bait_interval_list:
+    run: ../tools/picard-BedToIntervalList.cwl
+    requirements:
+      - class: ResourceRequirement
+        coresMin: 1
+        ramMin: 4000
+        outdirMin: 12000
+        tmpdirMin: 12000
+    in:
+      input_file: primary_intervals
+      reference_sequence: reference_genome
+    out:
+      - output_interval_list_file
   collect_hs_metrics:
     run: ../tools/picard-CollectHsMetrics.cwl
     requirements:
@@ -154,10 +184,10 @@ steps:
         outdirMin: 12000
         tmpdirMin: 12000
     in:
-      input_file: output_dedup_bam_file
+      input_file: mark_duplicates/output_dedup_bam_file
       reference_sequence: reference_genome
-      bait_intervals: bait_intervals
-      target_intervals: target_intervals
+      target_intervals: make_target_interval_list/output_interval_list_file
+      bait_intervals: make_bait_interval_list/output_interval_list_file
       output_filename: generate_sample_filenames/hs_metrics_output_filename
     out:
       - output_hs_metrics_file
