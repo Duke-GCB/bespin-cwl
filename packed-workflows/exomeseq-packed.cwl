@@ -2769,6 +2769,19 @@
                     "id": "#picard-BedToIntervalList.cwl/input_file"
                 }, 
                 {
+                    "type": [
+                        "null", 
+                        "string"
+                    ], 
+                    "doc": "Interval list output filename.", 
+                    "default": "list.interval_list", 
+                    "inputBinding": {
+                        "prefix": "O=", 
+                        "shellQuote": false
+                    }, 
+                    "id": "#picard-BedToIntervalList.cwl/output_filename"
+                }, 
+                {
                     "type": "File", 
                     "doc": "The reference sequences in fasta format.", 
                     "inputBinding": {
@@ -2780,15 +2793,9 @@
             ], 
             "outputs": [
                 {
-                    "type": [
-                        "null", 
-                        {
-                            "type": "array", 
-                            "items": "File"
-                        }
-                    ], 
+                    "type": "File", 
                     "outputBinding": {
-                        "glob": "$(inputs.input_file.path + '.interval_list')"
+                        "glob": "$(inputs.output_filename)"
                     }, 
                     "id": "#picard-BedToIntervalList.cwl/output_interval_list_file"
                 }
@@ -2806,11 +2813,6 @@
                 {
                     "valueFrom": "BedToIntervalList", 
                     "position": 0
-                }, 
-                {
-                    "valueFrom": "$(inputs.input_file.path + '.interval_list')", 
-                    "prefix": "O=", 
-                    "separate": false
                 }
             ], 
             "id": "#picard-BedToIntervalList.cwl"
@@ -2828,10 +2830,7 @@
             ], 
             "inputs": [
                 {
-                    "type": {
-                        "type": "array", 
-                        "items": "File"
-                    }, 
+                    "type": "File", 
                     "doc": "The bait interval file in picard interval_list format (from capture kit).", 
                     "inputBinding": {
                         "prefix": "BAIT_INTERVALS=", 
@@ -2871,10 +2870,7 @@
                     "id": "#picard-CollectHsMetrics.cwl/reference_sequence"
                 }, 
                 {
-                    "type": {
-                        "type": "array", 
-                        "items": "File"
-                    }, 
+                    "type": "File", 
                     "doc": "The target interval file in picard interval_list format (from capture kit).", 
                     "inputBinding": {
                         "prefix": "TARGET_INTERVALS=", 
@@ -3352,6 +3348,10 @@
                             "id": "#exomeseq-01-preprocessing.cwl/make_bait_interval_list/input_file"
                         }, 
                         {
+                            "default": "bait.interval_list", 
+                            "id": "#exomeseq-01-preprocessing.cwl/make_bait_interval_list/output_filename"
+                        }, 
+                        {
                             "source": "#exomeseq-01-preprocessing.cwl/reference_genome", 
                             "id": "#exomeseq-01-preprocessing.cwl/make_bait_interval_list/reference_sequence"
                         }
@@ -3376,6 +3376,10 @@
                         {
                             "source": "#exomeseq-01-preprocessing.cwl/intervals", 
                             "id": "#exomeseq-01-preprocessing.cwl/make_target_interval_list/input_file"
+                        }, 
+                        {
+                            "default": "target.interval_list", 
+                            "id": "#exomeseq-01-preprocessing.cwl/make_target_interval_list/output_filename"
                         }, 
                         {
                             "source": "#exomeseq-01-preprocessing.cwl/reference_genome", 

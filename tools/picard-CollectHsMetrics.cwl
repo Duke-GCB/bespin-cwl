@@ -30,13 +30,13 @@ inputs:
       prefix: "R="
       shellQuote: false
   bait_intervals:
-    type: File[]
+    type: File
     doc: "The bait interval file in picard interval_list format (from capture kit)."
     inputBinding:
       prefix: "BAIT_INTERVALS="
       shellQuote: false
   target_intervals:
-    type: File[]
+    type: File
     doc: "The target interval file in picard interval_list format (from capture kit)."
     inputBinding:
       prefix: "TARGET_INTERVALS="

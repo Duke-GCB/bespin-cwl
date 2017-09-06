@@ -160,6 +160,8 @@ steps:
     in:
       input_file: intervals
       reference_sequence: reference_genome
+      output_filename:
+        default: "target.interval_list"
     out:
       - output_interval_list_file
   make_bait_interval_list:
@@ -173,6 +175,8 @@ steps:
     in:
       input_file: primary_intervals
       reference_sequence: reference_genome
+      output_filename:
+        default: "bait.interval_list"
     out:
       - output_interval_list_file
   collect_hs_metrics:

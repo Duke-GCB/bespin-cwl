@@ -16,6 +16,13 @@ inputs:
     inputBinding:
       prefix: "I="
       shellQuote: false
+  output_filename:
+    type: string?
+    doc: "Interval list output filename."
+    default: "list.interval_list"
+    inputBinding:
+      prefix: "O="
+      shellQuote: false
   reference_sequence:
     type: File
     doc: "The reference sequences in fasta format."
@@ -24,9 +31,9 @@ inputs:
       shellQuote: false
 outputs:
   output_interval_list_file:
-    type: File[]?
+    type: File
     outputBinding:
-      glob: $(inputs.input_file.path + '.interval_list')
+      glob: $(inputs.output_filename)
 
 baseCommand: ["java", "-Xmx4g"]
 arguments:
@@ -35,8 +42,3 @@ arguments:
   prefix: -jar
 - valueFrom: BedToIntervalList
   position: 0
-- valueFrom: $(inputs.input_file.path + '.interval_list')
-  prefix: "O="
-  separate: false
-
-
