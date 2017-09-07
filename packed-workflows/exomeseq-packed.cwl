@@ -4424,6 +4424,10 @@
                             "id": "#main/preprocessing/platform"
                         }, 
                         {
+                            "source": "#main/primary_intervals", 
+                            "id": "#main/preprocessing/primary_intervals"
+                        }, 
+                        {
                             "source": "#main/read_pairs", 
                             "id": "#main/preprocessing/reads"
                         }, 
