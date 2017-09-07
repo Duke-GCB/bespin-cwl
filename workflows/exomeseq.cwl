@@ -129,6 +129,7 @@ steps:
     scatter: reads
     in:
       intervals: intervals
+      primary_intervals: primary_intervals
       interval_padding: interval_padding
       reads: read_pairs
       reference_genome: reference_genome
