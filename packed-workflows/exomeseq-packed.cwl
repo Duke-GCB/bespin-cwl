@@ -3348,10 +3348,6 @@
                             "id": "#exomeseq-01-preprocessing.cwl/make_bait_interval_list/input_file"
                         }, 
                         {
-                            "default": "bait.interval_list", 
-                            "id": "#exomeseq-01-preprocessing.cwl/make_bait_interval_list/output_filename"
-                        }, 
-                        {
                             "source": "#exomeseq-01-preprocessing.cwl/reference_genome", 
                             "id": "#exomeseq-01-preprocessing.cwl/make_bait_interval_list/reference_sequence"
                         }
@@ -3376,10 +3372,6 @@
                         {
                             "source": "#exomeseq-01-preprocessing.cwl/intervals", 
                             "id": "#exomeseq-01-preprocessing.cwl/make_target_interval_list/input_file"
-                        }, 
-                        {
-                            "default": "target.interval_list", 
-                            "id": "#exomeseq-01-preprocessing.cwl/make_target_interval_list/output_filename"
                         }, 
                         {
                             "source": "#exomeseq-01-preprocessing.cwl/reference_genome", 
@@ -4225,6 +4217,7 @@
                             "items": "File"
                         }
                     }, 
+                    "format": "http://edamontology.org/format_1930", 
                     "id": "#main/read_pairs"
                 }, 
                 {
