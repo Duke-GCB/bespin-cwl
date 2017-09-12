@@ -3059,10 +3059,7 @@
                     "id": "#exomeseq-01-preprocessing.cwl/qc_reports"
                 }, 
                 {
-                    "type": {
-                        "type": "array", 
-                        "items": "File"
-                    }, 
+                    "type": "File", 
                     "outputSource": "#exomeseq-01-preprocessing.cwl/variant_calling/output_HaplotypeCaller", 
                     "doc": "VCF files from per sample variant calling", 
                     "id": "#exomeseq-01-preprocessing.cwl/raw_variants"
@@ -3930,6 +3927,7 @@
                             "items": "File"
                         }
                     }, 
+                    "format": "http://edamontology.org/format_1930", 
                     "id": "#main/read_pairs"
                 }, 
                 {

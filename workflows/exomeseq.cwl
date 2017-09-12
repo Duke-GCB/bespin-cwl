@@ -1,5 +1,4 @@
 #!/usr/bin/env cwl-runner
-
 cwlVersion: v1.0
 class: Workflow
 label: Whole Exome Sequencing
@@ -14,7 +13,8 @@ inputs:
   interval_padding: int?
   # Read pairs, fastq format
   read_pairs:
-      type: { type: array, items: { type: array, items: File } }
+      type: { type: array, items: { type: array, items: File }} 
+      format: http://edamontology.org/format_1930 # FASTQ format
   # reference genome, fasta
   reference_genome:
     type: File
