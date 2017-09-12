@@ -13,7 +13,7 @@ inputs:
   interval_padding: int?
   # Read pairs, fastq format
   read_pairs:
-      type: { type: array, items: { type: array, items: File }} 
+      type: { type: array, items: { type: array, items: File }}
       format: http://edamontology.org/format_1930 # FASTQ format
   # reference genome, fasta
   reference_genome:
@@ -82,6 +82,10 @@ outputs:
     type: File[]
     outputSource: preprocessing/raw_variants
     doc: "VCF files from per sample variant calling"
+  haplotypes_bams:
+    type: File[]
+    outputSource: preprocessing/haplotypes_bam
+    doc: "BAM files containing assembled haplotypes and locally realigned reads"
   joint_raw_variants:
     type: File
     outputSource: variant_discovery/joint_raw_variants
@@ -140,6 +144,7 @@ steps:
       - recalibration_table
       - recalibrated_reads
       - raw_variants
+      - haplotypes_bam
   variant_discovery:
     run: exomeseq-02-variantdiscovery.cwl
     in:
