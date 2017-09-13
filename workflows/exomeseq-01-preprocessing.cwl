@@ -6,7 +6,10 @@ requirements:
   - class: ScatterFeatureRequirement
 inputs:
   # NOTE: How long is this expected to take?
+  # Intervals should come from capture kit (target intervals) bed format
   intervals: File[]?
+  # Intervals should come from capture kit (bait intervals) bed format
+  primary_intervals: File[]?
   interval_padding: int?
   # Read samples, fastq format
   # NOTE: Broad recommends the illumina basecalls and converts to unmapped SAM
@@ -36,6 +39,9 @@ outputs:
   qc_reports:
     type: File[]
     outputSource: qc/output_qc_report
+  hs_metrics:
+    type: File[]
+    outputSource: collect_hs_metrics/output_hs_metrics_file
   trim_reports:
     type: File[]
     outputSource: trim/trim_reports
@@ -98,6 +104,7 @@ steps:
       - recal_reads_output_filename
       - recal_table_output_filename
       - raw_variants_output_filename
+      - hs_metrics_output_filename
   map:
     run: ../tools/bwa-mem-samtools.cwl
     requirements:
@@ -142,6 +149,48 @@ steps:
     out:
       - output_dedup_bam_file
       - output_metrics_file
+  make_target_interval_list:
+    run: ../tools/picard-BedToIntervalList.cwl
+    requirements:
+      - class: ResourceRequirement
+        coresMin: 1
+        ramMin: 4000
+        outdirMin: 12000
+        tmpdirMin: 12000
+    in:
+      input_file: intervals
+      reference_sequence: reference_genome
+    out:
+      - output_interval_list_file
+  make_bait_interval_list:
+    run: ../tools/picard-BedToIntervalList.cwl
+    requirements:
+      - class: ResourceRequirement
+        coresMin: 1
+        ramMin: 4000
+        outdirMin: 12000
+        tmpdirMin: 12000
+    in:
+      input_file: primary_intervals
+      reference_sequence: reference_genome
+    out:
+      - output_interval_list_file
+  collect_hs_metrics:
+    run: ../tools/picard-CollectHsMetrics.cwl
+    requirements:
+      - class: ResourceRequirement
+        coresMin: 1
+        ramMin: 4000
+        outdirMin: 12000
+        tmpdirMin: 12000
+    in:
+      input_file: mark_duplicates/output_dedup_bam_file
+      reference_sequence: reference_genome
+      target_intervals: make_target_interval_list/output_interval_list_file
+      bait_intervals: make_bait_interval_list/output_interval_list_file
+      output_filename: generate_sample_filenames/hs_metrics_output_filename
+    out:
+      - output_hs_metrics_file
   # Now recalibrate
   recalibrate_01_analyze:
     run: ../tools/GATK-BaseRecalibrator.cwl

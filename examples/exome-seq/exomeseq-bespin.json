@@ -13,6 +13,12 @@
       "path": "/data/exome-seq/capture/SeqCap_EZ_Exome_v3_capture.noChr.bed"
     }
   ],
+  "primary_intervals": [
+    {
+      "class": "File",
+      "path": "/data/exome-seq/capture/SeqCap_EZ_Exome_v3_primary.noChr.bed"
+    }
+  ],
   "interval_padding": 100,
   "knownSites": [
     {

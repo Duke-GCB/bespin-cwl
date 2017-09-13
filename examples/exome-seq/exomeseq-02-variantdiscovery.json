@@ -13,6 +13,12 @@
       "path": "/home/ubuntu/data/capture/SeqCap_EZ_Exome_v3_capture.noChr.bed"
     }
   ],
+  "primary_intervals": [
+    {
+      "class": "File",
+      "path": "/home/ubuntu/data/capture/SeqCap_EZ_Exome_v3_primary.noChr.bed"
+    }
+  ],
   "mapped_reads": [
     {
         "checksum": "sha1$fe26a1074884a4d55c96b46aa62dfe3022598718",
