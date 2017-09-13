@@ -40,7 +40,7 @@ outputs:
     type: File[]
     outputSource: qc/output_qc_report
   hs_metrics:
-    type: File[]
+    type: File
     outputSource: collect_hs_metrics/output_hs_metrics_file
   trim_reports:
     type: File[]
