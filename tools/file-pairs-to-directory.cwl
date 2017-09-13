@@ -7,7 +7,8 @@ requirements:
   - class: InlineJavascriptRequirement
 
 inputs:
-  file_pairs: { type: array, items: { type: array, items: File } }
+  file_pairs:
+    type: { type: array, items: { type: array, items: File } }
   name: string
 outputs:
   outdir: Directory
