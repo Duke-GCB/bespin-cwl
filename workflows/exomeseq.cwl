@@ -65,19 +65,19 @@ inputs:
     secondaryFiles:
     - .idx
 outputs:
-  fastqc_reports:
-    type: { type: array, items: { type: array, items: File } }
-    outputSource: preprocessing/qc_reports
-  trim_reports:
-    type: { type: array, items: { type: array, items: File } }
-    outputSource: preprocessing/trim_reports
-  raw_variants:
-    type: File[]
-    outputSource: preprocessing/raw_variants
+  fastqc_reports_dir:
+    type: Directory
+    outputSource: organize_directories/fastqc_reports_dir
+  trim_reports_dir:
+    type: Directory
+    outputSource: organize_directories/trim_reports_dir
+  raw_variants_dir:
+    type: Directory
+    outputSource: organize_directories/raw_variants_dir
     doc: "VCF files from per sample variant calling"
-  haplotypes_bams:
-    type: File[]
-    outputSource: preprocessing/haplotypes_bam
+  bams_final_dir:
+    type: Directory
+    outputSource: organize_directories/bams_final_dir
     doc: "BAM files containing assembled haplotypes and locally realigned reads"
   joint_raw_variants:
     type: File
@@ -135,3 +135,15 @@ steps:
       - variant_recalibration_snps_indels_recal
       - variant_recalibration_snps_indels_rscript
       - variant_recalibration_snps_indels_vcf
+  organize_directories:
+    run: exomeseq-03-organizedirectories.cwl
+    in:
+      fastqc_reports: preprocessing/fastqc_reports
+      trim_reports: preprocessing/trim_reports
+      raw_variants: preprocessing/raw_variants
+      bams_final: preprocessing/haplotypes_bam
+    out:
+      - fastqc_reports_dir
+      - trim_reports_dir
+      - raw_variants_dir
+      - bams_final_dir
