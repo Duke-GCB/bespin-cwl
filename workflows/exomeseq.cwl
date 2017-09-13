@@ -8,8 +8,10 @@ requirements:
   - class: ScatterFeatureRequirement
   - class: SubworkflowFeatureRequirement
 inputs:
-  # Intervals should come from capture kit
+  # Intervals should come from capture kit (target intervals) bed format
   intervals: File[]?
+  # Intervals should come from capture kit (bait intervals) bed format
+  primary_intervals: File[]?
   interval_padding: int?
   # Read pairs, fastq format
   read_pairs:
@@ -74,6 +76,9 @@ outputs:
   raw_variants_dir:
     type: Directory
     outputSource: organize_directories/raw_variants_dir
+  hs_metrics:
+    type: { type: array, items: { type: array, items: File } }
+    outputSource: preprocessing/hs_metrics
     doc: "VCF files from per sample variant calling"
   bams_markduplicates_dir:
     type: Directory
@@ -97,6 +102,7 @@ steps:
     scatter: reads
     in:
       intervals: intervals
+      primary_intervals: primary_intervals
       interval_padding: interval_padding
       reads: read_pairs
       reference_genome: reference_genome
@@ -115,6 +121,7 @@ steps:
       - recalibrated_reads
       - raw_variants
       - haplotypes_bam
+      - hs_metrics
   variant_discovery:
     run: exomeseq-02-variantdiscovery.cwl
     in:

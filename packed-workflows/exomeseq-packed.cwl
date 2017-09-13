@@ -2732,6 +2732,10 @@
                 }, 
                 {
                     "type": "string", 
+                    "id": "#generate-sample-filenames.cwl/hs_metrics_output_filename"
+                }, 
+                {
+                    "type": "string", 
                     "id": "#generate-sample-filenames.cwl/mapped_reads_output_filename"
                 }, 
                 {
@@ -2751,7 +2755,7 @@
                     "id": "#generate-sample-filenames.cwl/sorted_reads_output_filename"
                 }
             ], 
-            "expression": "${\n  function makeFilename(base, suffix, extension) {\n    return base + '-' + suffix + '.' + extension;\n  }\n  var base = inputs.sample_name\n\n  return {\n    mapped_reads_output_filename: makeFilename(base, 'mapped', 'bam'),\n    sorted_reads_output_filename: makeFilename(base, 'sorted', 'bam'),\n    dedup_reads_output_filename: makeFilename(base, 'dedup', 'bam'),\n    dedup_metrics_output_filename: makeFilename(base, 'dedup-metrics', 'out'),\n    recal_reads_output_filename: makeFilename(base, 'recal', 'bam'),\n    recal_table_output_filename: makeFilename(base, 'recal', 'table'),\n    raw_variants_output_filename: makeFilename(base, 'raw_variants', 'g.vcf'),\n    haplotypes_bam_output_filename:  makeFilename(base, 'haplotypes', 'bam')\n  };\n}\n", 
+            "expression": "${\n  function makeFilename(base, suffix, extension) {\n    return base + '-' + suffix + '.' + extension;\n  }\n  var base = inputs.sample_name\n\n  return {\n    mapped_reads_output_filename: makeFilename(base, 'mapped', 'bam'),\n    sorted_reads_output_filename: makeFilename(base, 'sorted', 'bam'),\n    dedup_reads_output_filename: makeFilename(base, 'dedup', 'bam'),\n    dedup_metrics_output_filename: makeFilename(base, 'dedup-metrics', 'out'),\n    recal_reads_output_filename: makeFilename(base, 'recal', 'bam'),\n    recal_table_output_filename: makeFilename(base, 'recal', 'table'),\n    raw_variants_output_filename: makeFilename(base, 'raw_variants', 'g.vcf'),\n    haplotypes_bam_output_filename:  makeFilename(base, 'haplotypes', 'bam'),\n    hs_metrics_output_filename: makeFilename(base, 'hs', 'txt')\n  };\n}\n", 
             "id": "#generate-sample-filenames.cwl"
         }, 
         {
@@ -2813,6 +2817,173 @@
             ], 
             "expression": "${\n  // Returns the part of the filename before the extension\n  function removeExtension(name) {\n    return name.split('.')[0];\n  }\n\n  // Given an array of keys and values, creates an object mapping keys to values\n  function zip(keys, values) {\n    var object = {};\n    for (var i=0;i<keys.length;i++) {\n      object[keys[i]] = values[i]\n    }\n    return object;\n  }\n\n  // Split the string name on the separator\n  function splitFields(name, separator) {\n  \treturn name.split(separator);\n  }\n\n  // Makes a string with a read group header that can be provided to bwa as SAM metadata\n  function makeReadGroupsString(fields) {\n    \tvar readGroups = \"@RG\" +\n    \t  \"\\\\tID:\" + fields['sample'] +\n    \t  \"\\\\tLB:\" + fields['library'] +\n    \t  \"\\\\tPL:\" + fields['platform'] +\n    \t  \"\\\\tPU:\" + fields['sample'] +\n    \t  \"\\\\tSM:\" + fields['sample'];\n      return readGroups;\n  }\n\n  var filename = inputs.reads[0].basename;\n  var base = removeExtension(filename);\n  var components = splitFields(base, inputs.separator);\n  var fields = zip(inputs.field_order, components);\n  fields['library'] = inputs.library;\n  fields['platform'] = inputs.platform;\n  var read_group_header = makeReadGroupsString(fields);\n  return {\n    read_group_header: read_group_header,\n    sample_name: fields['sample']\n  };\n}\n", 
             "id": "#parse-read-group-header.cwl"
+        }, 
+        {
+            "class": "CommandLineTool", 
+            "requirements": [
+                {
+                    "class": "DockerRequirement", 
+                    "dockerPull": "dukegcb/picard:2.10.7"
+                }, 
+                {
+                    "class": "InlineJavascriptRequirement"
+                }
+            ], 
+            "inputs": [
+                {
+                    "type": [
+                        "null", 
+                        {
+                            "type": "array", 
+                            "items": "File"
+                        }
+                    ], 
+                    "doc": "The bed file to be converted to interval_list format.  Required.", 
+                    "inputBinding": {
+                        "prefix": "I=", 
+                        "shellQuote": false
+                    }, 
+                    "id": "#picard-BedToIntervalList.cwl/input_file"
+                }, 
+                {
+                    "type": [
+                        "null", 
+                        "string"
+                    ], 
+                    "doc": "Interval list output filename.", 
+                    "default": "list.interval_list", 
+                    "inputBinding": {
+                        "prefix": "O=", 
+                        "shellQuote": false
+                    }, 
+                    "id": "#picard-BedToIntervalList.cwl/output_filename"
+                }, 
+                {
+                    "type": "File", 
+                    "doc": "The reference sequences in fasta format.", 
+                    "inputBinding": {
+                        "prefix": "SD=", 
+                        "shellQuote": false
+                    }, 
+                    "id": "#picard-BedToIntervalList.cwl/reference_sequence"
+                }
+            ], 
+            "outputs": [
+                {
+                    "type": "File", 
+                    "outputBinding": {
+                        "glob": "$(inputs.output_filename)"
+                    }, 
+                    "id": "#picard-BedToIntervalList.cwl/output_interval_list_file"
+                }
+            ], 
+            "baseCommand": [
+                "java", 
+                "-Xmx4g"
+            ], 
+            "arguments": [
+                {
+                    "valueFrom": "/opt/picard/picard.jar", 
+                    "position": -1, 
+                    "prefix": "-jar"
+                }, 
+                {
+                    "valueFrom": "BedToIntervalList", 
+                    "position": 0
+                }
+            ], 
+            "id": "#picard-BedToIntervalList.cwl"
+        }, 
+        {
+            "class": "CommandLineTool", 
+            "requirements": [
+                {
+                    "class": "DockerRequirement", 
+                    "dockerPull": "dukegcb/picard:2.10.7"
+                }, 
+                {
+                    "class": "InlineJavascriptRequirement"
+                }
+            ], 
+            "inputs": [
+                {
+                    "type": "File", 
+                    "doc": "The bait interval file in picard interval_list format (from capture kit).", 
+                    "inputBinding": {
+                        "prefix": "BAIT_INTERVALS=", 
+                        "shellQuote": false
+                    }, 
+                    "id": "#picard-CollectHsMetrics.cwl/bait_intervals"
+                }, 
+                {
+                    "type": "File", 
+                    "doc": "The BAM or SAM file to collect metrics from.  Required.", 
+                    "inputBinding": {
+                        "prefix": "I=", 
+                        "shellQuote": false
+                    }, 
+                    "id": "#picard-CollectHsMetrics.cwl/input_file"
+                }, 
+                {
+                    "type": [
+                        "null", 
+                        "string"
+                    ], 
+                    "doc": "The metrics output filename.", 
+                    "default": "hs_metrics.txt", 
+                    "inputBinding": {
+                        "prefix": "O=", 
+                        "shellQuote": false
+                    }, 
+                    "id": "#picard-CollectHsMetrics.cwl/output_filename"
+                }, 
+                {
+                    "type": "File", 
+                    "doc": "The reference sequences in fasta format.", 
+                    "inputBinding": {
+                        "prefix": "R=", 
+                        "shellQuote": false
+                    }, 
+                    "id": "#picard-CollectHsMetrics.cwl/reference_sequence"
+                }, 
+                {
+                    "type": "File", 
+                    "doc": "The target interval file in picard interval_list format (from capture kit).", 
+                    "inputBinding": {
+                        "prefix": "TARGET_INTERVALS=", 
+                        "shellQuote": false
+                    }, 
+                    "id": "#picard-CollectHsMetrics.cwl/target_intervals"
+                }
+            ], 
+            "outputs": [
+                {
+                    "type": {
+                        "type": "array", 
+                        "items": "File"
+                    }, 
+                    "outputBinding": {
+                        "glob": "$(inputs.output_filename)"
+                    }, 
+                    "id": "#picard-CollectHsMetrics.cwl/output_hs_metrics_file"
+                }
+            ], 
+            "baseCommand": [
+                "java", 
+                "-Xmx4g"
+            ], 
+            "arguments": [
+                {
+                    "valueFrom": "/opt/picard/picard.jar", 
+                    "position": -1, 
+                    "prefix": "-jar"
+                }, 
+                {
+                    "valueFrom": "CollectHsMetrics", 
+                    "position": 0
+                }
+            ], 
+            "id": "#picard-CollectHsMetrics.cwl"
         }, 
         {
             "class": "CommandLineTool", 
@@ -3104,6 +3275,16 @@
                     "id": "#exomeseq-01-preprocessing.cwl/platform"
                 }, 
                 {
+                    "type": [
+                        "null", 
+                        {
+                            "type": "array", 
+                            "items": "File"
+                        }
+                    ], 
+                    "id": "#exomeseq-01-preprocessing.cwl/primary_intervals"
+                }, 
+                {
                     "type": {
                         "type": "array", 
                         "items": "File"
@@ -3142,6 +3323,14 @@
                     "id": "#exomeseq-01-preprocessing.cwl/haplotypes_bam"
                 }, 
                 {
+                    "type": {
+                        "type": "array", 
+                        "items": "File"
+                    }, 
+                    "outputSource": "#exomeseq-01-preprocessing.cwl/collect_hs_metrics/output_hs_metrics_file", 
+                    "id": "#exomeseq-01-preprocessing.cwl/hs_metrics"
+                }, 
+                {
                     "type": "File", 
                     "outputSource": "#exomeseq-01-preprocessing.cwl/mark_duplicates/output_dedup_bam_file", 
                     "id": "#exomeseq-01-preprocessing.cwl/markduplicates_bam"
@@ -3173,6 +3362,44 @@
             ], 
             "steps": [
                 {
+                    "run": "#picard-CollectHsMetrics.cwl", 
+                    "requirements": [
+                        {
+                            "class": "ResourceRequirement", 
+                            "coresMin": 1, 
+                            "ramMin": 4000, 
+                            "outdirMin": 12000, 
+                            "tmpdirMin": 12000
+                        }
+                    ], 
+                    "in": [
+                        {
+                            "source": "#exomeseq-01-preprocessing.cwl/make_bait_interval_list/output_interval_list_file", 
+                            "id": "#exomeseq-01-preprocessing.cwl/collect_hs_metrics/bait_intervals"
+                        }, 
+                        {
+                            "source": "#exomeseq-01-preprocessing.cwl/mark_duplicates/output_dedup_bam_file", 
+                            "id": "#exomeseq-01-preprocessing.cwl/collect_hs_metrics/input_file"
+                        }, 
+                        {
+                            "source": "#exomeseq-01-preprocessing.cwl/generate_sample_filenames/hs_metrics_output_filename", 
+                            "id": "#exomeseq-01-preprocessing.cwl/collect_hs_metrics/output_filename"
+                        }, 
+                        {
+                            "source": "#exomeseq-01-preprocessing.cwl/reference_genome", 
+                            "id": "#exomeseq-01-preprocessing.cwl/collect_hs_metrics/reference_sequence"
+                        }, 
+                        {
+                            "source": "#exomeseq-01-preprocessing.cwl/make_target_interval_list/output_interval_list_file", 
+                            "id": "#exomeseq-01-preprocessing.cwl/collect_hs_metrics/target_intervals"
+                        }
+                    ], 
+                    "out": [
+                        "#exomeseq-01-preprocessing.cwl/collect_hs_metrics/output_hs_metrics_file"
+                    ], 
+                    "id": "#exomeseq-01-preprocessing.cwl/collect_hs_metrics"
+                }, 
+                {
                     "run": "#generate-sample-filenames.cwl", 
                     "in": [
                         {
@@ -3188,9 +3415,62 @@
                         "#exomeseq-01-preprocessing.cwl/generate_sample_filenames/recal_reads_output_filename", 
                         "#exomeseq-01-preprocessing.cwl/generate_sample_filenames/recal_table_output_filename", 
                         "#exomeseq-01-preprocessing.cwl/generate_sample_filenames/raw_variants_output_filename", 
-                        "#exomeseq-01-preprocessing.cwl/generate_sample_filenames/haplotypes_bam_output_filename"
+                        "#exomeseq-01-preprocessing.cwl/generate_sample_filenames/haplotypes_bam_output_filename", 
+                        "#exomeseq-01-preprocessing.cwl/generate_sample_filenames/hs_metrics_output_filename"
                     ], 
                     "id": "#exomeseq-01-preprocessing.cwl/generate_sample_filenames"
+                }, 
+                {
+                    "run": "#picard-BedToIntervalList.cwl", 
+                    "requirements": [
+                        {
+                            "class": "ResourceRequirement", 
+                            "coresMin": 1, 
+                            "ramMin": 4000, 
+                            "outdirMin": 12000, 
+                            "tmpdirMin": 12000
+                        }
+                    ], 
+                    "in": [
+                        {
+                            "source": "#exomeseq-01-preprocessing.cwl/primary_intervals", 
+                            "id": "#exomeseq-01-preprocessing.cwl/make_bait_interval_list/input_file"
+                        }, 
+                        {
+                            "source": "#exomeseq-01-preprocessing.cwl/reference_genome", 
+                            "id": "#exomeseq-01-preprocessing.cwl/make_bait_interval_list/reference_sequence"
+                        }
+                    ], 
+                    "out": [
+                        "#exomeseq-01-preprocessing.cwl/make_bait_interval_list/output_interval_list_file"
+                    ], 
+                    "id": "#exomeseq-01-preprocessing.cwl/make_bait_interval_list"
+                }, 
+                {
+                    "run": "#picard-BedToIntervalList.cwl", 
+                    "requirements": [
+                        {
+                            "class": "ResourceRequirement", 
+                            "coresMin": 1, 
+                            "ramMin": 4000, 
+                            "outdirMin": 12000, 
+                            "tmpdirMin": 12000
+                        }
+                    ], 
+                    "in": [
+                        {
+                            "source": "#exomeseq-01-preprocessing.cwl/intervals", 
+                            "id": "#exomeseq-01-preprocessing.cwl/make_target_interval_list/input_file"
+                        }, 
+                        {
+                            "source": "#exomeseq-01-preprocessing.cwl/reference_genome", 
+                            "id": "#exomeseq-01-preprocessing.cwl/make_target_interval_list/reference_sequence"
+                        }
+                    ], 
+                    "out": [
+                        "#exomeseq-01-preprocessing.cwl/make_target_interval_list/output_interval_list_file"
+                    ], 
+                    "id": "#exomeseq-01-preprocessing.cwl/make_target_interval_list"
                 }, 
                 {
                     "run": "#bwa-mem-samtools.cwl", 
@@ -4170,6 +4450,16 @@
                     "id": "#main/platform"
                 }, 
                 {
+                    "type": [
+                        "null", 
+                        {
+                            "type": "array", 
+                            "items": "File"
+                        }
+                    ], 
+                    "id": "#main/primary_intervals"
+                }, 
+                {
                     "type": {
                         "type": "array", 
                         "items": {
@@ -4254,6 +4544,18 @@
                     "id": "#main/filtered_recalibrated_variants"
                 }, 
                 {
+                    "type": {
+                        "type": "array", 
+                        "items": {
+                            "type": "array", 
+                            "items": "File"
+                        }
+                    }, 
+                    "outputSource": "#main/preprocessing/hs_metrics", 
+                    "doc": "VCF files from per sample variant calling", 
+                    "id": "#main/hs_metrics"
+                }, 
+                {
                     "type": "File", 
                     "outputSource": "#main/variant_discovery/joint_raw_variants", 
                     "doc": "GVCF file from joint genotyping calling", 
@@ -4262,7 +4564,6 @@
                 {
                     "type": "Directory", 
                     "outputSource": "#main/organize_directories/raw_variants_dir", 
-                    "doc": "VCF files from per sample variant calling", 
                     "id": "#main/raw_variants_dir"
                 }, 
                 {
@@ -4338,6 +4639,10 @@
                             "id": "#main/preprocessing/platform"
                         }, 
                         {
+                            "source": "#main/primary_intervals", 
+                            "id": "#main/preprocessing/primary_intervals"
+                        }, 
+                        {
                             "source": "#main/read_pairs", 
                             "id": "#main/preprocessing/reads"
                         }, 
@@ -4361,7 +4666,8 @@
                         "#main/preprocessing/recalibration_table", 
                         "#main/preprocessing/recalibrated_reads", 
                         "#main/preprocessing/raw_variants", 
-                        "#main/preprocessing/haplotypes_bam"
+                        "#main/preprocessing/haplotypes_bam", 
+                        "#main/preprocessing/hs_metrics"
                     ], 
                     "id": "#main/preprocessing"
                 }, 
