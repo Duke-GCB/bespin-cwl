@@ -1,5 +1,5 @@
 #!/usr/bin/env cwl-runner
-# https://broadinstitute.github.io/picard/command-line-overview.html#CollectHsMetrics
+# https://broadinstitute.github.io/picard/command-line-overview.html#BedToIntervalList
 
 cwlVersion: v1.0
 class: CommandLineTool
