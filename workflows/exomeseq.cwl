@@ -86,7 +86,7 @@ outputs:
   filtered_recalibrated_variants:
     type: File
     outputSource: variant_discovery/variant_recalibration_snps_indels_vcf
-    doc: "The output filtered and recalibrated VCF file in INDEL mode in which each variant is annotated with its VQSLOD value"
+    doc: "The output filtered and recalibrated VCF file in which each variant is annotated with its VQSLOD value"
 steps:
   preprocessing:
     run: exomeseq-01-preprocessing.cwl
