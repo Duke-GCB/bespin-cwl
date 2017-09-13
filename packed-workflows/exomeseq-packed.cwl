@@ -3143,6 +3143,11 @@
                 }, 
                 {
                     "type": "File", 
+                    "outputSource": "#exomeseq-01-preprocessing.cwl/mark_duplicates/output_dedup_bam_file", 
+                    "id": "#exomeseq-01-preprocessing.cwl/markduplicates_bam"
+                }, 
+                {
+                    "type": "File", 
                     "outputSource": "#exomeseq-01-preprocessing.cwl/variant_calling/output_HaplotypeCaller", 
                     "doc": "VCF file from per sample variant calling", 
                     "id": "#exomeseq-01-preprocessing.cwl/raw_variants"
@@ -3947,6 +3952,13 @@
                 {
                     "type": {
                         "type": "array", 
+                        "items": "File"
+                    }, 
+                    "id": "#exomeseq-03-organizedirectories.cwl/bams_markduplicates"
+                }, 
+                {
+                    "type": {
+                        "type": "array", 
                         "items": {
                             "type": "array", 
                             "items": "File"
@@ -3977,6 +3989,11 @@
                     "type": "Directory", 
                     "outputSource": "#exomeseq-03-organizedirectories.cwl/org_bams_final/outdir", 
                     "id": "#exomeseq-03-organizedirectories.cwl/bams_final_dir"
+                }, 
+                {
+                    "type": "Directory", 
+                    "outputSource": "#exomeseq-03-organizedirectories.cwl/org_bams_markduplicates/outdir", 
+                    "id": "#exomeseq-03-organizedirectories.cwl/bams_markduplicates_dir"
                 }, 
                 {
                     "type": "Directory", 
@@ -4013,6 +4030,23 @@
                     "id": "#exomeseq-03-organizedirectories.cwl/org_bams_final"
                 }, 
                 {
+                    "run": "#files-to-directory.cwl", 
+                    "in": [
+                        {
+                            "source": "#exomeseq-03-organizedirectories.cwl/bams_markduplicates", 
+                            "id": "#exomeseq-03-organizedirectories.cwl/org_bams_markduplicates/files"
+                        }, 
+                        {
+                            "default": "bams-markduplicates", 
+                            "id": "#exomeseq-03-organizedirectories.cwl/org_bams_markduplicates/name"
+                        }
+                    ], 
+                    "out": [
+                        "#exomeseq-03-organizedirectories.cwl/org_bams_markduplicates/outdir"
+                    ], 
+                    "id": "#exomeseq-03-organizedirectories.cwl/org_bams_markduplicates"
+                }, 
+                {
                     "run": "#file-pairs-to-directory.cwl", 
                     "in": [
                         {
@@ -4037,7 +4071,7 @@
                             "id": "#exomeseq-03-organizedirectories.cwl/org_raw_variants/files"
                         }, 
                         {
-                            "default": "raw-variants", 
+                            "default": "gvcfs", 
                             "id": "#exomeseq-03-organizedirectories.cwl/org_raw_variants/name"
                         }
                     ], 
@@ -4204,6 +4238,12 @@
                 }, 
                 {
                     "type": "Directory", 
+                    "outputSource": "#main/organize_directories/bams_markduplicates_dir", 
+                    "doc": "BAM and bai files from markduplicates", 
+                    "id": "#main/bams_markduplicates_dir"
+                }, 
+                {
+                    "type": "Directory", 
                     "outputSource": "#main/organize_directories/fastqc_reports_dir", 
                     "id": "#main/fastqc_reports_dir"
                 }, 
@@ -4240,6 +4280,10 @@
                             "id": "#main/organize_directories/bams_final"
                         }, 
                         {
+                            "source": "#main/preprocessing/markduplicates_bam", 
+                            "id": "#main/organize_directories/bams_markduplicates"
+                        }, 
+                        {
                             "source": "#main/preprocessing/fastqc_reports", 
                             "id": "#main/organize_directories/fastqc_reports"
                         }, 
@@ -4255,6 +4299,7 @@
                     "out": [
                         "#main/organize_directories/fastqc_reports_dir", 
                         "#main/organize_directories/trim_reports_dir", 
+                        "#main/organize_directories/bams_markduplicates_dir", 
                         "#main/organize_directories/raw_variants_dir", 
                         "#main/organize_directories/bams_final_dir"
                     ], 
@@ -4312,6 +4357,7 @@
                     "out": [
                         "#main/preprocessing/fastqc_reports", 
                         "#main/preprocessing/trim_reports", 
+                        "#main/preprocessing/markduplicates_bam", 
                         "#main/preprocessing/recalibration_table", 
                         "#main/preprocessing/recalibrated_reads", 
                         "#main/preprocessing/raw_variants", 
