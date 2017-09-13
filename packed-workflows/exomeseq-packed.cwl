@@ -1068,7 +1068,7 @@
                 {
                     "type": [
                         "null", 
-                        "File"
+                        "string"
                     ], 
                     "inputBinding": {
                         "position": 2, 
@@ -1679,6 +1679,16 @@
                         ".idx"
                     ], 
                     "id": "#GATK-HaplotypeCaller.cwl/output_HaplotypeCaller"
+                }, 
+                {
+                    "type": [
+                        "null", 
+                        "File"
+                    ], 
+                    "outputBinding": {
+                        "glob": "$(inputs.bamOutput)"
+                    }, 
+                    "id": "#GATK-HaplotypeCaller.cwl/output_HaplotypesBam"
                 }
             ], 
             "arguments": [
@@ -2592,23 +2602,23 @@
             "outputs": [
                 {
                     "type": "string", 
-                    "id": "#generate-joint-filenames.cwl/indels_recalibrated_output_filename"
-                }, 
-                {
-                    "type": "string", 
-                    "id": "#generate-joint-filenames.cwl/indels_vqsr_recal_output_filename"
-                }, 
-                {
-                    "type": "string", 
-                    "id": "#generate-joint-filenames.cwl/indels_vqsr_rscript_output_filename"
-                }, 
-                {
-                    "type": "string", 
-                    "id": "#generate-joint-filenames.cwl/indels_vqsr_tranches_output_filename"
-                }, 
-                {
-                    "type": "string", 
                     "id": "#generate-joint-filenames.cwl/joint_genotype_raw_variants_output_filename"
+                }, 
+                {
+                    "type": "string", 
+                    "id": "#generate-joint-filenames.cwl/snps_indels_recalibrated_output_filename"
+                }, 
+                {
+                    "type": "string", 
+                    "id": "#generate-joint-filenames.cwl/snps_indels_vqsr_recal_output_filename"
+                }, 
+                {
+                    "type": "string", 
+                    "id": "#generate-joint-filenames.cwl/snps_indels_vqsr_rscript_output_filename"
+                }, 
+                {
+                    "type": "string", 
+                    "id": "#generate-joint-filenames.cwl/snps_indels_vqsr_tranches_output_filename"
                 }, 
                 {
                     "type": "string", 
@@ -2627,7 +2637,7 @@
                     "id": "#generate-joint-filenames.cwl/snps_vqsr_tranches_output_filename"
                 }
             ], 
-            "expression": "${\n  function makeFilename(base, suffix, extension) {\n    return base + '-' + suffix + '.' + extension;\n  }\n  var base = inputs.name\n\n  return {\n    joint_genotype_raw_variants_output_filename: makeFilename(base, 'raw_variants', 'g.vcf'),\n    snps_vqsr_recal_output_filename: makeFilename(base, 'snps_vqsr_recal', 'out'),\n    snps_vqsr_tranches_output_filename: makeFilename(base, 'snps_vqsr_tranches', 'out'),\n    snps_vqsr_rscript_output_filename: makeFilename(base, 'snps_vqsr', 'R'),\n    snps_recalibrated_output_filename: makeFilename(base, 'recalibrated_snps_raw_indels', 'vcf'),\n    indels_vqsr_recal_output_filename: makeFilename(base, 'indels_vqsr_recal', 'out'),\n    indels_vqsr_tranches_output_filename: makeFilename(base, 'indels_vqsr_tranches', 'out'),\n    indels_vqsr_rscript_output_filename: makeFilename(base, 'indels_vqsr', 'R'),\n    indels_recalibrated_output_filename: makeFilename(base, 'recalibrated_variants', 'vcf')\n  };\n}\n", 
+            "expression": "${\n  function makeFilename(base, suffix, extension) {\n    return base + '-' + suffix + '.' + extension;\n  }\n  var base = inputs.name\n\n  return {\n    joint_genotype_raw_variants_output_filename: makeFilename(base, 'raw_variants', 'g.vcf'),\n    snps_vqsr_recal_output_filename: makeFilename(base, 'snps_vqsr_recal', 'out'),\n    snps_vqsr_tranches_output_filename: makeFilename(base, 'snps_vqsr_tranches', 'out'),\n    snps_vqsr_rscript_output_filename: makeFilename(base, 'snps_vqsr', 'R'),\n    snps_recalibrated_output_filename: makeFilename(base, 'snps_recalibrated', 'vcf'),\n    snps_indels_vqsr_recal_output_filename: makeFilename(base, 'snps_indels_vqsr_recal', 'out'),\n    snps_indels_vqsr_tranches_output_filename: makeFilename(base, 'snps_indels_vqsr_tranches', 'out'),\n    snps_indels_vqsr_rscript_output_filename: makeFilename(base, 'snps_indels_vqsr', 'R'),\n    snps_indels_recalibrated_output_filename: makeFilename(base, 'snps_indels_recalibrated', 'vcf')\n  };\n}\n", 
             "id": "#generate-joint-filenames.cwl"
         }, 
         {
@@ -2655,6 +2665,10 @@
                 }, 
                 {
                     "type": "string", 
+                    "id": "#generate-sample-filenames.cwl/haplotypes_bam_output_filename"
+                }, 
+                {
+                    "type": "string", 
                     "id": "#generate-sample-filenames.cwl/mapped_reads_output_filename"
                 }, 
                 {
@@ -2674,7 +2688,7 @@
                     "id": "#generate-sample-filenames.cwl/sorted_reads_output_filename"
                 }
             ], 
-            "expression": "${\n  function makeFilename(base, suffix, extension) {\n    return base + '-' + suffix + '.' + extension;\n  }\n  var base = inputs.sample_name\n\n  return {\n    mapped_reads_output_filename: makeFilename(base, 'mapped', 'bam'),\n    sorted_reads_output_filename: makeFilename(base, 'sorted', 'bam'),\n    dedup_reads_output_filename: makeFilename(base, 'dedup', 'bam'),\n    dedup_metrics_output_filename: makeFilename(base, 'dedup-metrics', 'out'),\n    recal_reads_output_filename: makeFilename(base, 'recal', 'bam'),\n    recal_table_output_filename: makeFilename(base, 'recal', 'table'),\n    raw_variants_output_filename: makeFilename(base, 'raw_variants', 'g.vcf')\n  };\n}\n", 
+            "expression": "${\n  function makeFilename(base, suffix, extension) {\n    return base + '-' + suffix + '.' + extension;\n  }\n  var base = inputs.sample_name\n\n  return {\n    mapped_reads_output_filename: makeFilename(base, 'mapped', 'bam'),\n    sorted_reads_output_filename: makeFilename(base, 'sorted', 'bam'),\n    dedup_reads_output_filename: makeFilename(base, 'dedup', 'bam'),\n    dedup_metrics_output_filename: makeFilename(base, 'dedup-metrics', 'out'),\n    recal_reads_output_filename: makeFilename(base, 'recal', 'bam'),\n    recal_table_output_filename: makeFilename(base, 'recal', 'table'),\n    raw_variants_output_filename: makeFilename(base, 'raw_variants', 'g.vcf'),\n    haplotypes_bam_output_filename:  makeFilename(base, 'haplotypes', 'bam')\n  };\n}\n", 
             "id": "#generate-sample-filenames.cwl"
         }, 
         {
@@ -3051,6 +3065,12 @@
             ], 
             "outputs": [
                 {
+                    "type": "File", 
+                    "outputSource": "#exomeseq-01-preprocessing.cwl/variant_calling/output_HaplotypesBam", 
+                    "doc": "BAM file containing assembled haplotypes and locally realigned reads", 
+                    "id": "#exomeseq-01-preprocessing.cwl/haplotypes_bam"
+                }, 
+                {
                     "type": {
                         "type": "array", 
                         "items": "File"
@@ -3061,7 +3081,7 @@
                 {
                     "type": "File", 
                     "outputSource": "#exomeseq-01-preprocessing.cwl/variant_calling/output_HaplotypeCaller", 
-                    "doc": "VCF files from per sample variant calling", 
+                    "doc": "VCF file from per sample variant calling", 
                     "id": "#exomeseq-01-preprocessing.cwl/raw_variants"
                 }, 
                 {
@@ -3099,7 +3119,8 @@
                         "#exomeseq-01-preprocessing.cwl/generate_sample_filenames/dedup_metrics_output_filename", 
                         "#exomeseq-01-preprocessing.cwl/generate_sample_filenames/recal_reads_output_filename", 
                         "#exomeseq-01-preprocessing.cwl/generate_sample_filenames/recal_table_output_filename", 
-                        "#exomeseq-01-preprocessing.cwl/generate_sample_filenames/raw_variants_output_filename"
+                        "#exomeseq-01-preprocessing.cwl/generate_sample_filenames/raw_variants_output_filename", 
+                        "#exomeseq-01-preprocessing.cwl/generate_sample_filenames/haplotypes_bam_output_filename"
                     ], 
                     "id": "#exomeseq-01-preprocessing.cwl/generate_sample_filenames"
                 }, 
@@ -3381,6 +3402,10 @@
                             "id": "#exomeseq-01-preprocessing.cwl/variant_calling/GATKJar"
                         }, 
                         {
+                            "source": "#exomeseq-01-preprocessing.cwl/generate_sample_filenames/haplotypes_bam_output_filename", 
+                            "id": "#exomeseq-01-preprocessing.cwl/variant_calling/bamOutput"
+                        }, 
+                        {
                             "default": 8, 
                             "id": "#exomeseq-01-preprocessing.cwl/variant_calling/cpu_threads"
                         }, 
@@ -3421,7 +3446,8 @@
                         }
                     ], 
                     "out": [
-                        "#exomeseq-01-preprocessing.cwl/variant_calling/output_HaplotypeCaller"
+                        "#exomeseq-01-preprocessing.cwl/variant_calling/output_HaplotypeCaller", 
+                        "#exomeseq-01-preprocessing.cwl/variant_calling/output_HaplotypesBam"
                     ], 
                     "id": "#exomeseq-01-preprocessing.cwl/variant_calling"
                 }
@@ -3430,11 +3456,6 @@
         }, 
         {
             "class": "Workflow", 
-            "requirements": [
-                {
-                    "class": "ScatterFeatureRequirement"
-                }
-            ], 
             "inputs": [
                 {
                     "type": "File", 
@@ -3511,25 +3532,25 @@
                     "type": "File", 
                     "outputSource": "#exomeseq-02-variantdiscovery.cwl/variant_recalibration_indels/recal_File", 
                     "doc": "The output recal file used by ApplyRecalibration in INDEL mode", 
-                    "id": "#exomeseq-02-variantdiscovery.cwl/variant_recalibration_indels_recal"
+                    "id": "#exomeseq-02-variantdiscovery.cwl/variant_recalibration_snps_indels_recal"
                 }, 
                 {
                     "type": "File", 
                     "outputSource": "#exomeseq-02-variantdiscovery.cwl/variant_recalibration_indels/vqsr_rscript", 
                     "doc": "The output rscript file generated by the VQSR in INDEL mode to aid in visualization of the input data and learned model", 
-                    "id": "#exomeseq-02-variantdiscovery.cwl/variant_recalibration_indels_rscript"
+                    "id": "#exomeseq-02-variantdiscovery.cwl/variant_recalibration_snps_indels_rscript"
                 }, 
                 {
                     "type": "File", 
                     "outputSource": "#exomeseq-02-variantdiscovery.cwl/variant_recalibration_indels/tranches_File", 
                     "doc": "The output tranches file used by ApplyRecalibration in INDEL mode", 
-                    "id": "#exomeseq-02-variantdiscovery.cwl/variant_recalibration_indels_tranches"
+                    "id": "#exomeseq-02-variantdiscovery.cwl/variant_recalibration_snps_indels_tranches"
                 }, 
                 {
                     "type": "File", 
                     "outputSource": "#exomeseq-02-variantdiscovery.cwl/apply_recalibration_indels/output_recalibrated_vcf", 
-                    "doc": "The output filtered and recalibrated VCF file in INDEL mode in which each variant is annotated with its VQSLOD value", 
-                    "id": "#exomeseq-02-variantdiscovery.cwl/variant_recalibration_indels_vcf"
+                    "doc": "The output filtered and recalibrated VCF file in in which each variant is annotated with its VQSLOD value", 
+                    "id": "#exomeseq-02-variantdiscovery.cwl/variant_recalibration_snps_indels_vcf"
                 }, 
                 {
                     "type": "File", 
@@ -3569,7 +3590,7 @@
                             "id": "#exomeseq-02-variantdiscovery.cwl/apply_recalibration_indels/mode"
                         }, 
                         {
-                            "source": "#exomeseq-02-variantdiscovery.cwl/generate_joint_filenames/indels_recalibrated_output_filename", 
+                            "source": "#exomeseq-02-variantdiscovery.cwl/generate_joint_filenames/snps_indels_recalibrated_output_filename", 
                             "id": "#exomeseq-02-variantdiscovery.cwl/apply_recalibration_indels/outputfile_recalibrated_vcf"
                         }, 
                         {
@@ -3661,10 +3682,10 @@
                         "#exomeseq-02-variantdiscovery.cwl/generate_joint_filenames/snps_vqsr_tranches_output_filename", 
                         "#exomeseq-02-variantdiscovery.cwl/generate_joint_filenames/snps_vqsr_rscript_output_filename", 
                         "#exomeseq-02-variantdiscovery.cwl/generate_joint_filenames/snps_recalibrated_output_filename", 
-                        "#exomeseq-02-variantdiscovery.cwl/generate_joint_filenames/indels_vqsr_recal_output_filename", 
-                        "#exomeseq-02-variantdiscovery.cwl/generate_joint_filenames/indels_vqsr_tranches_output_filename", 
-                        "#exomeseq-02-variantdiscovery.cwl/generate_joint_filenames/indels_vqsr_rscript_output_filename", 
-                        "#exomeseq-02-variantdiscovery.cwl/generate_joint_filenames/indels_recalibrated_output_filename"
+                        "#exomeseq-02-variantdiscovery.cwl/generate_joint_filenames/snps_indels_vqsr_recal_output_filename", 
+                        "#exomeseq-02-variantdiscovery.cwl/generate_joint_filenames/snps_indels_vqsr_tranches_output_filename", 
+                        "#exomeseq-02-variantdiscovery.cwl/generate_joint_filenames/snps_indels_vqsr_rscript_output_filename", 
+                        "#exomeseq-02-variantdiscovery.cwl/generate_joint_filenames/snps_indels_recalibrated_output_filename"
                     ], 
                     "id": "#exomeseq-02-variantdiscovery.cwl/generate_joint_filenames"
                 }, 
@@ -3741,15 +3762,15 @@
                             "id": "#exomeseq-02-variantdiscovery.cwl/variant_recalibration_indels/annotations"
                         }, 
                         {
-                            "source": "#exomeseq-02-variantdiscovery.cwl/generate_joint_filenames/indels_vqsr_recal_output_filename", 
+                            "source": "#exomeseq-02-variantdiscovery.cwl/generate_joint_filenames/snps_indels_vqsr_recal_output_filename", 
                             "id": "#exomeseq-02-variantdiscovery.cwl/variant_recalibration_indels/outputfile_recal"
                         }, 
                         {
-                            "source": "#exomeseq-02-variantdiscovery.cwl/generate_joint_filenames/indels_vqsr_rscript_output_filename", 
+                            "source": "#exomeseq-02-variantdiscovery.cwl/generate_joint_filenames/snps_indels_vqsr_rscript_output_filename", 
                             "id": "#exomeseq-02-variantdiscovery.cwl/variant_recalibration_indels/outputfile_rscript"
                         }, 
                         {
-                            "source": "#exomeseq-02-variantdiscovery.cwl/generate_joint_filenames/indels_vqsr_tranches_output_filename", 
+                            "source": "#exomeseq-02-variantdiscovery.cwl/generate_joint_filenames/snps_indels_vqsr_tranches_output_filename", 
                             "id": "#exomeseq-02-variantdiscovery.cwl/variant_recalibration_indels/outputfile_tranches"
                         }, 
                         {
@@ -3981,12 +4002,6 @@
             ], 
             "outputs": [
                 {
-                    "type": "File", 
-                    "outputSource": "#main/variant_discovery/joint_raw_variants", 
-                    "doc": "VCF file from joint genotyping calling", 
-                    "id": "#main/joint_raw_variants"
-                }, 
-                {
                     "type": {
                         "type": "array", 
                         "items": {
@@ -3995,7 +4010,28 @@
                         }
                     }, 
                     "outputSource": "#main/preprocessing/qc_reports", 
-                    "id": "#main/qc_reports"
+                    "id": "#main/fastqc_reports"
+                }, 
+                {
+                    "type": "File", 
+                    "outputSource": "#main/variant_discovery/variant_recalibration_snps_indels_vcf", 
+                    "doc": "The output filtered and recalibrated VCF file in INDEL mode in which each variant is annotated with its VQSLOD value", 
+                    "id": "#main/filtered_recalibrated_variants"
+                }, 
+                {
+                    "type": {
+                        "type": "array", 
+                        "items": "File"
+                    }, 
+                    "outputSource": "#main/preprocessing/haplotypes_bam", 
+                    "doc": "BAM files containing assembled haplotypes and locally realigned reads", 
+                    "id": "#main/haplotypes_bams"
+                }, 
+                {
+                    "type": "File", 
+                    "outputSource": "#main/variant_discovery/joint_raw_variants", 
+                    "doc": "GVCF file from joint genotyping calling", 
+                    "id": "#main/joint_raw_variants"
                 }, 
                 {
                     "type": {
@@ -4009,22 +4045,6 @@
                 {
                     "type": {
                         "type": "array", 
-                        "items": "File"
-                    }, 
-                    "outputSource": "#main/preprocessing/recalibrated_reads", 
-                    "id": "#main/recalibrated_reads"
-                }, 
-                {
-                    "type": {
-                        "type": "array", 
-                        "items": "File"
-                    }, 
-                    "outputSource": "#main/preprocessing/recalibration_table", 
-                    "id": "#main/recalibration_table"
-                }, 
-                {
-                    "type": {
-                        "type": "array", 
                         "items": {
                             "type": "array", 
                             "items": "File"
@@ -4032,54 +4052,6 @@
                     }, 
                     "outputSource": "#main/preprocessing/trim_reports", 
                     "id": "#main/trim_reports"
-                }, 
-                {
-                    "type": "File", 
-                    "outputSource": "#main/variant_discovery/variant_recalibration_indels_recal", 
-                    "doc": "The output recal file used by ApplyRecalibration in INDEL mode", 
-                    "id": "#main/variant_recalibration_indels_recal"
-                }, 
-                {
-                    "type": "File", 
-                    "outputSource": "#main/variant_discovery/variant_recalibration_indels_rscript", 
-                    "doc": "The output rscript file generated by the VQSR in INDEL mode to aid in visualization of the input data and learned model", 
-                    "id": "#main/variant_recalibration_indels_rscript"
-                }, 
-                {
-                    "type": "File", 
-                    "outputSource": "#main/variant_discovery/variant_recalibration_indels_tranches", 
-                    "doc": "The output tranches file used by ApplyRecalibration in INDEL mode", 
-                    "id": "#main/variant_recalibration_indels_tranches"
-                }, 
-                {
-                    "type": "File", 
-                    "outputSource": "#main/variant_discovery/variant_recalibration_indels_vcf", 
-                    "doc": "The output filtered and recalibrated VCF file in INDEL mode in which each variant is annotated with its VQSLOD value", 
-                    "id": "#main/variant_recalibration_indels_vcf"
-                }, 
-                {
-                    "type": "File", 
-                    "outputSource": "#main/variant_discovery/variant_recalibration_snps_recal", 
-                    "doc": "The output recal file used by ApplyRecalibration in SNP mode", 
-                    "id": "#main/variant_recalibration_snps_recal"
-                }, 
-                {
-                    "type": "File", 
-                    "outputSource": "#main/variant_discovery/variant_recalibration_snps_rscript", 
-                    "doc": "The output rscript file generated by the VQSR in SNP mode to aid in visualization of the input data and learned model", 
-                    "id": "#main/variant_recalibration_snps_rscript"
-                }, 
-                {
-                    "type": "File", 
-                    "outputSource": "#main/variant_discovery/variant_recalibration_snps_tranches", 
-                    "doc": "The output tranches file used by ApplyRecalibration in SNP mode", 
-                    "id": "#main/variant_recalibration_snps_tranches"
-                }, 
-                {
-                    "type": "File", 
-                    "outputSource": "#main/variant_discovery/variant_recalibration_snps_vcf", 
-                    "doc": "The output filtered and recalibrated VCF file in SNP mode in which each variant is annotated with its VQSLOD value", 
-                    "id": "#main/variant_recalibration_snps_vcf"
                 }
             ], 
             "steps": [
@@ -4137,7 +4109,8 @@
                         "#main/preprocessing/trim_reports", 
                         "#main/preprocessing/recalibration_table", 
                         "#main/preprocessing/recalibrated_reads", 
-                        "#main/preprocessing/raw_variants"
+                        "#main/preprocessing/raw_variants", 
+                        "#main/preprocessing/haplotypes_bam"
                     ], 
                     "id": "#main/preprocessing"
                 }, 
@@ -4198,11 +4171,11 @@
                         "#main/variant_discovery/variant_recalibration_snps_tranches", 
                         "#main/variant_discovery/variant_recalibration_snps_recal", 
                         "#main/variant_discovery/variant_recalibration_snps_rscript", 
-                        "#main/variant_discovery/variant_recalibration_indels_tranches", 
-                        "#main/variant_discovery/variant_recalibration_indels_recal", 
-                        "#main/variant_discovery/variant_recalibration_indels_rscript", 
                         "#main/variant_discovery/variant_recalibration_snps_vcf", 
-                        "#main/variant_discovery/variant_recalibration_indels_vcf"
+                        "#main/variant_discovery/variant_recalibration_snps_indels_tranches", 
+                        "#main/variant_discovery/variant_recalibration_snps_indels_recal", 
+                        "#main/variant_discovery/variant_recalibration_snps_indels_rscript", 
+                        "#main/variant_discovery/variant_recalibration_snps_indels_vcf"
                     ], 
                     "id": "#main/variant_discovery"
                 }
