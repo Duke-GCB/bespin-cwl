@@ -2587,6 +2587,69 @@
         }, 
         {
             "class": "ExpressionTool", 
+            "label": "Moves an array of File pairs into a named directory", 
+            "requirements": [
+                {
+                    "class": "InlineJavascriptRequirement"
+                }
+            ], 
+            "inputs": [
+                {
+                    "type": {
+                        "type": "array", 
+                        "items": {
+                            "type": "array", 
+                            "items": "File"
+                        }
+                    }, 
+                    "id": "#file-pairs-to-directory.cwl/file_pairs"
+                }, 
+                {
+                    "type": "string", 
+                    "id": "#file-pairs-to-directory.cwl/name"
+                }
+            ], 
+            "outputs": [
+                {
+                    "type": "Directory", 
+                    "id": "#file-pairs-to-directory.cwl/outdir"
+                }
+            ], 
+            "expression": "${\n  var files = inputs.file_pairs.reduce(function(a,b) {\n      return a.concat(b);\n  }, []);\n\n  var result = {\n    outdir: {\n      class: 'Directory',\n      basename: inputs.name,\n      listing: files\n    }\n  };\n\n  return result;\n}\n", 
+            "id": "#file-pairs-to-directory.cwl"
+        }, 
+        {
+            "class": "ExpressionTool", 
+            "label": "Moves an array of Files into a named directory", 
+            "requirements": [
+                {
+                    "class": "InlineJavascriptRequirement"
+                }
+            ], 
+            "inputs": [
+                {
+                    "type": {
+                        "type": "array", 
+                        "items": "File"
+                    }, 
+                    "id": "#files-to-directory.cwl/files"
+                }, 
+                {
+                    "type": "string", 
+                    "id": "#files-to-directory.cwl/name"
+                }
+            ], 
+            "outputs": [
+                {
+                    "type": "Directory", 
+                    "id": "#files-to-directory.cwl/outdir"
+                }
+            ], 
+            "expression": "${\n  var result = {\n    outdir: {\n      class: 'Directory',\n      basename: inputs.name,\n      listing: inputs.files\n    }\n  };\n\n  return result;\n}\n", 
+            "id": "#files-to-directory.cwl"
+        }, 
+        {
+            "class": "ExpressionTool", 
             "label": "Generates a set of file names for joint steps based on an input name", 
             "requirements": [
                 {
@@ -3065,18 +3128,18 @@
             ], 
             "outputs": [
                 {
-                    "type": "File", 
-                    "outputSource": "#exomeseq-01-preprocessing.cwl/variant_calling/output_HaplotypesBam", 
-                    "doc": "BAM file containing assembled haplotypes and locally realigned reads", 
-                    "id": "#exomeseq-01-preprocessing.cwl/haplotypes_bam"
-                }, 
-                {
                     "type": {
                         "type": "array", 
                         "items": "File"
                     }, 
                     "outputSource": "#exomeseq-01-preprocessing.cwl/qc/output_qc_report", 
-                    "id": "#exomeseq-01-preprocessing.cwl/qc_reports"
+                    "id": "#exomeseq-01-preprocessing.cwl/fastqc_reports"
+                }, 
+                {
+                    "type": "File", 
+                    "outputSource": "#exomeseq-01-preprocessing.cwl/variant_calling/output_HaplotypesBam", 
+                    "doc": "BAM file containing assembled haplotypes and locally realigned reads", 
+                    "id": "#exomeseq-01-preprocessing.cwl/haplotypes_bam"
                 }, 
                 {
                     "type": "File", 
@@ -3873,6 +3936,138 @@
         }, 
         {
             "class": "Workflow", 
+            "inputs": [
+                {
+                    "type": {
+                        "type": "array", 
+                        "items": "File"
+                    }, 
+                    "id": "#exomeseq-03-organizedirectories.cwl/bams_final"
+                }, 
+                {
+                    "type": {
+                        "type": "array", 
+                        "items": {
+                            "type": "array", 
+                            "items": "File"
+                        }
+                    }, 
+                    "id": "#exomeseq-03-organizedirectories.cwl/fastqc_reports"
+                }, 
+                {
+                    "type": {
+                        "type": "array", 
+                        "items": "File"
+                    }, 
+                    "id": "#exomeseq-03-organizedirectories.cwl/raw_variants"
+                }, 
+                {
+                    "type": {
+                        "type": "array", 
+                        "items": {
+                            "type": "array", 
+                            "items": "File"
+                        }
+                    }, 
+                    "id": "#exomeseq-03-organizedirectories.cwl/trim_reports"
+                }
+            ], 
+            "outputs": [
+                {
+                    "type": "Directory", 
+                    "outputSource": "#exomeseq-03-organizedirectories.cwl/org_bams_final/outdir", 
+                    "id": "#exomeseq-03-organizedirectories.cwl/bams_final_dir"
+                }, 
+                {
+                    "type": "Directory", 
+                    "outputSource": "#exomeseq-03-organizedirectories.cwl/org_fastqc_reports/outdir", 
+                    "id": "#exomeseq-03-organizedirectories.cwl/fastqc_reports_dir"
+                }, 
+                {
+                    "type": "Directory", 
+                    "outputSource": "#exomeseq-03-organizedirectories.cwl/org_raw_variants/outdir", 
+                    "id": "#exomeseq-03-organizedirectories.cwl/raw_variants_dir"
+                }, 
+                {
+                    "type": "Directory", 
+                    "outputSource": "#exomeseq-03-organizedirectories.cwl/org_trim_reports/outdir", 
+                    "id": "#exomeseq-03-organizedirectories.cwl/trim_reports_dir"
+                }
+            ], 
+            "steps": [
+                {
+                    "run": "#files-to-directory.cwl", 
+                    "in": [
+                        {
+                            "source": "#exomeseq-03-organizedirectories.cwl/bams_final", 
+                            "id": "#exomeseq-03-organizedirectories.cwl/org_bams_final/files"
+                        }, 
+                        {
+                            "default": "bams-final", 
+                            "id": "#exomeseq-03-organizedirectories.cwl/org_bams_final/name"
+                        }
+                    ], 
+                    "out": [
+                        "#exomeseq-03-organizedirectories.cwl/org_bams_final/outdir"
+                    ], 
+                    "id": "#exomeseq-03-organizedirectories.cwl/org_bams_final"
+                }, 
+                {
+                    "run": "#file-pairs-to-directory.cwl", 
+                    "in": [
+                        {
+                            "source": "#exomeseq-03-organizedirectories.cwl/fastqc_reports", 
+                            "id": "#exomeseq-03-organizedirectories.cwl/org_fastqc_reports/file_pairs"
+                        }, 
+                        {
+                            "default": "fastqc-reports", 
+                            "id": "#exomeseq-03-organizedirectories.cwl/org_fastqc_reports/name"
+                        }
+                    ], 
+                    "out": [
+                        "#exomeseq-03-organizedirectories.cwl/org_fastqc_reports/outdir"
+                    ], 
+                    "id": "#exomeseq-03-organizedirectories.cwl/org_fastqc_reports"
+                }, 
+                {
+                    "run": "#files-to-directory.cwl", 
+                    "in": [
+                        {
+                            "source": "#exomeseq-03-organizedirectories.cwl/raw_variants", 
+                            "id": "#exomeseq-03-organizedirectories.cwl/org_raw_variants/files"
+                        }, 
+                        {
+                            "default": "raw-variants", 
+                            "id": "#exomeseq-03-organizedirectories.cwl/org_raw_variants/name"
+                        }
+                    ], 
+                    "out": [
+                        "#exomeseq-03-organizedirectories.cwl/org_raw_variants/outdir"
+                    ], 
+                    "id": "#exomeseq-03-organizedirectories.cwl/org_raw_variants"
+                }, 
+                {
+                    "run": "#file-pairs-to-directory.cwl", 
+                    "in": [
+                        {
+                            "source": "#exomeseq-03-organizedirectories.cwl/trim_reports", 
+                            "id": "#exomeseq-03-organizedirectories.cwl/org_trim_reports/file_pairs"
+                        }, 
+                        {
+                            "default": "trim-reports", 
+                            "id": "#exomeseq-03-organizedirectories.cwl/org_trim_reports/name"
+                        }
+                    ], 
+                    "out": [
+                        "#exomeseq-03-organizedirectories.cwl/org_trim_reports/outdir"
+                    ], 
+                    "id": "#exomeseq-03-organizedirectories.cwl/org_trim_reports"
+                }
+            ], 
+            "id": "#exomeseq-03-organizedirectories.cwl"
+        }, 
+        {
+            "class": "Workflow", 
             "label": "Whole Exome Sequencing", 
             "doc": "Whole Exome Sequence analysis using GATK best practices - Germline SNP & Indel Discovery\n", 
             "requirements": [
@@ -4002,30 +4197,21 @@
             ], 
             "outputs": [
                 {
-                    "type": {
-                        "type": "array", 
-                        "items": {
-                            "type": "array", 
-                            "items": "File"
-                        }
-                    }, 
-                    "outputSource": "#main/preprocessing/qc_reports", 
-                    "id": "#main/fastqc_reports"
+                    "type": "Directory", 
+                    "outputSource": "#main/organize_directories/bams_final_dir", 
+                    "doc": "BAM files containing assembled haplotypes and locally realigned reads", 
+                    "id": "#main/bams_final_dir"
+                }, 
+                {
+                    "type": "Directory", 
+                    "outputSource": "#main/organize_directories/fastqc_reports_dir", 
+                    "id": "#main/fastqc_reports_dir"
                 }, 
                 {
                     "type": "File", 
                     "outputSource": "#main/variant_discovery/variant_recalibration_snps_indels_vcf", 
-                    "doc": "The output filtered and recalibrated VCF file in INDEL mode in which each variant is annotated with its VQSLOD value", 
+                    "doc": "The output filtered and recalibrated VCF file in which each variant is annotated with its VQSLOD value", 
                     "id": "#main/filtered_recalibrated_variants"
-                }, 
-                {
-                    "type": {
-                        "type": "array", 
-                        "items": "File"
-                    }, 
-                    "outputSource": "#main/preprocessing/haplotypes_bam", 
-                    "doc": "BAM files containing assembled haplotypes and locally realigned reads", 
-                    "id": "#main/haplotypes_bams"
                 }, 
                 {
                     "type": "File", 
@@ -4034,27 +4220,46 @@
                     "id": "#main/joint_raw_variants"
                 }, 
                 {
-                    "type": {
-                        "type": "array", 
-                        "items": "File"
-                    }, 
-                    "outputSource": "#main/preprocessing/raw_variants", 
+                    "type": "Directory", 
+                    "outputSource": "#main/organize_directories/raw_variants_dir", 
                     "doc": "VCF files from per sample variant calling", 
-                    "id": "#main/raw_variants"
+                    "id": "#main/raw_variants_dir"
                 }, 
                 {
-                    "type": {
-                        "type": "array", 
-                        "items": {
-                            "type": "array", 
-                            "items": "File"
-                        }
-                    }, 
-                    "outputSource": "#main/preprocessing/trim_reports", 
-                    "id": "#main/trim_reports"
+                    "type": "Directory", 
+                    "outputSource": "#main/organize_directories/trim_reports_dir", 
+                    "id": "#main/trim_reports_dir"
                 }
             ], 
             "steps": [
+                {
+                    "run": "#exomeseq-03-organizedirectories.cwl", 
+                    "in": [
+                        {
+                            "source": "#main/preprocessing/haplotypes_bam", 
+                            "id": "#main/organize_directories/bams_final"
+                        }, 
+                        {
+                            "source": "#main/preprocessing/fastqc_reports", 
+                            "id": "#main/organize_directories/fastqc_reports"
+                        }, 
+                        {
+                            "source": "#main/preprocessing/raw_variants", 
+                            "id": "#main/organize_directories/raw_variants"
+                        }, 
+                        {
+                            "source": "#main/preprocessing/trim_reports", 
+                            "id": "#main/organize_directories/trim_reports"
+                        }
+                    ], 
+                    "out": [
+                        "#main/organize_directories/fastqc_reports_dir", 
+                        "#main/organize_directories/trim_reports_dir", 
+                        "#main/organize_directories/raw_variants_dir", 
+                        "#main/organize_directories/bams_final_dir"
+                    ], 
+                    "id": "#main/organize_directories"
+                }, 
                 {
                     "run": "#exomeseq-01-preprocessing.cwl", 
                     "scatter": "#main/preprocessing/reads", 
@@ -4105,7 +4310,7 @@
                         }
                     ], 
                     "out": [
-                        "#main/preprocessing/qc_reports", 
+                        "#main/preprocessing/fastqc_reports", 
                         "#main/preprocessing/trim_reports", 
                         "#main/preprocessing/recalibration_table", 
                         "#main/preprocessing/recalibrated_reads", 
