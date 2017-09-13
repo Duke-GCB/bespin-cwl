@@ -76,10 +76,9 @@ outputs:
   raw_variants_dir:
     type: Directory
     outputSource: organize_directories/raw_variants_dir
-  hs_metrics:
-    type: { type: array, items: { type: array, items: File } }
-    outputSource: preprocessing/hs_metrics
-    doc: "VCF files from per sample variant calling"
+  hs_metrics_dir:
+    type: File
+    outputSource: organize_directories/hs_metrics_dir
   bams_markduplicates_dir:
     type: Directory
     outputSource: organize_directories/bams_markduplicates_dir
@@ -152,12 +151,14 @@ steps:
     in:
       fastqc_reports: preprocessing/fastqc_reports
       trim_reports: preprocessing/trim_reports
+      hs_metrics: preprocessing/hs_metrics
       bams_markduplicates: preprocessing/markduplicates_bam
       raw_variants: preprocessing/raw_variants
       bams_final: preprocessing/haplotypes_bam
     out:
       - fastqc_reports_dir
       - trim_reports_dir
+      - hs_metrics_dir
       - bams_markduplicates_dir
       - raw_variants_dir
       - bams_final_dir

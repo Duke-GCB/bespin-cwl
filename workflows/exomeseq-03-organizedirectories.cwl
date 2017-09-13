@@ -7,6 +7,7 @@ inputs:
     type: { type: array, items: { type: array, items: File } }
   trim_reports:
     type: { type: array, items: { type: array, items: File } }
+  hs_metrics: File[]
   bams_markduplicates: File[]
   raw_variants: File[]
   bams_final: File[]
@@ -17,6 +18,9 @@ outputs:
   trim_reports_dir:
     type: Directory
     outputSource: org_trim_reports/outdir
+  hs_metrics_dir:
+    type: Directory
+    outputSource: org_hs_metrics/outdir
   bams_markduplicates_dir:
     type: Directory
     outputSource: org_bams_markduplicates/outdir
@@ -41,6 +45,14 @@ steps:
       name:
         default: 'trim-reports'
       file_pairs: trim_reports
+    out:
+      - outdir
+  org_hs_metrics:
+    run: ../tools/files-to-directory.cwl
+    in:
+      name:
+        default: 'hs-metrics'
+      files: hs_metrics
     out:
       - outdir
   org_bams_markduplicates:
