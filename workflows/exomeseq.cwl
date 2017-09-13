@@ -104,7 +104,7 @@ steps:
       knownSites: knownSites
       resource_dbsnp: resource_dbsnp
     out:
-      - qc_reports
+      - fastqc_reports
       - trim_reports
       - recalibration_table
       - recalibrated_reads

@@ -33,7 +33,7 @@ inputs:
   # Variant Recalibration - Common
   resource_dbsnp: File
 outputs:
-  qc_reports:
+  fastqc_reports:
     type: File[]
     outputSource: qc/output_qc_report
   trim_reports:
