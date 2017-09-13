@@ -75,6 +75,10 @@ outputs:
     type: Directory
     outputSource: organize_directories/raw_variants_dir
     doc: "VCF files from per sample variant calling"
+  bams_markduplicates_dir:
+    type: Directory
+    outputSource: organize_directories/bams_markduplicates_dir
+    doc: "BAM and bai files from markduplicates"
   bams_final_dir:
     type: Directory
     outputSource: organize_directories/bams_final_dir
@@ -106,6 +110,7 @@ steps:
     out:
       - fastqc_reports
       - trim_reports
+      - markduplicates_bam
       - recalibration_table
       - recalibrated_reads
       - raw_variants
@@ -140,10 +145,12 @@ steps:
     in:
       fastqc_reports: preprocessing/fastqc_reports
       trim_reports: preprocessing/trim_reports
+      bams_markduplicates: preprocessing/markduplicates_bam
       raw_variants: preprocessing/raw_variants
       bams_final: preprocessing/haplotypes_bam
     out:
       - fastqc_reports_dir
       - trim_reports_dir
+      - bams_markduplicates_dir
       - raw_variants_dir
       - bams_final_dir

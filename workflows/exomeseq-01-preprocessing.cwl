@@ -39,6 +39,9 @@ outputs:
   trim_reports:
     type: File[]
     outputSource: trim/trim_reports
+  markduplicates_bam:
+    type: File
+    outputSource: mark_duplicates/output_dedup_bam_file
   # Recalibration
   recalibration_table:
     type: File
