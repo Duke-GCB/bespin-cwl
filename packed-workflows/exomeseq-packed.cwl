@@ -2958,10 +2958,7 @@
             ], 
             "outputs": [
                 {
-                    "type": {
-                        "type": "array", 
-                        "items": "File"
-                    }, 
+                    "type": "File", 
                     "outputBinding": {
                         "glob": "$(inputs.output_filename)"
                     }, 
@@ -3323,10 +3320,7 @@
                     "id": "#exomeseq-01-preprocessing.cwl/haplotypes_bam"
                 }, 
                 {
-                    "type": {
-                        "type": "array", 
-                        "items": "File"
-                    }, 
+                    "type": "File", 
                     "outputSource": "#exomeseq-01-preprocessing.cwl/collect_hs_metrics/output_hs_metrics_file", 
                     "id": "#exomeseq-01-preprocessing.cwl/hs_metrics"
                 }, 
@@ -4251,6 +4245,13 @@
                         "type": "array", 
                         "items": "File"
                     }, 
+                    "id": "#exomeseq-03-organizedirectories.cwl/hs_metrics"
+                }, 
+                {
+                    "type": {
+                        "type": "array", 
+                        "items": "File"
+                    }, 
                     "id": "#exomeseq-03-organizedirectories.cwl/raw_variants"
                 }, 
                 {
@@ -4279,6 +4280,11 @@
                     "type": "Directory", 
                     "outputSource": "#exomeseq-03-organizedirectories.cwl/org_fastqc_reports/outdir", 
                     "id": "#exomeseq-03-organizedirectories.cwl/fastqc_reports_dir"
+                }, 
+                {
+                    "type": "Directory", 
+                    "outputSource": "#exomeseq-03-organizedirectories.cwl/org_hs_metrics/outdir", 
+                    "id": "#exomeseq-03-organizedirectories.cwl/hs_metrics_dir"
                 }, 
                 {
                     "type": "Directory", 
@@ -4342,6 +4348,23 @@
                         "#exomeseq-03-organizedirectories.cwl/org_fastqc_reports/outdir"
                     ], 
                     "id": "#exomeseq-03-organizedirectories.cwl/org_fastqc_reports"
+                }, 
+                {
+                    "run": "#files-to-directory.cwl", 
+                    "in": [
+                        {
+                            "source": "#exomeseq-03-organizedirectories.cwl/hs_metrics", 
+                            "id": "#exomeseq-03-organizedirectories.cwl/org_hs_metrics/files"
+                        }, 
+                        {
+                            "default": "hs-metrics", 
+                            "id": "#exomeseq-03-organizedirectories.cwl/org_hs_metrics/name"
+                        }
+                    ], 
+                    "out": [
+                        "#exomeseq-03-organizedirectories.cwl/org_hs_metrics/outdir"
+                    ], 
+                    "id": "#exomeseq-03-organizedirectories.cwl/org_hs_metrics"
                 }, 
                 {
                     "run": "#files-to-directory.cwl", 
@@ -4544,16 +4567,9 @@
                     "id": "#main/filtered_recalibrated_variants"
                 }, 
                 {
-                    "type": {
-                        "type": "array", 
-                        "items": {
-                            "type": "array", 
-                            "items": "File"
-                        }
-                    }, 
-                    "outputSource": "#main/preprocessing/hs_metrics", 
-                    "doc": "VCF files from per sample variant calling", 
-                    "id": "#main/hs_metrics"
+                    "type": "File", 
+                    "outputSource": "#main/organize_directories/hs_metrics_dir", 
+                    "id": "#main/hs_metrics_dir"
                 }, 
                 {
                     "type": "File", 
@@ -4589,6 +4605,10 @@
                             "id": "#main/organize_directories/fastqc_reports"
                         }, 
                         {
+                            "source": "#main/preprocessing/hs_metrics", 
+                            "id": "#main/organize_directories/hs_metrics"
+                        }, 
+                        {
                             "source": "#main/preprocessing/raw_variants", 
                             "id": "#main/organize_directories/raw_variants"
                         }, 
@@ -4600,6 +4620,7 @@
                     "out": [
                         "#main/organize_directories/fastqc_reports_dir", 
                         "#main/organize_directories/trim_reports_dir", 
+                        "#main/organize_directories/hs_metrics_dir", 
                         "#main/organize_directories/bams_markduplicates_dir", 
                         "#main/organize_directories/raw_variants_dir", 
                         "#main/organize_directories/bams_final_dir"
