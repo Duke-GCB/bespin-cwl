@@ -16,7 +16,7 @@
   "primary_intervals": [
     {
       "class": "File",
-      "path": "/home/ubuntu/data/capture/SeqCap_EZ_Exome_v3_primary.noChr.bed"
+      "path": "/data/exome-seq/capture/SeqCap_EZ_Exome_v3_primary.noChr.bed"
     }
   ],
   "interval_padding": 100,
