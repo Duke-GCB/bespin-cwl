@@ -36,15 +36,18 @@ inputs:
   # Variant Recalibration - Common
   resource_dbsnp: File
 outputs:
-  qc_reports:
+  fastqc_reports:
     type: File[]
     outputSource: qc/output_qc_report
   hs_metrics:
-    type: File[]
+    type: File
     outputSource: collect_hs_metrics/output_hs_metrics_file
   trim_reports:
     type: File[]
     outputSource: trim/trim_reports
+  markduplicates_bam:
+    type: File
+    outputSource: mark_duplicates/output_dedup_bam_file
   # Recalibration
   recalibration_table:
     type: File
@@ -55,7 +58,12 @@ outputs:
   raw_variants:
     type: File
     outputSource: variant_calling/output_HaplotypeCaller
-    doc: "VCF files from per sample variant calling"
+    doc: "VCF file from per sample variant calling"
+  haplotypes_bam:
+    type: File
+    outputSource: variant_calling/output_HaplotypesBam
+    doc: "BAM file containing assembled haplotypes and locally realigned reads"
+
 steps:
   qc:
     run: ../tools/fastqc.cwl
@@ -104,6 +112,7 @@ steps:
       - recal_reads_output_filename
       - recal_table_output_filename
       - raw_variants_output_filename
+      - haplotypes_bam_output_filename
       - hs_metrics_output_filename
   map:
     run: ../tools/bwa-mem-samtools.cwl
@@ -247,6 +256,8 @@ steps:
       emitRefConfidence:
         default: "GVCF"
       outputfile_HaplotypeCaller: generate_sample_filenames/raw_variants_output_filename
+      bamOutput: generate_sample_filenames/haplotypes_bam_output_filename
         # Naming your output file using the .g.vcf extension will automatically set the appropriate values  for --variant_index_type and --variant_index_parameter
     out:
       - output_HaplotypeCaller
+      - output_HaplotypesBam

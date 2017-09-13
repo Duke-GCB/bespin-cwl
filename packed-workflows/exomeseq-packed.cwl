@@ -1068,7 +1068,7 @@
                 {
                     "type": [
                         "null", 
-                        "File"
+                        "string"
                     ], 
                     "inputBinding": {
                         "position": 2, 
@@ -1679,6 +1679,16 @@
                         ".idx"
                     ], 
                     "id": "#GATK-HaplotypeCaller.cwl/output_HaplotypeCaller"
+                }, 
+                {
+                    "type": [
+                        "null", 
+                        "File"
+                    ], 
+                    "outputBinding": {
+                        "glob": "$(inputs.bamOutput)"
+                    }, 
+                    "id": "#GATK-HaplotypeCaller.cwl/output_HaplotypesBam"
                 }
             ], 
             "arguments": [
@@ -2577,6 +2587,69 @@
         }, 
         {
             "class": "ExpressionTool", 
+            "label": "Moves an array of File pairs into a named directory", 
+            "requirements": [
+                {
+                    "class": "InlineJavascriptRequirement"
+                }
+            ], 
+            "inputs": [
+                {
+                    "type": {
+                        "type": "array", 
+                        "items": {
+                            "type": "array", 
+                            "items": "File"
+                        }
+                    }, 
+                    "id": "#file-pairs-to-directory.cwl/file_pairs"
+                }, 
+                {
+                    "type": "string", 
+                    "id": "#file-pairs-to-directory.cwl/name"
+                }
+            ], 
+            "outputs": [
+                {
+                    "type": "Directory", 
+                    "id": "#file-pairs-to-directory.cwl/outdir"
+                }
+            ], 
+            "expression": "${\n  var files = inputs.file_pairs.reduce(function(a,b) {\n      return a.concat(b);\n  }, []);\n\n  var result = {\n    outdir: {\n      class: 'Directory',\n      basename: inputs.name,\n      listing: files\n    }\n  };\n\n  return result;\n}\n", 
+            "id": "#file-pairs-to-directory.cwl"
+        }, 
+        {
+            "class": "ExpressionTool", 
+            "label": "Moves an array of Files into a named directory", 
+            "requirements": [
+                {
+                    "class": "InlineJavascriptRequirement"
+                }
+            ], 
+            "inputs": [
+                {
+                    "type": {
+                        "type": "array", 
+                        "items": "File"
+                    }, 
+                    "id": "#files-to-directory.cwl/files"
+                }, 
+                {
+                    "type": "string", 
+                    "id": "#files-to-directory.cwl/name"
+                }
+            ], 
+            "outputs": [
+                {
+                    "type": "Directory", 
+                    "id": "#files-to-directory.cwl/outdir"
+                }
+            ], 
+            "expression": "${\n  var result = {\n    outdir: {\n      class: 'Directory',\n      basename: inputs.name,\n      listing: inputs.files\n    }\n  };\n\n  return result;\n}\n", 
+            "id": "#files-to-directory.cwl"
+        }, 
+        {
+            "class": "ExpressionTool", 
             "label": "Generates a set of file names for joint steps based on an input name", 
             "requirements": [
                 {
@@ -2592,23 +2665,23 @@
             "outputs": [
                 {
                     "type": "string", 
-                    "id": "#generate-joint-filenames.cwl/indels_recalibrated_output_filename"
-                }, 
-                {
-                    "type": "string", 
-                    "id": "#generate-joint-filenames.cwl/indels_vqsr_recal_output_filename"
-                }, 
-                {
-                    "type": "string", 
-                    "id": "#generate-joint-filenames.cwl/indels_vqsr_rscript_output_filename"
-                }, 
-                {
-                    "type": "string", 
-                    "id": "#generate-joint-filenames.cwl/indels_vqsr_tranches_output_filename"
-                }, 
-                {
-                    "type": "string", 
                     "id": "#generate-joint-filenames.cwl/joint_genotype_raw_variants_output_filename"
+                }, 
+                {
+                    "type": "string", 
+                    "id": "#generate-joint-filenames.cwl/snps_indels_recalibrated_output_filename"
+                }, 
+                {
+                    "type": "string", 
+                    "id": "#generate-joint-filenames.cwl/snps_indels_vqsr_recal_output_filename"
+                }, 
+                {
+                    "type": "string", 
+                    "id": "#generate-joint-filenames.cwl/snps_indels_vqsr_rscript_output_filename"
+                }, 
+                {
+                    "type": "string", 
+                    "id": "#generate-joint-filenames.cwl/snps_indels_vqsr_tranches_output_filename"
                 }, 
                 {
                     "type": "string", 
@@ -2627,7 +2700,7 @@
                     "id": "#generate-joint-filenames.cwl/snps_vqsr_tranches_output_filename"
                 }
             ], 
-            "expression": "${\n  function makeFilename(base, suffix, extension) {\n    return base + '-' + suffix + '.' + extension;\n  }\n  var base = inputs.name\n\n  return {\n    joint_genotype_raw_variants_output_filename: makeFilename(base, 'raw_variants', 'g.vcf'),\n    snps_vqsr_recal_output_filename: makeFilename(base, 'snps_vqsr_recal', 'out'),\n    snps_vqsr_tranches_output_filename: makeFilename(base, 'snps_vqsr_tranches', 'out'),\n    snps_vqsr_rscript_output_filename: makeFilename(base, 'snps_vqsr', 'R'),\n    snps_recalibrated_output_filename: makeFilename(base, 'recalibrated_snps_raw_indels', 'vcf'),\n    indels_vqsr_recal_output_filename: makeFilename(base, 'indels_vqsr_recal', 'out'),\n    indels_vqsr_tranches_output_filename: makeFilename(base, 'indels_vqsr_tranches', 'out'),\n    indels_vqsr_rscript_output_filename: makeFilename(base, 'indels_vqsr', 'R'),\n    indels_recalibrated_output_filename: makeFilename(base, 'recalibrated_variants', 'vcf')\n  };\n}\n", 
+            "expression": "${\n  function makeFilename(base, suffix, extension) {\n    return base + '-' + suffix + '.' + extension;\n  }\n  var base = inputs.name\n\n  return {\n    joint_genotype_raw_variants_output_filename: makeFilename(base, 'raw_variants', 'g.vcf'),\n    snps_vqsr_recal_output_filename: makeFilename(base, 'snps_vqsr_recal', 'out'),\n    snps_vqsr_tranches_output_filename: makeFilename(base, 'snps_vqsr_tranches', 'out'),\n    snps_vqsr_rscript_output_filename: makeFilename(base, 'snps_vqsr', 'R'),\n    snps_recalibrated_output_filename: makeFilename(base, 'snps_recalibrated', 'vcf'),\n    snps_indels_vqsr_recal_output_filename: makeFilename(base, 'snps_indels_vqsr_recal', 'out'),\n    snps_indels_vqsr_tranches_output_filename: makeFilename(base, 'snps_indels_vqsr_tranches', 'out'),\n    snps_indels_vqsr_rscript_output_filename: makeFilename(base, 'snps_indels_vqsr', 'R'),\n    snps_indels_recalibrated_output_filename: makeFilename(base, 'snps_indels_recalibrated', 'vcf')\n  };\n}\n", 
             "id": "#generate-joint-filenames.cwl"
         }, 
         {
@@ -2655,6 +2728,10 @@
                 }, 
                 {
                     "type": "string", 
+                    "id": "#generate-sample-filenames.cwl/haplotypes_bam_output_filename"
+                }, 
+                {
+                    "type": "string", 
                     "id": "#generate-sample-filenames.cwl/hs_metrics_output_filename"
                 }, 
                 {
@@ -2678,7 +2755,7 @@
                     "id": "#generate-sample-filenames.cwl/sorted_reads_output_filename"
                 }
             ], 
-            "expression": "${\n  function makeFilename(base, suffix, extension) {\n    return base + '-' + suffix + '.' + extension;\n  }\n  var base = inputs.sample_name\n\n  return {\n    mapped_reads_output_filename: makeFilename(base, 'mapped', 'bam'),\n    sorted_reads_output_filename: makeFilename(base, 'sorted', 'bam'),\n    dedup_reads_output_filename: makeFilename(base, 'dedup', 'bam'),\n    dedup_metrics_output_filename: makeFilename(base, 'dedup-metrics', 'out'),\n    recal_reads_output_filename: makeFilename(base, 'recal', 'bam'),\n    recal_table_output_filename: makeFilename(base, 'recal', 'table'),\n    raw_variants_output_filename: makeFilename(base, 'raw_variants', 'g.vcf'),\n    hs_metrics_output_filename: makeFilename(base, 'hs', 'txt')\n  };\n}\n", 
+            "expression": "${\n  function makeFilename(base, suffix, extension) {\n    return base + '-' + suffix + '.' + extension;\n  }\n  var base = inputs.sample_name\n\n  return {\n    mapped_reads_output_filename: makeFilename(base, 'mapped', 'bam'),\n    sorted_reads_output_filename: makeFilename(base, 'sorted', 'bam'),\n    dedup_reads_output_filename: makeFilename(base, 'dedup', 'bam'),\n    dedup_metrics_output_filename: makeFilename(base, 'dedup-metrics', 'out'),\n    recal_reads_output_filename: makeFilename(base, 'recal', 'bam'),\n    recal_table_output_filename: makeFilename(base, 'recal', 'table'),\n    raw_variants_output_filename: makeFilename(base, 'raw_variants', 'g.vcf'),\n    haplotypes_bam_output_filename:  makeFilename(base, 'haplotypes', 'bam'),\n    hs_metrics_output_filename: makeFilename(base, 'hs', 'txt')\n  };\n}\n", 
             "id": "#generate-sample-filenames.cwl"
         }, 
         {
@@ -2881,10 +2958,7 @@
             ], 
             "outputs": [
                 {
-                    "type": {
-                        "type": "array", 
-                        "items": "File"
-                    }, 
+                    "type": "File", 
                     "outputBinding": {
                         "glob": "$(inputs.output_filename)"
                     }, 
@@ -3236,21 +3310,29 @@
                         "type": "array", 
                         "items": "File"
                     }, 
+                    "outputSource": "#exomeseq-01-preprocessing.cwl/qc/output_qc_report", 
+                    "id": "#exomeseq-01-preprocessing.cwl/fastqc_reports"
+                }, 
+                {
+                    "type": "File", 
+                    "outputSource": "#exomeseq-01-preprocessing.cwl/variant_calling/output_HaplotypesBam", 
+                    "doc": "BAM file containing assembled haplotypes and locally realigned reads", 
+                    "id": "#exomeseq-01-preprocessing.cwl/haplotypes_bam"
+                }, 
+                {
+                    "type": "File", 
                     "outputSource": "#exomeseq-01-preprocessing.cwl/collect_hs_metrics/output_hs_metrics_file", 
                     "id": "#exomeseq-01-preprocessing.cwl/hs_metrics"
                 }, 
                 {
-                    "type": {
-                        "type": "array", 
-                        "items": "File"
-                    }, 
-                    "outputSource": "#exomeseq-01-preprocessing.cwl/qc/output_qc_report", 
-                    "id": "#exomeseq-01-preprocessing.cwl/qc_reports"
+                    "type": "File", 
+                    "outputSource": "#exomeseq-01-preprocessing.cwl/mark_duplicates/output_dedup_bam_file", 
+                    "id": "#exomeseq-01-preprocessing.cwl/markduplicates_bam"
                 }, 
                 {
                     "type": "File", 
                     "outputSource": "#exomeseq-01-preprocessing.cwl/variant_calling/output_HaplotypeCaller", 
-                    "doc": "VCF files from per sample variant calling", 
+                    "doc": "VCF file from per sample variant calling", 
                     "id": "#exomeseq-01-preprocessing.cwl/raw_variants"
                 }, 
                 {
@@ -3327,6 +3409,7 @@
                         "#exomeseq-01-preprocessing.cwl/generate_sample_filenames/recal_reads_output_filename", 
                         "#exomeseq-01-preprocessing.cwl/generate_sample_filenames/recal_table_output_filename", 
                         "#exomeseq-01-preprocessing.cwl/generate_sample_filenames/raw_variants_output_filename", 
+                        "#exomeseq-01-preprocessing.cwl/generate_sample_filenames/haplotypes_bam_output_filename", 
                         "#exomeseq-01-preprocessing.cwl/generate_sample_filenames/hs_metrics_output_filename"
                     ], 
                     "id": "#exomeseq-01-preprocessing.cwl/generate_sample_filenames"
@@ -3661,6 +3744,10 @@
                             "id": "#exomeseq-01-preprocessing.cwl/variant_calling/GATKJar"
                         }, 
                         {
+                            "source": "#exomeseq-01-preprocessing.cwl/generate_sample_filenames/haplotypes_bam_output_filename", 
+                            "id": "#exomeseq-01-preprocessing.cwl/variant_calling/bamOutput"
+                        }, 
+                        {
                             "default": 8, 
                             "id": "#exomeseq-01-preprocessing.cwl/variant_calling/cpu_threads"
                         }, 
@@ -3701,7 +3788,8 @@
                         }
                     ], 
                     "out": [
-                        "#exomeseq-01-preprocessing.cwl/variant_calling/output_HaplotypeCaller"
+                        "#exomeseq-01-preprocessing.cwl/variant_calling/output_HaplotypeCaller", 
+                        "#exomeseq-01-preprocessing.cwl/variant_calling/output_HaplotypesBam"
                     ], 
                     "id": "#exomeseq-01-preprocessing.cwl/variant_calling"
                 }
@@ -3710,11 +3798,6 @@
         }, 
         {
             "class": "Workflow", 
-            "requirements": [
-                {
-                    "class": "ScatterFeatureRequirement"
-                }
-            ], 
             "inputs": [
                 {
                     "type": "File", 
@@ -3791,25 +3874,25 @@
                     "type": "File", 
                     "outputSource": "#exomeseq-02-variantdiscovery.cwl/variant_recalibration_indels/recal_File", 
                     "doc": "The output recal file used by ApplyRecalibration in INDEL mode", 
-                    "id": "#exomeseq-02-variantdiscovery.cwl/variant_recalibration_indels_recal"
+                    "id": "#exomeseq-02-variantdiscovery.cwl/variant_recalibration_snps_indels_recal"
                 }, 
                 {
                     "type": "File", 
                     "outputSource": "#exomeseq-02-variantdiscovery.cwl/variant_recalibration_indels/vqsr_rscript", 
                     "doc": "The output rscript file generated by the VQSR in INDEL mode to aid in visualization of the input data and learned model", 
-                    "id": "#exomeseq-02-variantdiscovery.cwl/variant_recalibration_indels_rscript"
+                    "id": "#exomeseq-02-variantdiscovery.cwl/variant_recalibration_snps_indels_rscript"
                 }, 
                 {
                     "type": "File", 
                     "outputSource": "#exomeseq-02-variantdiscovery.cwl/variant_recalibration_indels/tranches_File", 
                     "doc": "The output tranches file used by ApplyRecalibration in INDEL mode", 
-                    "id": "#exomeseq-02-variantdiscovery.cwl/variant_recalibration_indels_tranches"
+                    "id": "#exomeseq-02-variantdiscovery.cwl/variant_recalibration_snps_indels_tranches"
                 }, 
                 {
                     "type": "File", 
                     "outputSource": "#exomeseq-02-variantdiscovery.cwl/apply_recalibration_indels/output_recalibrated_vcf", 
-                    "doc": "The output filtered and recalibrated VCF file in INDEL mode in which each variant is annotated with its VQSLOD value", 
-                    "id": "#exomeseq-02-variantdiscovery.cwl/variant_recalibration_indels_vcf"
+                    "doc": "The output filtered and recalibrated VCF file in in which each variant is annotated with its VQSLOD value", 
+                    "id": "#exomeseq-02-variantdiscovery.cwl/variant_recalibration_snps_indels_vcf"
                 }, 
                 {
                     "type": "File", 
@@ -3849,7 +3932,7 @@
                             "id": "#exomeseq-02-variantdiscovery.cwl/apply_recalibration_indels/mode"
                         }, 
                         {
-                            "source": "#exomeseq-02-variantdiscovery.cwl/generate_joint_filenames/indels_recalibrated_output_filename", 
+                            "source": "#exomeseq-02-variantdiscovery.cwl/generate_joint_filenames/snps_indels_recalibrated_output_filename", 
                             "id": "#exomeseq-02-variantdiscovery.cwl/apply_recalibration_indels/outputfile_recalibrated_vcf"
                         }, 
                         {
@@ -3941,10 +4024,10 @@
                         "#exomeseq-02-variantdiscovery.cwl/generate_joint_filenames/snps_vqsr_tranches_output_filename", 
                         "#exomeseq-02-variantdiscovery.cwl/generate_joint_filenames/snps_vqsr_rscript_output_filename", 
                         "#exomeseq-02-variantdiscovery.cwl/generate_joint_filenames/snps_recalibrated_output_filename", 
-                        "#exomeseq-02-variantdiscovery.cwl/generate_joint_filenames/indels_vqsr_recal_output_filename", 
-                        "#exomeseq-02-variantdiscovery.cwl/generate_joint_filenames/indels_vqsr_tranches_output_filename", 
-                        "#exomeseq-02-variantdiscovery.cwl/generate_joint_filenames/indels_vqsr_rscript_output_filename", 
-                        "#exomeseq-02-variantdiscovery.cwl/generate_joint_filenames/indels_recalibrated_output_filename"
+                        "#exomeseq-02-variantdiscovery.cwl/generate_joint_filenames/snps_indels_vqsr_recal_output_filename", 
+                        "#exomeseq-02-variantdiscovery.cwl/generate_joint_filenames/snps_indels_vqsr_tranches_output_filename", 
+                        "#exomeseq-02-variantdiscovery.cwl/generate_joint_filenames/snps_indels_vqsr_rscript_output_filename", 
+                        "#exomeseq-02-variantdiscovery.cwl/generate_joint_filenames/snps_indels_recalibrated_output_filename"
                     ], 
                     "id": "#exomeseq-02-variantdiscovery.cwl/generate_joint_filenames"
                 }, 
@@ -4021,15 +4104,15 @@
                             "id": "#exomeseq-02-variantdiscovery.cwl/variant_recalibration_indels/annotations"
                         }, 
                         {
-                            "source": "#exomeseq-02-variantdiscovery.cwl/generate_joint_filenames/indels_vqsr_recal_output_filename", 
+                            "source": "#exomeseq-02-variantdiscovery.cwl/generate_joint_filenames/snps_indels_vqsr_recal_output_filename", 
                             "id": "#exomeseq-02-variantdiscovery.cwl/variant_recalibration_indels/outputfile_recal"
                         }, 
                         {
-                            "source": "#exomeseq-02-variantdiscovery.cwl/generate_joint_filenames/indels_vqsr_rscript_output_filename", 
+                            "source": "#exomeseq-02-variantdiscovery.cwl/generate_joint_filenames/snps_indels_vqsr_rscript_output_filename", 
                             "id": "#exomeseq-02-variantdiscovery.cwl/variant_recalibration_indels/outputfile_rscript"
                         }, 
                         {
-                            "source": "#exomeseq-02-variantdiscovery.cwl/generate_joint_filenames/indels_vqsr_tranches_output_filename", 
+                            "source": "#exomeseq-02-variantdiscovery.cwl/generate_joint_filenames/snps_indels_vqsr_tranches_output_filename", 
                             "id": "#exomeseq-02-variantdiscovery.cwl/variant_recalibration_indels/outputfile_tranches"
                         }, 
                         {
@@ -4129,6 +4212,196 @@
                 }
             ], 
             "id": "#exomeseq-02-variantdiscovery.cwl"
+        }, 
+        {
+            "class": "Workflow", 
+            "inputs": [
+                {
+                    "type": {
+                        "type": "array", 
+                        "items": "File"
+                    }, 
+                    "id": "#exomeseq-03-organizedirectories.cwl/bams_final"
+                }, 
+                {
+                    "type": {
+                        "type": "array", 
+                        "items": "File"
+                    }, 
+                    "id": "#exomeseq-03-organizedirectories.cwl/bams_markduplicates"
+                }, 
+                {
+                    "type": {
+                        "type": "array", 
+                        "items": {
+                            "type": "array", 
+                            "items": "File"
+                        }
+                    }, 
+                    "id": "#exomeseq-03-organizedirectories.cwl/fastqc_reports"
+                }, 
+                {
+                    "type": {
+                        "type": "array", 
+                        "items": "File"
+                    }, 
+                    "id": "#exomeseq-03-organizedirectories.cwl/hs_metrics"
+                }, 
+                {
+                    "type": {
+                        "type": "array", 
+                        "items": "File"
+                    }, 
+                    "id": "#exomeseq-03-organizedirectories.cwl/raw_variants"
+                }, 
+                {
+                    "type": {
+                        "type": "array", 
+                        "items": {
+                            "type": "array", 
+                            "items": "File"
+                        }
+                    }, 
+                    "id": "#exomeseq-03-organizedirectories.cwl/trim_reports"
+                }
+            ], 
+            "outputs": [
+                {
+                    "type": "Directory", 
+                    "outputSource": "#exomeseq-03-organizedirectories.cwl/org_bams_final/outdir", 
+                    "id": "#exomeseq-03-organizedirectories.cwl/bams_final_dir"
+                }, 
+                {
+                    "type": "Directory", 
+                    "outputSource": "#exomeseq-03-organizedirectories.cwl/org_bams_markduplicates/outdir", 
+                    "id": "#exomeseq-03-organizedirectories.cwl/bams_markduplicates_dir"
+                }, 
+                {
+                    "type": "Directory", 
+                    "outputSource": "#exomeseq-03-organizedirectories.cwl/org_fastqc_reports/outdir", 
+                    "id": "#exomeseq-03-organizedirectories.cwl/fastqc_reports_dir"
+                }, 
+                {
+                    "type": "Directory", 
+                    "outputSource": "#exomeseq-03-organizedirectories.cwl/org_hs_metrics/outdir", 
+                    "id": "#exomeseq-03-organizedirectories.cwl/hs_metrics_dir"
+                }, 
+                {
+                    "type": "Directory", 
+                    "outputSource": "#exomeseq-03-organizedirectories.cwl/org_raw_variants/outdir", 
+                    "id": "#exomeseq-03-organizedirectories.cwl/raw_variants_dir"
+                }, 
+                {
+                    "type": "Directory", 
+                    "outputSource": "#exomeseq-03-organizedirectories.cwl/org_trim_reports/outdir", 
+                    "id": "#exomeseq-03-organizedirectories.cwl/trim_reports_dir"
+                }
+            ], 
+            "steps": [
+                {
+                    "run": "#files-to-directory.cwl", 
+                    "in": [
+                        {
+                            "source": "#exomeseq-03-organizedirectories.cwl/bams_final", 
+                            "id": "#exomeseq-03-organizedirectories.cwl/org_bams_final/files"
+                        }, 
+                        {
+                            "default": "bams-final", 
+                            "id": "#exomeseq-03-organizedirectories.cwl/org_bams_final/name"
+                        }
+                    ], 
+                    "out": [
+                        "#exomeseq-03-organizedirectories.cwl/org_bams_final/outdir"
+                    ], 
+                    "id": "#exomeseq-03-organizedirectories.cwl/org_bams_final"
+                }, 
+                {
+                    "run": "#files-to-directory.cwl", 
+                    "in": [
+                        {
+                            "source": "#exomeseq-03-organizedirectories.cwl/bams_markduplicates", 
+                            "id": "#exomeseq-03-organizedirectories.cwl/org_bams_markduplicates/files"
+                        }, 
+                        {
+                            "default": "bams-markduplicates", 
+                            "id": "#exomeseq-03-organizedirectories.cwl/org_bams_markduplicates/name"
+                        }
+                    ], 
+                    "out": [
+                        "#exomeseq-03-organizedirectories.cwl/org_bams_markduplicates/outdir"
+                    ], 
+                    "id": "#exomeseq-03-organizedirectories.cwl/org_bams_markduplicates"
+                }, 
+                {
+                    "run": "#file-pairs-to-directory.cwl", 
+                    "in": [
+                        {
+                            "source": "#exomeseq-03-organizedirectories.cwl/fastqc_reports", 
+                            "id": "#exomeseq-03-organizedirectories.cwl/org_fastqc_reports/file_pairs"
+                        }, 
+                        {
+                            "default": "fastqc-reports", 
+                            "id": "#exomeseq-03-organizedirectories.cwl/org_fastqc_reports/name"
+                        }
+                    ], 
+                    "out": [
+                        "#exomeseq-03-organizedirectories.cwl/org_fastqc_reports/outdir"
+                    ], 
+                    "id": "#exomeseq-03-organizedirectories.cwl/org_fastqc_reports"
+                }, 
+                {
+                    "run": "#files-to-directory.cwl", 
+                    "in": [
+                        {
+                            "source": "#exomeseq-03-organizedirectories.cwl/hs_metrics", 
+                            "id": "#exomeseq-03-organizedirectories.cwl/org_hs_metrics/files"
+                        }, 
+                        {
+                            "default": "hs-metrics", 
+                            "id": "#exomeseq-03-organizedirectories.cwl/org_hs_metrics/name"
+                        }
+                    ], 
+                    "out": [
+                        "#exomeseq-03-organizedirectories.cwl/org_hs_metrics/outdir"
+                    ], 
+                    "id": "#exomeseq-03-organizedirectories.cwl/org_hs_metrics"
+                }, 
+                {
+                    "run": "#files-to-directory.cwl", 
+                    "in": [
+                        {
+                            "source": "#exomeseq-03-organizedirectories.cwl/raw_variants", 
+                            "id": "#exomeseq-03-organizedirectories.cwl/org_raw_variants/files"
+                        }, 
+                        {
+                            "default": "gvcfs", 
+                            "id": "#exomeseq-03-organizedirectories.cwl/org_raw_variants/name"
+                        }
+                    ], 
+                    "out": [
+                        "#exomeseq-03-organizedirectories.cwl/org_raw_variants/outdir"
+                    ], 
+                    "id": "#exomeseq-03-organizedirectories.cwl/org_raw_variants"
+                }, 
+                {
+                    "run": "#file-pairs-to-directory.cwl", 
+                    "in": [
+                        {
+                            "source": "#exomeseq-03-organizedirectories.cwl/trim_reports", 
+                            "id": "#exomeseq-03-organizedirectories.cwl/org_trim_reports/file_pairs"
+                        }, 
+                        {
+                            "default": "trim-reports", 
+                            "id": "#exomeseq-03-organizedirectories.cwl/org_trim_reports/name"
+                        }
+                    ], 
+                    "out": [
+                        "#exomeseq-03-organizedirectories.cwl/org_trim_reports/outdir"
+                    ], 
+                    "id": "#exomeseq-03-organizedirectories.cwl/org_trim_reports"
+                }
+            ], 
+            "id": "#exomeseq-03-organizedirectories.cwl"
         }, 
         {
             "class": "Workflow", 
@@ -4271,119 +4544,89 @@
             ], 
             "outputs": [
                 {
-                    "type": {
-                        "type": "array", 
-                        "items": {
-                            "type": "array", 
-                            "items": "File"
-                        }
-                    }, 
-                    "outputSource": "#main/preprocessing/hs_metrics", 
-                    "id": "#main/hs_metrics"
+                    "type": "Directory", 
+                    "outputSource": "#main/organize_directories/bams_final_dir", 
+                    "doc": "BAM files containing assembled haplotypes and locally realigned reads", 
+                    "id": "#main/bams_final_dir"
+                }, 
+                {
+                    "type": "Directory", 
+                    "outputSource": "#main/organize_directories/bams_markduplicates_dir", 
+                    "doc": "BAM and bai files from markduplicates", 
+                    "id": "#main/bams_markduplicates_dir"
+                }, 
+                {
+                    "type": "Directory", 
+                    "outputSource": "#main/organize_directories/fastqc_reports_dir", 
+                    "id": "#main/fastqc_reports_dir"
+                }, 
+                {
+                    "type": "File", 
+                    "outputSource": "#main/variant_discovery/variant_recalibration_snps_indels_vcf", 
+                    "doc": "The output filtered and recalibrated VCF file in which each variant is annotated with its VQSLOD value", 
+                    "id": "#main/filtered_recalibrated_variants"
+                }, 
+                {
+                    "type": "File", 
+                    "outputSource": "#main/organize_directories/hs_metrics_dir", 
+                    "id": "#main/hs_metrics_dir"
                 }, 
                 {
                     "type": "File", 
                     "outputSource": "#main/variant_discovery/joint_raw_variants", 
-                    "doc": "VCF file from joint genotyping calling", 
+                    "doc": "GVCF file from joint genotyping calling", 
                     "id": "#main/joint_raw_variants"
                 }, 
                 {
-                    "type": {
-                        "type": "array", 
-                        "items": {
-                            "type": "array", 
-                            "items": "File"
-                        }
-                    }, 
-                    "outputSource": "#main/preprocessing/qc_reports", 
-                    "id": "#main/qc_reports"
+                    "type": "Directory", 
+                    "outputSource": "#main/organize_directories/raw_variants_dir", 
+                    "id": "#main/raw_variants_dir"
                 }, 
                 {
-                    "type": {
-                        "type": "array", 
-                        "items": "File"
-                    }, 
-                    "outputSource": "#main/preprocessing/raw_variants", 
-                    "doc": "VCF files from per sample variant calling", 
-                    "id": "#main/raw_variants"
-                }, 
-                {
-                    "type": {
-                        "type": "array", 
-                        "items": "File"
-                    }, 
-                    "outputSource": "#main/preprocessing/recalibrated_reads", 
-                    "id": "#main/recalibrated_reads"
-                }, 
-                {
-                    "type": {
-                        "type": "array", 
-                        "items": "File"
-                    }, 
-                    "outputSource": "#main/preprocessing/recalibration_table", 
-                    "id": "#main/recalibration_table"
-                }, 
-                {
-                    "type": {
-                        "type": "array", 
-                        "items": {
-                            "type": "array", 
-                            "items": "File"
-                        }
-                    }, 
-                    "outputSource": "#main/preprocessing/trim_reports", 
-                    "id": "#main/trim_reports"
-                }, 
-                {
-                    "type": "File", 
-                    "outputSource": "#main/variant_discovery/variant_recalibration_indels_recal", 
-                    "doc": "The output recal file used by ApplyRecalibration in INDEL mode", 
-                    "id": "#main/variant_recalibration_indels_recal"
-                }, 
-                {
-                    "type": "File", 
-                    "outputSource": "#main/variant_discovery/variant_recalibration_indels_rscript", 
-                    "doc": "The output rscript file generated by the VQSR in INDEL mode to aid in visualization of the input data and learned model", 
-                    "id": "#main/variant_recalibration_indels_rscript"
-                }, 
-                {
-                    "type": "File", 
-                    "outputSource": "#main/variant_discovery/variant_recalibration_indels_tranches", 
-                    "doc": "The output tranches file used by ApplyRecalibration in INDEL mode", 
-                    "id": "#main/variant_recalibration_indels_tranches"
-                }, 
-                {
-                    "type": "File", 
-                    "outputSource": "#main/variant_discovery/variant_recalibration_indels_vcf", 
-                    "doc": "The output filtered and recalibrated VCF file in INDEL mode in which each variant is annotated with its VQSLOD value", 
-                    "id": "#main/variant_recalibration_indels_vcf"
-                }, 
-                {
-                    "type": "File", 
-                    "outputSource": "#main/variant_discovery/variant_recalibration_snps_recal", 
-                    "doc": "The output recal file used by ApplyRecalibration in SNP mode", 
-                    "id": "#main/variant_recalibration_snps_recal"
-                }, 
-                {
-                    "type": "File", 
-                    "outputSource": "#main/variant_discovery/variant_recalibration_snps_rscript", 
-                    "doc": "The output rscript file generated by the VQSR in SNP mode to aid in visualization of the input data and learned model", 
-                    "id": "#main/variant_recalibration_snps_rscript"
-                }, 
-                {
-                    "type": "File", 
-                    "outputSource": "#main/variant_discovery/variant_recalibration_snps_tranches", 
-                    "doc": "The output tranches file used by ApplyRecalibration in SNP mode", 
-                    "id": "#main/variant_recalibration_snps_tranches"
-                }, 
-                {
-                    "type": "File", 
-                    "outputSource": "#main/variant_discovery/variant_recalibration_snps_vcf", 
-                    "doc": "The output filtered and recalibrated VCF file in SNP mode in which each variant is annotated with its VQSLOD value", 
-                    "id": "#main/variant_recalibration_snps_vcf"
+                    "type": "Directory", 
+                    "outputSource": "#main/organize_directories/trim_reports_dir", 
+                    "id": "#main/trim_reports_dir"
                 }
             ], 
             "steps": [
+                {
+                    "run": "#exomeseq-03-organizedirectories.cwl", 
+                    "in": [
+                        {
+                            "source": "#main/preprocessing/haplotypes_bam", 
+                            "id": "#main/organize_directories/bams_final"
+                        }, 
+                        {
+                            "source": "#main/preprocessing/markduplicates_bam", 
+                            "id": "#main/organize_directories/bams_markduplicates"
+                        }, 
+                        {
+                            "source": "#main/preprocessing/fastqc_reports", 
+                            "id": "#main/organize_directories/fastqc_reports"
+                        }, 
+                        {
+                            "source": "#main/preprocessing/hs_metrics", 
+                            "id": "#main/organize_directories/hs_metrics"
+                        }, 
+                        {
+                            "source": "#main/preprocessing/raw_variants", 
+                            "id": "#main/organize_directories/raw_variants"
+                        }, 
+                        {
+                            "source": "#main/preprocessing/trim_reports", 
+                            "id": "#main/organize_directories/trim_reports"
+                        }
+                    ], 
+                    "out": [
+                        "#main/organize_directories/fastqc_reports_dir", 
+                        "#main/organize_directories/trim_reports_dir", 
+                        "#main/organize_directories/hs_metrics_dir", 
+                        "#main/organize_directories/bams_markduplicates_dir", 
+                        "#main/organize_directories/raw_variants_dir", 
+                        "#main/organize_directories/bams_final_dir"
+                    ], 
+                    "id": "#main/organize_directories"
+                }, 
                 {
                     "run": "#exomeseq-01-preprocessing.cwl", 
                     "scatter": "#main/preprocessing/reads", 
@@ -4438,11 +4681,13 @@
                         }
                     ], 
                     "out": [
-                        "#main/preprocessing/qc_reports", 
+                        "#main/preprocessing/fastqc_reports", 
                         "#main/preprocessing/trim_reports", 
+                        "#main/preprocessing/markduplicates_bam", 
                         "#main/preprocessing/recalibration_table", 
                         "#main/preprocessing/recalibrated_reads", 
                         "#main/preprocessing/raw_variants", 
+                        "#main/preprocessing/haplotypes_bam", 
                         "#main/preprocessing/hs_metrics"
                     ], 
                     "id": "#main/preprocessing"
@@ -4504,11 +4749,11 @@
                         "#main/variant_discovery/variant_recalibration_snps_tranches", 
                         "#main/variant_discovery/variant_recalibration_snps_recal", 
                         "#main/variant_discovery/variant_recalibration_snps_rscript", 
-                        "#main/variant_discovery/variant_recalibration_indels_tranches", 
-                        "#main/variant_discovery/variant_recalibration_indels_recal", 
-                        "#main/variant_discovery/variant_recalibration_indels_rscript", 
                         "#main/variant_discovery/variant_recalibration_snps_vcf", 
-                        "#main/variant_discovery/variant_recalibration_indels_vcf"
+                        "#main/variant_discovery/variant_recalibration_snps_indels_tranches", 
+                        "#main/variant_discovery/variant_recalibration_snps_indels_recal", 
+                        "#main/variant_discovery/variant_recalibration_snps_indels_rscript", 
+                        "#main/variant_discovery/variant_recalibration_snps_indels_vcf"
                     ], 
                     "id": "#main/variant_discovery"
                 }

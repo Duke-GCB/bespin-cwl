@@ -43,7 +43,7 @@ inputs:
       shellQuote: false
 outputs:
   output_hs_metrics_file:
-    type: File[]
+    type: File
     outputBinding:
       glob: $(inputs.output_filename)
 

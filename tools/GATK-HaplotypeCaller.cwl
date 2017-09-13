@@ -142,7 +142,7 @@ inputs: # position 0, for java args, 1 for the jar, 2 for the tool itself
       prefix: --pcr_indel_model
     doc: The PCR indel model to use
   bamOutput:
-    type: File?
+    type: string?
     inputBinding:
       position: 2
       prefix: --bamOutput
@@ -415,6 +415,10 @@ outputs:
       glob: $(inputs.outputfile_HaplotypeCaller)
     secondaryFiles:
       - .idx
+  output_HaplotypesBam:
+    type: File?
+    outputBinding:
+      glob: $(inputs.bamOutput)
 
 arguments:
 - valueFrom: $(runtime.tmpdir)
