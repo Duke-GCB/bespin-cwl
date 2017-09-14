@@ -128,6 +128,8 @@ steps:
     in:
       intervals: intervals
       primary_intervals: primary_intervals
+      target_interval_list: make_target_interval_list/output_interval_list_file
+      bait_interval_list: make_bait_interval_list/output_interval_list_file
       interval_padding: interval_padding
       reads: read_pairs
       reference_genome: reference_genome

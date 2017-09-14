@@ -4634,6 +4634,10 @@
                             "id": "#main/preprocessing/GATKJar"
                         }, 
                         {
+                            "source": "#main/make_bait_interval_list/output_interval_list_file", 
+                            "id": "#main/preprocessing/bait_interval_list"
+                        }, 
+                        {
                             "source": "#main/field_order", 
                             "id": "#main/preprocessing/field_order"
                         }, 
@@ -4672,6 +4676,10 @@
                         {
                             "source": "#main/resource_dbsnp", 
                             "id": "#main/preprocessing/resource_dbsnp"
+                        }, 
+                        {
+                            "source": "#main/make_target_interval_list/output_interval_list_file", 
+                            "id": "#main/preprocessing/target_interval_list"
                         }, 
                         {
                             "source": "#main/threads", 
