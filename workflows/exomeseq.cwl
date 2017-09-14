@@ -77,7 +77,7 @@ outputs:
     type: Directory
     outputSource: organize_directories/raw_variants_dir
   hs_metrics_dir:
-    type: File
+    type: Directory
     outputSource: organize_directories/hs_metrics_dir
   bams_markduplicates_dir:
     type: Directory

@@ -4513,7 +4513,7 @@
                     "id": "#main/filtered_recalibrated_variants"
                 }, 
                 {
-                    "type": "File", 
+                    "type": "Directory", 
                     "outputSource": "#main/organize_directories/hs_metrics_dir", 
                     "id": "#main/hs_metrics_dir"
                 }, 
