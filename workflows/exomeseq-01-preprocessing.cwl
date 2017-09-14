@@ -6,7 +6,7 @@ requirements:
   - class: ScatterFeatureRequirement
 inputs:
   # NOTE: How long is this expected to take?
-  # Intervals should come from capture kitbed format
+  # Intervals should come from capture kit in bed format
   intervals: File[]?
   # target intervals in picard interval_list format (created from intervals bed file)
   target_interval_list: File
