@@ -3219,6 +3219,111 @@
         }, 
         {
             "class": "Workflow", 
+            "inputs": [
+                {
+                    "type": [
+                        "null", 
+                        {
+                            "type": "array", 
+                            "items": "File"
+                        }
+                    ], 
+                    "id": "#exomeseq-00-prepare-reference-data.cwl/intervals"
+                }, 
+                {
+                    "type": [
+                        "null", 
+                        {
+                            "type": "array", 
+                            "items": "File"
+                        }
+                    ], 
+                    "id": "#exomeseq-00-prepare-reference-data.cwl/primary_intervals"
+                }, 
+                {
+                    "type": "File", 
+                    "secondaryFiles": [
+                        ".amb", 
+                        ".ann", 
+                        ".bwt", 
+                        ".pac", 
+                        ".sa", 
+                        ".fai", 
+                        "^.dict"
+                    ], 
+                    "id": "#exomeseq-00-prepare-reference-data.cwl/reference_genome"
+                }
+            ], 
+            "outputs": [
+                {
+                    "type": "File", 
+                    "outputSource": "#exomeseq-00-prepare-reference-data.cwl/make_bait_interval_list/output_interval_list_file", 
+                    "id": "#exomeseq-00-prepare-reference-data.cwl/bait_interval_list"
+                }, 
+                {
+                    "type": "File", 
+                    "outputSource": "#exomeseq-00-prepare-reference-data.cwl/make_target_interval_list/output_interval_list_file", 
+                    "id": "#exomeseq-00-prepare-reference-data.cwl/target_interval_list"
+                }
+            ], 
+            "steps": [
+                {
+                    "run": "#picard-BedToIntervalList.cwl", 
+                    "requirements": [
+                        {
+                            "class": "ResourceRequirement", 
+                            "coresMin": 1, 
+                            "ramMin": 4000, 
+                            "outdirMin": 12000, 
+                            "tmpdirMin": 12000
+                        }
+                    ], 
+                    "in": [
+                        {
+                            "source": "#exomeseq-00-prepare-reference-data.cwl/primary_intervals", 
+                            "id": "#exomeseq-00-prepare-reference-data.cwl/make_bait_interval_list/input_file"
+                        }, 
+                        {
+                            "source": "#exomeseq-00-prepare-reference-data.cwl/reference_genome", 
+                            "id": "#exomeseq-00-prepare-reference-data.cwl/make_bait_interval_list/reference_sequence"
+                        }
+                    ], 
+                    "out": [
+                        "#exomeseq-00-prepare-reference-data.cwl/make_bait_interval_list/output_interval_list_file"
+                    ], 
+                    "id": "#exomeseq-00-prepare-reference-data.cwl/make_bait_interval_list"
+                }, 
+                {
+                    "run": "#picard-BedToIntervalList.cwl", 
+                    "requirements": [
+                        {
+                            "class": "ResourceRequirement", 
+                            "coresMin": 1, 
+                            "ramMin": 4000, 
+                            "outdirMin": 12000, 
+                            "tmpdirMin": 12000
+                        }
+                    ], 
+                    "in": [
+                        {
+                            "source": "#exomeseq-00-prepare-reference-data.cwl/intervals", 
+                            "id": "#exomeseq-00-prepare-reference-data.cwl/make_target_interval_list/input_file"
+                        }, 
+                        {
+                            "source": "#exomeseq-00-prepare-reference-data.cwl/reference_genome", 
+                            "id": "#exomeseq-00-prepare-reference-data.cwl/make_target_interval_list/reference_sequence"
+                        }
+                    ], 
+                    "out": [
+                        "#exomeseq-00-prepare-reference-data.cwl/make_target_interval_list/output_interval_list_file"
+                    ], 
+                    "id": "#exomeseq-00-prepare-reference-data.cwl/make_target_interval_list"
+                }
+            ], 
+            "id": "#exomeseq-00-prepare-reference-data.cwl"
+        }, 
+        {
+            "class": "Workflow", 
             "requirements": [
                 {
                     "class": "ScatterFeatureRequirement"
@@ -4536,58 +4641,6 @@
             ], 
             "steps": [
                 {
-                    "run": "#picard-BedToIntervalList.cwl", 
-                    "requirements": [
-                        {
-                            "class": "ResourceRequirement", 
-                            "coresMin": 1, 
-                            "ramMin": 4000, 
-                            "outdirMin": 12000, 
-                            "tmpdirMin": 12000
-                        }
-                    ], 
-                    "in": [
-                        {
-                            "source": "#main/primary_intervals", 
-                            "id": "#main/make_bait_interval_list/input_file"
-                        }, 
-                        {
-                            "source": "#main/reference_genome", 
-                            "id": "#main/make_bait_interval_list/reference_sequence"
-                        }
-                    ], 
-                    "out": [
-                        "#main/make_bait_interval_list/output_interval_list_file"
-                    ], 
-                    "id": "#main/make_bait_interval_list"
-                }, 
-                {
-                    "run": "#picard-BedToIntervalList.cwl", 
-                    "requirements": [
-                        {
-                            "class": "ResourceRequirement", 
-                            "coresMin": 1, 
-                            "ramMin": 4000, 
-                            "outdirMin": 12000, 
-                            "tmpdirMin": 12000
-                        }
-                    ], 
-                    "in": [
-                        {
-                            "source": "#main/intervals", 
-                            "id": "#main/make_target_interval_list/input_file"
-                        }, 
-                        {
-                            "source": "#main/reference_genome", 
-                            "id": "#main/make_target_interval_list/reference_sequence"
-                        }
-                    ], 
-                    "out": [
-                        "#main/make_target_interval_list/output_interval_list_file"
-                    ], 
-                    "id": "#main/make_target_interval_list"
-                }, 
-                {
                     "run": "#exomeseq-03-organizedirectories.cwl", 
                     "in": [
                         {
@@ -4626,6 +4679,28 @@
                     "id": "#main/organize_directories"
                 }, 
                 {
+                    "run": "#exomeseq-00-prepare-reference-data.cwl", 
+                    "in": [
+                        {
+                            "source": "#main/intervals", 
+                            "id": "#main/prepare_reference_data/intervals"
+                        }, 
+                        {
+                            "source": "#main/primary_intervals", 
+                            "id": "#main/prepare_reference_data/primary_intervals"
+                        }, 
+                        {
+                            "source": "#main/reference_genome", 
+                            "id": "#main/prepare_reference_data/reference_genome"
+                        }
+                    ], 
+                    "out": [
+                        "#main/prepare_reference_data/target_interval_list", 
+                        "#main/prepare_reference_data/bait_interval_list"
+                    ], 
+                    "id": "#main/prepare_reference_data"
+                }, 
+                {
                     "run": "#exomeseq-01-preprocessing.cwl", 
                     "scatter": "#main/preprocessing/reads", 
                     "in": [
@@ -4634,7 +4709,7 @@
                             "id": "#main/preprocessing/GATKJar"
                         }, 
                         {
-                            "source": "#main/make_bait_interval_list/output_interval_list_file", 
+                            "source": "#main/prepare_reference_data/bait_interval_list", 
                             "id": "#main/preprocessing/bait_interval_list"
                         }, 
                         {
@@ -4678,7 +4753,7 @@
                             "id": "#main/preprocessing/resource_dbsnp"
                         }, 
                         {
-                            "source": "#main/make_target_interval_list/output_interval_list_file", 
+                            "source": "#main/prepare_reference_data/target_interval_list", 
                             "id": "#main/preprocessing/target_interval_list"
                         }, 
                         {
