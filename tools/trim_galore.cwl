@@ -5,6 +5,13 @@ class: CommandLineTool
 hints:
   - class: DockerRequirement
     dockerPull: 'dukegcb/trim-galore:0.4.4'
+hints:
+  SoftwareRequirement:
+    packages:
+      trim-galore:
+        version: [ "0.4.4" ]
+      cutadapt:
+        version: [ "1.14" ]
 
 inputs:
   paired:
