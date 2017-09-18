@@ -2413,6 +2413,17 @@
                 }, 
                 {
                     "class": "InlineJavascriptRequirement"
+                }, 
+                {
+                    "class": "SoftwareRequirement", 
+                    "packages": [
+                        {
+                            "version": [
+                                "0.7.12"
+                            ], 
+                            "package": "bwa"
+                        }
+                    ]
                 }
             ], 
             "inputs": [
@@ -3161,6 +3172,11 @@
             "class": "CommandLineTool", 
             "hints": [
                 {
+                    "class": "DockerRequirement", 
+                    "dockerPull": "dukegcb/trim-galore:0.4.4"
+                }, 
+                {
+                    "class": "SoftwareRequirement", 
                     "packages": [
                         {
                             "version": [
@@ -3174,8 +3190,7 @@
                             ], 
                             "package": "trim-galore"
                         }
-                    ], 
-                    "class": "SoftwareRequirement"
+                    ]
                 }
             ], 
             "inputs": [
