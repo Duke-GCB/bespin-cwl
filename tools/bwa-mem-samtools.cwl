@@ -8,6 +8,7 @@ requirements:
 - class: DockerRequirement
   dockerPull: 'dukegcb/bwa-samtools:0.7.12_1.2.1-254-6462e34'
 - class: InlineJavascriptRequirement
+hints:
 - class: SoftwareRequirement
   packages:
       bwa:

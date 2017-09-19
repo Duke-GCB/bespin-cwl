@@ -7,6 +7,7 @@ requirements:
 - $import: envvar-global.yml
 - class: DockerRequirement
   dockerPull: 'dukegcb/gatk-base:3'
+hints:
 - class: SoftwareRequirement
   packages:
       gatk:
