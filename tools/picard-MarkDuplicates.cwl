@@ -7,7 +7,11 @@ requirements:
 - class: DockerRequirement
   dockerPull: dukegcb/picard:2.10.7
 - class: InlineJavascriptRequirement
-
+- class: SoftwareRequirement
+  packages:
+      picard:
+          version: [ "2.10.7" ]
+          s:citation: http://broadinstitute.github.io/picard
 inputs:
   input_file:
     type: File
@@ -60,3 +64,8 @@ arguments:
 - valueFrom: "CREATE_INDEX=True"
   position: 0
 
+$namespaces:
+  s: https://schema.org/
+
+$schemas:
+ - https://schema.org/docs/schema_org_rdfa.html

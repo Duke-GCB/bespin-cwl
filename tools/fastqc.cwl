@@ -5,6 +5,11 @@ class: CommandLineTool
 hints:
   - class: DockerRequirement
     dockerPull: 'dukegcb/fastqc:0.11.4'
+  - class: SoftwareRequirement
+    packages:
+      fastqc:
+        version: [ "0.11.4" ]
+        s:citation: https://www.bioinformatics.babraham.ac.uk/projects/fastqc/
 
 requirements:
   - class: InlineJavascriptRequirement
@@ -48,3 +53,9 @@ arguments:
   - valueFrom: $(runtime.outdir)
     prefix: "-o"
     position: 5
+
+$namespaces:
+  s: https://schema.org/
+
+$schemas:
+ - https://schema.org/docs/schema_org_rdfa.html

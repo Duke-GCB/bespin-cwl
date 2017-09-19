@@ -7,6 +7,11 @@ requirements:
 - $import: envvar-global.yml
 - class: DockerRequirement
   dockerPull: 'dukegcb/gatk-base:3'
+- class: SoftwareRequirement
+  packages:
+      gatk:
+          version: [ "3.8" ]
+          s:citation: http://dx.doi.org/10.1038/ng.806
 
 inputs: # position 0, for java args, 1 for the jar, 2 for the tool itself
   GATKJar:
@@ -133,4 +138,8 @@ doc: |
   Prints all reads that have a mapping quality above zero
     Usage: java -Xmx4g -jar GenomeAnalysisTK.jar -T PrintReads -R reference.fasta -I input1.bam -I input2.bam -o output.bam --read_filter MappingQualityZero
 
+$namespaces:
+  s: https://schema.org/
 
+$schemas:
+ - https://schema.org/docs/schema_org_rdfa.html
