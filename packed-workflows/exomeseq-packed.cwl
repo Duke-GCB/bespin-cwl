@@ -32,7 +32,7 @@
                                 "3.8"
                             ], 
                             "package": "gatk", 
-                            "https://schema.org/citation": "http://dx.doi.org/10.1038/ng.806"
+                            "https://schema.org/citation": "https://dx.doi.org/10.1038/ng.806"
                         }
                     ]
                 }
@@ -203,7 +203,7 @@
                                 "3.8"
                             ], 
                             "package": "gatk", 
-                            "https://schema.org/citation": "http://dx.doi.org/10.1038/ng.806"
+                            "https://schema.org/citation": "https://dx.doi.org/10.1038/ng.806"
                         }
                     ]
                 }
@@ -614,7 +614,7 @@
                                 "3.8"
                             ], 
                             "package": "gatk", 
-                            "https://schema.org/citation": "http://dx.doi.org/10.1038/ng.806"
+                            "https://schema.org/citation": "https://dx.doi.org/10.1038/ng.806"
                         }
                     ]
                 }
@@ -960,7 +960,7 @@
                                 "3.8"
                             ], 
                             "package": "gatk", 
-                            "https://schema.org/citation": "http://dx.doi.org/10.1038/ng.806"
+                            "https://schema.org/citation": "https://dx.doi.org/10.1038/ng.806"
                         }
                     ]
                 }
@@ -1789,7 +1789,7 @@
                                 "3.8"
                             ], 
                             "package": "gatk", 
-                            "https://schema.org/citation": "http://dx.doi.org/10.1038/ng.806"
+                            "https://schema.org/citation": "https://dx.doi.org/10.1038/ng.806"
                         }
                     ]
                 }
@@ -2031,7 +2031,7 @@
                                 "3.8"
                             ], 
                             "package": "gatk", 
-                            "https://schema.org/citation": "http://dx.doi.org/10.1038/ng.806"
+                            "https://schema.org/citation": "https://dx.doi.org/10.1038/ng.806"
                         }
                     ]
                 }
@@ -2265,7 +2265,7 @@
                                 "3.8"
                             ], 
                             "package": "gatk", 
-                            "https://schema.org/citation": "http://dx.doi.org/10.1038/ng.806"
+                            "https://schema.org/citation": "https://dx.doi.org/10.1038/ng.806"
                         }
                     ]
                 }

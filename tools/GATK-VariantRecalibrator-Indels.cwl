@@ -36,7 +36,7 @@ hints:
   packages:
       gatk:
           version: [ "3.8" ]
-          s:citation: http://dx.doi.org/10.1038/ng.806
+          s:citation: https://dx.doi.org/10.1038/ng.806
 
 inputs: # position 0, for java args, 1 for the jar, 2 for the tool itself
   GATKJar:
