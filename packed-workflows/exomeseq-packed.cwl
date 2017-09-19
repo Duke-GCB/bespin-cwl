@@ -21,7 +21,9 @@
                 {
                     "class": "DockerRequirement", 
                     "dockerPull": "dukegcb/gatk-base:3"
-                }, 
+                }
+            ], 
+            "hints": [
                 {
                     "class": "SoftwareRequirement", 
                     "packages": [
@@ -190,7 +192,9 @@
                 {
                     "class": "DockerRequirement", 
                     "dockerPull": "dukegcb/gatk-base:3"
-                }, 
+                }
+            ], 
+            "hints": [
                 {
                     "class": "SoftwareRequirement", 
                     "packages": [
@@ -599,7 +603,9 @@
                 {
                     "class": "DockerRequirement", 
                     "dockerPull": "dukegcb/gatk-base:3"
-                }, 
+                }
+            ], 
+            "hints": [
                 {
                     "class": "SoftwareRequirement", 
                     "packages": [
@@ -943,7 +949,9 @@
                 {
                     "class": "DockerRequirement", 
                     "dockerPull": "dukegcb/gatk-base:3"
-                }, 
+                }
+            ], 
+            "hints": [
                 {
                     "class": "SoftwareRequirement", 
                     "packages": [
@@ -1770,7 +1778,9 @@
                 {
                     "class": "DockerRequirement", 
                     "dockerPull": "dukegcb/gatk-base:3"
-                }, 
+                }
+            ], 
+            "hints": [
                 {
                     "class": "SoftwareRequirement", 
                     "packages": [
@@ -2010,7 +2020,9 @@
                 {
                     "class": "DockerRequirement", 
                     "dockerPull": "dukegcb/gatk-base:3"
-                }, 
+                }
+            ], 
+            "hints": [
                 {
                     "class": "SoftwareRequirement", 
                     "packages": [
@@ -2242,7 +2254,9 @@
                 {
                     "class": "DockerRequirement", 
                     "dockerPull": "dukegcb/gatk-base:3"
-                }, 
+                }
+            ], 
+            "hints": [
                 {
                     "class": "SoftwareRequirement", 
                     "packages": [
@@ -2500,7 +2514,9 @@
                 }, 
                 {
                     "class": "InlineJavascriptRequirement"
-                }, 
+                }
+            ], 
+            "hints": [
                 {
                     "class": "SoftwareRequirement", 
                     "packages": [
@@ -2938,7 +2954,9 @@
                 }, 
                 {
                     "class": "InlineJavascriptRequirement"
-                }, 
+                }
+            ], 
+            "hints": [
                 {
                     "class": "SoftwareRequirement", 
                     "packages": [
@@ -3026,7 +3044,9 @@
                 }, 
                 {
                     "class": "InlineJavascriptRequirement"
-                }, 
+                }
+            ], 
+            "hints": [
                 {
                     "class": "SoftwareRequirement", 
                     "packages": [
@@ -3126,7 +3146,9 @@
                 }, 
                 {
                     "class": "InlineJavascriptRequirement"
-                }, 
+                }
+            ], 
+            "hints": [
                 {
                     "class": "SoftwareRequirement", 
                     "packages": [
@@ -3239,7 +3261,9 @@
                 }, 
                 {
                     "class": "InlineJavascriptRequirement"
-                }, 
+                }
+            ], 
+            "hints": [
                 {
                     "class": "SoftwareRequirement", 
                     "packages": [
@@ -3319,10 +3343,6 @@
         {
             "class": "CommandLineTool", 
             "hints": [
-                {
-                    "class": "DockerRequirement", 
-                    "dockerPull": "dukegcb/trim-galore:0.4.4"
-                }, 
                 {
                     "class": "SoftwareRequirement", 
                     "packages": [
