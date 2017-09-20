@@ -2525,7 +2525,7 @@
                                 "0.7.12"
                             ], 
                             "package": "bwa", 
-                            "https://schema.org/citation": "https://doi.org/10.1093/bioinformatics/btp324"
+                            "https://schema.org/citation": "https://dx.doi.org/10.1093/bioinformatics/btp324"
                         }
                     ]
                 }

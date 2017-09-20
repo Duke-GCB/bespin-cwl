@@ -13,7 +13,7 @@ hints:
   packages:
       bwa:
           version: [ "0.7.12" ]
-          s:citation: https://doi.org/10.1093/bioinformatics/btp324
+          s:citation: https://dx.doi.org/10.1093/bioinformatics/btp324
 
 inputs:
   minimum_seed_length:
