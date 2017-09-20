@@ -8,7 +8,7 @@ hints:
 hints:
 - class: SoftwareRequirement
   packages:
-      trim-galore:
+      trimgalore:
         version: [ "0.4.4" ]
         s:citation: https://www.bioinformatics.babraham.ac.uk/projects/trim_galore/
       cutadapt:

@@ -3357,7 +3357,7 @@
                             "version": [
                                 "0.4.4"
                             ], 
-                            "package": "trim-galore", 
+                            "package": "trimgalore", 
                             "https://schema.org/citation": "https://www.bioinformatics.babraham.ac.uk/projects/trim_galore/"
                         }
                     ]
