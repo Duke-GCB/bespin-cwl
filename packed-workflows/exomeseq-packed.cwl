@@ -1,5 +1,8 @@
 {
     "cwlVersion": "v1.0", 
+    "$schemas": [
+        "https://schema.org/docs/schema_org_rdfa.html"
+    ], 
     "$graph": [
         {
             "class": "CommandLineTool", 
@@ -18,6 +21,20 @@
                 {
                     "class": "DockerRequirement", 
                     "dockerPull": "dukegcb/gatk-base:3"
+                }
+            ], 
+            "hints": [
+                {
+                    "class": "SoftwareRequirement", 
+                    "packages": [
+                        {
+                            "version": [
+                                "3.8"
+                            ], 
+                            "package": "gatk", 
+                            "https://schema.org/citation": "https://dx.doi.org/10.1038/ng.806"
+                        }
+                    ]
                 }
             ], 
             "inputs": [
@@ -175,6 +192,20 @@
                 {
                     "class": "DockerRequirement", 
                     "dockerPull": "dukegcb/gatk-base:3"
+                }
+            ], 
+            "hints": [
+                {
+                    "class": "SoftwareRequirement", 
+                    "packages": [
+                        {
+                            "version": [
+                                "3.8"
+                            ], 
+                            "package": "gatk", 
+                            "https://schema.org/citation": "https://dx.doi.org/10.1038/ng.806"
+                        }
+                    ]
                 }
             ], 
             "inputs": [
@@ -574,6 +605,20 @@
                     "dockerPull": "dukegcb/gatk-base:3"
                 }
             ], 
+            "hints": [
+                {
+                    "class": "SoftwareRequirement", 
+                    "packages": [
+                        {
+                            "version": [
+                                "3.8"
+                            ], 
+                            "package": "gatk", 
+                            "https://schema.org/citation": "https://dx.doi.org/10.1038/ng.806"
+                        }
+                    ]
+                }
+            ], 
             "inputs": [
                 {
                     "type": "File", 
@@ -904,6 +949,20 @@
                 {
                     "class": "DockerRequirement", 
                     "dockerPull": "dukegcb/gatk-base:3"
+                }
+            ], 
+            "hints": [
+                {
+                    "class": "SoftwareRequirement", 
+                    "packages": [
+                        {
+                            "version": [
+                                "3.8"
+                            ], 
+                            "package": "gatk", 
+                            "https://schema.org/citation": "https://dx.doi.org/10.1038/ng.806"
+                        }
+                    ]
                 }
             ], 
             "inputs": [
@@ -1721,6 +1780,20 @@
                     "dockerPull": "dukegcb/gatk-base:3"
                 }
             ], 
+            "hints": [
+                {
+                    "class": "SoftwareRequirement", 
+                    "packages": [
+                        {
+                            "version": [
+                                "3.8"
+                            ], 
+                            "package": "gatk", 
+                            "https://schema.org/citation": "https://dx.doi.org/10.1038/ng.806"
+                        }
+                    ]
+                }
+            ], 
             "inputs": [
                 {
                     "type": "File", 
@@ -1949,6 +2022,20 @@
                     "dockerPull": "dukegcb/gatk-base:3"
                 }
             ], 
+            "hints": [
+                {
+                    "class": "SoftwareRequirement", 
+                    "packages": [
+                        {
+                            "version": [
+                                "3.8"
+                            ], 
+                            "package": "gatk", 
+                            "https://schema.org/citation": "https://dx.doi.org/10.1038/ng.806"
+                        }
+                    ]
+                }
+            ], 
             "inputs": [
                 {
                     "type": "File", 
@@ -2167,6 +2254,20 @@
                 {
                     "class": "DockerRequirement", 
                     "dockerPull": "dukegcb/gatk-base:3"
+                }
+            ], 
+            "hints": [
+                {
+                    "class": "SoftwareRequirement", 
+                    "packages": [
+                        {
+                            "version": [
+                                "3.8"
+                            ], 
+                            "package": "gatk", 
+                            "https://schema.org/citation": "https://dx.doi.org/10.1038/ng.806"
+                        }
+                    ]
                 }
             ], 
             "inputs": [
@@ -2415,6 +2516,27 @@
                     "class": "InlineJavascriptRequirement"
                 }
             ], 
+            "hints": [
+                {
+                    "class": "SoftwareRequirement", 
+                    "packages": [
+                        {
+                            "version": [
+                                "0.7.12"
+                            ], 
+                            "package": "bwa", 
+                            "https://schema.org/citation": "https://dx.doi.org/10.1093/bioinformatics/btp324"
+                        }, 
+                        {
+                            "version": [
+                                "1.2-242-g4d56437"
+                            ], 
+                            "package": "samtools", 
+                            "https://schema.org/citation": "https://doi.org/10.1093/bioinformatics/btp352"
+                        }
+                    ]
+                }
+            ], 
             "inputs": [
                 {
                     "type": [
@@ -2518,6 +2640,18 @@
                 {
                     "class": "DockerRequirement", 
                     "dockerPull": "dukegcb/fastqc:0.11.4"
+                }, 
+                {
+                    "class": "SoftwareRequirement", 
+                    "packages": [
+                        {
+                            "version": [
+                                "0.11.4"
+                            ], 
+                            "package": "fastqc", 
+                            "https://schema.org/citation": "https://www.bioinformatics.babraham.ac.uk/projects/fastqc/"
+                        }
+                    ]
                 }
             ], 
             "requirements": [
@@ -2829,6 +2963,20 @@
                     "class": "InlineJavascriptRequirement"
                 }
             ], 
+            "hints": [
+                {
+                    "class": "SoftwareRequirement", 
+                    "packages": [
+                        {
+                            "version": [
+                                "2.10.7"
+                            ], 
+                            "package": "picard", 
+                            "https://schema.org/citation": "http://broadinstitute.github.io/picard"
+                        }
+                    ]
+                }
+            ], 
             "inputs": [
                 {
                     "type": [
@@ -2903,6 +3051,20 @@
                 }, 
                 {
                     "class": "InlineJavascriptRequirement"
+                }
+            ], 
+            "hints": [
+                {
+                    "class": "SoftwareRequirement", 
+                    "packages": [
+                        {
+                            "version": [
+                                "2.10.7"
+                            ], 
+                            "package": "picard", 
+                            "https://schema.org/citation": "http://broadinstitute.github.io/picard"
+                        }
+                    ]
                 }
             ], 
             "inputs": [
@@ -2991,6 +3153,20 @@
                 }, 
                 {
                     "class": "InlineJavascriptRequirement"
+                }
+            ], 
+            "hints": [
+                {
+                    "class": "SoftwareRequirement", 
+                    "packages": [
+                        {
+                            "version": [
+                                "2.10.7"
+                            ], 
+                            "package": "picard", 
+                            "https://schema.org/citation": "http://broadinstitute.github.io/picard"
+                        }
+                    ]
                 }
             ], 
             "inputs": [
@@ -3094,6 +3270,20 @@
                     "class": "InlineJavascriptRequirement"
                 }
             ], 
+            "hints": [
+                {
+                    "class": "SoftwareRequirement", 
+                    "packages": [
+                        {
+                            "version": [
+                                "2.10.7"
+                            ], 
+                            "package": "picard", 
+                            "https://schema.org/citation": "http://broadinstitute.github.io/picard"
+                        }
+                    ]
+                }
+            ], 
             "inputs": [
                 {
                     "type": "File", 
@@ -3161,8 +3351,23 @@
             "class": "CommandLineTool", 
             "hints": [
                 {
-                    "class": "DockerRequirement", 
-                    "dockerPull": "dukegcb/trim-galore:0.4.4"
+                    "class": "SoftwareRequirement", 
+                    "packages": [
+                        {
+                            "version": [
+                                "1.14"
+                            ], 
+                            "package": "cutadapt", 
+                            "https://schema.org/citation": "https://dx.doi.org/10.14806/ej.17.1.200"
+                        }, 
+                        {
+                            "version": [
+                                "0.4.4"
+                            ], 
+                            "package": "trimgalore", 
+                            "https://schema.org/citation": "https://www.bioinformatics.babraham.ac.uk/projects/trim_galore/"
+                        }
+                    ]
                 }
             ], 
             "inputs": [

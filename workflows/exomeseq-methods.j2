@@ -1,0 +1,15 @@
+# Methods:
+
+DNA-Seq data was processed using the TrimGalore toolkit¹ (v{{ trimgalore.version }}),
+which employs Cutadapt² (v{{ cutadapt.version }})
+to trim low quality bases and Illumina sequencing adapters from the 3' end of the reads.
+Reads were aligned to the b37 version of the human genome with the BWA3³ algorithm (v{{ bwa.version }})
+Alignment processing and variant calling were performed using the GATK⁴ toolkit (v{{ gatk.version }})
+following the Broad Institute's Best Practices Workflow⁵ (July 2017).
+
+# References:
+1. {{ trimgalore.citation }}
+2. {{ cutadapt.citation }}
+3. {{ bwa.citation }}
+4. {{ gatk.citation }}
+5. Van der Auwera, G.A. From fastq data to high-confidence variant calls: The Genome Analaysis Toolkit best practices pipeline.  Current Prot. In Bioinf. 43, 11.10.1-33 (2013)

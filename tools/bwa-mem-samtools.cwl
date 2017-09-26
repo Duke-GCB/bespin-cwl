@@ -8,6 +8,15 @@ requirements:
 - class: DockerRequirement
   dockerPull: 'dukegcb/bwa-samtools:0.7.12_1.2.1-254-6462e34'
 - class: InlineJavascriptRequirement
+hints:
+- class: SoftwareRequirement
+  packages:
+      bwa:
+          version: [ "0.7.12" ]
+          s:citation: https://dx.doi.org/10.1093/bioinformatics/btp324
+      samtools:
+          version: [ "1.2-242-g4d56437" ]
+          s:citation: https://doi.org/10.1093/bioinformatics/btp352
 
 inputs:
   minimum_seed_length:
@@ -120,3 +129,8 @@ doc: |
 
   Note: Please read the man page for detailed description of the command line and options.
 
+$namespaces:
+  s: https://schema.org/
+
+$schemas:
+ - https://schema.org/docs/schema_org_rdfa.html

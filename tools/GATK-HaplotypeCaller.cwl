@@ -7,7 +7,12 @@ requirements:
 - $import: envvar-global.yml
 - class: DockerRequirement
   dockerPull: 'dukegcb/gatk-base:3'
-
+hints:
+- class: SoftwareRequirement
+  packages:
+      gatk:
+          version: [ "3.8" ]
+          s:citation: https://dx.doi.org/10.1038/ng.806
 
 inputs: # position 0, for java args, 1 for the jar, 2 for the tool itself
   GATKJar:
@@ -433,4 +438,8 @@ doc: |
   GATK-RealignTargetCreator.cwl is developed for CWL consortium
   Call germline SNPs and indels via local re-assembly of haplotypes
 
+$namespaces:
+  s: https://schema.org/
 
+$schemas:
+ - https://schema.org/docs/schema_org_rdfa.html
