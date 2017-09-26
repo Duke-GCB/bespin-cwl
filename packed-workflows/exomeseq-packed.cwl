@@ -2526,6 +2526,13 @@
                             ], 
                             "package": "bwa", 
                             "https://schema.org/citation": "https://dx.doi.org/10.1093/bioinformatics/btp324"
+                        }, 
+                        {
+                            "version": [
+                                "1.2-242-g4d56437"
+                            ], 
+                            "package": "samtools", 
+                            "https://schema.org/citation": "https://doi.org/10.1093/bioinformatics/btp352"
                         }
                     ]
                 }

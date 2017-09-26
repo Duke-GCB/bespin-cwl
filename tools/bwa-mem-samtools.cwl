@@ -14,6 +14,9 @@ hints:
       bwa:
           version: [ "0.7.12" ]
           s:citation: https://dx.doi.org/10.1093/bioinformatics/btp324
+      samtools:
+          version: [ "1.2-242-g4d56437" ]
+          s:citation: https://doi.org/10.1093/bioinformatics/btp352
 
 inputs:
   minimum_seed_length:
