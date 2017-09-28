@@ -3351,6 +3351,10 @@
             "class": "CommandLineTool", 
             "hints": [
                 {
+                    "class": "DockerRequirement", 
+                    "dockerPull": "dukegcb/trim-galore:0.4.4"
+                }, 
+                {
                     "class": "SoftwareRequirement", 
                     "packages": [
                         {
