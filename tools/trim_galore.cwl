@@ -5,9 +5,9 @@ class: CommandLineTool
 hints:
   - class: DockerRequirement
     dockerPull: 'dukegcb/trim-galore:0.4.4'
-hints:
-- class: SoftwareRequirement
-  packages:
+
+  - class: SoftwareRequirement
+    packages:
       trimgalore:
         version: [ "0.4.4" ]
         s:citation: https://www.bioinformatics.babraham.ac.uk/projects/trim_galore/
