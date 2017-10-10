@@ -240,7 +240,7 @@ steps:
     run: ../tools/GATK-HaplotypeCaller.cwl
     requirements:
       - class: ResourceRequirement
-        coresMin: 4
+        coresMin: 1
         ramMin: 16384
     in:
       GATKJar: GATKJar
@@ -248,8 +248,6 @@ steps:
       intervals: intervals
       interval_padding: interval_padding
       reference: reference_genome
-      cpu_threads:
-        default: 8
       group:
         default: ['StandardAnnotation','AS_StandardAnnotation']
       dbsnp: resource_dbsnp

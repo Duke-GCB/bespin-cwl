@@ -409,7 +409,6 @@ inputs: # position 0, for java args, 1 for the jar, 2 for the tool itself
   cpu_threads:
     type: int?
     doc: controls the number of CPU threads allocated to each data thread
-    default: 4 # Recommended by https://software.broadinstitute.org/gatk/documentation/article?id=1975
     inputBinding:
       position: 2
       prefix: -nct
