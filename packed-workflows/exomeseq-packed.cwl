@@ -1204,7 +1204,6 @@
                         "int"
                     ], 
                     "doc": "controls the number of CPU threads allocated to each data thread", 
-                    "default": 4, 
                     "inputBinding": {
                         "position": 2, 
                         "prefix": "-nct"
@@ -3943,7 +3942,7 @@
                     "requirements": [
                         {
                             "class": "ResourceRequirement", 
-                            "coresMin": 4, 
+                            "coresMin": 1, 
                             "ramMin": 16384
                         }
                     ], 
@@ -3955,10 +3954,6 @@
                         {
                             "source": "#exomeseq-01-preprocessing.cwl/generate_sample_filenames/haplotypes_bam_output_filename", 
                             "id": "#exomeseq-01-preprocessing.cwl/variant_calling/bamOutput"
-                        }, 
-                        {
-                            "default": 8, 
-                            "id": "#exomeseq-01-preprocessing.cwl/variant_calling/cpu_threads"
                         }, 
                         {
                             "source": "#exomeseq-01-preprocessing.cwl/resource_dbsnp", 
