@@ -1,14 +1,5 @@
 class: SchemaDefRequirement
 types:
-  - name: NamedFilePairType
-    type: record
-    fields:
-      - name: name
-        type: string
-      - name: file1
-        type: File
-      - name: file2
-        type: File
   - name: NamedFASTQFilePairType
     type: record
     fields:

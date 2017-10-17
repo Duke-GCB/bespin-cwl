@@ -9,7 +9,7 @@ requirements:
 inputs:
   # Named read pairs in FASTQ format
   read_pair:
-      type: ../types/bespin-types.yml#NamedFilePairType
+      type: ../types/bespin-types.yml#NamedFASTQFilePairType
 outputs:
   reads:
     type: File[]

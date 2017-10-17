@@ -16,7 +16,7 @@ inputs:
   interval_padding: int?
   # Named read pairs in FASTQ format
   read_pairs:
-      type: ../types/bespin-types.yml#NamedFilePairType[]
+      type: ../types/bespin-types.yml#NamedFASTQFilePairType[]
   # reference genome, fasta
   reference_genome:
     type: File

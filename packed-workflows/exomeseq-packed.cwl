@@ -2792,19 +2792,19 @@
                     "class": "SchemaDefRequirement", 
                     "types": [
                         {
-                            "name": "#bespin-types.yml/NamedFilePairType", 
+                            "name": "#bespin-types.yml/NamedFASTQFilePairType", 
                             "type": "record", 
                             "fields": [
                                 {
-                                    "name": "#bespin-types.yml/NamedFilePairType/name", 
+                                    "name": "#bespin-types.yml/NamedFASTQFilePairType/name", 
                                     "type": "string"
                                 }, 
                                 {
-                                    "name": "#bespin-types.yml/NamedFilePairType/file1", 
+                                    "name": "#bespin-types.yml/NamedFASTQFilePairType/file1", 
                                     "type": "File"
                                 }, 
                                 {
-                                    "name": "#bespin-types.yml/NamedFilePairType/file2", 
+                                    "name": "#bespin-types.yml/NamedFASTQFilePairType/file2", 
                                     "type": "File"
                                 }
                             ]
@@ -2816,7 +2816,7 @@
             ], 
             "inputs": [
                 {
-                    "type": "#bespin-types.yml/NamedFilePairType", 
+                    "type": "#bespin-types.yml/NamedFASTQFilePairType", 
                     "id": "#flatten-named-file-pair.cwl/read_pair"
                 }
             ], 
@@ -3544,7 +3544,7 @@
                     "id": "#exomeseq-01-preprocessing.cwl/primary_intervals"
                 }, 
                 {
-                    "type": "#bespin-types.yml/NamedFilePairType", 
+                    "type": "#bespin-types.yml/NamedFASTQFilePairType", 
                     "id": "#exomeseq-01-preprocessing.cwl/read_pair"
                 }, 
                 {
@@ -4756,7 +4756,7 @@
                 {
                     "type": {
                         "type": "array", 
-                        "items": "#bespin-types.yml/NamedFilePairType"
+                        "items": "#bespin-types.yml/NamedFASTQFilePairType"
                     }, 
                     "id": "#main/read_pairs"
                 }, 

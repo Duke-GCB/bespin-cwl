@@ -16,7 +16,7 @@ inputs:
   # NOTE: Broad recommends the illumina basecalls and converts to unmapped SAM
   #   but do we typically have fastq?
   read_pair:
-    type: ../types/bespin-types.yml#NamedFilePairType
+    type: ../types/bespin-types.yml#NamedFASTQFilePairType
   # reference genome, fasta
   # NOTE: GATK can't handle compressed fasta reference genome
   # NOTE: is b37 appropriate to use?
