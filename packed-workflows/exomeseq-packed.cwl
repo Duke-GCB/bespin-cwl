@@ -2783,7 +2783,7 @@
         }, 
         {
             "class": "ExpressionTool", 
-            "label": "Extracts", 
+            "label": "Given a NamedFASTQFilePairType returns an array of the files contained within", 
             "requirements": [
                 {
                     "class": "InlineJavascriptRequirement"
