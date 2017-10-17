@@ -35,16 +35,17 @@
     }
   ],
   "read_pairs": [
-    [
-      {
+    {
+      "name": "SRR099967",
+      "file1": {
         "class": "File",
         "path": "/home/ubuntu/exome-seq/SRR099967/SRR099967_1.fastq.gz"
       },
-      {
+      "file2": {
         "class": "File",
         "path": "/home/ubuntu/exome-seq/SRR099967/SRR099967_2.fastq.gz"
       }
-    ]
+    }
   ],
   "library": "testproj",
   "platform": "Illumina",

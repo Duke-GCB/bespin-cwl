@@ -7,16 +7,16 @@ doc: |
 requirements:
   - class: ScatterFeatureRequirement
   - class: SubworkflowFeatureRequirement
+  - $import: ../types/bespin-types.yml
 inputs:
   # Intervals should come from capture kit (target intervals) bed format
   intervals: File[]?
   # Intervals should come from capture kit (bait intervals) bed format
   primary_intervals: File[]?
   interval_padding: int?
-  # Read pairs, fastq format
+  # Named read pairs in FASTQ format
   read_pairs:
-      type: { type: array, items: { type: array, items: File }}
-      format: http://edamontology.org/format_1930 # FASTQ format
+      type: ../types/bespin-types.yml#NamedFilePairType[]
   # reference genome, fasta
   reference_genome:
     type: File
@@ -70,32 +70,14 @@ outputs:
   fastqc_reports_dir:
     type: Directory
     outputSource: organize_directories/fastqc_reports_dir
-  trim_reports_dir:
-    type: Directory
-    outputSource: organize_directories/trim_reports_dir
-  raw_variants_dir:
-    type: Directory
-    outputSource: organize_directories/raw_variants_dir
-  hs_metrics_dir:
-    type: Directory
-    outputSource: organize_directories/hs_metrics_dir
-  bams_markduplicates_dir:
-    type: Directory
-    outputSource: organize_directories/bams_markduplicates_dir
-    doc: "BAM and bai files from markduplicates"
-  bams_final_dir:
-    type: Directory
-    outputSource: organize_directories/bams_final_dir
-    doc: "BAM files containing assembled haplotypes and locally realigned reads"
-  joint_raw_variants:
-    type: File
-    outputSource: variant_discovery/joint_raw_variants
-    doc: "GVCF file from joint genotyping calling"
-  filtered_recalibrated_variants:
-    type: File
-    outputSource: variant_discovery/variant_recalibration_snps_indels_vcf
-    doc: "The output filtered and recalibrated VCF file in which each variant is annotated with its VQSLOD value"
 steps:
+  flatten_read_pairs:
+    run: ../tools/flatten-named-file-pairs.cwl
+    in:
+       read_pairs: read_pairs
+    out:
+       - reads
+       - sample_names
   preprocessing:
     run: exomeseq-01-preprocessing.cwl
     scatter: reads
@@ -103,7 +85,7 @@ steps:
       intervals: intervals
       primary_intervals: primary_intervals
       interval_padding: interval_padding
-      reads: read_pairs
+      reads: flatten_read_pairs/reads
       reference_genome: reference_genome
       threads: threads
       library: library

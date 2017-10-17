@@ -2783,6 +2783,70 @@
         }, 
         {
             "class": "ExpressionTool", 
+            "label": "Extracts", 
+            "requirements": [
+                {
+                    "class": "InlineJavascriptRequirement"
+                }, 
+                {
+                    "class": "SchemaDefRequirement", 
+                    "types": [
+                        {
+                            "name": "#bespin-types.yml/NamedFilePairType", 
+                            "type": "record", 
+                            "fields": [
+                                {
+                                    "name": "#bespin-types.yml/NamedFilePairType/name", 
+                                    "type": "string"
+                                }, 
+                                {
+                                    "name": "#bespin-types.yml/NamedFilePairType/file1", 
+                                    "type": "File"
+                                }, 
+                                {
+                                    "name": "#bespin-types.yml/NamedFilePairType/file2", 
+                                    "type": "File"
+                                }
+                            ]
+                        }
+                    ], 
+                    "id": "#bespin-types.yml", 
+                    "name": "#bespin-types.yml"
+                }
+            ], 
+            "inputs": [
+                {
+                    "type": {
+                        "type": "array", 
+                        "items": "#bespin-types.yml/NamedFilePairType"
+                    }, 
+                    "id": "#flatten-named-file-pairs.cwl/read_pairs"
+                }
+            ], 
+            "outputs": [
+                {
+                    "type": {
+                        "type": "array", 
+                        "items": {
+                            "type": "array", 
+                            "items": "File"
+                        }
+                    }, 
+                    "id": "#flatten-named-file-pairs.cwl/reads"
+                }, 
+                {
+                    "type": {
+                        "type": "array", 
+                        "items": "string"
+                    }, 
+                    "id": "#flatten-named-file-pairs.cwl/sample_names"
+                }
+            ], 
+            "expression": "${\n  var read_pairs = inputs.read_pairs\n  var reads = [];\n  var sample_names = [];\n  for (var i=0;i<read_pairs.length;i++) {\n    var samples_files = [];\n    //for each read add the file and sample name to output arrays\n    sample_names.push(read_pairs[i].name);\n    samples_files.push(read_pairs[i].file1);\n\n    sample_names.push(read_pairs[i].name);\n    samples_files.push(read_pairs[i].file2);\n    reads.push(samples_files);\n  }\n  return {\n    reads: reads,\n    sample_names: sample_names\n  };\n}\n", 
+            "id": "#flatten-named-file-pairs.cwl"
+        }, 
+        {
+            "class": "ExpressionTool", 
             "label": "Generates a set of file names for joint steps based on an input name", 
             "requirements": [
                 {
@@ -4617,6 +4681,9 @@
                 }, 
                 {
                     "class": "SubworkflowFeatureRequirement"
+                }, 
+                {
+                    "$import": "#bespin-types.yml"
                 }
             ], 
             "inputs": [
@@ -4689,12 +4756,8 @@
                 {
                     "type": {
                         "type": "array", 
-                        "items": {
-                            "type": "array", 
-                            "items": "File"
-                        }
+                        "items": "#bespin-types.yml/NamedFilePairType"
                     }, 
-                    "format": "http://edamontology.org/format_1930", 
                     "id": "#main/read_pairs"
                 }, 
                 {
@@ -4749,50 +4812,25 @@
             "outputs": [
                 {
                     "type": "Directory", 
-                    "outputSource": "#main/organize_directories/bams_final_dir", 
-                    "doc": "BAM files containing assembled haplotypes and locally realigned reads", 
-                    "id": "#main/bams_final_dir"
-                }, 
-                {
-                    "type": "Directory", 
-                    "outputSource": "#main/organize_directories/bams_markduplicates_dir", 
-                    "doc": "BAM and bai files from markduplicates", 
-                    "id": "#main/bams_markduplicates_dir"
-                }, 
-                {
-                    "type": "Directory", 
                     "outputSource": "#main/organize_directories/fastqc_reports_dir", 
                     "id": "#main/fastqc_reports_dir"
-                }, 
-                {
-                    "type": "File", 
-                    "outputSource": "#main/variant_discovery/variant_recalibration_snps_indels_vcf", 
-                    "doc": "The output filtered and recalibrated VCF file in which each variant is annotated with its VQSLOD value", 
-                    "id": "#main/filtered_recalibrated_variants"
-                }, 
-                {
-                    "type": "Directory", 
-                    "outputSource": "#main/organize_directories/hs_metrics_dir", 
-                    "id": "#main/hs_metrics_dir"
-                }, 
-                {
-                    "type": "File", 
-                    "outputSource": "#main/variant_discovery/joint_raw_variants", 
-                    "doc": "GVCF file from joint genotyping calling", 
-                    "id": "#main/joint_raw_variants"
-                }, 
-                {
-                    "type": "Directory", 
-                    "outputSource": "#main/organize_directories/raw_variants_dir", 
-                    "id": "#main/raw_variants_dir"
-                }, 
-                {
-                    "type": "Directory", 
-                    "outputSource": "#main/organize_directories/trim_reports_dir", 
-                    "id": "#main/trim_reports_dir"
                 }
             ], 
             "steps": [
+                {
+                    "run": "#flatten-named-file-pairs.cwl", 
+                    "in": [
+                        {
+                            "source": "#main/read_pairs", 
+                            "id": "#main/flatten_read_pairs/read_pairs"
+                        }
+                    ], 
+                    "out": [
+                        "#main/flatten_read_pairs/reads", 
+                        "#main/flatten_read_pairs/sample_names"
+                    ], 
+                    "id": "#main/flatten_read_pairs"
+                }, 
                 {
                     "run": "#exomeseq-03-organizedirectories.cwl", 
                     "in": [
@@ -4868,7 +4906,7 @@
                             "id": "#main/preprocessing/primary_intervals"
                         }, 
                         {
-                            "source": "#main/read_pairs", 
+                            "source": "#main/flatten_read_pairs/reads", 
                             "id": "#main/preprocessing/reads"
                         }, 
                         {
