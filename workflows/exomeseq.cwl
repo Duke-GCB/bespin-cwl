@@ -71,21 +71,14 @@ outputs:
     type: Directory
     outputSource: organize_directories/fastqc_reports_dir
 steps:
-  flatten_read_pairs:
-    run: ../tools/flatten-named-file-pairs.cwl
-    in:
-       read_pairs: read_pairs
-    out:
-       - reads
-       - sample_names
   preprocessing:
     run: exomeseq-01-preprocessing.cwl
-    scatter: reads
+    scatter: read_pair
     in:
       intervals: intervals
       primary_intervals: primary_intervals
       interval_padding: interval_padding
-      reads: flatten_read_pairs/reads
+      read_pair: read_pairs
       reference_genome: reference_genome
       threads: threads
       library: library

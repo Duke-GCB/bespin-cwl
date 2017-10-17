@@ -4,6 +4,7 @@ cwlVersion: v1.0
 class: Workflow
 requirements:
   - class: ScatterFeatureRequirement
+  - $import: ../types/bespin-types.yml
 inputs:
   # NOTE: How long is this expected to take?
   # Intervals should come from capture kit (target intervals) bed format
@@ -14,7 +15,8 @@ inputs:
   # Read samples, fastq format
   # NOTE: Broad recommends the illumina basecalls and converts to unmapped SAM
   #   but do we typically have fastq?
-  reads: File[]
+  read_pair:
+    type: ../types/bespin-types.yml#NamedFilePairType
   # reference genome, fasta
   # NOTE: GATK can't handle compressed fasta reference genome
   # NOTE: is b37 appropriate to use?
@@ -65,6 +67,12 @@ outputs:
     doc: "BAM file containing assembled haplotypes and locally realigned reads"
 
 steps:
+  flatten_read_pair:
+    run: ../tools/flatten-named-file-pair.cwl
+    in:
+       read_pair: read_pair
+    out:
+       - reads
   qc:
     run: ../tools/fastqc.cwl
     requirements:
@@ -73,7 +81,7 @@ steps:
         ramMin: 2500
     scatter: input_fastq_file
     in:
-      input_fastq_file: reads
+      input_fastq_file: flatten_read_pair/reads
       threads: threads
     out:
       - output_qc_report
@@ -84,7 +92,7 @@ steps:
         coresMin: 4
         ramMin: 8000
     in:
-      reads: reads
+      reads: flatten_read_pair/reads
       paired:
         default: true
     out:
@@ -93,7 +101,7 @@ steps:
   parse_read_group_header:
     run: ../tools/parse-read-group-header.cwl
     in:
-      reads: reads
+      reads: flatten_read_pair/reads
       field_order: field_order
       library: library
       platform: platform

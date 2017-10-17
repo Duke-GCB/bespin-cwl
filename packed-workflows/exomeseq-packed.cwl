@@ -2816,34 +2816,21 @@
             ], 
             "inputs": [
                 {
-                    "type": {
-                        "type": "array", 
-                        "items": "#bespin-types.yml/NamedFilePairType"
-                    }, 
-                    "id": "#flatten-named-file-pairs.cwl/read_pairs"
+                    "type": "#bespin-types.yml/NamedFilePairType", 
+                    "id": "#flatten-named-file-pair.cwl/read_pair"
                 }
             ], 
             "outputs": [
                 {
                     "type": {
                         "type": "array", 
-                        "items": {
-                            "type": "array", 
-                            "items": "File"
-                        }
+                        "items": "File"
                     }, 
-                    "id": "#flatten-named-file-pairs.cwl/reads"
-                }, 
-                {
-                    "type": {
-                        "type": "array", 
-                        "items": "string"
-                    }, 
-                    "id": "#flatten-named-file-pairs.cwl/sample_names"
+                    "id": "#flatten-named-file-pair.cwl/reads"
                 }
             ], 
-            "expression": "${\n  var read_pairs = inputs.read_pairs\n  var reads = [];\n  var sample_names = [];\n  for (var i=0;i<read_pairs.length;i++) {\n    var samples_files = [];\n    //for each read add the file and sample name to output arrays\n    sample_names.push(read_pairs[i].name);\n    samples_files.push(read_pairs[i].file1);\n\n    sample_names.push(read_pairs[i].name);\n    samples_files.push(read_pairs[i].file2);\n    reads.push(samples_files);\n  }\n  return {\n    reads: reads,\n    sample_names: sample_names\n  };\n}\n", 
-            "id": "#flatten-named-file-pairs.cwl"
+            "expression": "${\n  return {\n    reads: [\n      inputs.read_pair.file1,\n      inputs.read_pair.file2,\n    ]\n  };\n}\n", 
+            "id": "#flatten-named-file-pair.cwl"
         }, 
         {
             "class": "ExpressionTool", 
@@ -3494,6 +3481,9 @@
             "requirements": [
                 {
                     "class": "ScatterFeatureRequirement"
+                }, 
+                {
+                    "$import": "#bespin-types.yml"
                 }
             ], 
             "inputs": [
@@ -3554,11 +3544,8 @@
                     "id": "#exomeseq-01-preprocessing.cwl/primary_intervals"
                 }, 
                 {
-                    "type": {
-                        "type": "array", 
-                        "items": "File"
-                    }, 
-                    "id": "#exomeseq-01-preprocessing.cwl/reads"
+                    "type": "#bespin-types.yml/NamedFilePairType", 
+                    "id": "#exomeseq-01-preprocessing.cwl/read_pair"
                 }, 
                 {
                     "type": "File", 
@@ -3664,6 +3651,19 @@
                         "#exomeseq-01-preprocessing.cwl/collect_hs_metrics/output_hs_metrics_file"
                     ], 
                     "id": "#exomeseq-01-preprocessing.cwl/collect_hs_metrics"
+                }, 
+                {
+                    "run": "#flatten-named-file-pair.cwl", 
+                    "in": [
+                        {
+                            "source": "#exomeseq-01-preprocessing.cwl/read_pair", 
+                            "id": "#exomeseq-01-preprocessing.cwl/flatten_read_pair/read_pair"
+                        }
+                    ], 
+                    "out": [
+                        "#exomeseq-01-preprocessing.cwl/flatten_read_pair/reads"
+                    ], 
+                    "id": "#exomeseq-01-preprocessing.cwl/flatten_read_pair"
                 }, 
                 {
                     "run": "#generate-sample-filenames.cwl", 
@@ -3823,7 +3823,7 @@
                             "id": "#exomeseq-01-preprocessing.cwl/parse_read_group_header/platform"
                         }, 
                         {
-                            "source": "#exomeseq-01-preprocessing.cwl/reads", 
+                            "source": "#exomeseq-01-preprocessing.cwl/flatten_read_pair/reads", 
                             "id": "#exomeseq-01-preprocessing.cwl/parse_read_group_header/reads"
                         }
                     ], 
@@ -3845,7 +3845,7 @@
                     "scatter": "#exomeseq-01-preprocessing.cwl/qc/input_fastq_file", 
                     "in": [
                         {
-                            "source": "#exomeseq-01-preprocessing.cwl/reads", 
+                            "source": "#exomeseq-01-preprocessing.cwl/flatten_read_pair/reads", 
                             "id": "#exomeseq-01-preprocessing.cwl/qc/input_fastq_file"
                         }, 
                         {
@@ -3991,7 +3991,7 @@
                             "id": "#exomeseq-01-preprocessing.cwl/trim/paired"
                         }, 
                         {
-                            "source": "#exomeseq-01-preprocessing.cwl/reads", 
+                            "source": "#exomeseq-01-preprocessing.cwl/flatten_read_pair/reads", 
                             "id": "#exomeseq-01-preprocessing.cwl/trim/reads"
                         }
                     ], 
@@ -4818,20 +4818,6 @@
             ], 
             "steps": [
                 {
-                    "run": "#flatten-named-file-pairs.cwl", 
-                    "in": [
-                        {
-                            "source": "#main/read_pairs", 
-                            "id": "#main/flatten_read_pairs/read_pairs"
-                        }
-                    ], 
-                    "out": [
-                        "#main/flatten_read_pairs/reads", 
-                        "#main/flatten_read_pairs/sample_names"
-                    ], 
-                    "id": "#main/flatten_read_pairs"
-                }, 
-                {
                     "run": "#exomeseq-03-organizedirectories.cwl", 
                     "in": [
                         {
@@ -4871,7 +4857,7 @@
                 }, 
                 {
                     "run": "#exomeseq-01-preprocessing.cwl", 
-                    "scatter": "#main/preprocessing/reads", 
+                    "scatter": "#main/preprocessing/read_pair", 
                     "in": [
                         {
                             "source": "#main/GATKJar", 
@@ -4906,8 +4892,8 @@
                             "id": "#main/preprocessing/primary_intervals"
                         }, 
                         {
-                            "source": "#main/flatten_read_pairs/reads", 
-                            "id": "#main/preprocessing/reads"
+                            "source": "#main/read_pairs", 
+                            "id": "#main/preprocessing/read_pair"
                         }, 
                         {
                             "source": "#main/reference_genome", 
