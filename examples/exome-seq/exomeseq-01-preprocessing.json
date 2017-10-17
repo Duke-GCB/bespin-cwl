@@ -27,17 +27,18 @@
   ],
   "library": "testproj",
   "platform": "Illumina",
-  "field_order": ["sample", "read"],
-  "reads": [
-    {
+  "read_pair":
+  {
+    "name": "SRR099967",
+    "file1": {
       "class": "File",
       "path": "/home/ubuntu/exome-seq/SRR099967/SRR099967_1.fastq.gz"
     },
-    {
+    "file2": {
       "class": "File",
       "path": "/home/ubuntu/exome-seq/SRR099967/SRR099967_2.fastq.gz"
     }
-  ],
+  },
   "reference_genome": {
     "class": "File",
     "path": "/home/ubuntu/data/b37/human_g1k_v37.fasta"
