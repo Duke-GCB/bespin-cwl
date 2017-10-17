@@ -35,7 +35,6 @@ inputs:
   library: string
   # e.g. Illumina
   platform: string
-  field_order: string[]?
   # GATK
   GATKJar:
     type: File
@@ -83,7 +82,6 @@ steps:
       threads: threads
       library: library
       platform: platform
-      field_order: field_order
       GATKJar: GATKJar
       knownSites: knownSites
       resource_dbsnp: resource_dbsnp

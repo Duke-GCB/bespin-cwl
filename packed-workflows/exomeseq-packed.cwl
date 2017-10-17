@@ -2634,6 +2634,73 @@
             "id": "#bwa-mem-samtools.cwl"
         }, 
         {
+            "class": "ExpressionTool", 
+            "label": "Given a NamedFASTQFilePairType returns an array of the files contained within", 
+            "requirements": [
+                {
+                    "class": "InlineJavascriptRequirement"
+                }, 
+                {
+                    "class": "SchemaDefRequirement", 
+                    "types": [
+                        {
+                            "name": "#bespin-types.yml/NamedFASTQFilePairType", 
+                            "type": "record", 
+                            "fields": [
+                                {
+                                    "name": "#bespin-types.yml/NamedFASTQFilePairType/name", 
+                                    "type": "string"
+                                }, 
+                                {
+                                    "name": "#bespin-types.yml/NamedFASTQFilePairType/file1", 
+                                    "type": "File"
+                                }, 
+                                {
+                                    "name": "#bespin-types.yml/NamedFASTQFilePairType/file2", 
+                                    "type": "File"
+                                }
+                            ]
+                        }
+                    ], 
+                    "id": "#bespin-types.yml", 
+                    "name": "#bespin-types.yml"
+                }
+            ], 
+            "inputs": [
+                {
+                    "type": "string", 
+                    "id": "#extract-named-file-pair-details.cwl/library"
+                }, 
+                {
+                    "type": "string", 
+                    "id": "#extract-named-file-pair-details.cwl/platform"
+                }, 
+                {
+                    "type": "#bespin-types.yml/NamedFASTQFilePairType", 
+                    "id": "#extract-named-file-pair-details.cwl/read_pair"
+                }
+            ], 
+            "outputs": [
+                {
+                    "type": "string", 
+                    "id": "#extract-named-file-pair-details.cwl/read_group_header"
+                }, 
+                {
+                    "type": "string", 
+                    "id": "#extract-named-file-pair-details.cwl/read_pair_name"
+                }, 
+                {
+                    "type": {
+                        "type": "array", 
+                        "items": "File"
+                    }, 
+                    "id": "#extract-named-file-pair-details.cwl/reads"
+                }
+            ], 
+            "expression": "${\n  var readPairName = inputs.read_pair.name;\n  var readGroupHeader = \"@RG\" +\n    \"\\\\tID:\" + readPairName +\n    \"\\\\tLB:\" + inputs.library +\n    \"\\\\tPL:\" + inputs.platform +\n    \"\\\\tPU:\" + readPairName +\n    \"\\\\tSM:\" + readPairName;\n  return {\n    reads: [\n      inputs.read_pair.file1,\n      inputs.read_pair.file2,\n    ],\n    read_pair_name: readPairName,\n    read_group_header: readGroupHeader\n  };\n\n}\n", 
+            "id": "#extract-named-file-pair-details.cwl"
+        }, 
+        {
             "class": "CommandLineTool", 
             "hints": [
                 {
@@ -2783,57 +2850,6 @@
         }, 
         {
             "class": "ExpressionTool", 
-            "label": "Given a NamedFASTQFilePairType returns an array of the files contained within", 
-            "requirements": [
-                {
-                    "class": "InlineJavascriptRequirement"
-                }, 
-                {
-                    "class": "SchemaDefRequirement", 
-                    "types": [
-                        {
-                            "name": "#bespin-types.yml/NamedFASTQFilePairType", 
-                            "type": "record", 
-                            "fields": [
-                                {
-                                    "name": "#bespin-types.yml/NamedFASTQFilePairType/name", 
-                                    "type": "string"
-                                }, 
-                                {
-                                    "name": "#bespin-types.yml/NamedFASTQFilePairType/file1", 
-                                    "type": "File"
-                                }, 
-                                {
-                                    "name": "#bespin-types.yml/NamedFASTQFilePairType/file2", 
-                                    "type": "File"
-                                }
-                            ]
-                        }
-                    ], 
-                    "id": "#bespin-types.yml", 
-                    "name": "#bespin-types.yml"
-                }
-            ], 
-            "inputs": [
-                {
-                    "type": "#bespin-types.yml/NamedFASTQFilePairType", 
-                    "id": "#flatten-named-file-pair.cwl/read_pair"
-                }
-            ], 
-            "outputs": [
-                {
-                    "type": {
-                        "type": "array", 
-                        "items": "File"
-                    }, 
-                    "id": "#flatten-named-file-pair.cwl/reads"
-                }
-            ], 
-            "expression": "${\n  return {\n    reads: [\n      inputs.read_pair.file1,\n      inputs.read_pair.file2,\n    ]\n  };\n}\n", 
-            "id": "#flatten-named-file-pair.cwl"
-        }, 
-        {
-            "class": "ExpressionTool", 
             "label": "Generates a set of file names for joint steps based on an input name", 
             "requirements": [
                 {
@@ -2941,66 +2957,6 @@
             ], 
             "expression": "${\n  function makeFilename(base, suffix, extension) {\n    return base + '-' + suffix + '.' + extension;\n  }\n  var base = inputs.sample_name\n\n  return {\n    mapped_reads_output_filename: makeFilename(base, 'mapped', 'bam'),\n    sorted_reads_output_filename: makeFilename(base, 'sorted', 'bam'),\n    dedup_reads_output_filename: makeFilename(base, 'dedup', 'bam'),\n    dedup_metrics_output_filename: makeFilename(base, 'dedup-metrics', 'out'),\n    recal_reads_output_filename: makeFilename(base, 'recal', 'bam'),\n    recal_table_output_filename: makeFilename(base, 'recal', 'table'),\n    raw_variants_output_filename: makeFilename(base, 'raw_variants', 'g.vcf'),\n    haplotypes_bam_output_filename:  makeFilename(base, 'haplotypes', 'bam'),\n    hs_metrics_output_filename: makeFilename(base, 'hs', 'txt')\n  };\n}\n", 
             "id": "#generate-sample-filenames.cwl"
-        }, 
-        {
-            "class": "ExpressionTool", 
-            "label": "Extracts a read group header from the first file name in an array of files", 
-            "requirements": [
-                {
-                    "class": "InlineJavascriptRequirement"
-                }
-            ], 
-            "inputs": [
-                {
-                    "type": [
-                        "null", 
-                        {
-                            "type": "array", 
-                            "items": "string"
-                        }
-                    ], 
-                    "default": [
-                        "sample", 
-                        "barcode", 
-                        "lane", 
-                        "read", 
-                        "part"
-                    ], 
-                    "id": "#parse-read-group-header.cwl/field_order"
-                }, 
-                {
-                    "type": "string", 
-                    "id": "#parse-read-group-header.cwl/library"
-                }, 
-                {
-                    "type": "string", 
-                    "id": "#parse-read-group-header.cwl/platform"
-                }, 
-                {
-                    "type": {
-                        "type": "array", 
-                        "items": "File"
-                    }, 
-                    "id": "#parse-read-group-header.cwl/reads"
-                }, 
-                {
-                    "type": "string", 
-                    "default": "_", 
-                    "id": "#parse-read-group-header.cwl/separator"
-                }
-            ], 
-            "outputs": [
-                {
-                    "type": "string", 
-                    "id": "#parse-read-group-header.cwl/read_group_header"
-                }, 
-                {
-                    "type": "string", 
-                    "id": "#parse-read-group-header.cwl/sample_name"
-                }
-            ], 
-            "expression": "${\n  // Returns the part of the filename before the extension\n  function removeExtension(name) {\n    return name.split('.')[0];\n  }\n\n  // Given an array of keys and values, creates an object mapping keys to values\n  function zip(keys, values) {\n    var object = {};\n    for (var i=0;i<keys.length;i++) {\n      object[keys[i]] = values[i]\n    }\n    return object;\n  }\n\n  // Split the string name on the separator\n  function splitFields(name, separator) {\n  \treturn name.split(separator);\n  }\n\n  // Makes a string with a read group header that can be provided to bwa as SAM metadata\n  function makeReadGroupsString(fields) {\n    \tvar readGroups = \"@RG\" +\n    \t  \"\\\\tID:\" + fields['sample'] +\n    \t  \"\\\\tLB:\" + fields['library'] +\n    \t  \"\\\\tPL:\" + fields['platform'] +\n    \t  \"\\\\tPU:\" + fields['sample'] +\n    \t  \"\\\\tSM:\" + fields['sample'];\n      return readGroups;\n  }\n\n  var filename = inputs.reads[0].basename;\n  var base = removeExtension(filename);\n  var components = splitFields(base, inputs.separator);\n  var fields = zip(inputs.field_order, components);\n  fields['library'] = inputs.library;\n  fields['platform'] = inputs.platform;\n  var read_group_header = makeReadGroupsString(fields);\n  return {\n    read_group_header: read_group_header,\n    sample_name: fields['sample']\n  };\n}\n", 
-            "id": "#parse-read-group-header.cwl"
         }, 
         {
             "class": "CommandLineTool", 
@@ -3494,16 +3450,6 @@
                 {
                     "type": [
                         "null", 
-                        {
-                            "type": "array", 
-                            "items": "string"
-                        }
-                    ], 
-                    "id": "#exomeseq-01-preprocessing.cwl/field_order"
-                }, 
-                {
-                    "type": [
-                        "null", 
                         "int"
                     ], 
                     "id": "#exomeseq-01-preprocessing.cwl/interval_padding"
@@ -3653,23 +3599,33 @@
                     "id": "#exomeseq-01-preprocessing.cwl/collect_hs_metrics"
                 }, 
                 {
-                    "run": "#flatten-named-file-pair.cwl", 
+                    "run": "#extract-named-file-pair-details.cwl", 
                     "in": [
                         {
+                            "source": "#exomeseq-01-preprocessing.cwl/library", 
+                            "id": "#exomeseq-01-preprocessing.cwl/file_pair_details/library"
+                        }, 
+                        {
+                            "source": "#exomeseq-01-preprocessing.cwl/platform", 
+                            "id": "#exomeseq-01-preprocessing.cwl/file_pair_details/platform"
+                        }, 
+                        {
                             "source": "#exomeseq-01-preprocessing.cwl/read_pair", 
-                            "id": "#exomeseq-01-preprocessing.cwl/flatten_read_pair/read_pair"
+                            "id": "#exomeseq-01-preprocessing.cwl/file_pair_details/read_pair"
                         }
                     ], 
                     "out": [
-                        "#exomeseq-01-preprocessing.cwl/flatten_read_pair/reads"
+                        "#exomeseq-01-preprocessing.cwl/file_pair_details/reads", 
+                        "#exomeseq-01-preprocessing.cwl/file_pair_details/read_pair_name", 
+                        "#exomeseq-01-preprocessing.cwl/file_pair_details/read_group_header"
                     ], 
-                    "id": "#exomeseq-01-preprocessing.cwl/flatten_read_pair"
+                    "id": "#exomeseq-01-preprocessing.cwl/file_pair_details"
                 }, 
                 {
                     "run": "#generate-sample-filenames.cwl", 
                     "in": [
                         {
-                            "source": "#exomeseq-01-preprocessing.cwl/parse_read_group_header/sample_name", 
+                            "source": "#exomeseq-01-preprocessing.cwl/file_pair_details/read_pair_name", 
                             "id": "#exomeseq-01-preprocessing.cwl/generate_sample_filenames/sample_name"
                         }
                     ], 
@@ -3755,7 +3711,7 @@
                             "id": "#exomeseq-01-preprocessing.cwl/map/output_filename"
                         }, 
                         {
-                            "source": "#exomeseq-01-preprocessing.cwl/parse_read_group_header/read_group_header", 
+                            "source": "#exomeseq-01-preprocessing.cwl/file_pair_details/read_group_header", 
                             "id": "#exomeseq-01-preprocessing.cwl/map/read_group_header"
                         }, 
                         {
@@ -3808,32 +3764,6 @@
                     "id": "#exomeseq-01-preprocessing.cwl/mark_duplicates"
                 }, 
                 {
-                    "run": "#parse-read-group-header.cwl", 
-                    "in": [
-                        {
-                            "source": "#exomeseq-01-preprocessing.cwl/field_order", 
-                            "id": "#exomeseq-01-preprocessing.cwl/parse_read_group_header/field_order"
-                        }, 
-                        {
-                            "source": "#exomeseq-01-preprocessing.cwl/library", 
-                            "id": "#exomeseq-01-preprocessing.cwl/parse_read_group_header/library"
-                        }, 
-                        {
-                            "source": "#exomeseq-01-preprocessing.cwl/platform", 
-                            "id": "#exomeseq-01-preprocessing.cwl/parse_read_group_header/platform"
-                        }, 
-                        {
-                            "source": "#exomeseq-01-preprocessing.cwl/flatten_read_pair/reads", 
-                            "id": "#exomeseq-01-preprocessing.cwl/parse_read_group_header/reads"
-                        }
-                    ], 
-                    "out": [
-                        "#exomeseq-01-preprocessing.cwl/parse_read_group_header/read_group_header", 
-                        "#exomeseq-01-preprocessing.cwl/parse_read_group_header/sample_name"
-                    ], 
-                    "id": "#exomeseq-01-preprocessing.cwl/parse_read_group_header"
-                }, 
-                {
                     "run": "#fastqc.cwl", 
                     "requirements": [
                         {
@@ -3845,7 +3775,7 @@
                     "scatter": "#exomeseq-01-preprocessing.cwl/qc/input_fastq_file", 
                     "in": [
                         {
-                            "source": "#exomeseq-01-preprocessing.cwl/flatten_read_pair/reads", 
+                            "source": "#exomeseq-01-preprocessing.cwl/file_pair_details/reads", 
                             "id": "#exomeseq-01-preprocessing.cwl/qc/input_fastq_file"
                         }, 
                         {
@@ -3991,7 +3921,7 @@
                             "id": "#exomeseq-01-preprocessing.cwl/trim/paired"
                         }, 
                         {
-                            "source": "#exomeseq-01-preprocessing.cwl/flatten_read_pair/reads", 
+                            "source": "#exomeseq-01-preprocessing.cwl/file_pair_details/reads", 
                             "id": "#exomeseq-01-preprocessing.cwl/trim/reads"
                         }
                     ], 
@@ -4692,16 +4622,6 @@
                     "id": "#main/GATKJar"
                 }, 
                 {
-                    "type": [
-                        "null", 
-                        {
-                            "type": "array", 
-                            "items": "string"
-                        }
-                    ], 
-                    "id": "#main/field_order"
-                }, 
-                {
                     "type": "File", 
                     "secondaryFiles": [
                         ".idx"
@@ -4862,10 +4782,6 @@
                         {
                             "source": "#main/GATKJar", 
                             "id": "#main/preprocessing/GATKJar"
-                        }, 
-                        {
-                            "source": "#main/field_order", 
-                            "id": "#main/preprocessing/field_order"
                         }, 
                         {
                             "source": "#main/interval_padding", 
