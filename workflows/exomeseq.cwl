@@ -69,6 +69,31 @@ outputs:
   fastqc_reports_dir:
     type: Directory
     outputSource: organize_directories/fastqc_reports_dir
+  trim_reports_dir:
+    type: Directory
+    outputSource: organize_directories/trim_reports_dir
+  raw_variants_dir:
+    type: Directory
+    outputSource: organize_directories/raw_variants_dir
+  hs_metrics_dir:
+    type: Directory
+    outputSource: organize_directories/hs_metrics_dir
+  bams_markduplicates_dir:
+    type: Directory
+    outputSource: organize_directories/bams_markduplicates_dir
+    doc: "BAM and bai files from markduplicates"
+  bams_final_dir:
+    type: Directory
+    outputSource: organize_directories/bams_final_dir
+    doc: "BAM files containing assembled haplotypes and locally realigned reads"
+  joint_raw_variants:
+    type: File
+    outputSource: variant_discovery/joint_raw_variants
+    doc: "GVCF file from joint genotyping calling"
+  filtered_recalibrated_variants:
+    type: File
+    outputSource: variant_discovery/variant_recalibration_snps_indels_vcf
+    doc: "The output filtered and recalibrated VCF file in which each variant is annotated with its VQSLOD value"
 steps:
   preprocessing:
     run: exomeseq-01-preprocessing.cwl

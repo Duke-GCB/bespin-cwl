@@ -4732,8 +4732,47 @@
             "outputs": [
                 {
                     "type": "Directory", 
+                    "outputSource": "#main/organize_directories/bams_final_dir", 
+                    "doc": "BAM files containing assembled haplotypes and locally realigned reads", 
+                    "id": "#main/bams_final_dir"
+                }, 
+                {
+                    "type": "Directory", 
+                    "outputSource": "#main/organize_directories/bams_markduplicates_dir", 
+                    "doc": "BAM and bai files from markduplicates", 
+                    "id": "#main/bams_markduplicates_dir"
+                }, 
+                {
+                    "type": "Directory", 
                     "outputSource": "#main/organize_directories/fastqc_reports_dir", 
                     "id": "#main/fastqc_reports_dir"
+                }, 
+                {
+                    "type": "File", 
+                    "outputSource": "#main/variant_discovery/variant_recalibration_snps_indels_vcf", 
+                    "doc": "The output filtered and recalibrated VCF file in which each variant is annotated with its VQSLOD value", 
+                    "id": "#main/filtered_recalibrated_variants"
+                }, 
+                {
+                    "type": "Directory", 
+                    "outputSource": "#main/organize_directories/hs_metrics_dir", 
+                    "id": "#main/hs_metrics_dir"
+                }, 
+                {
+                    "type": "File", 
+                    "outputSource": "#main/variant_discovery/joint_raw_variants", 
+                    "doc": "GVCF file from joint genotyping calling", 
+                    "id": "#main/joint_raw_variants"
+                }, 
+                {
+                    "type": "Directory", 
+                    "outputSource": "#main/organize_directories/raw_variants_dir", 
+                    "id": "#main/raw_variants_dir"
+                }, 
+                {
+                    "type": "Directory", 
+                    "outputSource": "#main/organize_directories/trim_reports_dir", 
+                    "id": "#main/trim_reports_dir"
                 }
             ], 
             "steps": [
