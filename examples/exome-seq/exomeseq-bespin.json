@@ -36,7 +36,6 @@
   ],
   "library": "testproj",
   "platform": "Illumina",
-  "field_order": ["sample","read"],
   "reference_genome": {
     "class": "File",
     "path": "/data/exome-seq/b37/human_g1k_v37.fasta"
