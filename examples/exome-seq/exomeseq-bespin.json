@@ -34,7 +34,6 @@
       "path": "/data/exome-seq/b37/1000G_phase1.indels.b37.vcf"
     }
   ],
-  "library": "testproj",
   "platform": "Illumina",
   "reference_genome": {
     "class": "File",
