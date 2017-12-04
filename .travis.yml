@@ -2,7 +2,9 @@ language: python
 install:
 - pip install -r requirements.txt
 script:
-- "./scripts/build-packed-workflows.sh"
+- "./scripts/validate-workflows.sh"
+before_deploy:
+- "./scripts/pack-workflows.sh"
 deploy:
   provider: releases
   api_key:
