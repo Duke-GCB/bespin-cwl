@@ -1,0 +1,12 @@
+language: python
+install:
+- pip install -r requirements.txt
+script:
+- "./scripts/build-packed-workflows.sh"
+deploy:
+  provider: releases
+  api_key:
+    secure: G9tBPVNyXERd1sdqLROMqDD+437O3rYzWmEqFy/WeWu7Qkte6ujmoJ+PPrsLNnpIPDvYFd+5uv9MSyc+YMXs+5h6crjN9tRjkLyz1W5QI752bHSp3eP1QfG2ALJOGurMH9g7D/6uSR4gYoMbE1JXnmScQcfY3h2isafxUZIMordPhUgRx9UlnAbyBbnHQZz58GhY5GuZeyOqCqyvlo7KWqnh5+bH0IL5ER+88q8fwpzFSfWbLk99t/atVXVNhSrzijwktffB6zbj/rWKF/wmHkJYaMpdFHJNqcgcoFqojyuNoE3KpotuuXNcPIjhZMVJAKzPXPnQ0n/ZxlPvMaAC3wI2Uj52cBaKmA3gakJL7bJHUcyWx/GjZi8R0LhBpzYdpDkXiW9sL3dRnNVj2YmwRgJ3OEB9hH0Mi9QaexTEyaiQHATz4I5F6c4O2Qh+5FEGnv74QQj50LqV09WrwGHVADkQ0r0hwNsdePKJzxkELFs5pZWVKDP3h+hsG1uMQaYGkP7ZywJ0V+1S2bRlS4Wd7Kys1AWCubL7F6Uqss9zsAR7StJtp9lr38YaLs+CF+3Msa1kwX57UBCW0sLTcj/LpgS2nhD4toFRIkm2MislXSq2a5uAdPgqnc26tqtPQFwWULjvg06fp5VgxU/fhOmfT4VQG/KTIlG2fg4fzkiHN4I=
+  file: build/*
+  on:
+    tags: true
