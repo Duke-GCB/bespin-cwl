@@ -123,9 +123,8 @@ steps:
       # Please note that these recommendations are formulated for whole-genome datasets.
       # For exomes, we do not recommend using DP for variant recalibration (see below for details of why).
       annotations:
-        # The InbreedingCoeff is a population level statistic that requires at least 10 samples in order to be computed. For projects with fewer samples, or that includes many closely related samples (such as a family) please omit this annotation from the command line.
-        # NOTE: InbreedingCoeff would need to be annotated separately
-        default: ["QD","FS","MQ","SOR","MQRankSum","ReadPosRankSum","InbreedingCoeff"]
+        # 2017-12-04 - Removed InbreedingCoeff again. See #43
+        default: ["QD","FS","MQ","SOR","MQRankSum","ReadPosRankSum"]
     out:
       - tranches_File
       - recal_File
