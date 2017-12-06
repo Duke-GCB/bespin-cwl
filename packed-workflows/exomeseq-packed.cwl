@@ -4296,8 +4296,7 @@
                                 "FS", 
                                 "MQ", 
                                 "MQRankSum", 
-                                "ReadPosRankSum", 
-                                "InbreedingCoeff"
+                                "ReadPosRankSum"
                             ], 
                             "id": "#exomeseq-02-variantdiscovery.cwl/variant_recalibration_indels/annotations"
                         }, 
