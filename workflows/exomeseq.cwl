@@ -96,7 +96,7 @@ outputs:
     doc: "The output filtered and recalibrated VCF file in which each variant is annotated with its VQSLOD value"
 steps:
   preprocessing:
-    run: exomeseq-01-preprocessing.cwl
+    run: ../subworkflows/exomeseq-01-preprocessing.cwl
     scatter: read_pair
     in:
       intervals: intervals
@@ -120,7 +120,7 @@ steps:
       - haplotypes_bam
       - hs_metrics
   variant_discovery:
-    run: exomeseq-02-variantdiscovery.cwl
+    run: ../subworkflows/exomeseq-02-variantdiscovery.cwl
     in:
       name: library
       intervals: intervals
@@ -145,7 +145,7 @@ steps:
       - variant_recalibration_snps_indels_rscript
       - variant_recalibration_snps_indels_vcf
   organize_directories:
-    run: exomeseq-03-organizedirectories.cwl
+    run: ../subworkflows/exomeseq-03-organizedirectories.cwl
     in:
       fastqc_reports: preprocessing/fastqc_reports
       trim_reports: preprocessing/trim_reports
