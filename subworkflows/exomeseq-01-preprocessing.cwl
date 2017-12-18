@@ -4,6 +4,7 @@ cwlVersion: v1.0
 class: Workflow
 requirements:
   - class: ScatterFeatureRequirement
+  - $import: ../types/bespin-types.yml
 inputs:
   # NOTE: How long is this expected to take?
   # Intervals should come from capture kit in bed format
@@ -16,7 +17,8 @@ inputs:
   # Read samples, fastq format
   # NOTE: Broad recommends the illumina basecalls and converts to unmapped SAM
   #   but do we typically have fastq?
-  reads: File[]
+  read_pair:
+    type: ../types/bespin-types.yml#NamedFASTQFilePairType
   # reference genome, fasta
   # NOTE: GATK can't handle compressed fasta reference genome
   # NOTE: is b37 appropriate to use?
@@ -30,8 +32,6 @@ inputs:
   library: string
   # e.g. Illumina
   platform: string
-  # Must include "sample" at minimum
-  field_order: string[]?
   # GATK
   GATKJar: File
   knownSites: File[] # vcf files of known sites, with indexing
@@ -67,6 +67,16 @@ outputs:
     doc: "BAM file containing assembled haplotypes and locally realigned reads"
 
 steps:
+  file_pair_details:
+    run: ../tools/extract-named-file-pair-details.cwl
+    in:
+       read_pair: read_pair
+       library: library
+       platform: platform
+    out:
+       - reads
+       - read_pair_name
+       - read_group_header
   qc:
     run: ../tools/fastqc.cwl
     requirements:
@@ -75,7 +85,7 @@ steps:
         ramMin: 2500
     scatter: input_fastq_file
     in:
-      input_fastq_file: reads
+      input_fastq_file: file_pair_details/reads
       threads: threads
     out:
       - output_qc_report
@@ -86,26 +96,16 @@ steps:
         coresMin: 4
         ramMin: 8000
     in:
-      reads: reads
+      reads: file_pair_details/reads
       paired:
         default: true
     out:
       - trimmed_reads
       - trim_reports
-  parse_read_group_header:
-    run: ../tools/parse-read-group-header.cwl
-    in:
-      reads: reads
-      field_order: field_order
-      library: library
-      platform: platform
-    out:
-      - read_group_header
-      - sample_name
   generate_sample_filenames:
     run: ../tools/generate-sample-filenames.cwl
     in:
-      sample_name: parse_read_group_header/sample_name
+      sample_name: file_pair_details/read_pair_name
     out:
       - mapped_reads_output_filename
       - sorted_reads_output_filename
@@ -127,7 +127,7 @@ steps:
     in:
       reads: trim/trimmed_reads
       reference: reference_genome
-      read_group_header: parse_read_group_header/read_group_header
+      read_group_header: file_pair_details/read_group_header
       output_filename: generate_sample_filenames/mapped_reads_output_filename
       threads: threads
     out:
@@ -216,7 +216,7 @@ steps:
     run: ../tools/GATK-HaplotypeCaller.cwl
     requirements:
       - class: ResourceRequirement
-        coresMin: 4
+        coresMin: 1
         ramMin: 16384
     in:
       GATKJar: GATKJar
@@ -224,8 +224,6 @@ steps:
       intervals: intervals
       interval_padding: interval_padding
       reference: reference_genome
-      cpu_threads:
-        default: 8
       group:
         default: ['StandardAnnotation','AS_StandardAnnotation']
       dbsnp: resource_dbsnp

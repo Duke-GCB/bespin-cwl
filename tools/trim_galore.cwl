@@ -6,6 +6,15 @@ hints:
   - class: DockerRequirement
     dockerPull: 'dukegcb/trim-galore:0.4.4'
 
+  - class: SoftwareRequirement
+    packages:
+      trimgalore:
+        version: [ "0.4.4" ]
+        s:citation: https://www.bioinformatics.babraham.ac.uk/projects/trim_galore/
+      cutadapt:
+        version: [ "1.14" ]
+        s:citation: https://dx.doi.org/10.14806/ej.17.1.200
+
 inputs:
   paired:
     type: boolean
@@ -39,5 +48,8 @@ arguments:
     prefix: "-o"
     position: 2
 
+$namespaces:
+  s: https://schema.org/
 
-
+$schemas:
+ - https://schema.org/docs/schema_org_rdfa.html

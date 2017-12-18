@@ -7,16 +7,16 @@ doc: |
 requirements:
   - class: ScatterFeatureRequirement
   - class: SubworkflowFeatureRequirement
+  - $import: ../types/bespin-types.yml
 inputs:
   # Intervals should come from capture kit (target intervals) bed format
   intervals: File[]?
   # Intervals should come from capture kit (bait intervals) bed format
   primary_intervals: File[]?
   interval_padding: int?
-  # Read pairs, fastq format
+  # Named read pairs in FASTQ format
   read_pairs:
-      type: { type: array, items: { type: array, items: File }}
-      format: http://edamontology.org/format_1930 # FASTQ format
+      type: ../types/bespin-types.yml#NamedFASTQFilePairType[]
   # reference genome, fasta
   reference_genome:
     type: File
@@ -35,7 +35,6 @@ inputs:
   library: string
   # e.g. Illumina
   platform: string
-  field_order: string[]?
   # GATK
   GATKJar:
     type: File
@@ -106,20 +105,19 @@ steps:
       - target_interval_list
       - bait_interval_list
   preprocessing:
-    run: exomeseq-01-preprocessing.cwl
-    scatter: reads
+    run: ../subworkflows/exomeseq-01-preprocessing.cwl
+    scatter: read_pair
     in:
       intervals: intervals
       primary_intervals: primary_intervals
       target_interval_list: prepare_reference_data/target_interval_list
       bait_interval_list: prepare_reference_data/bait_interval_list
       interval_padding: interval_padding
-      reads: read_pairs
+      read_pair: read_pairs
       reference_genome: reference_genome
       threads: threads
       library: library
       platform: platform
-      field_order: field_order
       GATKJar: GATKJar
       knownSites: knownSites
       resource_dbsnp: resource_dbsnp
@@ -133,7 +131,7 @@ steps:
       - haplotypes_bam
       - hs_metrics
   variant_discovery:
-    run: exomeseq-02-variantdiscovery.cwl
+    run: ../subworkflows/exomeseq-02-variantdiscovery.cwl
     in:
       name: library
       intervals: intervals
@@ -158,7 +156,7 @@ steps:
       - variant_recalibration_snps_indels_rscript
       - variant_recalibration_snps_indels_vcf
   organize_directories:
-    run: exomeseq-03-organizedirectories.cwl
+    run: ../subworkflows/exomeseq-03-organizedirectories.cwl
     in:
       fastqc_reports: preprocessing/fastqc_reports
       trim_reports: preprocessing/trim_reports

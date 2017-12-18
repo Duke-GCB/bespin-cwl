@@ -9,6 +9,12 @@ requirements:
   dockerPull: dukegcb/picard:2.10.7
 - class: InlineJavascriptRequirement
 
+hints:
+- class: SoftwareRequirement
+  packages:
+      picard:
+        version: [ "2.10.7" ]
+        s:citation: http://broadinstitute.github.io/picard
 inputs:
   input_file:
     type: File
@@ -55,3 +61,8 @@ arguments:
 - valueFrom: CollectHsMetrics
   position: 0
 
+$namespaces:
+  s: https://schema.org/
+
+$schemas:
+ - https://schema.org/docs/schema_org_rdfa.html
