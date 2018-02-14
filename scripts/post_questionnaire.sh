@@ -10,8 +10,8 @@
 #   ./post_questionnaire.sh questionnaire.json
 
 [[ -z "$1" ]] && echo "Usage: $0 questionnaire.json" && exit 1
-[[ -z "$BESPIN_API_TOKEN" ]] && echo "Please set BESPIN_API_TOKEN to a valid token" && exit 1
-[[ -z "$BESPIN_API_HOST" ]] && echo "Please set BESPIN_API_HOST, e.g. https://bespin.genome.duke.edu" && exit 1
+[[ -z "$BESPIN_API_TOKEN" ]] && echo "Error: Please set BESPIN_API_TOKEN to a valid token" && exit 1
+[[ -z "$BESPIN_API_HOST" ]] && echo "Error: Please set BESPIN_API_HOST, e.g. https://bespin.genome.duke.edu" && exit 1
 
 curl \
   -H "Authorization: Token ${BESPIN_API_TOKEN}" \
