@@ -1,9 +1,9 @@
 {
   "cwl_url": "https://github.com/Duke-GCB/bespin-cwl/releases/download/v0.9.0/exomeseq.cwl",
-  "description": "WES Description",
+  "description": "Whole Exome sequencing following GATK best practices workflow. Germline SNP & Indel Discovery using b37 human genome assembly on samples sequenced with a SeqCap EZ Exome v3 capture kit.",
   "methods_template_url": "https://raw.githubusercontent.com/Duke-GCB/bespin-cwl/v0.9.0/workflows/exomeseq-methods.j2",
-  "name": "WES Questionnaire",
-  "share_group_name": "informatics",
+  "name": "Whole Exome Sequence analysis - Human b37",
+  "share_group_name": "Genomic Analysis",
   "system_json": {
     "GATKJar": {
       "class": "File",
@@ -65,7 +65,7 @@
   },
   "vm_flavor_name": "m1.xxlarge",
   "vm_settings_name": "bespin-prod",
-  "volume_size_base": 1000,
+  "volume_size_base": 3000,
   "volume_size_factor": 10,
-  "workflow_version_number": 9
+  "workflow_version_number": 3
 }
