@@ -7,10 +7,12 @@ requirements:
   - $import: ../types/bespin-types.yml
 inputs:
   # NOTE: How long is this expected to take?
-  # Intervals should come from capture kit (target intervals) bed format
+  # Intervals should come from capture kit in bed format
   intervals: File[]?
-  # Intervals should come from capture kit (bait intervals) bed format
-  primary_intervals: File[]?
+  # target intervals in picard interval_list format (created from intervals bed file)
+  target_interval_list: File
+  # bait intervals in picard interval_list format
+  bait_interval_list: File
   interval_padding: int?
   # Read samples, fastq format
   # NOTE: Broad recommends the illumina basecalls and converts to unmapped SAM
@@ -158,32 +160,6 @@ steps:
     out:
       - output_dedup_bam_file
       - output_metrics_file
-  make_target_interval_list:
-    run: ../tools/picard-BedToIntervalList.cwl
-    requirements:
-      - class: ResourceRequirement
-        coresMin: 1
-        ramMin: 4000
-        outdirMin: 12000
-        tmpdirMin: 12000
-    in:
-      input_file: intervals
-      reference_sequence: reference_genome
-    out:
-      - output_interval_list_file
-  make_bait_interval_list:
-    run: ../tools/picard-BedToIntervalList.cwl
-    requirements:
-      - class: ResourceRequirement
-        coresMin: 1
-        ramMin: 4000
-        outdirMin: 12000
-        tmpdirMin: 12000
-    in:
-      input_file: primary_intervals
-      reference_sequence: reference_genome
-    out:
-      - output_interval_list_file
   collect_hs_metrics:
     run: ../tools/picard-CollectHsMetrics.cwl
     requirements:
@@ -195,8 +171,8 @@ steps:
     in:
       input_file: mark_duplicates/output_dedup_bam_file
       reference_sequence: reference_genome
-      target_intervals: make_target_interval_list/output_interval_list_file
-      bait_intervals: make_bait_interval_list/output_interval_list_file
+      target_intervals: target_interval_list
+      bait_intervals: bait_interval_list
       output_filename: generate_sample_filenames/hs_metrics_output_filename
     out:
       - output_hs_metrics_file

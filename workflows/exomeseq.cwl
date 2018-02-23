@@ -95,12 +95,23 @@ outputs:
     outputSource: variant_discovery/variant_recalibration_snps_indels_vcf
     doc: "The output filtered and recalibrated VCF file in which each variant is annotated with its VQSLOD value"
 steps:
+  prepare_reference_data:
+    run: exomeseq-00-prepare-reference-data.cwl
+    in:
+      intervals: intervals
+      primary_intervals: primary_intervals
+      reference_genome: reference_genome
+    out:
+      - target_interval_list
+      - bait_interval_list
   preprocessing:
     run: ../subworkflows/exomeseq-01-preprocessing.cwl
     scatter: read_pair
     in:
       intervals: intervals
       primary_intervals: primary_intervals
+      target_interval_list: prepare_reference_data/target_interval_list
+      bait_interval_list: prepare_reference_data/bait_interval_list
       interval_padding: interval_padding
       read_pair: read_pairs
       reference_genome: reference_genome
