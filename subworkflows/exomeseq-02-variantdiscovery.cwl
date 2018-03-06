@@ -2,7 +2,11 @@
 
 cwlVersion: v1.0
 class: Workflow
+requirements:
+  - $import: ../types/bespin-types.yml
 inputs:
+  study_type:
+    type: ../types/bespin-types.yml#ExomeseqStudyType
   name: string
   intervals: File[]?
   interval_padding: int?
@@ -23,7 +27,6 @@ inputs:
   resource_dbsnp: File
   # Variant Recalibration - Indels
   indel_resource_mills: File
-
 outputs:
   joint_raw_variants:
     type: File
@@ -102,6 +105,14 @@ steps:
     out:
       - output_GenotypeGVCFs
   # Recommendations from https://software.broadinstitute.org/gatk/documentation/article?id=1259
+  generate_annotations_snps:
+    run: ../tools/generate-variant-recalibration-annotation-set.cwl
+    in:
+      study_type: study_type
+      base_annotations:
+        default: ["QD","FS","MQ","SOR","MQRankSum","ReadPosRankSum"]
+    out:
+      - annotations
   variant_recalibration_snps:
     run: ../tools/GATK-VariantRecalibrator-SNPs.cwl
     in:
@@ -117,14 +128,7 @@ steps:
       resource_omni: snp_resource_omni
       resource_1kg: snp_resource_1kg
       resource_dbsnp: resource_dbsnp
-      # Check the values!
-      # annotations, See https://software.broadinstitute.org/gatk/documentation/article?id=1259
-      # Removed DP and InbreedingCoeff
-      # Please note that these recommendations are formulated for whole-genome datasets.
-      # For exomes, we do not recommend using DP for variant recalibration (see below for details of why).
-      annotations:
-        # 2017-12-04 - Removed InbreedingCoeff again. See #43
-        default: ["QD","FS","MQ","SOR","MQRankSum","ReadPosRankSum"]
+      annotations: generate_annotations_snps/annotations
     out:
       - tranches_File
       - recal_File
@@ -145,6 +149,14 @@ steps:
         default: "SNP"
     out:
       - output_recalibrated_vcf
+  generate_annotations_indels:
+    run: ../tools/generate-variant-recalibration-annotation-set.cwl
+    in:
+      study_type: study_type
+      base_annotations:
+        default: ["QD","FS","MQ","MQRankSum","ReadPosRankSum"]
+    out:
+      - annotations
   variant_recalibration_indels:
     run: ../tools/GATK-VariantRecalibrator-Indels.cwl
     in:
@@ -158,13 +170,7 @@ steps:
       outputfile_rscript: generate_joint_filenames/snps_indels_vqsr_rscript_output_filename
       resource_mills: indel_resource_mills
       resource_dbsnp: resource_dbsnp
-      # annotations, See https://software.broadinstitute.org/gatk/documentation/article?id=1259
-      # Removed DP and InbreedingCoeff
-      # Please note that these recommendations are formulated for whole-genome datasets.
-      # For exomes, we do not recommend using DP for variant recalibration (see below for details of why).
-      annotations:
-        # 2017-12-06 - Removed InbreedingCoeff again. See #43
-          default: ["QD","FS","MQ","MQRankSum","ReadPosRankSum"]
+      annotations: generate_annotations_indels/annotations
     out:
       - tranches_File
       - recal_File
