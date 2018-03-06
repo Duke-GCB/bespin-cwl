@@ -96,7 +96,7 @@ outputs:
     doc: "The output filtered and recalibrated VCF file in which each variant is annotated with its VQSLOD value"
 steps:
   prepare_reference_data:
-    run: exomeseq-00-prepare-reference-data.cwl
+    run: ../subworkflows/exomeseq-00-prepare-reference-data.cwl
     in:
       intervals: intervals
       primary_intervals: primary_intervals
