@@ -9,3 +9,9 @@ types:
         type: File
       - name: file2
         type: File
+  - name: ExomeseqStudyType
+    type: enum
+    label: The type of study
+    symbols:
+      - Small Familial
+      - Large Population
