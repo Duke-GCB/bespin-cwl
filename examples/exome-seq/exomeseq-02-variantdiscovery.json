@@ -1,4 +1,5 @@
 {
+  "study_type": "Small Familial",
   "GATKJar": {
     "class": "File",
     "path": "/home/ubuntu/GenomeAnalysisTK-3.8/GenomeAnalysisTK.jar"
