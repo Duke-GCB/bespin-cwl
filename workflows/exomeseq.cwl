@@ -9,6 +9,8 @@ requirements:
   - class: SubworkflowFeatureRequirement
   - $import: ../types/bespin-types.yml
 inputs:
+  study_type:
+    type: ../types/bespin-types.yml#ExomeseqStudyType
   # Intervals should come from capture kit (target intervals) bed format
   intervals: File[]?
   # Intervals should come from capture kit (bait intervals) bed format
@@ -133,6 +135,7 @@ steps:
   variant_discovery:
     run: ../subworkflows/exomeseq-02-variantdiscovery.cwl
     in:
+      study_type: study_type
       name: library
       intervals: intervals
       interval_padding: interval_padding
