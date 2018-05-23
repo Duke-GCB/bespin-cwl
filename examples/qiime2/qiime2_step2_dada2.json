@@ -1,0 +1,12 @@
+{
+  "demux_sequences_artifact": {
+    "class": "File",
+    "location": "/tmp/microbiome-data/demux.qza"
+  },
+  "dada2_trim_left": 0,
+  "dada2_trunc_len": 120,
+  "sample_metadata": {
+    "class": "File",
+    "location": "/tmp/microbiome-data/sample-metadata.tsv"
+  }
+}

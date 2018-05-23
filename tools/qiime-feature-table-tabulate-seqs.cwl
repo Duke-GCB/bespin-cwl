@@ -8,20 +8,20 @@ requirements:
   dockerPull: qiime2/core:2018.4
 - class: InlineJavascriptRequirement
 inputs:
-  input_file:
+  data:
     type: File
-    doc: "metadata file or artifact viewable as metadata"
+    doc: "feature sequences to be tabulated"
     inputBinding:
-      prefix: "--m-input-file"
+      prefix: "--i-data"
   visualization_filename:
     type: string
     doc: "filename for the resulting visualization file"
     inputBinding:
       prefix: "--o-visualization"
 outputs:
-  visualization_artifact:
+  visualization:
     type: File
     outputBinding:
       glob: $(inputs.visualization_filename)
 
-baseCommand: ["qiime", "metadata", "tabulate"]
+baseCommand: ["qiime", "feature-table", "tabulate-seqs"]

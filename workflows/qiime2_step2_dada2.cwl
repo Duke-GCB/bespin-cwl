@@ -6,35 +6,43 @@ requirements:
 - class: SubworkflowFeatureRequirement
 label: qiime2
 inputs:
-  sequences_directory: Directory
-  artifact_type: string
-  artifact_filename: string
-  barcodes_file: File
-  barcodes_column: string
-  per_sample_sequences_filename: string
-  demux_visualization_filename: string
+  demux_sequences_artifact: File
   dada2_trim_left: int
   dada2_trunc_len: int
-  dada2_representative_sequences_filename: string
-  dada2_table_filename: string
-  dada2_denoising_stats_filename: string
-  dada2_stats_filename: string
-  feature_table_summary_filename: string
-  feature_table_tabulation_filename: string
-  aligned_rep_seqs_filename: string
-  masked_aligned_rep_seqs_filename: string
-  unrooted_tree_filename: string
-  rooted_tree_filename: string
+  sample_metadata: File
+
+  dada2_representative_sequences_filename:
+    type: string
+    default: rep-seqs-dada2.qza
+  dada2_table_filename:
+    type: string
+    default: table-dada2.qza
+  dada2_denoising_stats_filename:
+    type: string
+    default: stats-dada2.qza
+  dada2_stats_filename:
+    type: string
+    default: stats-dada2.qzv
+  feature_table_summary_filename:
+    type: string
+    default: table.qzv
+  feature_table_tabulation_filename:
+    type: string
+    default: rep-seqs.qzv
+  aligned_rep_seqs_filename:
+    type: string
+    default: aligned-rep-seqs.qza
+  masked_aligned_rep_seqs_filename:
+    type: string
+    default: masked-aligned-rep-seqs.qza
+  unrooted_tree_filename:
+    type: string
+    default: unrooted-tree.qza
+  rooted_tree_filename:
+    type: string
+    default: rooted-tree.qza
+
 outputs:
-  sequences_artifact:
-    type: File
-    outputSource: import_sequences/sequences_artifact
-  demux_sequences_artifact:
-    type: File
-    outputSource: demux_sequences/demux_sequences_artifact
-  demux_visualization_artifact:
-    type: File
-    outputSource: demux_visualization/demux_visualization_artifact
   dada2_representative_sequences:
     type: File
     outputSource: dada2_denoise_single/representative_sequences
@@ -65,35 +73,12 @@ outputs:
   rooted_tree:
     type: File
     outputSource: root_tree/rooted_tree
+
 steps:
-  import_sequences:
-    run: ../tools/qiime-tools-import.cwl
-    in:
-      input_path: sequences_directory
-      type: artifact_type
-      output_filename: artifact_filename
-    out:
-      - sequences_artifact
-  demux_sequences:
-    run: ../tools/qiime-demux-emp-single.cwl
-    in:
-      seqs: import_sequences/sequences_artifact
-      barcodes_file: barcodes_file
-      barcodes_column: barcodes_column
-      per_sample_sequences_filename: per_sample_sequences_filename
-    out:
-      - demux_sequences_artifact
-  demux_visualization:
-    run: ../tools/qiime-demux-summarize.cwl
-    in:
-      data: demux_sequences/demux_sequences_artifact
-      visualization_filename: demux_visualization_filename
-    out:
-      - demux_visualization_artifact
   dada2_denoise_single:
     run: ../tools/qiime-dada2-denoise-single.cwl
     in:
-      demultiplexed_seqs: demux_sequences/demux_sequences_artifact
+      demultiplexed_seqs: demux_sequences_artifact
       trim_left: dada2_trim_left
       trunc_len: dada2_trunc_len
       representative_sequences_filename: dada2_representative_sequences_filename
@@ -115,7 +100,7 @@ steps:
     in:
       table: dada2_denoise_single/table
       visualization_filename: feature_table_summary_filename
-      sample_metadata_file: barcodes_file
+      sample_metadata_file: sample_metadata
     out:
       - visualization
   feature_table_tabulation:
