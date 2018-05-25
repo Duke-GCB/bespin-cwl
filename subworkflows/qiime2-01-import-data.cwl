@@ -9,8 +9,6 @@ label: qiime2 create sequences artifact
 inputs:
   sequences: File
   barcodes: File
-  sample_metadata: File
-  metadata_barcodes_column: string
   sequences_artifact_type:
     type: string
     default: EMPSingleEndSequences
