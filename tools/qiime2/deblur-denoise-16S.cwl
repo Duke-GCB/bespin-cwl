@@ -24,16 +24,19 @@ inputs:
     doc: "?"
     inputBinding:
       prefix: "--o-representative-sequences"
+    default: 'rep-seqs.qza'
   table_filename:
     type: string
     doc: "?"
     inputBinding:
       prefix: "--o-table"
+    default: 'table.qza'
   stats_filename:
     type: string
     doc: "?"
     inputBinding:
       prefix: "--o-stats"
+    default: 'stats.qza'
 
 outputs:
   representative_sequences:

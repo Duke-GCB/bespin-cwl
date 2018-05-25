@@ -19,6 +19,7 @@ inputs:
     doc: "?"
     inputBinding:
       prefix: "--o-visualization"
+    default: 'deblur-stats.qzv'
 outputs:
   deblur_stats:
     type: File

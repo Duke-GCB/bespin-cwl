@@ -12,16 +12,16 @@ inputs:
   dada2_trunc_len: int
   dada2_representative_sequences_filename:
     type: string
-    default: rep-seqs-dada2.qza
+    default: rep-seqs.qza
   dada2_table_filename:
     type: string
-    default: table-dada2.qza
+    default: table.qza
   dada2_denoising_stats_filename:
     type: string
-    default: stats-dada2.qza
+    default: stats.qza
   dada2_stats_filename:
     type: string
-    default: stats-dada2.qzv
+    default: stats.qzv
 
 outputs:
   dada2_representative_sequences:

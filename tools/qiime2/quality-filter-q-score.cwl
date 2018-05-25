@@ -19,11 +19,13 @@ inputs:
     doc: "?"
     inputBinding:
       prefix: "--o-filtered-sequences"
+    default: "demux-filtered.qza"
   filter_stats_filename:
     type: string
     doc: "?"
     inputBinding:
       prefix: "--o-filter-stats"
+    default: "demux-filter-stats.qza"
 outputs:
   filtered_sequences:
     type: File

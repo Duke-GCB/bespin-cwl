@@ -9,7 +9,6 @@ label: qiime2
 inputs:
   demux_sequences_artifact: File
   trim_length: int
-  sample_metadata: File
   demux_filter_visualization_filename:
     type: string
     default: demux-filter-stats.qzv
@@ -20,7 +19,7 @@ outputs:
     outputSource: deblur_quality_filter/filtered_sequences
   rep_seqs_deblur:
     type: File
-    outputSource: deblur_quality_filter/filtered_stats
+    outputSource: deblur_quality_filter/filter_stats
   rep_seqs_deblur:
     type: File
     outputSource: deblur_denoise/representative_sequences
@@ -39,31 +38,31 @@ outputs:
 
 steps:
   deblur_quality_filter:
-    run: ../tools/qiime2/quality-filter-g-score.cwl
+    run: ../tools/qiime2/quality-filter-q-score.cwl
     in:
-      - demux: demux_sequences_artifact
+      demux: demux_sequences_artifact
     out:
       - filtered_sequences
-      - filtered_stats
+      - filter_stats
   deblur_denoise:
     run: ../tools/qiime2/deblur-denoise-16S.cwl
     in:
-      - demultiplexed_seqs: demux_sequences_artifact
-      - trim_length: trim_length
+      demultiplexed_seqs: demux_sequences_artifact
+      trim_length: trim_length
     out:
       - representative_sequences
       - table
       - stats
   deblur_metadata_tabulate:
-    run: ../tools/qiime2/metadata-tabluate.cwl
+    run: ../tools/qiime2/metadata-tabulate.cwl
     in:
-      - input_file: deblur_quality_filter/filtered_stats
-      - visualization_filename: demux_filter_visualization_filename
+      input_file: deblur_quality_filter/filter_stats
+      visualization_filename: demux_filter_visualization_filename
     out:
       - visualization_artifact
   deblur_visualize:
     run: ../tools/qiime2/deblur-visualize-stats.cwl
     in:
-      - input_file: deblur_denoise/stats
+      input_file: deblur_denoise/stats
     out:
       - deblur_stats
