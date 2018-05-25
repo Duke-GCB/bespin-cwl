@@ -18,9 +18,9 @@ inputs:
     inputBinding:
       prefix: --m-metadata-file
     type: File
-  metadata_category:
+  metadata_column:
     inputBinding:
-      prefix: --m-metadata-category
+      prefix: --m-metadata-column
     type: string
   feat_visualization:
     inputBinding:

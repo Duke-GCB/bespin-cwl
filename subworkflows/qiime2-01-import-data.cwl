@@ -25,14 +25,14 @@ outputs:
 
 steps:
   make_import_directory:
-    run: ../tools/qiime-EMPSingleEndSequences-directory.cwl
+    run: ../tools/qiime2/EMPSingleEndSequences-directory.cwl
     in:
       sequences: sequences
       barcodes: barcodes
     out:
       - dir
   make_sequences_artifact:
-    run: ../tools/qiime-tools-import.cwl
+    run: ../tools/qiime2/tools-import.cwl
     in:
       input_path: make_import_directory/dir
       type: sequences_artifact_type

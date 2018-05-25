@@ -10,31 +10,28 @@ requirements:
 - class: InlineJavascriptRequirement
 
 inputs:
-  input_dir:
-    type: Directory
-  pcoa_file_base:
-    type: string
+  pcoa:
+    inputBinding:
+      prefix: --i-pcoa
+    type: File
   metadata_file:
     inputBinding:
       prefix: --m-metadata-file
     type: File
-  custom_axis:
+  custom_axes:
     label: Name for custom axis label
     inputBinding:
-      prefix: --p-custom-axis
+      prefix: --p-custom-axes
     type: string
   out_visualization:
     inputBinding:
       prefix: --o-visualization
     type: string
+
 outputs:
   pcoa_visual:
     type: File
     outputBinding:
       glob: $(inputs.out_visualization)
-
-arguments:
-  - valueFrom: $(inputs.input_dir.path + '/' + inputs.pcoa_file_base)
-    prefix: --i-pcoa
 
 baseCommand: ["qiime", "emperor", "plot"]

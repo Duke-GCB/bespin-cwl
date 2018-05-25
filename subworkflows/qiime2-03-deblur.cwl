@@ -39,14 +39,14 @@ outputs:
 
 steps:
   deblur_quality_filter:
-    run: ../tools/qiime-quality-filter-g-score.cwl
+    run: ../tools/qiime2/quality-filter-g-score.cwl
     in:
       - demux: demux_sequences_artifact
     out:
       - filtered_sequences
       - filtered_stats
   deblur_denoise:
-    run: ../tools/qiime-deblur-denoise-16S.cwl
+    run: ../tools/qiime2/deblur-denoise-16S.cwl
     in:
       - demultiplexed_seqs: demux_sequences_artifact
       - trim_length: trim_length
@@ -55,14 +55,14 @@ steps:
       - table
       - stats
   deblur_metadata_tabulate:
-    run: ../tools/qiime-metadata-tabluate.cwl
+    run: ../tools/qiime2/metadata-tabluate.cwl
     in:
       - input_file: deblur_quality_filter/filtered_stats
       - visualization_filename: demux_filter_visualization_filename
     out:
       - visualization_artifact
   deblur_visualize:
-    run: ../tools/qiime-deblur-visualize-stats.cwl
+    run: ../tools/qiime2/deblur-visualize-stats.cwl
     in:
       - input_file: deblur_denoise/stats
     out:

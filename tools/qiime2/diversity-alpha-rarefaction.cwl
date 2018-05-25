@@ -20,7 +20,9 @@ inputs:
     inputBinding:
       prefix: "--i-phylogeny"
   max_depth:
-    type: string
+    type: int
+    inputBinding:
+      prefix: "--p-max-depth"
   sample_metadata:
     type: File
     doc: "?"
@@ -30,6 +32,7 @@ inputs:
   alpha_rarefaction_filename:
     type: string
     doc: "resulting aligned sequences filename"
+    default: "alpha-rarefaction.qzv"
     inputBinding:
       prefix: "--o-visualization"
 

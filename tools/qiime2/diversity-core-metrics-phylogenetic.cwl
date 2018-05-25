@@ -1,9 +1,7 @@
-#!/usr/bin/env cwl-runner
-# Based on https://raw.githubusercontent.com/IGS/Chiron/master/pipelines/qiime2/diversity_core_metrics.cwl
-
 cwlVersion: v1.0
-label: QIIME2 - Compute core metrics for alpha/beta diversity analysis
 class: CommandLineTool
+
+baseCommand: [mkdir, 'core-metrics-results']
 
 requirements:
 - class: DockerRequirement
@@ -24,7 +22,11 @@ inputs:
       prefix: --p-sampling-depth
     type: int
     default: 1080
-  output_dir:
+  metadata_file:
+    inputBinding:
+      prefix: --m-metadata-file
+    type: File
+  output_dir_name:
     inputBinding:
       prefix: --output-dir
     type: string
@@ -34,6 +36,26 @@ outputs:
   out_dir:
     type: Directory
     outputBinding:
-      glob: $(inputs.output_dir)
+      glob: $(inputs.output_dir_name)
+  faith_pd_vector:
+    type: File
+    outputBinding:
+      glob: $(inputs.output_dir_name + '/faith_pd_vector.qza')
+  evenness_vector:
+    type: File
+    outputBinding:
+      glob: $(inputs.output_dir_name + '/evenness_vector.qza')
+  unweighted_unifrac_distance_matrix:
+    type: File
+    outputBinding:
+      glob: $(inputs.output_dir_name + '/unweighted_unifrac_distance_matrix.qza')
+  unweighted_unifrac_pcoa_results:
+    type: File
+    outputBinding:
+      glob: $(inputs.output_dir_name + '/unweighted_unifrac_pcoa_results.qza')
+  bray_curtis_pcoa_results:
+    type: File
+    outputBinding:
+      glob: $(inputs.output_dir_name + '/bray_curtis_pcoa_results.qza')
 
-baseCommand: ["qiime", "diversity", "core-metrics"]
+baseCommand: ["qiime", "diversity", "core-metrics-phylogenetic"]

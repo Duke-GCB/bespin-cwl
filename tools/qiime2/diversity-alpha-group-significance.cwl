@@ -10,26 +10,23 @@ requirements:
 - class: InlineJavascriptRequirement
 
 inputs:
-  input_dir:
-    type: Directory
-  vector_file_base:
-    type: string
+  alpha_diversity:
+    inputBinding:
+      prefix: --i-alpha-diversity
+    type: File
   metadata_file:
     inputBinding:
       prefix: --m-metadata-file
     type: File
-  out_visualization:
+  output_significance_filename:
     inputBinding:
       prefix: --o-visualization
     type: string
+
 outputs:
-  out_visual:
+  significance:
     type: File
     outputBinding:
-      glob: $(inputs.out_visualization)
-
-arguments:
-  - valueFrom: $(inputs.input_dir.path + '/' + inputs.vector_file_base)
-    prefix: --i-alpha-diversity
+      glob: $(inputs.output_significance_filename)
 
 baseCommand: ["qiime", "diversity", "alpha-group-significance"]

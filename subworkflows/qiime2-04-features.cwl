@@ -27,7 +27,7 @@ outputs:
 
 steps:
   feature_table_summarize:
-    run: ../tools/qiime-feature-table-summarize.cwl
+    run: ../tools/qiime2/feature-table-summarize.cwl
     in:
       table: feature_table_artifact
       visualization_filename: feature_table_summary_filename
@@ -35,9 +35,9 @@ steps:
     out:
       - visualization
   feature_table_tabulation:
-    run: ../tools/qiime-feature-table-tabulate-seqs.cwl
+    run: ../tools/qiime2/feature-table-tabulate-seqs.cwl
     in:
-      data: dada2_denoise_single/representative_sequences
+      data: rep_seqs_artifact
       visualization_filename: feature_table_tabulation_filename
     out:
       - visualization

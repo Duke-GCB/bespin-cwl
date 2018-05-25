@@ -10,19 +10,19 @@ requirements:
 - class: InlineJavascriptRequirement
 
 inputs:
-  input_dir:
-    type: Directory
-  matrix_file_base:
-    type: string
+  distance_matrix:
+    inputBinding:
+      prefix: --i-distance-matrix
+    type: File
   metadata_file:
     inputBinding:
       prefix: --m-metadata-file
     type: File
-  metadata_category:
+  metadata_column:
     inputBinding:
-      prefix: --m-metadata-category
+      prefix: --m-metadata-column
     type: string
-  out_visualization:
+  output_significance_filename:
     inputBinding:
       prefix: --o-visualization
     type: string
@@ -30,10 +30,9 @@ outputs:
   out_visual:
     type: File
     outputBinding:
-      glob: $(inputs.out_visualization)
+      glob: $(inputs.output_significance_filename)
 
 arguments:
-  - valueFrom: $(inputs.input_dir.path + '/' + inputs.matrix_file_base)
-    prefix: --i-distance-matrix
   - prefix: --p-pairwise"
+
 baseCommand: ["qiime", "diversity", "beta-group-significance"]

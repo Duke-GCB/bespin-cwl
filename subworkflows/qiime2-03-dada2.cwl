@@ -10,7 +10,6 @@ inputs:
   demux_sequences_artifact: File
   dada2_trim_left: int
   dada2_trunc_len: int
-  sample_metadata: File
   dada2_representative_sequences_filename:
     type: string
     default: rep-seqs-dada2.qza
@@ -40,7 +39,7 @@ outputs:
 
 steps:
   dada2_denoise_single:
-    run: ../tools/qiime-dada2-denoise-single.cwl
+    run: ../tools/qiime2/dada2-denoise-single.cwl
     in:
       demultiplexed_seqs: demux_sequences_artifact
       trim_left: dada2_trim_left
@@ -53,7 +52,7 @@ steps:
       - table
       - denoising_stats
   dada2_visualization:
-    run: ../tools/qiime-metadata-tabulate.cwl
+    run: ../tools/qiime2/metadata-tabulate.cwl
     in:
       input_file: dada2_denoise_single/denoising_stats
       visualization_filename: dada2_stats_filename

@@ -17,7 +17,7 @@ inputs:
     inputBinding:
       prefix: --i-classifier
     type: File
-  taxonomy:
+  taxonomy_filename:
     inputBinding:
       prefix: --o-classification
     type: string
@@ -26,6 +26,6 @@ outputs:
   out_taxa:
     type: File
     outputBinding:
-      glob: $(inputs.taxonomy)
+      glob: $(inputs.taxonomy_filename)
 
 baseCommand: ["qiime", "feature-classifier", "classify-sklearn"]

@@ -7,7 +7,6 @@ requirements:
 label: qiime2
 inputs:
   representative_sequences: File
-
   aligned_rep_seqs_filename:
     type: string
     default: aligned-rep-seqs.qza
@@ -37,28 +36,28 @@ outputs:
 
 steps:
   align_representative_sequences:
-    run: ../tools/qiime-alignment-mafft.cwl
+    run: ../tools/qiime2/alignment-mafft.cwl
     in:
       sequences: representative_sequences
       alignment_filename: aligned_rep_seqs_filename
     out:
       - alignment
   mask_representative_sequences:
-    run: ../tools/qiime-alignment-mask.cwl
+    run: ../tools/qiime2/alignment-mask.cwl
     in:
       alignment: align_representative_sequences/alignment
       masked_aligned_rep_seqs_filename: masked_aligned_rep_seqs_filename
     out:
       - masked_aligned_rep_seqs
   create_tree_from_alignment:
-    run: ../tools/qiime-phylogeny-fasttree.cwl
+    run: ../tools/qiime2/phylogeny-fasttree.cwl
     in:
       alignment: mask_representative_sequences/masked_aligned_rep_seqs
       tree_filename: unrooted_tree_filename
     out:
       - unrooted_tree
   root_tree:
-    run: ../tools/qiime-phylogeny-midpoint-root.cwl
+    run: ../tools/qiime2/phylogeny-midpoint-root.cwl
     in:
       tree: create_tree_from_alignment/unrooted_tree
       rooted_tree_filename: rooted_tree_filename

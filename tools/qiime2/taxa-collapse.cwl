@@ -1,5 +1,11 @@
 class: CommandLineTool
-baseCommand: ["qiime", "taxa", "collapse"]
+
+requirements:
+- class: DockerRequirement
+  dockerPull: qiime2/core:2018.4
+- class: InlineJavascriptRequirement
+
+
 inputs:
   table:
     inputBinding:
@@ -24,3 +30,5 @@ outputs:
     type: File
     outputBinding:
       glob: $(inputs.collapsed_table)
+
+baseCommand: ["qiime", "taxa", "collapse"]
