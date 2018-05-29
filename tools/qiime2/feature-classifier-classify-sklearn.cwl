@@ -1,6 +1,7 @@
 #!/usr/bin/env cwl-runner
 # Patterned after https://github.com/IGS/Chiron/blob/master/pipelines/qiime2/taxonomic_analysis.cwl
 
+cwlVersion: v1.0
 class: CommandLineTool
 
 requirements:
