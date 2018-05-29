@@ -1,9 +1,9 @@
 # QIIME2 mulit-part workflows
 
-- __Step1__: Import Demux: `workflows/qiime2_step1_import_demux.cwl`
-- __Step2-v1__: DADA2 Option: `workflows/qiime2_step2_dada2.cwl`
-- __Step2-v2__: Deblur Option: `workflows/qiime2_step2_ deblur.cwl`
-- __Step3__: Alpha analysis: `workflows/qiime2_step3_alpha_analysis.cwl`
+- __Step1__: Import Demux: `workflows/qiime2-step1-import-demux.cwl`
+- __Step2-v1__: DADA2 Option: `workflows/qiime2-step2-dada2.cwl`
+- __Step2-v2__: Deblur Option: `workflows/qiime2-step2-deblur.cwl`
+- __Step3__: Alpha analysis: `workflows/qiime2-step3-alpha-analysis.cwl`
 
 
 # Relation to QIIME2 Moving Pictures Tutorial
@@ -13,7 +13,7 @@
  - [Demultiplexing sequences](https://docs.qiime2.org/2018.4/tutorials/moving-pictures/#demultiplexing-sequences)
 
 ### Step2-v1
-Before running this step a user must determine `trim-left` and `trunc-len` parameters.
+Before running this step a user must determine `dada2_trim_left` and `dada2_trunc_len` parameters.
 This can be done based on plots you see in `demux.qzv` created in __Step1__.
 
 - [Option 1: DADA2](https://docs.qiime2.org/2018.4/tutorials/moving-pictures/#option-1-dada2)
@@ -23,7 +23,7 @@ This can be done based on plots you see in `demux.qzv` created in __Step1__.
 - [Differential abundance testing with ANCOM](https://docs.qiime2.org/2018.4/tutorials/moving-pictures/#differential-abundance-testing-with-ancom)
 
 ### Step2-v2
-Before running this step a user must determine `trim-length` parameters.
+Before running this step a user must determine `deblur_trim_length` parameters.
 This can be done based on plots you see in `demux.qzv` created in __Step1__.
 - [Option 2: Deblur](https://docs.qiime2.org/2018.4/tutorials/moving-pictures/#option-2-deblur)
 - [FeatureTable and FeatureData summaries](https://docs.qiime2.org/2018.4/tutorials/moving-pictures/#featuretable-and-featuredata-summaries)
