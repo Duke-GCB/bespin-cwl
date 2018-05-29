@@ -7,26 +7,34 @@ requirements:
 label: qiime2
 inputs:
   demux_sequences_artifact: File
-  dada2_trim_left: int
-  dada2_trunc_len: int
+  deblur_trim_length: int
   sample_metadata: File
   taxonomic_classifier: File
   ancom_collapse_level: int
   ancom_filter_sample_query: string
 
 outputs:
-   dada2_representative_sequences:
+   deblur_filtered_sequences:
      type: File
-     outputSource: dada2_sequences/dada2_representative_sequences
-   dada2_table:
+     outputSource: deblur_sequences/filtered_sequences
+   deblur_filter_stats:
      type: File
-     outputSource: dada2_sequences/dada2_table
-   dada2_denoising_stats:
+     outputSource: deblur_sequences/filter_stats
+   deblur_rep_seqs:
      type: File
-     outputSource: dada2_sequences/dada2_denoising_stats
-   dada2_visualization_artifact:
+     outputSource: deblur_sequences/rep_seqs
+   deblur_table:
      type: File
-     outputSource: dada2_sequences/dada2_visualization_artifact
+     outputSource: deblur_sequences/table
+   deblur_stats:
+     type: File
+     outputSource: deblur_sequences/stats
+   deblur_demux_filter_stats:
+     type: File
+     outputSource: deblur_sequences/demux_filter_stats
+   deblur_stats_visualization:
+     type: File
+     outputSource: deblur_sequences/stats_visualization
 
    feature_table_summarize_visualization:
      type: File
@@ -78,22 +86,24 @@ outputs:
      outputSource: ancom_diff_abundance/ancom_subject_16_visualization_file
 
 steps:
-  dada2_sequences:
-    run: ../subworkflows/qiime2-03-dada2.cwl
+  deblur_sequences:
+    run: ../subworkflows/qiime2-03-deblur.cwl
     in:
       demux_sequences_artifact: demux_sequences_artifact
-      dada2_trim_left: dada2_trim_left
-      dada2_trunc_len: dada2_trunc_len
+      trim_length: deblur_trim_length
     out:
-      - dada2_representative_sequences
-      - dada2_table
-      - dada2_denoising_stats
-      - dada2_visualization_artifact
+      - filtered_sequences
+      - filter_stats
+      - rep_seqs
+      - table
+      - stats
+      - demux_filter_stats
+      - stats_visualization
   feature_table_visualizations:
     run: ../subworkflows/qiime2-04-features.cwl
     in:
-      feature_table_artifact: dada2_sequences/dada2_table
-      rep_seqs_artifact: dada2_sequences/dada2_representative_sequences
+      feature_table_artifact: deblur_sequences/table
+      rep_seqs_artifact: deblur_sequences/rep_seqs
       sample_metadata: sample_metadata
     out:
       - feature_table_summarize_visualization
@@ -101,7 +111,7 @@ steps:
   phylogenetic_tree:
     run: ../subworkflows/qiime2-05-phylogeny.cwl
     in:
-      representative_sequences: dada2_sequences/dada2_representative_sequences
+      representative_sequences: deblur_sequences/rep_seqs
     out:
       - aligned_representative_sequences
       - masked_representative_sequences
@@ -110,8 +120,8 @@ steps:
   taxonomic_analysis:
     run: ../subworkflows/qiime2-08-taxonomic-analysis.cwl
     in:
-      rep_seqs: dada2_sequences/dada2_representative_sequences
-      table: dada2_sequences/dada2_table
+      rep_seqs: deblur_sequences/rep_seqs
+      table: deblur_sequences/table
       classifier: taxonomic_classifier
       sample_metadata: sample_metadata
     out:
@@ -121,7 +131,7 @@ steps:
   ancom_diff_abundance:
     run: ../subworkflows/qiime2-09-ancom.cwl
     in:
-      table: dada2_sequences/dada2_table
+      table: deblur_sequences/table
       sample_metadata: sample_metadata
       collapse_level: ancom_collapse_level
       taxonomy: taxonomic_analysis/taxonomy_artifact

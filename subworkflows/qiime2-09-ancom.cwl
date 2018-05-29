@@ -12,6 +12,7 @@ inputs:
   sample_metadata: File
   collapse_level: int
   taxonomy: File
+  filter_sample_query: string
 
 outputs:
   filter_table_file:
@@ -20,7 +21,7 @@ outputs:
   composition_table_file:
     type: File
     outputSource: pseudocount_gut_table/out_comp_table
-  ancom_vizualization_file:
+  ancom_visualization_file:
     type: File
     outputSource: ancom_subject_column_gut_table/out_visual
   collapsed_table_file:
@@ -38,8 +39,7 @@ steps:
     in:
       table: table
       sample_metadata_file: sample_metadata
-      filter_where:
-        valueFrom: "BodySite='gut'"
+      filter_where: filter_sample_query
       filtered_table_filename:
         valueFrom: 'gut-table.qza'
     out:

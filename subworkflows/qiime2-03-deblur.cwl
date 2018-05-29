@@ -14,25 +14,25 @@ inputs:
     default: demux-filter-stats.qzv
 
 outputs:
-  demux_filtered:
+  filtered_sequences:
     type: File
     outputSource: deblur_quality_filter/filtered_sequences
-  rep_seqs_deblur:
+  filter_stats:
     type: File
     outputSource: deblur_quality_filter/filter_stats
-  rep_seqs_deblur:
+  rep_seqs:
     type: File
     outputSource: deblur_denoise/representative_sequences
-  table_deblur:
+  table:
     type: File
     outputSource: deblur_denoise/table
-  deblur_stats:
+  stats:
     type: File
     outputSource: deblur_denoise/stats
   demux_filter_stats:
     type: File
     outputSource: deblur_metadata_tabulate/visualization_artifact
-  deblur_stats:
+  stats_visualization:
     type: File
     outputSource: deblur_visualize/deblur_stats
 
