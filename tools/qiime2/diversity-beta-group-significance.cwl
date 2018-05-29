@@ -5,9 +5,11 @@ label: QIIME2 - Perform beta group significance analysis
 class: CommandLineTool
 
 requirements:
-- class: DockerRequirement
-  dockerPull: qiime2/core:2018.4
 - class: InlineJavascriptRequirement
+
+hints:
+  DockerRequirement:
+    dockerPull: qiime2/core:2018.4
 
 inputs:
   distance_matrix:

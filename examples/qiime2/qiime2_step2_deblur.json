@@ -3,8 +3,7 @@
     "class": "File",
     "location": "/Users/jpb67/qiime2/demux.qza"
   },
-  "dada2_trim_left": 0,
-  "dada2_trunc_len": 120,
+  "deblur_trim_length": 120,
   "sample_metadata": {
     "class": "File",
     "location": "/Users/jpb67/qiime2/sample-metadata.tsv"

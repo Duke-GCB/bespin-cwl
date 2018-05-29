@@ -1,0 +1,16 @@
+{
+  "rooted_tree": {
+    "class": "File",
+    "location": "/Users/jpb67/qiime2/rooted-tree.qza"
+  },
+  "table": {
+    "class": "File",
+    "location": "/Users/jpb67/qiime2/table.qza"
+  }
+  "sample_metadata": {
+    "class": "File",
+    "location": "/Users/jpb67/qiime2/sample-metadata.tsv"
+  },
+  "diversity_sampling_depth": 1109,
+  "rarefaction_max_depth": 4000
+}

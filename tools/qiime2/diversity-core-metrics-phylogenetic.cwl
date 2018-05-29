@@ -4,9 +4,11 @@ class: CommandLineTool
 baseCommand: [mkdir, 'core-metrics-results']
 
 requirements:
-- class: DockerRequirement
-  dockerPull: qiime2/core:2018.4
 - class: InlineJavascriptRequirement
+
+hints:
+  DockerRequirement:
+    dockerPull: qiime2/core:2018.4
 
 inputs:
   input_tree:

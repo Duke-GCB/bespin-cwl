@@ -1,15 +1,15 @@
 {
   "sequences": {
     "class": "File",
-    "location": "/tmp/microbiome-data/sequences.fastq.gz"
+    "location": "/tmp/qiime2/sequences.fastq.gz"
   },
   "barcodes": {
     "class": "File",
-    "location": "/tmp/microbiome-data/barcodes.fastq.gz"
+    "location": "/tmp/qiime2/barcodes.fastq.gz"
   },
   "sample_metadata": {
     "class": "File",
-    "location": "/tmp/microbiome-data/sample-metadata.tsv"
+    "location": "/tmp/qiime2/sample-metadata.tsv"
   },
   "metadata_barcodes_column": "BarcodeSequence"
 }
