@@ -6,7 +6,7 @@
   "table": {
     "class": "File",
     "location": "/Users/jpb67/qiime2/table.qza"
-  }
+  },
   "sample_metadata": {
     "class": "File",
     "location": "/Users/jpb67/qiime2/sample-metadata.tsv"
