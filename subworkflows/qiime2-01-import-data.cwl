@@ -4,7 +4,8 @@ cwlVersion: v1.0
 class: Workflow
 requirements:
 - class: SubworkflowFeatureRequirement
-label: qiime2 create sequences artifact
+label: qiime2 importing data
+doc: Obtaining and importing data from https://docs.qiime2.org/2018.4/tutorials/moving-pictures/
 
 inputs:
   sequences: File

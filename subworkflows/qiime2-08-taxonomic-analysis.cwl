@@ -5,7 +5,8 @@ class: Workflow
 requirements:
 - class: SubworkflowFeatureRequirement
 - class: StepInputExpressionRequirement
-label: qiime2
+label: qiime2 explore sample taxonomic composition
+doc: Taxonomic analysis from https://docs.qiime2.org/2018.4/tutorials/moving-pictures/
 
 inputs:
   rep_seqs: File

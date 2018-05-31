@@ -5,7 +5,8 @@ class: Workflow
 requirements:
 - class: SubworkflowFeatureRequirement
 - class: StepInputExpressionRequirement
-label: qiime2
+label: qiime2 identify differentially abundant features
+doc: Differential abundance testing with ANCOM from https://docs.qiime2.org/2018.4/tutorials/moving-pictures/
 
 inputs:
   table: File

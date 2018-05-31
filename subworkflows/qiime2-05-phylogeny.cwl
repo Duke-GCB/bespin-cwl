@@ -4,7 +4,9 @@ cwlVersion: v1.0
 class: Workflow
 requirements:
 - class: SubworkflowFeatureRequirement
-label: qiime2
+label: qiime2 create phylogenetic tree
+doc: Generate a tree for phylogenetic diversity analyses from https://docs.qiime2.org/2018.4/tutorials/moving-pictures/
+
 inputs:
   representative_sequences: File
   aligned_rep_seqs_filename:
