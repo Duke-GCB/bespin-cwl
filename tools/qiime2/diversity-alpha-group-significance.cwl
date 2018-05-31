@@ -1,8 +1,8 @@
 #!/usr/bin/env cwl-runner
 # Based on https://raw.githubusercontent.com/IGS/Chiron/master/pipelines/qiime2/alpha_significance.cwl
 cwlVersion: v1.0
-label: QIIME2 - Perform alpha group significance analysis
 class: CommandLineTool
+label: qiime2: Visually and statistically compare groups of alpha diversity values
 
 hints:
   - $import: qiime2-docker-hint.yml

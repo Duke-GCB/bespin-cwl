@@ -2,6 +2,7 @@
 
 cwlVersion: v1.0
 class: CommandLineTool
+label: qiime2: Demultiplex sequence data for data generated with the Earth Microbiome Project (EMP) amplicon sequencing protocol
 
 hints:
   - $import: qiime2-docker-hint.yml

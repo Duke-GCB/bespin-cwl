@@ -2,6 +2,7 @@
 
 cwlVersion: v1.0
 class: CommandLineTool
+label: qiime2: Perform sequence quality control for Illumina data using the Deblur workflow with a 16S reference as a positive filter
 
 hints:
   - $import: qiime2-docker-hint.yml

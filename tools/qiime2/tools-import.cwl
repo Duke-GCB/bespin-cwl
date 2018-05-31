@@ -2,6 +2,7 @@
 
 cwlVersion: v1.0
 class: CommandLineTool
+label: qiime2: Import data to create a new QIIME 2 Artifact
 
 hints:
   - $import: qiime2-docker-hint.yml

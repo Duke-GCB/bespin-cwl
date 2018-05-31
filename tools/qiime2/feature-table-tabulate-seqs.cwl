@@ -2,6 +2,7 @@
 
 cwlVersion: v1.0
 class: CommandLineTool
+label: qiime2: Generate tabular view of feature identifier to sequence mapping, including links to BLAST each sequence against the NCBI nt database
 
 hints:
   - $import: qiime2-docker-hint.yml

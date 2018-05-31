@@ -2,6 +2,7 @@
 
 cwlVersion: v1.0
 class: CommandLineTool
+label: qiime2: Perform de novo multiple sequence alignment using MAFFT
 
 hints:
   - $import: qiime2-docker-hint.yml

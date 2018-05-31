@@ -1,5 +1,6 @@
 cwlVersion: v1.0
 class: CommandLineTool
+label: qiime2: Creates a directory populated with specifically named files as required by qiime2 EMPSingleEndSequences
 
 requirements:
   - class: ShellCommandRequirement

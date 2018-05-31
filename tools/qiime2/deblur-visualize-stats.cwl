@@ -2,6 +2,7 @@
 
 cwlVersion: v1.0
 class: CommandLineTool
+label: qiime2: Display Deblur statistics per sample
 
 hints:
   - $import: qiime2-docker-hint.yml

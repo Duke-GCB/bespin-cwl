@@ -3,6 +3,7 @@
 
 cwlVersion: v1.0
 class: CommandLineTool
+label: qiime2: Increment all counts in table by pseudocount
 
 hints:
   - $import: qiime2-docker-hint.yml

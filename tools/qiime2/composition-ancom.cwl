@@ -3,6 +3,7 @@
 
 cwlVersion: v1.0
 class: CommandLineTool
+label: qiime2: Apply ANCOM to identify features that are differentially abundant across groups
 
 hints:
   - $import: qiime2-docker-hint.yml

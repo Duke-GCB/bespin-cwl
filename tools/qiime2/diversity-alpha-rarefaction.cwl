@@ -2,6 +2,7 @@
 
 cwlVersion: v1.0
 class: CommandLineTool
+label: qiime2: Generate interactive alpha rarefaction curves by computing rarefactions between a depth range.
 
 hints:
   - $import: qiime2-docker-hint.yml

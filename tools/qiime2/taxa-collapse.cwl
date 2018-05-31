@@ -1,5 +1,6 @@
 cwlVersion: v1.0
 class: CommandLineTool
+label: qiime2: Collapse groups of features that have the same taxonomic assignment through the specified level
 
 hints:
   - $import: qiime2-docker-hint.yml

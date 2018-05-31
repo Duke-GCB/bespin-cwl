@@ -3,6 +3,7 @@
 
 cwlVersion: v1.0
 class: CommandLineTool
+label: qiime2: Filter sequences based on quality scores and the presence of ambiguous base calls
 
 hints:
   - $import: qiime2-docker-hint.yml

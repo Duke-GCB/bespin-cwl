@@ -3,6 +3,7 @@
 
 cwlVersion: v1.0
 class: CommandLineTool
+label: qiime2: Classify reads by taxon using a fitted classifier
 
 hints:
   - $import: qiime2-docker-hint.yml

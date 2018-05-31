@@ -1,7 +1,7 @@
 #!/usr/bin/env cwl-runner
 # https://github.com/IGS/Chiron/blob/master/pipelines/qiime2/emperor_plot.cwl
 cwlVersion: v1.0
-label: QIIME2 - Create PCoA plots using Emperor
+label: qiime2: emperor visualization and ordination
 class: CommandLineTool
 
 hints:

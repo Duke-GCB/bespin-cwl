@@ -2,6 +2,7 @@
 
 cwlVersion: v1.0
 class: CommandLineTool
+label: qiime2: Midpoint root an unrooted phylogenetic tree
 
 hints:
   - $import: qiime2-docker-hint.yml

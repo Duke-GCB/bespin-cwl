@@ -2,7 +2,7 @@
 
 cwlVersion: v1.0
 class: CommandLineTool
-
+label: qiime2: Mask unconserved and highly gapped columns from an alignment
 
 hints:
   - $import: qiime2-docker-hint.yml

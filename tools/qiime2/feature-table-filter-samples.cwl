@@ -2,6 +2,7 @@
 
 cwlVersion: v1.0
 class: CommandLineTool
+label: qiime2: Filter samples from table based on frequency and/or metadata
 
 hints:
   - $import: qiime2-docker-hint.yml

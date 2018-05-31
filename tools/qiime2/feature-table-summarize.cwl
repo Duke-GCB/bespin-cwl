@@ -2,6 +2,7 @@
 
 cwlVersion: v1.0
 class: CommandLineTool
+label: qiime2: Generate visual and tabular summaries of a feature table
 
 hints:
   - $import: qiime2-docker-hint.yml

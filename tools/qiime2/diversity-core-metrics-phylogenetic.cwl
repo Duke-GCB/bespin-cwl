@@ -1,5 +1,6 @@
 cwlVersion: v1.0
 class: CommandLineTool
+label: qiime2: Applies a collection of diversity metrics (both phylogenetic and non-phylogenetic) to a feature table.
 
 baseCommand: [mkdir, 'core-metrics-results']
 

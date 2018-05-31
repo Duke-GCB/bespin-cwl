@@ -1,7 +1,7 @@
 #!/usr/bin/env cwl-runner
 # Based on https://raw.githubusercontent.com/IGS/Chiron/master/pipelines/qiime2/beta_significance.cwl
 cwlVersion: v1.0
-label: QIIME2 - Perform beta group significance analysis
+label: qiime2: Determine whether groups of samples are significantly different from one another using a permutation-based statistical test
 class: CommandLineTool
 
 hints:

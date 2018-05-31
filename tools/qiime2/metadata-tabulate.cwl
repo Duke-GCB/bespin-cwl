@@ -2,6 +2,7 @@
 
 cwlVersion: v1.0
 class: CommandLineTool
+label: qiime2: Generate a tabular view of metadata
 
 hints:
   - $import: qiime2-docker-hint.yml
