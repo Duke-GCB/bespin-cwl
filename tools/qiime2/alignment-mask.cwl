@@ -2,7 +2,7 @@
 
 cwlVersion: v1.0
 class: CommandLineTool
-label: qiime2: Mask unconserved and highly gapped columns from an alignment
+label: "qiime2: Mask unconserved and highly gapped columns from an alignment"
 
 hints:
   - $import: qiime2-docker-hint.yml
@@ -10,12 +10,12 @@ hints:
 inputs:
   alignment:
     type: File
-    doc: "alignment to be masked"
+    label: "alignment to be masked"
     inputBinding:
       prefix: "--i-alignment"
   masked_aligned_rep_seqs_filename:
     type: string
-    doc: "masked alignment filename"
+    label: "masked alignment filename"
     inputBinding:
       prefix: "--o-masked-alignment"
 outputs:

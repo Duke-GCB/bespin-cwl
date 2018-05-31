@@ -3,7 +3,7 @@
 
 cwlVersion: v1.0
 class: CommandLineTool
-label: qiime2: Increment all counts in table by pseudocount
+label: "qiime2: Increment all counts in table by pseudocount"
 
 hints:
   - $import: qiime2-docker-hint.yml
@@ -12,10 +12,12 @@ inputs:
   table:
     inputBinding:
       prefix: --i-table
+    label: feature table to which pseudocounts should be added
     type: File
   composition:
     inputBinding:
       prefix: --o-composition-table
+    label: resulting feature table filename
     type: string
     default: 'comp-table.qza'
 outputs:

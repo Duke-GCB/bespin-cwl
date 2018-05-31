@@ -2,7 +2,7 @@
 
 cwlVersion: v1.0
 class: CommandLineTool
-label: qiime2: Generate tabular view of feature identifier to sequence mapping, including links to BLAST each sequence against the NCBI nt database
+label: "qiime2: Generate tabular view of feature identifier to sequence mapping, including links to BLAST each sequence against the NCBI nt database"
 
 hints:
   - $import: qiime2-docker-hint.yml
@@ -10,12 +10,12 @@ hints:
 inputs:
   data:
     type: File
-    doc: "feature sequences to be tabulated"
+    label: "feature sequences to be tabulated"
     inputBinding:
       prefix: "--i-data"
   visualization_filename:
     type: string
-    doc: "filename for the resulting visualization file"
+    label: "filename for the resulting visualization file"
     inputBinding:
       prefix: "--o-visualization"
 outputs:

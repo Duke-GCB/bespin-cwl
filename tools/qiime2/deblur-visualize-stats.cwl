@@ -2,7 +2,7 @@
 
 cwlVersion: v1.0
 class: CommandLineTool
-label: qiime2: Display Deblur statistics per sample
+label: "qiime2: Display Deblur statistics per sample"
 
 hints:
   - $import: qiime2-docker-hint.yml
@@ -10,12 +10,12 @@ hints:
 inputs:
   input_file:
     type: File
-    doc: "?"
+    label: "Summary statistics of the Deblur proces"
     inputBinding:
       prefix: "--i-deblur-stats"
   deblur_stats_filename:
     type: string
-    doc: "?"
+    label: "The resulting visualization filename"
     inputBinding:
       prefix: "--o-visualization"
     default: 'deblur-stats.qzv'

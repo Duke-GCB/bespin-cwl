@@ -2,7 +2,7 @@
 
 cwlVersion: v1.0
 class: CommandLineTool
-label: qiime2: Perform de novo multiple sequence alignment using MAFFT
+label: "qiime2: Perform de novo multiple sequence alignment using MAFFT"
 
 hints:
   - $import: qiime2-docker-hint.yml
@@ -10,12 +10,12 @@ hints:
 inputs:
   sequences:
     type: File
-    doc: "sequences to be aligned"
+    label: "sequences to be aligned"
     inputBinding:
       prefix: "--i-sequences"
   alignment_filename:
     type: string
-    doc: "resulting aligned sequences filename"
+    label: "resulting aligned sequences filename"
     inputBinding:
       prefix: "--o-alignment"
 outputs:

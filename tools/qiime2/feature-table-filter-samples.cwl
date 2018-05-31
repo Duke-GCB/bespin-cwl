@@ -2,7 +2,7 @@
 
 cwlVersion: v1.0
 class: CommandLineTool
-label: qiime2: Filter samples from table based on frequency and/or metadata
+label: "qiime2: Filter samples from table based on frequency and/or metadata"
 
 hints:
   - $import: qiime2-docker-hint.yml
@@ -10,22 +10,23 @@ hints:
 inputs:
   table:
     type: File
-    doc: "feature table to be summarized"
+    label: "feature table to be summarized"
     inputBinding:
       prefix: "--i-table"
   sample_metadata_file:
     type: File
-    doc: "metadata file or artifact viewable as metadata"
+    label: "metadata file or artifact viewable as metadata"
     inputBinding:
       prefix: "--m-metadata-file"
   filter_where:
     type: string
+    label: Filter string to filter samples by
     default: "BodySite='gut'"
     inputBinding:
       prefix: "--p-where"
   filtered_table_filename:
     type: string
-    doc: "?"
+    label: "resulting filtered table filename"
     inputBinding:
       prefix: "--o-filtered-table"
 

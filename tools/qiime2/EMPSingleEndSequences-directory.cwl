@@ -1,6 +1,6 @@
 cwlVersion: v1.0
 class: CommandLineTool
-label: qiime2: Creates a directory populated with specifically named files as required by qiime2 EMPSingleEndSequences
+label: "qiime2: Creates a directory populated with specifically named files as required by qiime2 EMPSingleEndSequences"
 
 requirements:
   - class: ShellCommandRequirement
@@ -8,10 +8,13 @@ requirements:
 inputs:
   sequences:
     type: File
+    label: sequence reads
   barcodes:
     type: File
+    label: barcode read associated with each sequence
   directory_name:
     type: string
+    label: Name of the resulting directory
     default: emp-single-end-sequences
 
 arguments:

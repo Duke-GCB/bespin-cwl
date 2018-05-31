@@ -2,7 +2,7 @@
 
 cwlVersion: v1.0
 class: CommandLineTool
-label: qiime2: Construct a phylogenetic tree with FastTree
+label: "qiime2: Construct a phylogenetic tree with FastTree"
 
 hints:
   - $import: qiime2-docker-hint.yml
@@ -10,12 +10,12 @@ hints:
 inputs:
   alignment:
     type: File
-    doc: "aligned sequences to be used for phylogenetic reconstruction"
+    label: "aligned sequences to be used for phylogenetic reconstruction"
     inputBinding:
       prefix: "--i-alignment"
   tree_filename:
     type: string
-    doc: "resulting phylogenetic tree filename"
+    label: "resulting phylogenetic tree filename"
     inputBinding:
       prefix: "--o-tree"
 outputs:

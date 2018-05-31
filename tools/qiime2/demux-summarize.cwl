@@ -2,7 +2,7 @@
 
 cwlVersion: v1.0
 class: CommandLineTool
-label: qiime2: Summarize counts per sample for all samples, and generate interactive positional quality plots based on `n` randomly selected sequences
+label: "qiime2: Summarize counts per sample for all samples, and generate interactive positional quality plots based on `n` randomly selected sequences"
 
 hints:
   - $import: qiime2-docker-hint.yml
@@ -10,12 +10,12 @@ hints:
 inputs:
   data:
     type: File
-    doc: "de-multiplexed sequences to be summarized"
+    label: "de-multiplexed sequences to be summarized"
     inputBinding:
       prefix: "--i-data"
   visualization_filename:
     type: string
-    doc: "filename for the resulting visualization file"
+    label: "filename for the resulting visualization file"
     inputBinding:
       prefix: "--o-visualization"
 outputs:

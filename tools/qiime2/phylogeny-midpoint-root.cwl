@@ -2,7 +2,7 @@
 
 cwlVersion: v1.0
 class: CommandLineTool
-label: qiime2: Midpoint root an unrooted phylogenetic tree
+label: "qiime2: Midpoint root an unrooted phylogenetic tree"
 
 hints:
   - $import: qiime2-docker-hint.yml
@@ -10,12 +10,12 @@ hints:
 inputs:
   tree:
     type: File
-    doc: "phylogenetic tree to be rooted"
+    label: "phylogenetic tree to be rooted"
     inputBinding:
       prefix: "--i-tree"
   rooted_tree_filename:
     type: string
-    doc: "rooted phylogenetic tree"
+    label: "rooted phylogenetic tree"
     inputBinding:
       prefix: "--o-rooted-tree"
 outputs:

@@ -5,7 +5,7 @@ class: Workflow
 requirements:
 - class: SubworkflowFeatureRequirement
 label: qiime2 create feature visual summaries
-doc: FeatureTable and FeatureData summaries from https://docs.qiime2.org/2018.4/tutorials/moving-pictures/
+doc: "FeatureTable and FeatureData summaries from https://docs.qiime2.org/2018.4/tutorials/moving-pictures/"
 
 inputs:
   feature_table_artifact: File

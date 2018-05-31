@@ -6,7 +6,7 @@ requirements:
 - class: SubworkflowFeatureRequirement
 - class: StepInputExpressionRequirement
 label: qiime2 diversity analyses
-doc: Alpha and beta diversity analysis from https://docs.qiime2.org/2018.4/tutorials/moving-pictures/
+doc: "Alpha and beta diversity analysis from https://docs.qiime2.org/2018.4/tutorials/moving-pictures/"
 
 inputs:
   rooted_tree: File

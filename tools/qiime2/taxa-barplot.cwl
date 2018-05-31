@@ -2,7 +2,7 @@
 
 cwlVersion: v1.0
 class: CommandLineTool
-label: qiime2: Produce an interactive barplot visualization of taxonomies
+label: "qiime2: Produce an interactive barplot visualization of taxonomies"
 
 hints:
   - $import: qiime2-docker-hint.yml
@@ -10,22 +10,22 @@ hints:
 inputs:
   table:
     type: File
-    doc: "?"
+    label: Feature table to visualize at various taxonomic levels
     inputBinding:
       prefix: "--i-table"
   taxonomy:
     type: File
-    doc: "?"
+    label: Taxonomic annotations for features in the provided feature table
     inputBinding:
       prefix: "--i-taxonomy"
   sample_metadata:
     type: File
-    doc: "?"
+    label: Metadata file or artifact viewable as metadata
     inputBinding:
       prefix: "--m-metadata-file"
   taxa_bar_plots_filename:
     type: string
-    doc: "?"
+    label: "The resulting visualization filename"
     inputBinding:
       prefix: "--o-visualization"
 

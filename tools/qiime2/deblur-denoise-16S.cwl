@@ -2,7 +2,7 @@
 
 cwlVersion: v1.0
 class: CommandLineTool
-label: qiime2: Perform sequence quality control for Illumina data using the Deblur workflow with a 16S reference as a positive filter
+label: "qiime2: Perform sequence quality control for Illumina data using the Deblur workflow with a 16S reference as a positive filter"
 
 hints:
   - $import: qiime2-docker-hint.yml
@@ -10,29 +10,29 @@ hints:
 inputs:
   demultiplexed_seqs:
     type: File
-    doc: "?"
+    label: "The demultiplexed sequences to be denoised"
     inputBinding:
       prefix: "--i-demultiplexed-seqs"
   trim_length:
     type: int
-    doc: "?"
+    label: "Sequence trim length, specify -1 to disable trimming"
     inputBinding:
       prefix: "--p-trim-length"
   representative_sequences_filename:
     type: string
-    doc: "?"
+    label: "The resulting feature sequences filename"
     inputBinding:
       prefix: "--o-representative-sequences"
     default: 'rep-seqs.qza'
   table_filename:
     type: string
-    doc: "?"
+    label: "The resulting denoised feature table filename"
     inputBinding:
       prefix: "--o-table"
     default: 'table.qza'
   stats_filename:
     type: string
-    doc: "?"
+    label: "The resulting per-sample stats filename"
     inputBinding:
       prefix: "--o-stats"
     default: 'stats.qza'

@@ -3,7 +3,7 @@
 
 cwlVersion: v1.0
 class: CommandLineTool
-label: qiime2: Filter sequences based on quality scores and the presence of ambiguous base calls
+label: "qiime2: Filter sequences based on quality scores and the presence of ambiguous base calls"
 
 hints:
   - $import: qiime2-docker-hint.yml
@@ -11,18 +11,18 @@ hints:
 inputs:
   demux:
     type: File
-    doc: "?"
+    label: The demultiplexed sequence data to be quality filtered
     inputBinding:
       prefix: "--i-demux"
   filtered_sequences_filename:
     type: string
-    doc: "?"
+    doc: "The resulting quality-filtered sequences filename"
     inputBinding:
       prefix: "--o-filtered-sequences"
     default: "demux-filtered.qza"
   filter_stats_filename:
     type: string
-    doc: "?"
+    doc: "Summary statistics of the filtering process filename"
     inputBinding:
       prefix: "--o-filter-stats"
     default: "demux-filter-stats.qza"

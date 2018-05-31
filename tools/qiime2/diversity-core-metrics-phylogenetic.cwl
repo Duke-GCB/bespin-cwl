@@ -1,6 +1,6 @@
 cwlVersion: v1.0
 class: CommandLineTool
-label: qiime2: Applies a collection of diversity metrics (both phylogenetic and non-phylogenetic) to a feature table.
+label: "qiime2: Applies a collection of diversity metrics (both phylogenetic and non-phylogenetic) to a feature table."
 
 baseCommand: [mkdir, 'core-metrics-results']
 
@@ -11,24 +11,29 @@ inputs:
   input_tree:
     inputBinding:
       prefix: --i-phylogeny
+    label: Phylogenetic tree containing tip identifiers that correspond to the feature identifiers in the table
     type: File
   input_table:
     inputBinding:
       prefix: --i-table
+    doc: The feature table containing the samples over which diversity metrics should be computed
     type: File
   sampling_depth:
     inputBinding:
       prefix: --p-sampling-depth
+    label: The total frequency that each sample should be rarefied to prior to computing diversity metrics
     type: int
     default: 1080
   metadata_file:
     inputBinding:
       prefix: --m-metadata-file
+    label: Metadata file or artifact viewable as metadata
     type: File
   output_dir_name:
     inputBinding:
       prefix: --output-dir
     type: string
+    label: name of the directory to contain the results
     default: 'core-metrics-results'
 
 outputs:

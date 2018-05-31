@@ -2,7 +2,7 @@
 
 cwlVersion: v1.0
 class: CommandLineTool
-label: qiime2: Import data to create a new QIIME 2 Artifact
+label: "qiime2: Import data to create a new QIIME 2 Artifact"
 
 hints:
   - $import: qiime2-docker-hint.yml
@@ -10,17 +10,17 @@ hints:
 inputs:
   type:
     type: string
-    doc: "semantic type of the artifact that will be created upon importing"
+    label: "semantic type of the artifact that will be created upon importing"
     inputBinding:
       prefix: "--type"
   input_path:
     type: Directory
-    doc: "path to file or directory that should be imported"
+    label: "path to file or directory that should be imported"
     inputBinding:
       prefix: "--input-path"
   output_filename:
     type: string
-    doc: "filename to use for output file (qza format)"
+    label: "filename to use for output file (qza format)"
     inputBinding:
       prefix: "--output-path"
 outputs:
