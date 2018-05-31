@@ -4,12 +4,8 @@ cwlVersion: v1.0
 label: QIIME2 - Create PCoA plots using Emperor
 class: CommandLineTool
 
-requirements:
-- class: InlineJavascriptRequirement
-
 hints:
-  DockerRequirement:
-    dockerPull: qiime2/core:2018.4
+  - $import: qiime2-docker-hint.yml
 
 inputs:
   pcoa:

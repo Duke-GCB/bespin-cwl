@@ -3,12 +3,9 @@
 cwlVersion: v1.0
 class: CommandLineTool
 
-requirements:
-- class: InlineJavascriptRequirement
 
 hints:
-  DockerRequirement:
-    dockerPull: qiime2/core:2018.4
+  - $import: qiime2-docker-hint.yml
 
 inputs:
   alignment:
