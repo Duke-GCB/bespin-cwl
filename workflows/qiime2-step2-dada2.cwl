@@ -4,7 +4,9 @@ cwlVersion: v1.0
 class: Workflow
 requirements:
 - class: SubworkflowFeatureRequirement
-label: qiime2
+doc: |
+  QIIME2 DADA2, feature summaries, phylogenetic diversity tree, taxonomic analysis and ancom
+
 inputs:
   demux_sequences_artifact: File
   dada2_trim_left: int

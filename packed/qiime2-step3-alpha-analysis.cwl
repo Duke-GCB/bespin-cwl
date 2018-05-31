@@ -688,7 +688,7 @@
                     "class": "SubworkflowFeatureRequirement"
                 }
             ], 
-            "label": "qiime2", 
+            "doc": "QIIME2 Alpha/beta diversity analysis and Alpha rarefaction plotting\n", 
             "inputs": [
                 {
                     "type": "int", 

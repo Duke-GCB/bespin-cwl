@@ -1386,7 +1386,7 @@
                     "class": "SubworkflowFeatureRequirement"
                 }
             ], 
-            "label": "qiime2", 
+            "doc": "QIIME2 DADA2, feature summaries, phylogenetic diversity tree, taxonomic analysis and ancom\n", 
             "inputs": [
                 {
                     "type": "int", 

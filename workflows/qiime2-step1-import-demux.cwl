@@ -4,7 +4,9 @@ cwlVersion: v1.0
 class: Workflow
 requirements:
 - class: SubworkflowFeatureRequirement
-label: qiime2
+doc: |
+  QIIME2 Import and Demux Step 1
+
 inputs:
   sequences: File
   barcodes: File

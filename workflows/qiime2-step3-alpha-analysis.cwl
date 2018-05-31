@@ -4,7 +4,9 @@ cwlVersion: v1.0
 class: Workflow
 requirements:
 - class: SubworkflowFeatureRequirement
-label: qiime2
+doc: |
+  QIIME2 Alpha/beta diversity analysis and Alpha rarefaction plotting
+
 inputs:
   rooted_tree: File
   table: File

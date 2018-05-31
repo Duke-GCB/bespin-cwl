@@ -1491,7 +1491,7 @@
                     "class": "SubworkflowFeatureRequirement"
                 }
             ], 
-            "label": "qiime2", 
+            "doc": "QIIME2 Deblur, feature summaries, phylogenetic diversity tree, taxonomic analysis and ancom\n", 
             "inputs": [
                 {
                     "type": "int", 

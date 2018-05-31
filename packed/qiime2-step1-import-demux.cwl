@@ -380,6 +380,7 @@
                 }
             ], 
             "label": "qiime2", 
+            "doc": "QIIME2 Import and Demux Step 1\n", 
             "inputs": [
                 {
                     "type": "File", 
