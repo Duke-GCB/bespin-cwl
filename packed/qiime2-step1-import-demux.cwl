@@ -379,7 +379,7 @@
                     "class": "SubworkflowFeatureRequirement"
                 }
             ], 
-            "label": "qiime2", 
+            "label": "QIIME2 Step 1", 
             "doc": "QIIME2 Import and Demux Step 1\n", 
             "inputs": [
                 {

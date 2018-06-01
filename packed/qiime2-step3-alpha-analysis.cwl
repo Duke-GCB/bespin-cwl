@@ -688,6 +688,7 @@
                     "class": "SubworkflowFeatureRequirement"
                 }
             ], 
+            "label": "QIIME2 Step 3", 
             "doc": "QIIME2 Alpha/beta diversity analysis and Alpha rarefaction plotting\n", 
             "inputs": [
                 {

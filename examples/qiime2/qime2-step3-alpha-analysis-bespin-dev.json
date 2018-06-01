@@ -1,0 +1,13 @@
+{
+  "cwl_url": "https://raw.githubusercontent.com/Duke-GCB/bespin-cwl/qiime2-workflow/packed/qiime2-step3-alpha-analysis.cwl",
+  "description": "QIIME2 alpha/beta diversity analysis and rarefaction - step 3",
+  "methods_template_url": "https://raw.githubusercontent.com/Duke-GCB/bespin-cwl/qiime2-workflow/workflows/qiime2-methods.j2",
+  "name": "QIIME2 - Step 3 - alpha/beta analysis",
+  "share_group_name": "informatics",
+  "system_json": {},
+  "vm_flavor_name": "m1.xxlarge",
+  "vm_settings_name": "lando_worker_toil_dev_20180208_213920",
+  "volume_size_base": 3000,
+  "volume_size_factor": 10,
+  "workflow_version_number": 1
+}

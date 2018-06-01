@@ -4,6 +4,7 @@ cwlVersion: v1.0
 class: Workflow
 requirements:
 - class: SubworkflowFeatureRequirement
+label: QIIME2 Step 2 (Deblur option)
 doc: |
   QIIME2 Deblur, feature summaries, phylogenetic diversity tree, taxonomic analysis and ancom
 

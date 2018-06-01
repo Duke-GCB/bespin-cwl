@@ -4,6 +4,7 @@ cwlVersion: v1.0
 class: Workflow
 requirements:
 - class: SubworkflowFeatureRequirement
+label: QIIME2 Step 1
 doc: |
   QIIME2 Import and Demux Step 1
 
