@@ -384,18 +384,22 @@
             "inputs": [
                 {
                     "type": "File", 
+                    "doc": "barcodes associated with sequences in FASTQ format", 
                     "id": "#main/barcodes"
                 }, 
                 {
                     "type": "string", 
+                    "doc": "name of the column in sample_metadata that contains barcodes", 
                     "id": "#main/metadata_barcodes_column"
                 }, 
                 {
                     "type": "File", 
+                    "doc": "Sample metadata in tsv format", 
                     "id": "#main/sample_metadata"
                 }, 
                 {
                     "type": "File", 
+                    "doc": "single ended sequence reads in FASTQ format", 
                     "id": "#main/sequences"
                 }
             ], 

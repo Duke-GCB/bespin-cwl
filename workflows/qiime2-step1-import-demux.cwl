@@ -9,10 +9,18 @@ doc: |
   QIIME2 Import and Demux Step 1
 
 inputs:
-  sequences: File
-  barcodes: File
-  sample_metadata: File
-  metadata_barcodes_column: string
+  sequences: 
+    type: File
+    doc: single ended sequence reads in FASTQ format
+  barcodes: 
+    type: File
+    doc: barcodes associated with sequences in FASTQ format
+  sample_metadata: 
+    type: File
+    doc: Sample metadata in tsv format
+  metadata_barcodes_column: 
+    type: string
+    doc: name of the column in sample_metadata that contains barcodes
 
 outputs:
   sequences_artifact:

@@ -1,5 +1,5 @@
 {
-  "cwl_url": "https://raw.githubusercontent.com/Duke-GCB/bespin-cwl/qiime2-workflow/packed/qiime2-step2-dada2.cwl",
+  "cwl_url": "https://raw.githubusercontent.com/Duke-GCB/bespin-cwl/qiime2-workflow/packed/qiime2-step2-deblur.cwl",
   "description": "QIIME2 Deblur, feature summaries, phylogenetic tree, taxonomic analysis, and ancom - step 2",
   "methods_template_url": "https://raw.githubusercontent.com/Duke-GCB/bespin-cwl/qiime2-workflow/workflows/qiime2-methods.j2",
   "name": "QIIME2  - Step 2 - Deblur and analysis",
