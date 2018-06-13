@@ -67,5 +67,7 @@
   "vm_settings_name": "lando_worker_toil_prod_20180209_184025",
   "volume_size_base": 3000,
   "volume_size_factor": 10,
-  "workflow_version_number": 4
+  "workflow_version_number": 4,
+  "slug": "whole-exome-sequence-analysis",
+  "type_slug": "b37-human"
 }
