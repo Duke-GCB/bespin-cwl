@@ -9,5 +9,7 @@
   "vm_settings_name": "lando_worker_toil_dev_20180208_213920",
   "volume_size_base": 3000,
   "volume_size_factor": 10,
-  "workflow_version_number": 1
+  "workflow_version_number": 3,
+  "slug": "qime2-step-1",
+  "type_slug": "human"
 }
