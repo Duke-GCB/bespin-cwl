@@ -18,7 +18,7 @@ I pulled a [qiime2 image](https://www.singularity-hub.org/containers/3114) from 
 It can be used by doing the following:
 ```
 module load singularity
-export PATH=$PATH:/data/itlab/qiime2/bin/
+export PATH=$PATH:/data/itlab/qiime2-2018.4/bin/
 ```
 
 ## Create Input File for Step 1
