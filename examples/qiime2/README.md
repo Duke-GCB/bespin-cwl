@@ -1,8 +1,8 @@
 # Instructions for running on Duke HARDAC cluster
 
 ## Setup
-- Install cwltool
-- Install qiime2
+- [Install cwltool](https://github.com/common-workflow-language/cwltool#install)
+- [Install qiime2](https://docs.qiime2.org/2018.4/install/native/)
 
 ## Create Input File for Step 1
 Create a file named `qiime_step1.yml` with contents simlar to:
@@ -20,7 +20,7 @@ metadata_barcodes_column: BarcodeSequence
 ```
 Replace `TODO/<filename>` with your actual filenames.
 
-## Run workflow
+## Run workflow for Step 1
 On an interactive node setup your environment so the `qiime` and `cwltool` commands can be run.
 
 Then run the following commands:
