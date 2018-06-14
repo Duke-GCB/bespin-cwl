@@ -4,6 +4,7 @@
 - [Install cwltool](https://github.com/common-workflow-language/cwltool#install)
 - [Install qiime2](https://docs.qiime2.org/2018.4/install/native/)
 
+
 ## Create Input File for Step 1
 Create a file named `qiime_step1.yml` with contents simlar to:
 ```
