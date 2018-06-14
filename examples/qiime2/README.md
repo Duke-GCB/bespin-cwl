@@ -4,6 +4,22 @@
 - [Install cwltool](https://github.com/common-workflow-language/cwltool#install)
 - [Install qiime2](https://docs.qiime2.org/2018.4/install/native/)
 
+### Setup cwltool
+How I installed cwltool:
+```
+module load virtualenv
+virtualenv env
+source env/bin/activate
+pip install cwltool
+```
+
+### Setup qiime2
+I pulled a [qiime2 image](https://www.singularity-hub.org/containers/3114) from singularity hub.
+It can be used by doing the following:
+```
+module load singularity
+export PATH=$PATH:/data/itlab/qiime2/bin/
+```
 
 ## Create Input File for Step 1
 Create a file named `qiime_step1.yml` with contents simlar to:
