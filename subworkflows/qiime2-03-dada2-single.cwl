@@ -4,13 +4,15 @@ cwlVersion: v1.0
 class: Workflow
 requirements:
 - class: SubworkflowFeatureRequirement
-label: qiime2 DADA2 detect/correct sequence data
+label: qiime2 DADA2 detect/correct single sequence data
 doc: "Option 1: DADA2 from https://docs.qiime2.org/2018.4/tutorials/moving-pictures/"
 
 inputs:
   demux_sequences_artifact: File
-  dada2_trim_left: int
-  dada2_trunc_len: int
+  dada2_trim_left_f: int
+  dada2_trim_left_r: int
+  dada2_trunc_len_f: int
+  dada2_trunc_len_r: int
   dada2_representative_sequences_filename:
     type: string
     default: rep-seqs.qza
