@@ -171,6 +171,15 @@
                     "id": "#qiime2-04-features.cwl/feature_table_tabulation_filename"
                 }, 
                 {
+                    "type": "string", 
+                    "id": "#qiime2-04-features.cwl/filter_feature_table_where"
+                }, 
+                {
+                    "type": "string", 
+                    "default": "filtered-table.qzv", 
+                    "id": "#qiime2-04-features.cwl/filtered_table_filename_filename"
+                }, 
+                {
                     "type": "File", 
                     "id": "#qiime2-04-features.cwl/rep_seqs_artifact"
                 }, 
@@ -189,6 +198,11 @@
                     "type": "File", 
                     "outputSource": "#qiime2-04-features.cwl/feature_table_tabulation/visualization", 
                     "id": "#qiime2-04-features.cwl/feature_table_tabulation_visualization"
+                }, 
+                {
+                    "type": "File", 
+                    "outputSource": "#qiime2-04-features.cwl/filter_feature_table/filtered_table", 
+                    "id": "#qiime2-04-features.cwl/filtered_feature_table_artifact"
                 }
             ], 
             "steps": [
@@ -200,7 +214,7 @@
                             "id": "#qiime2-04-features.cwl/feature_table_summarize/sample_metadata_file"
                         }, 
                         {
-                            "source": "#qiime2-04-features.cwl/feature_table_artifact", 
+                            "source": "#qiime2-04-features.cwl/filter_feature_table/filtered_table", 
                             "id": "#qiime2-04-features.cwl/feature_table_summarize/table"
                         }, 
                         {
@@ -229,6 +243,31 @@
                         "#qiime2-04-features.cwl/feature_table_tabulation/visualization"
                     ], 
                     "id": "#qiime2-04-features.cwl/feature_table_tabulation"
+                }, 
+                {
+                    "run": "#feature-table-filter-samples.cwl", 
+                    "in": [
+                        {
+                            "source": "#qiime2-04-features.cwl/filter_feature_table_where", 
+                            "id": "#qiime2-04-features.cwl/filter_feature_table/filter_where"
+                        }, 
+                        {
+                            "source": "#qiime2-04-features.cwl/filtered_table_filename_filename", 
+                            "id": "#qiime2-04-features.cwl/filter_feature_table/filtered_table_filename"
+                        }, 
+                        {
+                            "source": "#qiime2-04-features.cwl/sample_metadata", 
+                            "id": "#qiime2-04-features.cwl/filter_feature_table/sample_metadata_file"
+                        }, 
+                        {
+                            "source": "#qiime2-04-features.cwl/feature_table_artifact", 
+                            "id": "#qiime2-04-features.cwl/filter_feature_table/table"
+                        }
+                    ], 
+                    "out": [
+                        "#qiime2-04-features.cwl/filter_feature_table/filtered_table"
+                    ], 
+                    "id": "#qiime2-04-features.cwl/filter_feature_table"
                 }
             ], 
             "id": "#qiime2-04-features.cwl"
@@ -477,210 +516,6 @@
             "id": "#qiime2-08-taxonomic-analysis.cwl"
         }, 
         {
-            "class": "Workflow", 
-            "requirements": [
-                {
-                    "class": "SubworkflowFeatureRequirement"
-                }, 
-                {
-                    "class": "StepInputExpressionRequirement"
-                }
-            ], 
-            "label": "qiime2 identify differentially abundant features", 
-            "doc": "Differential abundance testing with ANCOM from https://docs.qiime2.org/2018.4/tutorials/moving-pictures/", 
-            "inputs": [
-                {
-                    "type": "int", 
-                    "id": "#qiime2-09-ancom.cwl/collapse_level"
-                }, 
-                {
-                    "type": "string", 
-                    "id": "#qiime2-09-ancom.cwl/filter_sample_query"
-                }, 
-                {
-                    "type": "File", 
-                    "id": "#qiime2-09-ancom.cwl/sample_metadata"
-                }, 
-                {
-                    "type": "File", 
-                    "id": "#qiime2-09-ancom.cwl/table"
-                }, 
-                {
-                    "type": "File", 
-                    "id": "#qiime2-09-ancom.cwl/taxonomy"
-                }
-            ], 
-            "outputs": [
-                {
-                    "type": "File", 
-                    "outputSource": "#qiime2-09-ancom.cwl/ancom_subject_16/out_visual", 
-                    "id": "#qiime2-09-ancom.cwl/ancom_subject_16_visualization_file"
-                }, 
-                {
-                    "type": "File", 
-                    "outputSource": "#qiime2-09-ancom.cwl/ancom_subject_column_gut_table/out_visual", 
-                    "id": "#qiime2-09-ancom.cwl/ancom_visualization_file"
-                }, 
-                {
-                    "type": "File", 
-                    "outputSource": "#qiime2-09-ancom.cwl/gut_table_collapse/out_collapsed_table", 
-                    "id": "#qiime2-09-ancom.cwl/collapsed_table_file"
-                }, 
-                {
-                    "type": "File", 
-                    "outputSource": "#qiime2-09-ancom.cwl/comp_gut_table_l6/out_comp_table", 
-                    "id": "#qiime2-09-ancom.cwl/comp_gut_table_l6_file"
-                }, 
-                {
-                    "type": "File", 
-                    "outputSource": "#qiime2-09-ancom.cwl/pseudocount_gut_table/out_comp_table", 
-                    "id": "#qiime2-09-ancom.cwl/composition_table_file"
-                }, 
-                {
-                    "type": "File", 
-                    "outputSource": "#qiime2-09-ancom.cwl/filter_gut_samples/filtered_table", 
-                    "id": "#qiime2-09-ancom.cwl/filter_table_file"
-                }
-            ], 
-            "steps": [
-                {
-                    "run": "#composition-ancom.cwl", 
-                    "in": [
-                        {
-                            "source": "#qiime2-09-ancom.cwl/comp_gut_table_l6/out_comp_table", 
-                            "id": "#qiime2-09-ancom.cwl/ancom_subject_16/comp_table"
-                        }, 
-                        {
-                            "valueFrom": "l6-ancom-Subject.qzv", 
-                            "id": "#qiime2-09-ancom.cwl/ancom_subject_16/feat_visualization"
-                        }, 
-                        {
-                            "valueFrom": "Subject", 
-                            "id": "#qiime2-09-ancom.cwl/ancom_subject_16/metadata_column"
-                        }, 
-                        {
-                            "source": "#qiime2-09-ancom.cwl/sample_metadata", 
-                            "id": "#qiime2-09-ancom.cwl/ancom_subject_16/metadata_file"
-                        }
-                    ], 
-                    "out": [
-                        "#qiime2-09-ancom.cwl/ancom_subject_16/out_visual"
-                    ], 
-                    "id": "#qiime2-09-ancom.cwl/ancom_subject_16"
-                }, 
-                {
-                    "run": "#composition-ancom.cwl", 
-                    "in": [
-                        {
-                            "source": "#qiime2-09-ancom.cwl/pseudocount_gut_table/out_comp_table", 
-                            "id": "#qiime2-09-ancom.cwl/ancom_subject_column_gut_table/comp_table"
-                        }, 
-                        {
-                            "valueFrom": "ancom.qzv", 
-                            "id": "#qiime2-09-ancom.cwl/ancom_subject_column_gut_table/feat_visualization"
-                        }, 
-                        {
-                            "valueFrom": "Subject", 
-                            "id": "#qiime2-09-ancom.cwl/ancom_subject_column_gut_table/metadata_column"
-                        }, 
-                        {
-                            "source": "#qiime2-09-ancom.cwl/sample_metadata", 
-                            "id": "#qiime2-09-ancom.cwl/ancom_subject_column_gut_table/metadata_file"
-                        }
-                    ], 
-                    "out": [
-                        "#qiime2-09-ancom.cwl/ancom_subject_column_gut_table/out_visual"
-                    ], 
-                    "id": "#qiime2-09-ancom.cwl/ancom_subject_column_gut_table"
-                }, 
-                {
-                    "run": "#composition-add-pseudocount.cwl", 
-                    "in": [
-                        {
-                            "valueFrom": "comp-gut-table-l6.qza", 
-                            "id": "#qiime2-09-ancom.cwl/comp_gut_table_l6/composition"
-                        }, 
-                        {
-                            "source": "#qiime2-09-ancom.cwl/gut_table_collapse/out_collapsed_table", 
-                            "id": "#qiime2-09-ancom.cwl/comp_gut_table_l6/table"
-                        }
-                    ], 
-                    "out": [
-                        "#qiime2-09-ancom.cwl/comp_gut_table_l6/out_comp_table"
-                    ], 
-                    "id": "#qiime2-09-ancom.cwl/comp_gut_table_l6"
-                }, 
-                {
-                    "run": "#feature-table-filter-samples.cwl", 
-                    "in": [
-                        {
-                            "source": "#qiime2-09-ancom.cwl/filter_sample_query", 
-                            "id": "#qiime2-09-ancom.cwl/filter_gut_samples/filter_where"
-                        }, 
-                        {
-                            "valueFrom": "gut-table.qza", 
-                            "id": "#qiime2-09-ancom.cwl/filter_gut_samples/filtered_table_filename"
-                        }, 
-                        {
-                            "source": "#qiime2-09-ancom.cwl/sample_metadata", 
-                            "id": "#qiime2-09-ancom.cwl/filter_gut_samples/sample_metadata_file"
-                        }, 
-                        {
-                            "source": "#qiime2-09-ancom.cwl/table", 
-                            "id": "#qiime2-09-ancom.cwl/filter_gut_samples/table"
-                        }
-                    ], 
-                    "out": [
-                        "#qiime2-09-ancom.cwl/filter_gut_samples/filtered_table"
-                    ], 
-                    "id": "#qiime2-09-ancom.cwl/filter_gut_samples"
-                }, 
-                {
-                    "run": "#taxa-collapse.cwl", 
-                    "in": [
-                        {
-                            "source": "#qiime2-09-ancom.cwl/collapse_level", 
-                            "id": "#qiime2-09-ancom.cwl/gut_table_collapse/collapse_level"
-                        }, 
-                        {
-                            "valueFrom": "gut-table-l6.qza", 
-                            "id": "#qiime2-09-ancom.cwl/gut_table_collapse/collapsed_table"
-                        }, 
-                        {
-                            "source": "#qiime2-09-ancom.cwl/filter_gut_samples/filtered_table", 
-                            "id": "#qiime2-09-ancom.cwl/gut_table_collapse/table"
-                        }, 
-                        {
-                            "source": "#qiime2-09-ancom.cwl/taxonomy", 
-                            "id": "#qiime2-09-ancom.cwl/gut_table_collapse/taxonomy_file"
-                        }
-                    ], 
-                    "out": [
-                        "#qiime2-09-ancom.cwl/gut_table_collapse/out_collapsed_table"
-                    ], 
-                    "id": "#qiime2-09-ancom.cwl/gut_table_collapse"
-                }, 
-                {
-                    "run": "#composition-add-pseudocount.cwl", 
-                    "in": [
-                        {
-                            "valueFrom": "comp-gut-table.qza", 
-                            "id": "#qiime2-09-ancom.cwl/pseudocount_gut_table/composition"
-                        }, 
-                        {
-                            "source": "#qiime2-09-ancom.cwl/filter_gut_samples/filtered_table", 
-                            "id": "#qiime2-09-ancom.cwl/pseudocount_gut_table/table"
-                        }
-                    ], 
-                    "out": [
-                        "#qiime2-09-ancom.cwl/pseudocount_gut_table/out_comp_table"
-                    ], 
-                    "id": "#qiime2-09-ancom.cwl/pseudocount_gut_table"
-                }
-            ], 
-            "id": "#qiime2-09-ancom.cwl"
-        }, 
-        {
             "class": "CommandLineTool", 
             "label": "qiime2: Perform de novo multiple sequence alignment using MAFFT", 
             "hints": [
@@ -766,108 +601,6 @@
                 "mask"
             ], 
             "id": "#alignment-mask.cwl"
-        }, 
-        {
-            "class": "CommandLineTool", 
-            "label": "qiime2: Increment all counts in table by pseudocount", 
-            "hints": [
-                {
-                    "$import": "#qiime2-docker-hint.yml"
-                }
-            ], 
-            "inputs": [
-                {
-                    "inputBinding": {
-                        "prefix": "--o-composition-table"
-                    }, 
-                    "label": "resulting feature table filename", 
-                    "type": "string", 
-                    "default": "comp-table.qza", 
-                    "id": "#composition-add-pseudocount.cwl/composition"
-                }, 
-                {
-                    "inputBinding": {
-                        "prefix": "--i-table"
-                    }, 
-                    "label": "feature table to which pseudocounts should be added", 
-                    "type": "File", 
-                    "id": "#composition-add-pseudocount.cwl/table"
-                }
-            ], 
-            "outputs": [
-                {
-                    "type": "File", 
-                    "outputBinding": {
-                        "glob": "$(inputs.composition)"
-                    }, 
-                    "id": "#composition-add-pseudocount.cwl/out_comp_table"
-                }
-            ], 
-            "baseCommand": [
-                "qiime", 
-                "composition", 
-                "add-pseudocount"
-            ], 
-            "id": "#composition-add-pseudocount.cwl"
-        }, 
-        {
-            "class": "CommandLineTool", 
-            "label": "qiime2: Apply ANCOM to identify features that are differentially abundant across groups", 
-            "hints": [
-                {
-                    "$import": "#qiime2-docker-hint.yml"
-                }
-            ], 
-            "inputs": [
-                {
-                    "inputBinding": {
-                        "prefix": "--i-table"
-                    }, 
-                    "label": "The feature table to be used for ANCOM computation", 
-                    "type": "File", 
-                    "id": "#composition-ancom.cwl/comp_table"
-                }, 
-                {
-                    "inputBinding": {
-                        "prefix": "--o-visualization"
-                    }, 
-                    "label": "Resulting visualization filename", 
-                    "type": "string", 
-                    "default": "ancom.qzv", 
-                    "id": "#composition-ancom.cwl/feat_visualization"
-                }, 
-                {
-                    "inputBinding": {
-                        "prefix": "--m-metadata-column"
-                    }, 
-                    "label": "Column from metadata file or artifact viewable as metadata", 
-                    "type": "string", 
-                    "id": "#composition-ancom.cwl/metadata_column"
-                }, 
-                {
-                    "inputBinding": {
-                        "prefix": "--m-metadata-file"
-                    }, 
-                    "label": "Metadata file or artifact viewable as metadata", 
-                    "type": "File", 
-                    "id": "#composition-ancom.cwl/metadata_file"
-                }
-            ], 
-            "outputs": [
-                {
-                    "type": "File", 
-                    "outputBinding": {
-                        "glob": "$(inputs.feat_visualization)"
-                    }, 
-                    "id": "#composition-ancom.cwl/out_visual"
-                }
-            ], 
-            "baseCommand": [
-                "qiime", 
-                "composition", 
-                "ancom"
-            ], 
-            "id": "#composition-ancom.cwl"
         }, 
         {
             "class": "CommandLineTool", 
@@ -1368,66 +1101,6 @@
             "id": "#taxa-barplot.cwl"
         }, 
         {
-            "class": "CommandLineTool", 
-            "label": "qiime2: Collapse groups of features that have the same taxonomic assignment through the specified level", 
-            "hints": [
-                {
-                    "$import": "#qiime2-docker-hint.yml"
-                }
-            ], 
-            "inputs": [
-                {
-                    "inputBinding": {
-                        "prefix": "--p-level"
-                    }, 
-                    "label": "The taxonomic level at which the features should be collapsed", 
-                    "type": "int", 
-                    "default": 2, 
-                    "id": "#taxa-collapse.cwl/collapse_level"
-                }, 
-                {
-                    "inputBinding": {
-                        "prefix": "--o-collapsed-table"
-                    }, 
-                    "label": "The resulting feature table, where all features are now taxonomic annotations with the user-specified number of levels", 
-                    "type": "string", 
-                    "default": "coll-table.qza", 
-                    "id": "#taxa-collapse.cwl/collapsed_table"
-                }, 
-                {
-                    "inputBinding": {
-                        "prefix": "--i-table"
-                    }, 
-                    "label": "Feature table to be collapsed", 
-                    "type": "File", 
-                    "id": "#taxa-collapse.cwl/table"
-                }, 
-                {
-                    "inputBinding": {
-                        "prefix": "--i-taxonomy"
-                    }, 
-                    "label": "Taxonomic annotations for features in the provided feature table", 
-                    "type": "File", 
-                    "id": "#taxa-collapse.cwl/taxonomy_file"
-                }
-            ], 
-            "outputs": [
-                {
-                    "type": "File", 
-                    "outputBinding": {
-                        "glob": "$(inputs.collapsed_table)"
-                    }, 
-                    "id": "#taxa-collapse.cwl/out_collapsed_table"
-                }
-            ], 
-            "baseCommand": [
-                "qiime", 
-                "taxa", 
-                "collapse"
-            ], 
-            "id": "#taxa-collapse.cwl"
-        }, 
-        {
             "class": "Workflow", 
             "requirements": [
                 {
@@ -1437,14 +1110,6 @@
             "label": "QIIME2 Step 2 (DADA2 option)", 
             "doc": "QIIME2 DADA2, feature summaries, phylogenetic diversity tree, taxonomic analysis and ancom\n", 
             "inputs": [
-                {
-                    "type": "int", 
-                    "id": "#main/ancom_collapse_level"
-                }, 
-                {
-                    "type": "string", 
-                    "id": "#main/ancom_filter_sample_query"
-                }, 
                 {
                     "type": "int", 
                     "id": "#main/dada2_denoise_n_threads"
@@ -1470,6 +1135,10 @@
                     "id": "#main/demux_sequences_artifact"
                 }, 
                 {
+                    "type": "string", 
+                    "id": "#main/filter_feature_table_where"
+                }, 
+                {
                     "type": "File", 
                     "id": "#main/sample_metadata"
                 }, 
@@ -1483,31 +1152,6 @@
                     "type": "File", 
                     "outputSource": "#main/phylogenetic_tree/aligned_representative_sequences", 
                     "id": "#main/aligned_representative_sequences"
-                }, 
-                {
-                    "type": "File", 
-                    "outputSource": "#main/ancom_diff_abundance/ancom_subject_16_visualization_file", 
-                    "id": "#main/ancom_subject_16_visualization_file"
-                }, 
-                {
-                    "type": "File", 
-                    "outputSource": "#main/ancom_diff_abundance/ancom_visualization_file", 
-                    "id": "#main/ancom_visualization_file"
-                }, 
-                {
-                    "type": "File", 
-                    "outputSource": "#main/ancom_diff_abundance/collapsed_table_file", 
-                    "id": "#main/collapsed_table_file"
-                }, 
-                {
-                    "type": "File", 
-                    "outputSource": "#main/ancom_diff_abundance/comp_gut_table_l6_file", 
-                    "id": "#main/comp_gut_table_l6_file"
-                }, 
-                {
-                    "type": "File", 
-                    "outputSource": "#main/ancom_diff_abundance/composition_table_file", 
-                    "id": "#main/composition_table_file"
                 }, 
                 {
                     "type": "File", 
@@ -1541,8 +1185,8 @@
                 }, 
                 {
                     "type": "File", 
-                    "outputSource": "#main/ancom_diff_abundance/filter_table_file", 
-                    "id": "#main/filter_table_file"
+                    "outputSource": "#main/feature_table_visualizations/filtered_feature_table_artifact", 
+                    "id": "#main/filtered_feature_table_artifact"
                 }, 
                 {
                     "type": "File", 
@@ -1576,40 +1220,6 @@
                 }
             ], 
             "steps": [
-                {
-                    "run": "#qiime2-09-ancom.cwl", 
-                    "in": [
-                        {
-                            "source": "#main/ancom_collapse_level", 
-                            "id": "#main/ancom_diff_abundance/collapse_level"
-                        }, 
-                        {
-                            "source": "#main/ancom_filter_sample_query", 
-                            "id": "#main/ancom_diff_abundance/filter_sample_query"
-                        }, 
-                        {
-                            "source": "#main/sample_metadata", 
-                            "id": "#main/ancom_diff_abundance/sample_metadata"
-                        }, 
-                        {
-                            "source": "#main/dada2_sequences/dada2_table", 
-                            "id": "#main/ancom_diff_abundance/table"
-                        }, 
-                        {
-                            "source": "#main/taxonomic_analysis/taxonomy_artifact", 
-                            "id": "#main/ancom_diff_abundance/taxonomy"
-                        }
-                    ], 
-                    "out": [
-                        "#main/ancom_diff_abundance/filter_table_file", 
-                        "#main/ancom_diff_abundance/composition_table_file", 
-                        "#main/ancom_diff_abundance/ancom_visualization_file", 
-                        "#main/ancom_diff_abundance/collapsed_table_file", 
-                        "#main/ancom_diff_abundance/comp_gut_table_l6_file", 
-                        "#main/ancom_diff_abundance/ancom_subject_16_visualization_file"
-                    ], 
-                    "id": "#main/ancom_diff_abundance"
-                }, 
                 {
                     "run": "#qiime2-03-dada2-paired.cwl", 
                     "in": [
@@ -1654,6 +1264,10 @@
                             "id": "#main/feature_table_visualizations/feature_table_artifact"
                         }, 
                         {
+                            "source": "#main/filter_feature_table_where", 
+                            "id": "#main/feature_table_visualizations/filter_feature_table_where"
+                        }, 
+                        {
                             "source": "#main/dada2_sequences/dada2_representative_sequences", 
                             "id": "#main/feature_table_visualizations/rep_seqs_artifact"
                         }, 
@@ -1663,6 +1277,7 @@
                         }
                     ], 
                     "out": [
+                        "#main/feature_table_visualizations/filtered_feature_table_artifact", 
                         "#main/feature_table_visualizations/feature_table_summarize_visualization", 
                         "#main/feature_table_visualizations/feature_table_tabulation_visualization"
                     ], 

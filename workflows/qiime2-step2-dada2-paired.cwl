@@ -8,7 +8,6 @@ label: QIIME2 Step 2 (DADA2 option)
 doc: |
   QIIME2 DADA2, feature summaries, phylogenetic diversity tree, taxonomic analysis and ancom
 
-
 inputs:
   demux_sequences_artifact: File
   dada2_trunc_len_f: int
@@ -18,9 +17,7 @@ inputs:
   dada2_denoise_n_threads: int
   sample_metadata: File
   taxonomic_classifier: File
-  ancom_collapse_level: int
-  ancom_filter_sample_query: string
-
+  filter_feature_table_where: string
 
 outputs:
    dada2_representative_sequences:
@@ -36,6 +33,9 @@ outputs:
      type: File
      outputSource: dada2_sequences/dada2_visualization_artifact
 
+   filtered_feature_table_artifact:
+     type: File
+     outputSource: feature_table_visualizations/filtered_feature_table_artifact
    feature_table_summarize_visualization:
      type: File
      outputSource: feature_table_visualizations/feature_table_summarize_visualization
@@ -66,25 +66,6 @@ outputs:
      type: File
      outputSource: taxonomic_analysis/taxa_barplot_file
 
-   filter_table_file:
-     type: File
-     outputSource: ancom_diff_abundance/filter_table_file
-   composition_table_file:
-     type: File
-     outputSource: ancom_diff_abundance/composition_table_file
-   ancom_visualization_file:
-     type: File
-     outputSource: ancom_diff_abundance/ancom_visualization_file
-   collapsed_table_file:
-     type: File
-     outputSource: ancom_diff_abundance/collapsed_table_file
-   comp_gut_table_l6_file:
-     type: File
-     outputSource: ancom_diff_abundance/comp_gut_table_l6_file
-   ancom_subject_16_visualization_file:
-     type: File
-     outputSource: ancom_diff_abundance/ancom_subject_16_visualization_file
-
 steps:
   dada2_sequences:
     run: ../subworkflows/qiime2-03-dada2-paired.cwl
@@ -106,7 +87,9 @@ steps:
       feature_table_artifact: dada2_sequences/dada2_table
       rep_seqs_artifact: dada2_sequences/dada2_representative_sequences
       sample_metadata: sample_metadata
+      filter_feature_table_where: filter_feature_table_where
     out:
+      - filtered_feature_table_artifact
       - feature_table_summarize_visualization
       - feature_table_tabulation_visualization
   phylogenetic_tree:
@@ -129,18 +112,3 @@ steps:
       - taxonomy_artifact
       - taxonomy_visualization_file
       - taxa_barplot_file
-  ancom_diff_abundance:
-    run: ../subworkflows/qiime2-09-ancom.cwl
-    in:
-      table: dada2_sequences/dada2_table
-      sample_metadata: sample_metadata
-      collapse_level: ancom_collapse_level
-      taxonomy: taxonomic_analysis/taxonomy_artifact
-      filter_sample_query: ancom_filter_sample_query
-    out:
-      - filter_table_file
-      - composition_table_file
-      - ancom_visualization_file
-      - collapsed_table_file
-      - comp_gut_table_l6_file
-      - ancom_subject_16_visualization_file
