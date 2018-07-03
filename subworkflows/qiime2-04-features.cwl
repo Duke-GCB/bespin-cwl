@@ -15,7 +15,7 @@ inputs:
 
   filtered_table_filename_filename:
     type: string
-    default: filtered-table.qzv
+    default: filtered-table.qza
   feature_table_summary_filename:
     type: string
     default: table.qzv

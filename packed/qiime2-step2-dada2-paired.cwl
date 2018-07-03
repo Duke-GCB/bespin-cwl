@@ -176,7 +176,7 @@
                 }, 
                 {
                     "type": "string", 
-                    "default": "filtered-table.qzv", 
+                    "default": "filtered-table.qza", 
                     "id": "#qiime2-04-features.cwl/filtered_table_filename_filename"
                 }, 
                 {
