@@ -13,6 +13,7 @@ inputs:
   table: File
   sample_metadata: File
   diversity_sampling_depth: int
+  unweighted_unifrac_metadata_column: string
 
 outputs:
   core_metrics_directory:
@@ -39,6 +40,7 @@ steps:
       table: table
       sampling_depth: diversity_sampling_depth
       sample_metadata: sample_metadata
+      unweighted_unifrac_metadata_column: unweighted_unifrac_metadata_column
     out:
       - core_metrics_directory
       - faith_pd_group_significance_file

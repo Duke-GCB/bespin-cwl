@@ -13,6 +13,7 @@ inputs:
   table: File
   sampling_depth: int
   sample_metadata: File
+  unweighted_unifrac_metadata_column: string
 
   faith_pd_group_significance_filename:
     type: string
@@ -94,8 +95,7 @@ steps:
     in:
       distance_matrix: generate_core_metrics/unweighted_unifrac_distance_matrix
       metadata_file: sample_metadata
-      metadata_column:
-        valueFrom: 'TransectName'
+      metadata_column: unweighted_unifrac_metadata_column
       output_significance_filename: unweighted_unifrac_significance_filename
     out:
       - out_visual
