@@ -4,7 +4,6 @@ cwlVersion: v1.0
 class: Workflow
 requirements:
 - class: SubworkflowFeatureRequirement
-- class: StepInputExpressionRequirement
 label: qiime2 diversity analyses
 doc: "Alpha and beta diversity analysis"
 
