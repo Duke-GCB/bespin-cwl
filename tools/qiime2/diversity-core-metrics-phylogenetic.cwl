@@ -7,6 +7,9 @@ baseCommand: [mkdir, 'core-metrics-results']
 hints:
   - $import: qiime2-docker-hint.yml
 
+requirements:
+  - class: InlineJavascriptRequirement
+
 inputs:
   input_tree:
     inputBinding:
@@ -58,8 +61,12 @@ outputs:
     outputBinding:
       glob: $(inputs.output_dir_name + '/unweighted_unifrac_pcoa_results.qza')
   bray_curtis_pcoa_results:
-    type: File
+    type: File?
     outputBinding:
       glob: $(inputs.output_dir_name + '/bray_curtis_pcoa_results.qza')
+  shannon_vector:
+    type: File
+    outputBinding:
+      glob: $(inputs.output_dir_name + '/shannon_vector.qza')
 
 baseCommand: ["qiime", "diversity", "core-metrics-phylogenetic"]
