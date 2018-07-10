@@ -7,9 +7,6 @@ baseCommand: [mkdir, 'core-metrics-results']
 hints:
   - $import: qiime2-docker-hint.yml
 
-requirements:
-  - class: InlineJavascriptRequirement
-
 inputs:
   input_tree:
     inputBinding:
