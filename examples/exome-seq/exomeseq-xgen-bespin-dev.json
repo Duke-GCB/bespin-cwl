@@ -1,0 +1,73 @@
+{
+  "cwl_url": "https://github.com/Duke-GCB/bespin-cwl/releases/download/v0.9.1/exomeseq.cwl",
+  "description": "Whole Exome sequencing following GATK best practices workflow. Germline SNP & Indel Discovery using b37 human genome assembly on samples sequenced with an xGen Exome Research Panel v1.0 capture kit.",
+  "methods_template_url": "https://raw.githubusercontent.com/Duke-GCB/bespin-cwl/v0.9.1/workflows/exomeseq-methods.j2",
+  "name": "Whole Exome Sequence analysis - Human b37 xGen v1.0",
+  "share_group_name": "informatics",
+  "system_json": {
+    "GATKJar": {
+      "class": "File",
+      "path": "/data/exome-seq/GenomeAnalysisTK-3.8/GenomeAnalysisTK.jar"
+    },
+    "indel_resource_mills": {
+      "class": "File",
+      "path": "/data/exome-seq/b37/Mills_and_1000G_gold_standard.indels.b37.vcf"
+    },
+    "interval_padding": 100,
+    "intervals": [
+      {
+        "class": "File",
+        "path": "/data/exome-seq/capture/SeqCap_EZ_Exome_v3_capture.noChr.bed"
+      }
+    ],
+    "knownSites": [
+      {
+        "class": "File",
+        "path": "/data/exome-seq/b37/dbsnp_138.b37.vcf"
+      },
+      {
+        "class": "File",
+        "path": "/data/exome-seq/b37/Mills_and_1000G_gold_standard.indels.b37.vcf"
+      },
+      {
+        "class": "File",
+        "path": "/data/exome-seq/b37/1000G_phase1.indels.b37.vcf"
+      }
+    ],
+    "platform": "Illumina",
+    "primary_intervals": [
+      {
+        "class": "File",
+        "path": "/data/exome-seq/capture/SeqCap_EZ_Exome_v3_primary.noChr.bed"
+      }
+    ],
+    "reference_genome": {
+      "class": "File",
+      "path": "/data/exome-seq/b37/human_g1k_v37.fasta"
+    },
+    "resource_dbsnp": {
+      "class": "File",
+      "path": "/data/exome-seq/b37/dbsnp_138.b37.vcf"
+    },
+    "snp_resource_1kg": {
+      "class": "File",
+      "path": "/data/exome-seq/b37/1000G_phase1.snps.high_confidence.b37.vcf"
+    },
+    "snp_resource_hapmap": {
+      "class": "File",
+      "path": "/data/exome-seq/b37/hapmap/hapmap_3.3.b37.vcf"
+    },
+    "snp_resource_omni": {
+      "class": "File",
+      "path": "/data/exome-seq/b37/omni/1000G_omni2.5.b37.vcf"
+    },
+    "threads": 30
+  },
+  "vm_flavor_name": "m1.xxlarge",
+  "vm_settings_name": "lando_worker_toil_dev_20180208_213920",
+  "volume_size_base": 3000,
+  "volume_size_factor": 10,
+  "workflow_version_number": 4,
+  "workflow_tag": "whole-exome-sequence-analysis",
+  "type_tag": "b37-human-xgen"
+}
