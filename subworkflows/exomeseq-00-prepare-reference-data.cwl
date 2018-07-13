@@ -4,9 +4,9 @@ cwlVersion: v1.0
 class: Workflow
 inputs:
   # Intervals should come from capture kit (target intervals) bed format
-  intervals: File[]?
+  target_intervals: File[]?
   # Intervals should come from capture kit (bait intervals) bed format
-  primary_intervals: File[]?
+  bait_intervals: File[]?
   reference_genome:
     type: File
     secondaryFiles:
@@ -34,7 +34,7 @@ steps:
         outdirMin: 12000
         tmpdirMin: 12000
     in:
-      input_file: intervals
+      input_file: target_intervals
       reference_sequence: reference_genome
     out:
       - output_interval_list_file
@@ -47,7 +47,7 @@ steps:
         outdirMin: 12000
         tmpdirMin: 12000
     in:
-      input_file: primary_intervals
+      input_file: bait_intervals
       reference_sequence: reference_genome
     out:
       - output_interval_list_file
