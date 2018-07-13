@@ -84,10 +84,10 @@ outputs:
     type: Directory
     outputSource: organize_directories/bams_markduplicates_dir
     doc: "BAM and bai files from markduplicates"
-  bams_final_dir:
+  bams_recalibrated_dir:
     type: Directory
-    outputSource: organize_directories/bams_final_dir
-    doc: "BAM files containing assembled haplotypes and locally realigned reads"
+    outputSource: organize_directories/bams_recalibrated_dir
+    doc: "BAM files containing recalibrated reads"
   joint_raw_variants:
     type: File
     outputSource: variant_discovery/joint_raw_variants
@@ -164,9 +164,11 @@ steps:
       hs_metrics: preprocessing/hs_metrics
       bams_markduplicates: preprocessing/markduplicates_bam
       raw_variants: preprocessing/raw_variants
+      bams_recalibrated: preprocessing/recalibrated_reads
     out:
       - fastqc_reports_dir
       - trim_reports_dir
       - hs_metrics_dir
       - bams_markduplicates_dir
       - raw_variants_dir
+      - bams_recalibrated_dir
