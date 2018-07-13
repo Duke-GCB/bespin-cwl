@@ -1114,14 +1114,14 @@
                         "type": "array", 
                         "items": "File"
                     }, 
-                    "id": "#exomeseq-03-organizedirectories.cwl/bams_final"
+                    "id": "#exomeseq-03-organizedirectories.cwl/bams_markduplicates"
                 }, 
                 {
                     "type": {
                         "type": "array", 
                         "items": "File"
                     }, 
-                    "id": "#exomeseq-03-organizedirectories.cwl/bams_markduplicates"
+                    "id": "#exomeseq-03-organizedirectories.cwl/bams_recalibrated"
                 }, 
                 {
                     "type": {
@@ -1161,13 +1161,13 @@
             "outputs": [
                 {
                     "type": "Directory", 
-                    "outputSource": "#exomeseq-03-organizedirectories.cwl/org_bams_final/outdir", 
-                    "id": "#exomeseq-03-organizedirectories.cwl/bams_final_dir"
+                    "outputSource": "#exomeseq-03-organizedirectories.cwl/org_bams_markduplicates/outdir", 
+                    "id": "#exomeseq-03-organizedirectories.cwl/bams_markduplicates_dir"
                 }, 
                 {
                     "type": "Directory", 
-                    "outputSource": "#exomeseq-03-organizedirectories.cwl/org_bams_markduplicates/outdir", 
-                    "id": "#exomeseq-03-organizedirectories.cwl/bams_markduplicates_dir"
+                    "outputSource": "#exomeseq-03-organizedirectories.cwl/org_bams_recalibrated/outdir", 
+                    "id": "#exomeseq-03-organizedirectories.cwl/bams_recalibrated_dir"
                 }, 
                 {
                     "type": "Directory", 
@@ -1195,23 +1195,6 @@
                     "run": "#files-to-directory.cwl", 
                     "in": [
                         {
-                            "source": "#exomeseq-03-organizedirectories.cwl/bams_final", 
-                            "id": "#exomeseq-03-organizedirectories.cwl/org_bams_final/files"
-                        }, 
-                        {
-                            "default": "bams-final", 
-                            "id": "#exomeseq-03-organizedirectories.cwl/org_bams_final/name"
-                        }
-                    ], 
-                    "out": [
-                        "#exomeseq-03-organizedirectories.cwl/org_bams_final/outdir"
-                    ], 
-                    "id": "#exomeseq-03-organizedirectories.cwl/org_bams_final"
-                }, 
-                {
-                    "run": "#files-to-directory.cwl", 
-                    "in": [
-                        {
                             "source": "#exomeseq-03-organizedirectories.cwl/bams_markduplicates", 
                             "id": "#exomeseq-03-organizedirectories.cwl/org_bams_markduplicates/files"
                         }, 
@@ -1224,6 +1207,23 @@
                         "#exomeseq-03-organizedirectories.cwl/org_bams_markduplicates/outdir"
                     ], 
                     "id": "#exomeseq-03-organizedirectories.cwl/org_bams_markduplicates"
+                }, 
+                {
+                    "run": "#files-to-directory.cwl", 
+                    "in": [
+                        {
+                            "source": "#exomeseq-03-organizedirectories.cwl/bams_recalibrated", 
+                            "id": "#exomeseq-03-organizedirectories.cwl/org_bams_recalibrated/files"
+                        }, 
+                        {
+                            "default": "bams-recalibrated", 
+                            "id": "#exomeseq-03-organizedirectories.cwl/org_bams_recalibrated/name"
+                        }
+                    ], 
+                    "out": [
+                        "#exomeseq-03-organizedirectories.cwl/org_bams_recalibrated/outdir"
+                    ], 
+                    "id": "#exomeseq-03-organizedirectories.cwl/org_bams_recalibrated"
                 }, 
                 {
                     "run": "#file-pairs-to-directory.cwl", 
@@ -4874,15 +4874,15 @@
             "outputs": [
                 {
                     "type": "Directory", 
-                    "outputSource": "#main/organize_directories/bams_final_dir", 
-                    "doc": "BAM files containing assembled haplotypes and locally realigned reads", 
-                    "id": "#main/bams_final_dir"
-                }, 
-                {
-                    "type": "Directory", 
                     "outputSource": "#main/organize_directories/bams_markduplicates_dir", 
                     "doc": "BAM and bai files from markduplicates", 
                     "id": "#main/bams_markduplicates_dir"
+                }, 
+                {
+                    "type": "Directory", 
+                    "outputSource": "#main/organize_directories/bams_recalibrated_dir", 
+                    "doc": "BAM files containing recalibrated reads", 
+                    "id": "#main/bams_recalibrated_dir"
                 }, 
                 {
                     "type": "Directory", 
@@ -4922,12 +4922,12 @@
                     "run": "#exomeseq-03-organizedirectories.cwl", 
                     "in": [
                         {
-                            "source": "#main/preprocessing/haplotypes_bam", 
-                            "id": "#main/organize_directories/bams_final"
-                        }, 
-                        {
                             "source": "#main/preprocessing/markduplicates_bam", 
                             "id": "#main/organize_directories/bams_markduplicates"
+                        }, 
+                        {
+                            "source": "#main/preprocessing/recalibrated_reads", 
+                            "id": "#main/organize_directories/bams_recalibrated"
                         }, 
                         {
                             "source": "#main/preprocessing/fastqc_reports", 
@@ -4952,7 +4952,7 @@
                         "#main/organize_directories/hs_metrics_dir", 
                         "#main/organize_directories/bams_markduplicates_dir", 
                         "#main/organize_directories/raw_variants_dir", 
-                        "#main/organize_directories/bams_final_dir"
+                        "#main/organize_directories/bams_recalibrated_dir"
                     ], 
                     "id": "#main/organize_directories"
                 }, 
@@ -5038,7 +5038,6 @@
                         "#main/preprocessing/recalibration_table", 
                         "#main/preprocessing/recalibrated_reads", 
                         "#main/preprocessing/raw_variants", 
-                        "#main/preprocessing/haplotypes_bam", 
                         "#main/preprocessing/hs_metrics"
                     ], 
                     "id": "#main/preprocessing"
