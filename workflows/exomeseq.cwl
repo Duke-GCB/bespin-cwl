@@ -129,7 +129,6 @@ steps:
       - recalibration_table
       - recalibrated_reads
       - raw_variants
-      - haplotypes_bam
       - hs_metrics
   variant_discovery:
     run: ../subworkflows/exomeseq-02-variantdiscovery.cwl
@@ -165,11 +164,9 @@ steps:
       hs_metrics: preprocessing/hs_metrics
       bams_markduplicates: preprocessing/markduplicates_bam
       raw_variants: preprocessing/raw_variants
-      bams_final: preprocessing/haplotypes_bam
     out:
       - fastqc_reports_dir
       - trim_reports_dir
       - hs_metrics_dir
       - bams_markduplicates_dir
       - raw_variants_dir
-      - bams_final_dir
