@@ -14,7 +14,7 @@ inputs:
   # Intervals should come from capture kit (target intervals) bed format
   intervals: File[]?
   # Intervals should come from capture kit (bait intervals) bed format
-  primary_intervals: File[]?
+  bait_intervals: File[]?
   interval_padding: int?
   # Named read pairs in FASTQ format
   read_pairs:
@@ -100,8 +100,8 @@ steps:
   prepare_reference_data:
     run: ../subworkflows/exomeseq-00-prepare-reference-data.cwl
     in:
-      intervals: intervals
-      primary_intervals: primary_intervals
+      target_intervals: intervals
+      bait_intervals: bait_intervals
       reference_genome: reference_genome
     out:
       - target_interval_list
@@ -111,7 +111,6 @@ steps:
     scatter: read_pair
     in:
       intervals: intervals
-      primary_intervals: primary_intervals
       target_interval_list: prepare_reference_data/target_interval_list
       bait_interval_list: prepare_reference_data/bait_interval_list
       interval_padding: interval_padding
