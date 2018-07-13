@@ -12,7 +12,7 @@ inputs:
   study_type:
     type: ../types/bespin-types.yml#ExomeseqStudyType
   # Intervals should come from capture kit (target intervals) bed format
-  intervals: File[]?
+  target_intervals: File[]?
   # Intervals should come from capture kit (bait intervals) bed format
   bait_intervals: File[]?
   interval_padding: int?
@@ -100,7 +100,7 @@ steps:
   prepare_reference_data:
     run: ../subworkflows/exomeseq-00-prepare-reference-data.cwl
     in:
-      target_intervals: intervals
+      target_intervals: target_intervals
       bait_intervals: bait_intervals
       reference_genome: reference_genome
     out:
@@ -110,7 +110,7 @@ steps:
     run: ../subworkflows/exomeseq-01-preprocessing.cwl
     scatter: read_pair
     in:
-      intervals: intervals
+      intervals: target_intervals
       target_interval_list: prepare_reference_data/target_interval_list
       bait_interval_list: prepare_reference_data/bait_interval_list
       interval_padding: interval_padding
@@ -136,7 +136,7 @@ steps:
     in:
       study_type: study_type
       name: library
-      intervals: intervals
+      intervals: target_intervals
       interval_padding: interval_padding
       raw_variants: preprocessing/raw_variants
       reference_genome: reference_genome
