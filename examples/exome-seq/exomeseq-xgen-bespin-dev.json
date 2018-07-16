@@ -17,7 +17,7 @@
     "target_intervals": [
       {
         "class": "File",
-        "path": "/data/exome-seq/capture/xgen-exome-research-panel-targetsae255a1532796e2eaa53ff00001c1b3c.bed"
+        "path": "/data/exome-seq/capture/xgen-exome-research-panel-targetsae255a1532796e2eaa53ff00001c1b3c-trimmed-chr.bed"
       }
     ],
     "knownSites": [
@@ -38,7 +38,7 @@
     "bait_intervals": [
       {
         "class": "File",
-        "path": "/data/exome-seq/capture/xgen-exome-research-panel-probesbe255a1532796e2eaa53ff00001c1b3c.bed"
+        "path": "/data/exome-seq/capture/xgen-exome-research-panel-probesbe255a1532796e2eaa53ff00001c1b3c-trimmed-chr.bed"
       }
     ],
     "reference_genome": {
@@ -67,7 +67,7 @@
   "vm_settings_name": "lando_worker_toil_dev_20180208_213920",
   "volume_size_base": 3000,
   "volume_size_factor": 10,
-  "workflow_version_number": 6,
+  "workflow_version_number": 7,
   "workflow_tag": "whole-exome-sequence-analysis",
   "type_tag": "b37-human-xgen"
 }
