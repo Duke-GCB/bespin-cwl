@@ -82,7 +82,7 @@ steps:
     requirements:
       - class: ResourceRequirement
         coresMin: 4
-        ramMin: 1500
+        ramMin: 2500
     scatter: input_fastq_file
     in:
       input_fastq_file: file_pair_details/reads
