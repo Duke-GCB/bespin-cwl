@@ -10,7 +10,7 @@ inputs:
   hs_metrics: File[]
   bams_markduplicates: File[]
   raw_variants: File[]
-  bams_final: File[]
+  bams_recalibrated: File[]
 outputs:
   fastqc_reports_dir:
     type: Directory
@@ -27,9 +27,9 @@ outputs:
   raw_variants_dir:
     type: Directory
     outputSource: org_raw_variants/outdir
-  bams_final_dir:
+  bams_recalibrated_dir:
     type: Directory
-    outputSource: org_bams_final/outdir
+    outputSource: org_bams_recalibrated/outdir
 steps:
   org_fastqc_reports:
     run: ../tools/file-pairs-to-directory.cwl
@@ -71,12 +71,12 @@ steps:
       files: raw_variants
     out:
       - outdir
-  org_bams_final:
+  org_bams_recalibrated:
     run: ../tools/files-to-directory.cwl
     in:
       name:
-        default: 'bams-final'
-      files: bams_final
+        default: 'bams-recalibrated'
+      files: bams_recalibrated
     out:
       - outdir
 

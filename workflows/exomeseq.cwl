@@ -12,9 +12,9 @@ inputs:
   study_type:
     type: ../types/bespin-types.yml#ExomeseqStudyType
   # Intervals should come from capture kit (target intervals) bed format
-  intervals: File[]?
+  target_intervals: File[]?
   # Intervals should come from capture kit (bait intervals) bed format
-  primary_intervals: File[]?
+  bait_intervals: File[]?
   interval_padding: int?
   # Named read pairs in FASTQ format
   read_pairs:
@@ -84,10 +84,10 @@ outputs:
     type: Directory
     outputSource: organize_directories/bams_markduplicates_dir
     doc: "BAM and bai files from markduplicates"
-  bams_final_dir:
+  bams_recalibrated_dir:
     type: Directory
-    outputSource: organize_directories/bams_final_dir
-    doc: "BAM files containing assembled haplotypes and locally realigned reads"
+    outputSource: organize_directories/bams_recalibrated_dir
+    doc: "BAM files containing recalibrated reads"
   joint_raw_variants:
     type: File
     outputSource: variant_discovery/joint_raw_variants
@@ -100,8 +100,8 @@ steps:
   prepare_reference_data:
     run: ../subworkflows/exomeseq-00-prepare-reference-data.cwl
     in:
-      intervals: intervals
-      primary_intervals: primary_intervals
+      target_intervals: target_intervals
+      bait_intervals: bait_intervals
       reference_genome: reference_genome
     out:
       - target_interval_list
@@ -110,8 +110,7 @@ steps:
     run: ../subworkflows/exomeseq-01-preprocessing.cwl
     scatter: read_pair
     in:
-      intervals: intervals
-      primary_intervals: primary_intervals
+      intervals: target_intervals
       target_interval_list: prepare_reference_data/target_interval_list
       bait_interval_list: prepare_reference_data/bait_interval_list
       interval_padding: interval_padding
@@ -130,14 +129,13 @@ steps:
       - recalibration_table
       - recalibrated_reads
       - raw_variants
-      - haplotypes_bam
       - hs_metrics
   variant_discovery:
     run: ../subworkflows/exomeseq-02-variantdiscovery.cwl
     in:
       study_type: study_type
       name: library
-      intervals: intervals
+      intervals: target_intervals
       interval_padding: interval_padding
       raw_variants: preprocessing/raw_variants
       reference_genome: reference_genome
@@ -166,11 +164,11 @@ steps:
       hs_metrics: preprocessing/hs_metrics
       bams_markduplicates: preprocessing/markduplicates_bam
       raw_variants: preprocessing/raw_variants
-      bams_final: preprocessing/haplotypes_bam
+      bams_recalibrated: preprocessing/recalibrated_reads
     out:
       - fastqc_reports_dir
       - trim_reports_dir
       - hs_metrics_dir
       - bams_markduplicates_dir
       - raw_variants_dir
-      - bams_final_dir
+      - bams_recalibrated_dir
