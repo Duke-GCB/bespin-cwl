@@ -37,9 +37,6 @@ inputs:
   demux_visualization_filename:
     type: string
     default: demux.qzv
-  output_prefix:
-    type: string
-    default: ''
 
 outputs:
   sequences_artifact:
@@ -53,10 +50,10 @@ outputs:
     outputSource: demux/demux_visualization_artifact
   qza_directory:
     type: Directory
-    outputSource: create_qza_directory/outdir
+    outputSource: create_output_directories/qza_directory
   qzv_directory:
     type: Directory
-    outputSource: create_qzv_directory/outdir
+    outputSource: create_output_directories/qzv_directory
 
 steps:
   import_data:
@@ -79,23 +76,15 @@ steps:
     out:
       - demux_sequences_artifact
       - demux_visualization_artifact
-  create_qza_directory:
-    run: ../tools/files-to-directory.cwl
+  create_output_directories:
+    run: ../subworkflows/qiime2-output-directories.cwl
     in:
-      name:
-        valueFrom: 'qza'
-      files:
+      qza_files:
         source: [import_data/sequences_artifact, demux/demux_sequences_artifact]
         valueFrom: ${ return [self[0], self[1]]; }
-    out:
-      - outdir
-  create_qzv_directory:
-    run: ../tools/files-to-directory.cwl
-    in:
-      name:
-        valueFrom: 'qzv'
-      files:
+      qzv_files:
         source: demux/demux_visualization_artifact
         valueFrom: ${ return [self]; }
     out:
-      - outdir
+      - qza_directory
+      - qzv_directory
