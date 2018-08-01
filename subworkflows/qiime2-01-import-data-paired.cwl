@@ -16,7 +16,6 @@ inputs:
     default: EMPPairedEndSequences
   sequences_artifact_filename:
     type: string
-    default: emp-paired-end-sequences.qza
 
 outputs:
   sequences_artifact:
