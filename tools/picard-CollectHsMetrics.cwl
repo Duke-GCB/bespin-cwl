@@ -11,7 +11,7 @@ hints:
 - class: SoftwareRequirement
   packages:
       picard:
-        version: [ "2.10.7" ]
+        version: [ "2.10.6" ]
         s:citation: http://broadinstitute.github.io/picard
 inputs:
   input_file:
