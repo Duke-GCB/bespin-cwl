@@ -4,11 +4,10 @@
 cwlVersion: v1.0
 class: CommandLineTool
 
-requirements:
+hints:
 - class: DockerRequirement
   dockerPull: dukegcb/picard:2.10.7
 - class: InlineJavascriptRequirement
-hints:
 - class: SoftwareRequirement
   packages:
       picard:
@@ -40,11 +39,8 @@ outputs:
     outputBinding:
       glob: $(inputs.output_filename)
 
-baseCommand: ["java", "-Xmx4g"]
+baseCommand: [picard]
 arguments:
-- valueFrom: "/opt/picard/picard.jar"
-  position: -1
-  prefix: -jar
 - valueFrom: BedToIntervalList
   position: 0
 

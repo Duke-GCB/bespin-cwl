@@ -11,7 +11,7 @@ hints:
 - class: SoftwareRequirement
   packages:
       picard:
-          version: [ "2.10.7" ]
+          version: [ "2.10.6" ]
           s:citation: http://broadinstitute.github.io/picard
 inputs:
   input_file:
@@ -53,13 +53,8 @@ outputs:
     secondaryFiles:
       - ^.bai
 
-baseCommand: [java]
+baseCommand: [picard]
 arguments:
-- valueFrom: "-Xmx4g"
-  position: -2
-- valueFrom: "/opt/picard/picard.jar"
-  position: -1
-  prefix: -jar
 - valueFrom: MarkDuplicates
   position: 0
 - valueFrom: "CREATE_INDEX=True"

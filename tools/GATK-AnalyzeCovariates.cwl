@@ -3,7 +3,7 @@
 cwlVersion: v1.0
 class: CommandLineTool
 
-requirements:
+hints:
 - $import: envvar-global.yml
 - class: DockerRequirement
   dockerPull: 'dukegcb/gatk-base:3'
