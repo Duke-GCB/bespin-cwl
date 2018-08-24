@@ -10,6 +10,8 @@ hints:
     packages:
       trimgalore:
         version: [ "0.4.4" ]
+        specs:
+        - https://anaconda.org/bioconda/trim-galore
         s:citation: https://www.bioinformatics.babraham.ac.uk/projects/trim_galore/
       cutadapt:
         version: [ "1.14" ]

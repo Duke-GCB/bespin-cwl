@@ -3,19 +3,18 @@
 cwlVersion: v1.0
 class: CommandLineTool
 
-requirements:
+hints:
 - $import: envvar-global.yml
 - class: DockerRequirement
   dockerPull: 'dukegcb/bwa-samtools:0.7.12_1.2.1-254-6462e34'
 - class: InlineJavascriptRequirement
-hints:
 - class: SoftwareRequirement
   packages:
       bwa:
           version: [ "0.7.12" ]
           s:citation: https://dx.doi.org/10.1093/bioinformatics/btp324
       samtools:
-          version: [ "1.2-242-g4d56437" ]
+          version: [ "1.2" ]
           s:citation: https://doi.org/10.1093/bioinformatics/btp352
 
 inputs:
