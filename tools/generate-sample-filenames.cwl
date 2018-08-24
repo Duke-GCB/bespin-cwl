@@ -10,6 +10,7 @@ inputs:
   sample_name: string
 outputs:
   mapped_reads_output_filename: string
+  mapped_reads_sam_output_filename: string
   sorted_reads_output_filename: string
   dedup_reads_output_filename: string
   dedup_metrics_output_filename: string
@@ -28,6 +29,7 @@ expression: >
 
     return {
       mapped_reads_output_filename: makeFilename(base, 'mapped', 'bam'),
+      mapped_reads_sam_output_filename: makeFilename(base, 'mapped', 'sam'),
       sorted_reads_output_filename: makeFilename(base, 'sorted', 'bam'),
       dedup_reads_output_filename: makeFilename(base, 'dedup', 'bam'),
       dedup_metrics_output_filename: makeFilename(base, 'dedup-metrics', 'out'),

@@ -4,18 +4,12 @@ cwlVersion: v1.0
 class: CommandLineTool
 
 hints:
-- $import: envvar-global.yml
-- class: DockerRequirement
-  dockerPull: 'dukegcb/bwa-samtools:0.7.12_1.2.1-254-6462e34'
 - class: InlineJavascriptRequirement
 - class: SoftwareRequirement
   packages:
       bwa:
           version: [ "0.7.12" ]
           s:citation: https://dx.doi.org/10.1093/bioinformatics/btp324
-      samtools:
-          version: [ "1.2" ]
-          s:citation: https://doi.org/10.1093/bioinformatics/btp352
 
 inputs:
   minimum_seed_length:
@@ -69,11 +63,11 @@ stdout: $(inputs.output_filename)
 outputs:
   output:
     type: File
+    streamable: True
     outputBinding:
       glob: $(inputs.output_filename)
 
-baseCommand:
-- bwamem-to-samtools.sh
+baseCommand: ['bwa', 'mem']
 
 doc: |
   Usage: bwa mem [options] <idxbase> <in1.fq> [in2.fq]

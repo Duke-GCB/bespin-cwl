@@ -109,6 +109,7 @@ steps:
       sample_name: file_pair_details/read_pair_name
     out:
       - mapped_reads_output_filename
+      - mapped_reads_sam_output_filename
       - sorted_reads_output_filename
       - dedup_reads_output_filename
       - dedup_metrics_output_filename
@@ -118,7 +119,7 @@ steps:
       - haplotypes_bam_output_filename
       - hs_metrics_output_filename
   map:
-    run: ../tools/bwa-mem-samtools.cwl
+    run: ../tools/bwa-mem.cwl
     requirements:
       - class: ResourceRequirement
         coresMin: 8
@@ -129,8 +130,21 @@ steps:
       reads: trim/trimmed_reads
       reference: reference_genome
       read_group_header: file_pair_details/read_group_header
-      output_filename: generate_sample_filenames/mapped_reads_output_filename
+      output_filename: generate_sample_filenames/mapped_reads_sam_output_filename
       threads: threads
+    out:
+      - output
+  bam:
+    run: ../tools/samtools-view.cwl
+    requirements:
+      - class: ResourceRequirement
+        coresMin: 8
+        ramMin: 16000
+        outdirMin: 12000
+        tmpdirMin: 12000
+    in:
+      input_file: map/output
+      output_filename: generate_sample_filenames/mapped_reads_output_filename
     out:
       - output
   sort:
@@ -142,7 +156,7 @@ steps:
         outdirMin: 12000
         tmpdirMin: 12000
     in:
-      input_file: map/output
+      input_file: bam/output
       output_filename: generate_sample_filenames/sorted_reads_output_filename
     out:
       - sorted
