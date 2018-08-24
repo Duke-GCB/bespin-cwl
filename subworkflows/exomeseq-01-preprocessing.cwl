@@ -144,6 +144,8 @@ steps:
         tmpdirMin: 12000
     in:
       input_file: map/output
+      output_bam_format:
+        default: true
       output_filename: generate_sample_filenames/mapped_reads_output_filename
     out:
       - output
