@@ -77,6 +77,13 @@ steps:
        - reads
        - read_pair_name
        - read_group_header
+  unify_reads:
+    run: ../tools/unify_reads.cwl
+    scatter: reads_array
+    in:
+       reads_array: file_pair_details/reads
+    out:
+       - reads
   qc:
     run: ../tools/fastqc.cwl
     requirements:
@@ -85,7 +92,7 @@ steps:
         ramMin: 2500
     scatter: input_fastq_file
     in:
-      input_fastq_file: file_pair_details/reads
+      input_fastq_file: unify_reads/reads
       threads: threads
     out:
       - output_qc_report
@@ -96,7 +103,7 @@ steps:
         coresMin: 4
         ramMin: 8000
     in:
-      reads: file_pair_details/reads
+      reads: unify_reads/reads
       paired:
         default: true
     out:

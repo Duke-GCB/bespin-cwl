@@ -6,9 +6,9 @@ types:
       - name: name
         type: string
       - name: file1
-        type: File
+        type: File[]
       - name: file2
-        type: File
+        type: File[]
   - name: ExomeseqStudyType
     type: enum
     label: The type of study

@@ -16,7 +16,11 @@ inputs:
     type: string
 outputs:
   reads:
-    type: File[]
+    type:
+      type: array
+      items:
+        type: array
+        items: File
   read_pair_name:
     type: string
   read_group_header:
