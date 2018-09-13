@@ -77,13 +77,20 @@ steps:
        - reads
        - read_pair_name
        - read_group_header
-  unify_reads:
-    run: ../tools/unify_reads.cwl
-    scatter: reads_array
+  zcat_reads:
+    run: ../tools/zcat_files.cwl
+    scatter: files
     in:
-       reads_array: file_pair_details/reads
+       files: file_pair_details/reads
     out:
-       - reads
+       - output
+  gzip_reads:
+    run: ../tools/gzip_file.cwl
+    scatter: file
+    in:
+       file: zcat_reads/output
+    out:
+       - output
   qc:
     run: ../tools/fastqc.cwl
     requirements:
@@ -92,7 +99,7 @@ steps:
         ramMin: 2500
     scatter: input_fastq_file
     in:
-      input_fastq_file: unify_reads/reads
+      input_fastq_file: gzip_reads/output
       threads: threads
     out:
       - output_qc_report
@@ -103,7 +110,7 @@ steps:
         coresMin: 4
         ramMin: 8000
     in:
-      reads: unify_reads/reads
+      reads: gzip_reads/output
       paired:
         default: true
     out:

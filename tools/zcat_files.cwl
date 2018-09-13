@@ -1,11 +1,13 @@
 cwlVersion: v1.0
 class: CommandLineTool
-baseCommand: cat
+baseCommand: zcat
 inputs:
-    reads_array:
+    files:
       type: File[]
+      streamable: true
       inputBinding:
         position: 1
 outputs:
-    reads:
-        type: stdout
+    output:
+      type: stdout
+      streamable: true
