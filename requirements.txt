@@ -2,8 +2,8 @@ appdirs==1.4.3
 avro==1.8.2
 bd2k-python-lib==1.14a1.dev37
 CacheControl==0.11.7
-cwltest==1.0.20170214185319
-cwltool==1.0.20170516234254
+cwltest==1.0.20180912090223
+cwltool==1.0.20180912090223
 dill==0.2.5
 futures==3.1.1
 html5lib==0.999999999
