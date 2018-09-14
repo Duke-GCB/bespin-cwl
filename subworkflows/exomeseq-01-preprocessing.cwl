@@ -77,18 +77,11 @@ steps:
        - reads
        - read_pair_name
        - read_group_header
-  zcat_reads:
-    run: ../tools/zcat_files.cwl
-    scatter: files
+  combine_reads:
+    run: ../tools/combine-gz-files.cwl
+    scatter: files_input
     in:
-       files: file_pair_details/reads
-    out:
-       - output
-  gzip_reads:
-    run: ../tools/gzip_file.cwl
-    scatter: file
-    in:
-       file: zcat_reads/output
+       files_input: file_pair_details/reads
     out:
        - output
   qc:
@@ -99,7 +92,7 @@ steps:
         ramMin: 2500
     scatter: input_fastq_file
     in:
-      input_fastq_file: gzip_reads/output
+      input_fastq_file: combine_reads/output
       threads: threads
     out:
       - output_qc_report
@@ -110,7 +103,7 @@ steps:
         coresMin: 4
         ramMin: 8000
     in:
-      reads: gzip_reads/output
+      reads: combine_reads/output
       paired:
         default: true
     out:
