@@ -78,12 +78,11 @@ steps:
        - read_pair_name
        - read_group_header
   combine_reads:
-    run: ../tools/combine-gz-files.cwl
-    scatter: files_input
+    run: ../tools/combine-reads.cwl
+    scatter: reads
     in:
-       files_input: file_pair_details/reads
-       output_filename:
-         valueFrom: "file.fastq.gz"
+       reads: file_pair_details/reads
+       read_pair_name: file_pair_details/reads
     out:
        - output
   qc:

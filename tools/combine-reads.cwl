@@ -4,7 +4,7 @@ requirements:
   - class: ShellCommandRequirement
 baseCommand: zcat
 inputs:
-  files_input:
+  reads:
     type: File[]
     inputBinding:
       position: 1
@@ -27,9 +27,11 @@ inputs:
     inputBinding:
       position: 4
       shellQuote: False
+  read_pair_name:
+    type: string
   output_filename:
     type: string
-    default: "output.gz"
+    valueFrom: ${ return inputs.read_pair_name + ".fastq.gz";}
     inputBinding:
       position: 5
       shellQuote: False
