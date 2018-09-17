@@ -21,11 +21,20 @@ inputs:
     inputBinding:
       position: 3
       shellQuote: False
+  redirect:
+    type: string
+    default: ">"
+    inputBinding:
+      position: 4
+      shellQuote: False
   output_filename:
-     type: string
-     default: "output.gz"
-
+    type: string
+    default: "output.gz"
+    inputBinding:
+      position: 5
+      shellQuote: False
 outputs:
-    output:
-      type: stdout
-stdout: output_filename
+  output:
+    type: File
+    outputBinding:
+      glob: $(inputs.output_filename)
