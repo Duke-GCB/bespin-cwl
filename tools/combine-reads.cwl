@@ -27,11 +27,8 @@ inputs:
     inputBinding:
       position: 4
       shellQuote: False
-  read_pair_name:
-    type: string
   output_filename:
     type: string
-    valueFrom: ${ return inputs.read_pair_name + ".fastq.gz";}
     inputBinding:
       position: 5
       shellQuote: False
