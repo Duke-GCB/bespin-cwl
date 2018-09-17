@@ -21,7 +21,11 @@ inputs:
     inputBinding:
       position: 3
       shellQuote: False
+  output_filename:
+     type: string
+     default: "output.gz"
 
 outputs:
     output:
       type: stdout
+stdout: output_filename

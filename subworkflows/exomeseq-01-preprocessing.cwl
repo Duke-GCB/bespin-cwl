@@ -82,6 +82,8 @@ steps:
     scatter: files_input
     in:
        files_input: file_pair_details/reads
+       output_filename:
+         valueFrom: "file.fastq.gz"
     out:
        - output
   qc:
