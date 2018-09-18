@@ -85,7 +85,7 @@ steps:
     in:
        reads: file_pair_details/reads
        output_filename:
-         valueFrom: ${ return inputs.reads[0].nameroot + ".gz";}
+         valueFrom: ${ return inputs.reads[0].nameroot + "combined.fastq.gz";}
     out:
        - output
   qc:
