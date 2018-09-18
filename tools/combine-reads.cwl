@@ -2,6 +2,7 @@ cwlVersion: v1.0
 class: CommandLineTool
 requirements:
   - class: ShellCommandRequirement
+  - class: InlineJavascriptRequirement
 baseCommand: zcat
 inputs:
   reads:
@@ -27,13 +28,11 @@ inputs:
     inputBinding:
       position: 4
       shellQuote: False
-  output_filename:
-    type: string
-    inputBinding:
-      position: 5
-      shellQuote: False
+arguments:
+  - position: 5
+    valueFrom: $(inputs.reads[0].nameroot + "-combined.fastq.gz")
 outputs:
   output:
     type: File
     outputBinding:
-      glob: $(inputs.output_filename)
+      glob: $(inputs.reads[0].nameroot + "-combined.fastq.gz")

@@ -4,8 +4,6 @@ cwlVersion: v1.0
 class: Workflow
 requirements:
   - class: ScatterFeatureRequirement
-  - class: StepInputExpressionRequirement
-  - class: InlineJavascriptRequirement
   - $import: ../types/bespin-types.yml
 inputs:
   # NOTE: How long is this expected to take?
@@ -84,8 +82,6 @@ steps:
     scatter: reads
     in:
        reads: file_pair_details/reads
-       output_filename:
-         valueFrom: ${ return inputs.reads[0].nameroot + "-combined.fastq.gz";}
     out:
        - output
   qc:
