@@ -9,7 +9,7 @@ requirements:
 inputs:
   # Named read pairs in FASTQ format
   read_pair:
-      type: ../types/bespin-types.yml#NamedFASTQFilePairType
+      type: ../types/bespin-types.yml#FASTQReadPairType
   library:
     type: string
   platform:
@@ -37,8 +37,8 @@ expression: >
       "\\tSM:" + readPairName;
     return {
       reads: [
-        inputs.read_pair.file1,
-        inputs.read_pair.file2,
+        inputs.read_pair.read1_files,
+        inputs.read_pair.read2_files,
       ],
       read_pair_name: readPairName,
       read_group_header: readGroupHeader

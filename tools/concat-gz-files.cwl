@@ -5,7 +5,7 @@ requirements:
   - class: InlineJavascriptRequirement
 baseCommand: zcat
 inputs:
-  reads:
+  files:
     type: File[]
     inputBinding:
       position: 1
@@ -28,11 +28,13 @@ inputs:
     inputBinding:
       position: 4
       shellQuote: False
-arguments:
-  - position: 5
-    valueFrom: $(inputs.reads[0].nameroot + "-combined.fastq.gz")
+  output_filename:
+    type: string
+    inputBinding:
+      position: 5
+      shellQuote: False
 outputs:
   output:
     type: File
     outputBinding:
-      glob: $(inputs.reads[0].nameroot + "-combined.fastq.gz")
+      glob: $(inputs.output_filename)
