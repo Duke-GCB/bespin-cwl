@@ -38,11 +38,11 @@
   "read_pairs": [
     {
       "name": "SRR099967",
-      "file1": [{
+      "read1_files": [{
         "class": "File",
         "path": "/home/ubuntu/exome-seq/SRR099967/SRR099967_1.fastq.gz"
       }],
-      "file2": [{
+      "read2_files": [{
         "class": "File",
         "path": "/home/ubuntu/exome-seq/SRR099967/SRR099967_2.fastq.gz"
       }]
