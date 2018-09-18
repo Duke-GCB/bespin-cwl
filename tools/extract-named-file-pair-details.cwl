@@ -2,7 +2,7 @@
 
 cwlVersion: v1.0
 class: ExpressionTool
-label: Given a NamedFASTQFilePairType returns an array of the files contained within
+label: Given a FASTQReadPairType returns a 2D array of the files contained within
 requirements:
   - class: InlineJavascriptRequirement
   - $import: ../types/bespin-types.yml
