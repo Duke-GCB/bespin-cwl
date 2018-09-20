@@ -12,7 +12,7 @@ inputs:
   files:
     type: File[]
     inputBinding:
-      position: 1
+      position: 2
       shellQuote: False
   output_filename:
     type: string
