@@ -19,9 +19,8 @@ arguments:
   - valueFrom: "|"
     position: 2
     shellQuote: False
-  - valueFrom: "gzip"
+  - valueFrom: gzip
     position: 3
-    shellQuote: False
   - valueFrom: ">"
     position: 4
     shellQuote: False
