@@ -1,9 +1,13 @@
 cwlVersion: v1.0
 class: CommandLineTool
 requirements:
-  - class: ShellCommandRequirement
-  - class: InlineJavascriptRequirement
-baseCommand: zcat
+  - class: InitialWorkDirRequirement
+    listing:
+      - entryname: combinefiles.sh
+        entry: |
+          zcat "$@" | gzip
+baseCommand: bash
+arguments: [combinefiles.sh]
 inputs:
   files:
     type: File[]
@@ -13,17 +17,12 @@ inputs:
   output_filename:
     type: string
     inputBinding:
-      position: 4
+      position: 5
       shellQuote: False
-arguments:
-  - valueFrom: "| gzip"
-    position: 2
-    shellQuote: False
-  - valueFrom: ">"
-    position: 3
-    shellQuote: False
+stdout: $(inputs.output_filename)
 outputs:
   output:
     type: File
     outputBinding:
       glob: $(inputs.output_filename)
+
