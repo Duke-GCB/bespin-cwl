@@ -16,9 +16,6 @@ inputs:
       shellQuote: False
   output_filename:
     type: string
-    inputBinding:
-      position: 5
-      shellQuote: False
 stdout: $(inputs.output_filename)
 outputs:
   output:
