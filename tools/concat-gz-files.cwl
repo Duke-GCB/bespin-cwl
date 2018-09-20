@@ -13,16 +13,14 @@ inputs:
   output_filename:
     type: string
     inputBinding:
-      position: 5
+      position: 4
       shellQuote: False
 arguments:
-  - valueFrom: "|"
+  - valueFrom: "| gzip"
     position: 2
     shellQuote: False
-  - valueFrom: gzip
-    position: 3
   - valueFrom: ">"
-    position: 4
+    position: 3
     shellQuote: False
 outputs:
   output:
