@@ -29,8 +29,8 @@ expression: >
 
     return {
       combined_reads_output_filenames: [
-        makeFilename(base, 'read1', 'fastq.gz'),
-        makeFilename(base, 'read2', 'fastq.gz'),
+        makeFilename(base, 'R1', 'fastq.gz'),
+        makeFilename(base, 'R2', 'fastq.gz'),
       ],
       mapped_reads_output_filename: makeFilename(base, 'mapped', 'bam'),
       sorted_reads_output_filename: makeFilename(base, 'sorted', 'bam'),
