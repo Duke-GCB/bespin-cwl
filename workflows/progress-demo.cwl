@@ -3,6 +3,7 @@ class: Workflow
 label: Progress Reporting Demo
 requirements:
   - class: StepInputExpressionRequirement
+  - class: InlineJavascriptRequirement
   - class: ScatterFeatureRequirement
 inputs:
   files: File[]
@@ -11,6 +12,12 @@ outputs:
     type: File[]
     outputSource: wordcount/output
 steps:
+  expect_cat:
+    run: ../tools/task-expect.cwl
+    in:
+      task_group: { valueFrom: 'cat' }
+      task_array: files
+    out: []
   cat:
     scatter: file
     run: ../tools/cat.cwl
@@ -18,13 +25,18 @@ steps:
       file: files
     out:
       - output
-  progress1:
-    run: ../tools/report-progress.cwl
-    scatter: file
+  complete_cat:
+    run: ../tools/task-complete.cwl
+    scatter: task_file
     in:
-      step_name: { valueFrom: "cat" }
-      step_status: { valueFrom: "complete" }
-      file: cat/output
+      task_group: { valueFrom: 'cat' }
+      task_file: cat/output
+    out: []
+  expect_wordcount:
+    run: ../tools/task-expect.cwl
+    in:
+      task_group: { valueFrom: 'wordcount' }
+      task_array: cat/output
     out: []
   wordcount:
     run: ../tools/wc.cwl
@@ -33,11 +45,10 @@ steps:
       file: cat/output
     out:
       - output
-  progress2:
-    run: ../tools/report-progress.cwl
-    scatter: file
+  complete_wordcount:
+    run: ../tools/task-complete.cwl
+    scatter: task_file
     in:
-      step_name: { valueFrom: "wordcount" }
-      step_status: { valueFrom: "complete" }
-      file: wordcount/output
+      task_group: { valueFrom: 'wordcount' }
+      task_file: wordcount/output
     out: []
