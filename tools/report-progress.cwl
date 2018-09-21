@@ -4,21 +4,17 @@ baseCommand: echo
 requirements:
   - class: InlineJavascriptRequirement
 inputs:
-  item_label: string
-  item: string
-  status_label: string
-  status:: string
+  step_name: string
+  step_status: string
+  subject: string?
   file: File?
-  files_label: string?
   files: File[]?
 outputs: []
 arguments:
   - valueFrom: |
       ${
-        var prefix = '[progress-report ';
-        var suffix = ']';
-        var message = '';
-
-        message = message + inputs.item_label + '=' + inputs.item;
-        return prefix + message + suffix;
+        var prefix = '# bespin-progress-report: ';
+        var d = new Date();
+        var report = Object.assign({date: d}, inputs)
+        return prefix + JSON.stringify(report);
       }
