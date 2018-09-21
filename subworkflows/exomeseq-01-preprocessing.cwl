@@ -110,7 +110,8 @@ steps:
     scatter: input_fastq_file
     in:
       input_fastq_file: combine_reads/output
-      threads: threads
+      threads:
+        default: 4
     out:
       - output_qc_report
   trim:
