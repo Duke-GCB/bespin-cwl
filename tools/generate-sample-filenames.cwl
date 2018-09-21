@@ -9,6 +9,7 @@ requirements:
 inputs:
   sample_name: string
 outputs:
+  combined_reads_output_filenames: string[]
   mapped_reads_output_filename: string
   sorted_reads_output_filename: string
   dedup_reads_output_filename: string
@@ -27,6 +28,10 @@ expression: >
     var base = inputs.sample_name
 
     return {
+      combined_reads_output_filenames: [
+        makeFilename(base, 'R1', 'fastq.gz'),
+        makeFilename(base, 'R2', 'fastq.gz'),
+      ],
       mapped_reads_output_filename: makeFilename(base, 'mapped', 'bam'),
       sorted_reads_output_filename: makeFilename(base, 'sorted', 'bam'),
       dedup_reads_output_filename: makeFilename(base, 'dedup', 'bam'),

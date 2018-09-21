@@ -18,7 +18,7 @@ inputs:
   # NOTE: Broad recommends the illumina basecalls and converts to unmapped SAM
   #   but do we typically have fastq?
   read_pair:
-    type: ../types/bespin-types.yml#NamedFASTQFilePairType
+    type: ../types/bespin-types.yml#FASTQReadPairType
   # reference genome, fasta
   # NOTE: GATK can't handle compressed fasta reference genome
   # NOTE: is b37 appropriate to use?
@@ -77,6 +77,30 @@ steps:
        - reads
        - read_pair_name
        - read_group_header
+  generate_sample_filenames:
+    run: ../tools/generate-sample-filenames.cwl
+    in:
+      sample_name: file_pair_details/read_pair_name
+    out:
+      - combined_reads_output_filenames
+      - mapped_reads_output_filename
+      - sorted_reads_output_filename
+      - dedup_reads_output_filename
+      - dedup_metrics_output_filename
+      - recal_reads_output_filename
+      - recal_table_output_filename
+      - raw_variants_output_filename
+      - haplotypes_bam_output_filename
+      - hs_metrics_output_filename
+  combine_reads:
+    run: ../tools/concat-gz-files.cwl
+    scatter: [files, output_filename]
+    scatterMethod: dotproduct
+    in:
+       files: file_pair_details/reads
+       output_filename: generate_sample_filenames/combined_reads_output_filenames
+    out:
+       - output
   qc:
     run: ../tools/fastqc.cwl
     requirements:
@@ -85,7 +109,7 @@ steps:
         ramMin: 2500
     scatter: input_fastq_file
     in:
-      input_fastq_file: file_pair_details/reads
+      input_fastq_file: combine_reads/output
       threads:
         default: 4
     out:
@@ -97,26 +121,12 @@ steps:
         coresMin: 4
         ramMin: 8000
     in:
-      reads: file_pair_details/reads
+      reads: combine_reads/output
       paired:
         default: true
     out:
       - trimmed_reads
       - trim_reports
-  generate_sample_filenames:
-    run: ../tools/generate-sample-filenames.cwl
-    in:
-      sample_name: file_pair_details/read_pair_name
-    out:
-      - mapped_reads_output_filename
-      - sorted_reads_output_filename
-      - dedup_reads_output_filename
-      - dedup_metrics_output_filename
-      - recal_reads_output_filename
-      - recal_table_output_filename
-      - raw_variants_output_filename
-      - haplotypes_bam_output_filename
-      - hs_metrics_output_filename
   map:
     run: ../tools/bwa-mem-samtools.cwl
     requirements:

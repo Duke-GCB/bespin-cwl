@@ -6,11 +6,11 @@ CWL: [exomeseq-00-prepare-reference-data.cwl](exomeseq-01-preprocessing.cwl)
 
 ### Inputs
 
-- intervals: `File[]?` - target intervals from the capture kit in bed format
-- primary_intervals: `File[]?` - bait intervals from the capture kit in bed format
+- target\_intervals: `File[]?` - target intervals from the capture kit in bed format
+- bait\_intervals: `File[]?` - bait or probes intervals from the capture kit in bed format
 - reference\_genome: `File` reference genome, fasta
 
 ### Outputs
 
-- target_interval_list: `File` - target intervals in picard Interval_list format
-- bait_interval_list: `File` - bait intervals in picard Interval_list format
+- target\_interval_list: `File` - target intervals in picard Interval\_list format
+- bait\_interval\_list: `File` - bait intervals in picard Interval\_list format

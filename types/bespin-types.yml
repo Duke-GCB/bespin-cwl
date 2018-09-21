@@ -1,14 +1,14 @@
 class: SchemaDefRequirement
 types:
-  - name: NamedFASTQFilePairType
+  - name: FASTQReadPairType
     type: record
     fields:
       - name: name
         type: string
-      - name: file1
-        type: File
-      - name: file2
-        type: File
+      - name: read1_files
+        type: File[]
+      - name: read2_files
+        type: File[]
   - name: ExomeseqStudyType
     type: enum
     label: The type of study
