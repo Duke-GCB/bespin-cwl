@@ -1,6 +1,52 @@
 {
-  "file1": {
-    "class": "File",
-    "path": "progress-demo.cwl"
-  }
+  "files": [
+    {
+      "class": "File",
+      "path": "progress-demo.cwl"
+    },
+    {
+      "class": "File",
+      "path": "progress-demo.json"
+    },
+    {
+      "class": "File",
+      "path": "exomeseq-methods.j2"
+    },
+    {
+      "class": "File",
+      "path": "exomeseq.cwl"
+    },
+    {
+      "class": "File",
+      "path": "exomeseq.md"
+    },
+    {
+      "class": "File",
+      "path": "extract-progress.py"
+    },
+    {
+      "class": "File",
+      "path": "progress-demo.cwl"
+    },
+    {
+      "class": "File",
+      "path": "progress-demo.json"
+    },
+    {
+      "class": "File",
+      "path": "result.json"
+    },
+    {
+      "class": "File",
+      "path": "rnaseq-pt1.cwl"
+    },
+    {
+      "class": "File",
+      "path": "stderr.log"
+    },
+    {
+      "class": "File",
+      "path": "wrap-progress.sh"
+    }
+  ]
 }
