@@ -34,6 +34,7 @@ inputs:
   threads:
     type: int
     default: 1
+    doc: The number of threads to use. The fastqc wrapper script requests 250MB of memory per thread, so keep this in line with any CWL ResourceRequirement
     inputBinding:
       position: 5
       prefix: "--threads"
