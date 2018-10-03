@@ -1,7 +1,7 @@
 {
-  "cwl_url": "https://github.com/Duke-GCB/bespin-cwl/releases/download/v0.9.2/exomeseq.cwl",
-  "description": "Whole Exome sequencing following GATK best practices workflow. Germline SNP & Indel Discovery using b37 human genome assembly on samples sequenced with an xGen Exome Research Panel v1.0 capture kit.",
-  "methods_template_url": "https://raw.githubusercontent.com/Duke-GCB/bespin-cwl/v0.9.2/workflows/exomeseq-methods.j2",
+  "cwl_url": "https://github.com/Duke-GCB/bespin-cwl/releases/download/v0.9.3/exomeseq.cwl",
+  "description": "Whole Exome sequencing following GATK best practices workflow. Germline SNP & Indel Discovery using b37 human genome assembly on samples sequenced with an xGen Exome Research Panel v1.0 capture kit. Merges reads split into multiple files.",
+  "methods_template_url": "https://raw.githubusercontent.com/Duke-GCB/bespin-cwl/v0.9.3/workflows/exomeseq-methods.j2",
   "name": "Whole Exome Sequence analysis - Human b37",
   "share_group_name": "informatics",
   "system_json": {
@@ -64,10 +64,10 @@
     "threads": 30
   },
   "vm_flavor_name": "m1.xxlarge",
-  "vm_settings_name": "lando_worker_toil_dev_20180208_213920",
+  "vm_settings_name": "lando_worker_cwltool_dev_20180918_183036",
   "volume_size_base": 3000,
-  "volume_size_factor": 10,
-  "workflow_version_number": 8,
+  "volume_size_factor": 20,
+  "workflow_version_number": 9,
   "workflow_tag": "whole-exome-sequence-analysis",
   "type_tag": "b37-human-xgen"
 }
