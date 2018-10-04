@@ -26,7 +26,7 @@ inputs:
   # NOTE: For mapping, they recommend a merge step, but this may only apply to having raw basecalls
   reference_genome: File
   # Number of threads to use for mapping
-  threads: int?
+  threads: int
   # Read Group annotations
   # Can be the project name
   library: string
@@ -131,7 +131,7 @@ steps:
     run: ../tools/bwa-mem-samtools.cwl
     requirements:
       - class: ResourceRequirement
-        coresMin: 8
+        coresMin: threads
         ramMin: 16000
         outdirMin: 12000
         tmpdirMin: 12000
