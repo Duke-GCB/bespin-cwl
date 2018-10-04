@@ -9,8 +9,6 @@ requirements:
   - class: SubworkflowFeatureRequirement
   - $import: ../types/bespin-types.yml
 inputs:
-  study_type:
-    type: ../types/bespin-types.yml#ExomeseqStudyType
   # Intervals should come from capture kit (target intervals) bed format
   target_intervals: File[]?
   # Intervals should come from capture kit (bait intervals) bed format
@@ -44,26 +42,8 @@ inputs:
     type: File[] # vcf files of known sites, with indexing
     secondaryFiles:
     - .idx
-  # Variant Recalibration - SNPs
-  snp_resource_hapmap:
-    type: File
-    secondaryFiles:
-    - .idx
-  snp_resource_omni:
-    type: File
-    secondaryFiles:
-    - .idx
-  snp_resource_1kg:
-    type: File
-    secondaryFiles:
-      - .idx
   # Variant Recalibration - Common
   resource_dbsnp:
-    type: File
-    secondaryFiles:
-    - .idx
-  # Variant Recalibration - Indels
-  indel_resource_mills:
     type: File
     secondaryFiles:
     - .idx
