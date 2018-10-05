@@ -131,7 +131,7 @@ steps:
     run: ../tools/bwa-mem-samtools.cwl
     requirements:
       - class: ResourceRequirement
-        coresMin: threads
+        coresMin: $(inputs.threads)
         ramMin: 16000
         outdirMin: 12000
         tmpdirMin: 12000
