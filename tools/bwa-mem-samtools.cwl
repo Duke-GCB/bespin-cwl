@@ -45,7 +45,7 @@ inputs:
       position: 3
 
   threads:
-    type: int?
+    type: int
     inputBinding:
       position: 1
       prefix: -t

@@ -29,7 +29,7 @@ inputs:
     - .fai
     - ^.dict
   # Number of threads to use
-  threads: int?
+  threads: int
   # Read Group annotation
   # Can be the project name
   library: string
