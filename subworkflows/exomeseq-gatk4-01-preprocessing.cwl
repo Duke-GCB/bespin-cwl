@@ -51,7 +51,7 @@ outputs:
     outputSource: recalibrate_01_analyze/output_baseRecalibrator
   recalibrated_reads:
     type: File
-    outputSource: recalibrate_02_apply/calibrated_bam
+    outputSource: recalibrate_02_apply_bqsr/calibrated_bam
 
 steps:
   file_pair_details:
@@ -166,7 +166,7 @@ steps:
         outdirMin: 12000
         tmpdirMin: 12000
     in:
-      input_file: sort/output
+      input_file: sort/sorted
       output_filename: generate_sample_filenames/fixed_tag_reads_output_filename # TODO: Allocate this
     out:
       - fixed_tags_bam
