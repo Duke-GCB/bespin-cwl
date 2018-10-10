@@ -141,6 +141,9 @@ steps:
       input_file: map/sortedoutput
       output_filename: generate_sample_filenames/dedup_reads_output_filename
       metrics_filename: generate_sample_filenames/dedup_metrics_output_filename
+      validation_stringency: { valueFrom: "SILENT" }
+      assume_sort_order: { valueFrom: "queryname" }
+      optical_duplicate_pixel_distance: { valueFrom: 2500 }
     out:
       - output_dedup_bam_file
       - output_metrics_file

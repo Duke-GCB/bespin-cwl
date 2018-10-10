@@ -12,37 +12,46 @@ inputs:
     type: File
     doc: 'One or more input SAM or BAM files to analyze. Must be coordinate sorted.'
     inputBinding:
-      prefix: "INPUT="
-      shellQuote: false
+      prefix: "--INPUT"
   output_filename:
-    type: string?
+    type: string
     doc: "Output filename"
     default: "marked_duplicates.bam"
     inputBinding:
-      prefix: "OUTPUT="
-      shellQuote: false
+      prefix: "--OUTPUT"
   metrics_filename:
-    type: string?
+    type: string
     doc: "Output metrics filename"
     default: "marked_dup_metrics.txt"
     inputBinding:
-      prefix: "METRICS_FILE="
-      shellQuote: false
-  remove_duplicates:
-    type: boolean
-    doc: "If true do not write duplicates to the output file instead of writing them with appropriate flags set.  (Default true)."
-    default: true
+      prefix: "--METRICS_FILE"
+  validation_stringency:
+    type: string?
     inputBinding:
-      prefix: "REMOVE_DUPLICATES="
+      prefix: "--VALIDATION_STRINGENCY"
+  optical_duplicate_pixel_distance:
+    type: int?
+    inputBinding:
+      prefix: "--OPTICAL_DUPLICATE_PIXEL_DISTANCE"
+  assume_sort_order:
+    type: string?
+    inputBinding:
+      prefix: "--ASSUME_SORT_ORDER"
+  remove_duplicates:
+    type: string?
+    doc: "If true do not write duplicates to the output file instead of writing them with appropriate flags set.  (Default true)."
+    inputBinding:
+      prefix: "--REMOVE_DUPLICATES:"
       shellQuote: false
   java_opt:
-    type: string?
+    type: string
     doc: "String of options to pass to JVM at runtime"
     default:
       "-Xms4000m"
     inputBinding:
       prefix: "--java-options"
-      position: 0 # before the tool name
+      position: -1 # before the tool name
+      shellQuote: true
     
 outputs:
   output_metrics_file:
@@ -58,7 +67,7 @@ outputs:
 
 arguments:
 - valueFrom: MarkDuplicates
-  position: 1
+  position: 0
 
 $namespaces:
   s: https://schema.org/

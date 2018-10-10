@@ -1,10 +1,13 @@
 {
-  "input_file": 
+  "input_file":
     {
-      "path": "/home/ubuntu/bespin-cwl/data/mapped-sorted.bam",
+      "path": "/Users/dcl9/Data/sam-header/mapped.bam",
       "class": "File"
     }
-  , 
+  ,
   "output_filename": "mapped-duplicates-removed.bam",
-  "metrics_filename": "mapped-duplicates-metrics.txt"
+  "metrics_filename": "mapped-duplicates-metrics.txt",
+  "optical_duplicate_pixel_distance": 2500,
+  "assume_sort_order": "queryname",
+  "validation_stringency": "SILENT"
 }
