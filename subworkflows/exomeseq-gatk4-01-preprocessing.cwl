@@ -171,8 +171,9 @@ steps:
     in:
       input_file: sort/sorted
       output_filename: generate_sample_filenames/fixed_tag_reads_output_filename # TODO: Allocate this
+      reference: reference_genome
     out:
-      - fixed_tags_bam
+      - output_fixed_tags_bam
   # Now recalibrate
   recalibrate_01_analyze:
     run: ../tools/GATK4-BaseRecalibrator.cwl
@@ -181,7 +182,7 @@ steps:
         coresMin: 8
         ramMin: 4096
     in:
-      inputBam_BaseRecalibrator: fixtags/fixed_tags_bam
+      inputBam_BaseRecalibrator: fixtags/output_fixed_tags_bam
       intervals: intervals
       interval_padding: interval_padding
       knownSites: knownSites
@@ -198,7 +199,7 @@ steps:
         coresMin: 8
         ramMin: 4096
     in:
-      inputBam_applyBQSR: fixtags/fixed_tags_bam
+      inputBam_applyBQSR: fixtags/output_fixed_tags_bam
       intervals: intervals
       recalibration_report: recalibrate_01_analyze/output_baseRecalibrator
       cpu_threads:

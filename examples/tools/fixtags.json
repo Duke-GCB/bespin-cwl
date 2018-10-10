@@ -1,0 +1,10 @@
+{
+  "input_file":
+    {
+      "path": "/Users/dcl9/Data/sam-header/mapped.bam",
+      "class": "File"
+    }
+  ,
+  "output_filename": "fixed.bam",
+  "reference": { "path": "/Users/dcl9/Data/genomes/hg38.fa", "class": "File"}
+}
