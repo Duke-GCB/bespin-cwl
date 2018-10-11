@@ -19,6 +19,7 @@ outputs:
   raw_variants_output_filename: string
   haplotypes_bam_output_filename: string
   hs_metrics_output_filename: string
+  fixedtag_reads_output_filename: string
 
 expression: >
   ${
@@ -40,6 +41,7 @@ expression: >
       recal_table_output_filename: makeFilename(base, 'recal', 'table'),
       raw_variants_output_filename: makeFilename(base, 'raw_variants', 'g.vcf'),
       haplotypes_bam_output_filename:  makeFilename(base, 'haplotypes', 'bam'),
-      hs_metrics_output_filename: makeFilename(base, 'hs', 'txt')
+      hs_metrics_output_filename: makeFilename(base, 'hs', 'txt'),
+      fixedtag_reads_output_filename: makeFileName(base, 'fixed_tags', 'bam')
     };
   }

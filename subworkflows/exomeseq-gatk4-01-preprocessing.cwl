@@ -78,6 +78,7 @@ steps:
       - recal_table_output_filename
       - raw_variants_output_filename
       - haplotypes_bam_output_filename
+      - fixedtag_reads_output_filename
   combine_reads:
     run: ../tools/concat-gz-files.cwl
     scatter: [files, output_filename]
@@ -114,7 +115,7 @@ steps:
       - trimmed_reads
       - trim_reports
   map:
-    run: ../tools/gitc-bwa-mem-samtools.cwl
+    run: ../tools/gotc-bwa-mem-samtools.cwl
     requirements:
       - class: ResourceRequirement
         coresMin: $(inputs.threads)
@@ -138,7 +139,7 @@ steps:
         outdirMin: 12000
         tmpdirMin: 12000
     in:
-      input_file: map/sortedoutput
+      input_file: map/output
       output_filename: generate_sample_filenames/dedup_reads_output_filename
       metrics_filename: generate_sample_filenames/dedup_metrics_output_filename
       validation_stringency: { valueFrom: "SILENT" }
@@ -170,7 +171,7 @@ steps:
         tmpdirMin: 12000
     in:
       input_file: sort/sorted
-      output_filename: generate_sample_filenames/fixed_tag_reads_output_filename # TODO: Allocate this
+      output_filename: generate_sample_filenames/fixedtag_reads_output_filename
       reference: reference_genome
     out:
       - output_fixed_tags_bam
