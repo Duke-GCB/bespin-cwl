@@ -46,7 +46,7 @@ inputs:
     - type: array
       items: File
       inputBinding:
-        prefix: --knownSites
+        prefix: --known-sites
     secondaryFiles:
       - .idx
     doc: Any number of VCF files representing known SNPs and/or indels. Could be e.g.
