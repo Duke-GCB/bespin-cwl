@@ -32,7 +32,7 @@ inputs:
   library: string
   # e.g. Illumina
   platform: string
-  knownSites: File[] # vcf files of known sites, with indexing
+  known_sites: File[] # vcf files of known sites, with indexing
   # Variant Recalibration - Common
   resource_dbsnp: File
 outputs:
@@ -48,10 +48,10 @@ outputs:
   # Recalibration
   recalibration_table:
     type: File
-    outputSource: recalibrate_01_analyze/output_baseRecalibrator
+    outputSource: recalibrate_01_analyze/output_recalibration_report
   recalibrated_reads:
     type: File
-    outputSource: recalibrate_02_apply_bqsr/calibrated_bam
+    outputSource: recalibrate_02_apply_bqsr/output_recalibrated_bam
 
 steps:
   file_pair_details:
@@ -134,17 +134,17 @@ steps:
     run: ../tools/GATK4-MarkDuplicates.cwl
     requirements:
       - class: ResourceRequirement
-        coresMin: 1
-        ramMin: 4000
+        ramMin: 7000
         outdirMin: 12000
         tmpdirMin: 12000
     in:
       input_file: map/output
       output_filename: generate_sample_filenames/dedup_reads_output_filename
       metrics_filename: generate_sample_filenames/dedup_metrics_output_filename
-      validation_stringency: { valueFrom: "SILENT" }
-      assume_sort_order: { valueFrom: "queryname" }
-      optical_duplicate_pixel_distance: { valueFrom: 2500 }
+      validation_stringency: { default: "SILENT" }
+      assume_sort_order: { default: "queryname" }
+      optical_duplicate_pixel_distance: { default: 2500 }
+      java_opt: { default: "-Xms4000m" }
     out:
       - output_dedup_bam_file
       - output_metrics_file
@@ -152,27 +152,24 @@ steps:
     run: ../tools/GATK4-SortSam.cwl
     requirements:
       - class: ResourceRequirement
-        coresMin: 1
-        ramMin: 4000
-        outdirMin: 12000
-        tmpdirMin: 12000
+        ramMin: 5000
     in:
       input_file: mark_duplicates/output_dedup_bam_file
-      output_filename: generate_sample_filenames/sorted_reads_output_filename
+      output_sorted_bam_filename: generate_sample_filenames/sorted_reads_output_filename
+      sort_order: { default: "coordinate" }
+      java_opt: { default: "-Xms4000m" }
     out:
-      - sorted
+      - output_sorted_bam
   fixtags:
     run: ../tools/GATK4-SetNmAndUqTags.cwl # what does this do?
     requirements:
       - class: ResourceRequirement
-        coresMin: 1
-        ramMin: 4000
-        outdirMin: 12000
-        tmpdirMin: 12000
+        ramMin: 1000
     in:
-      input_file: sort/sorted
+      input_file: sort/output_sorted_bam
       output_filename: generate_sample_filenames/fixedtag_reads_output_filename
       reference: reference_genome
+      java_opt: { default: "-Xms500m" }   
     out:
       - output_fixed_tags_bam
   # Now recalibrate
@@ -180,33 +177,32 @@ steps:
     run: ../tools/GATK4-BaseRecalibrator.cwl
     requirements:
       - class: ResourceRequirement
-        coresMin: 8
-        ramMin: 4096
+        ramMin: 6000
     in:
-      inputBam_BaseRecalibrator: fixtags/output_fixed_tags_bam
-      intervals: intervals
-      interval_padding: interval_padding
-      knownSites: knownSites
-      cpu_threads:
-        default: 8
-      outputfile_BaseRecalibrator: generate_sample_filenames/recal_table_output_filename
       reference: reference_genome
+      input_bam: fixtags/output_fixed_tags_bam
+      use_original_qualities: { default: true }
+      output_recalibration_report_filename: generate_sample_filenames/recal_table_output_filename
+      known_sites: known_sites
+      intervals: intervals
+      java_opt: { default: "-Xms4000m" }
     out:
-      - output_baseRecalibrator
+      - output_recalibration_report
   recalibrate_02_apply_bqsr:
     run: ../tools/GATK4-ApplyBQSR.cwl
     requirements:
       - class: ResourceRequirement
-        coresMin: 8
-        ramMin: 4096
+        ramMin: 3500
     in:
-      inputBam_applyBQSR: fixtags/output_fixed_tags_bam
-      intervals: intervals
-      recalibration_report: recalibrate_01_analyze/output_baseRecalibrator
-      cpu_threads:
-        default: 8
-      outputfile_printReads: generate_sample_filenames/recal_reads_output_filename
       reference: reference_genome
+      input_bam: fixtags/output_fixed_tags_bam
+      output_recalibrated_bam_filename: generate_sample_filenames/recal_reads_output_filename
+      intervals: intervals
+      bqsr_report: recalibrate_01_analyze/output_recalibration_report
+      static_quantized_quals: { default: [10, 20, 30]}
+      add_output_sam_program_record: { default: true }
+      use_original_qualities: { default: true }
+      java_opt: { default: "-Xms3000m" }
     out:
-      - calibrated_bam
+      - output_recalibrated_bam
 
