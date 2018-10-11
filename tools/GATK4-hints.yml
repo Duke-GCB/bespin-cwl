@@ -4,8 +4,10 @@
           version: [ "4.0.4.0" ]
           s:citation: https://doi.org/10.1101/gr.107524.110
 
-$namespaces:
-  s: https://schema.org/
+# Namespaces and schemas can't be here at the top-level, but cwl complains about them anyways
+# commenting-out for now
+# $namespaces:
+#   s: https://schema.org/
 
-$schemas:
- - https://schema.org/docs/schema_org_rdfa.html
+# $schemas:
+#  - https://schema.org/docs/schema_org_rdfa.html
