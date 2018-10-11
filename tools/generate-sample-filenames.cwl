@@ -42,6 +42,6 @@ expression: >
       raw_variants_output_filename: makeFilename(base, 'raw_variants', 'g.vcf'),
       haplotypes_bam_output_filename:  makeFilename(base, 'haplotypes', 'bam'),
       hs_metrics_output_filename: makeFilename(base, 'hs', 'txt'),
-      fixedtag_reads_output_filename: makeFileName(base, 'fixed_tags', 'bam')
+      fixedtag_reads_output_filename: makeFilename(base, 'fixed_tags', 'bam')
     };
   }
