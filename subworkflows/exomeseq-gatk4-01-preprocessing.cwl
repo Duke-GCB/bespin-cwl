@@ -13,7 +13,6 @@ inputs:
   target_interval_list: File
   # bait intervals in picard interval_list format
   bait_interval_list: File
-  interval_padding: int?
   # Read samples, fastq format
   # NOTE: Broad recommends the illumina basecalls and converts to unmapped SAM
   #   but do we typically have fastq?
@@ -33,8 +32,6 @@ inputs:
   # e.g. Illumina
   platform: string
   known_sites: File[] # vcf files of known sites, with indexing
-  # Variant Recalibration - Common
-  resource_dbsnp: File
 outputs:
   fastqc_reports:
     type: File[]
@@ -169,7 +166,7 @@ steps:
       input_file: sort/output_sorted_bam
       output_filename: generate_sample_filenames/fixedtag_reads_output_filename
       reference: reference_genome
-      java_opt: { default: "-Xms500m" }   
+      java_opt: { default: "-Xms500m" }
     out:
       - output_fixed_tags_bam
   # Now recalibrate
