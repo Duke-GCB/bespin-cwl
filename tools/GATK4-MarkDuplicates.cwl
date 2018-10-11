@@ -44,10 +44,8 @@ inputs:
       prefix: "--REMOVE_DUPLICATES:"
       shellQuote: false
   java_opt:
-    type: string
+    type: string?
     doc: "String of options to pass to JVM at runtime"
-    default:
-      "-Xms4000m"
     inputBinding:
       prefix: "--java-options"
       position: -1 # before the tool name

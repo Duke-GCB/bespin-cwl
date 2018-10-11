@@ -22,6 +22,8 @@ inputs:
   create_index:
     type: string
     default: "true"
+    inputBinding:
+      prefix: "--CREATE_INDEX"
     doc: "Create an index"
   reference:
     type: File
@@ -34,8 +36,6 @@ inputs:
   java_opt:
     type: string
     doc: "String of options to pass to JVM at runtime"
-    default:
-      "-Xms500m"
     inputBinding:
       prefix: "--java-options"
       position: -1 # before the tool name

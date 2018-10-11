@@ -34,13 +34,13 @@ inputs:
     default: false
     inputBinding:
       prefix: "--use-original-qualities"
-  recalibration_report_filename:
+  output_recalibration_report_filename:
     type: string
     doc: "Recalibration Report Filename"
     default: "recal.csv"
     inputBinding:
       prefix: "-O"
-  knownSites:
+  known_sites:
     type:
     - 'null'
     - type: array
@@ -60,12 +60,19 @@ inputs:
       inputBinding:
         prefix: -L
     doc: One or more genomic intervals over which to operate
+  java_opt:
+    type: string
+    doc: "String of options to pass to JVM at runtime"
+    inputBinding:
+      prefix: "--java-options"
+      position: -1 # before the tool name
+      shellQuote: true
   
 outputs:
   output_recalibration_report:
     type: File
     outputBinding:
-      glob: $(inputs.recalibration_report_filename)
+      glob: $(inputs.output_recalibration_report_filename)
 
 arguments:
 - valueFrom: BaseRecalibrator
