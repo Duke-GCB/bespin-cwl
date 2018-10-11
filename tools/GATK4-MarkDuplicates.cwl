@@ -4,8 +4,8 @@ cwlVersion: v1.0
 class: CommandLineTool
 requirements:
   $import: GATK4-requirements.yml
-# hints:      # Removing this to suppress noise
-#   - $import: GATK4-hints.yml
+hints:
+  - $import: GATK4-hints.yml
 baseCommand: gatk
 inputs:
   input_file:
