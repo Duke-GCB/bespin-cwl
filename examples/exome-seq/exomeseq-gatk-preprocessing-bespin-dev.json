@@ -1,5 +1,5 @@
 {
-  "cwl_url": "https://gist.githubusercontent.com/dleehr/9bd2155a6cbf5783c4f6c8d9c32d16e3/raw/6b7cb645c20ab446106a5d366f510b225114cd31/exomeseq-gatk4-preprocessing.cwl",
+  "cwl_url": "https://gist.githubusercontent.com/dleehr/9bd2155a6cbf5783c4f6c8d9c32d16e3/raw/a2db9f39ae4fdbd4aa8e6d9d7a7e27ffea920e03/exomeseq-gatk4-preprocessing.cwl",
   "description": "WES-GATK4 01 - Preprocessing of Whole Exome sequencing following GATK4 best practices workflow. Germline SNP & Indel Discovery using b37 human genome assembly on samples sequenced with an xGen Exome Research Panel v1.0 capture kit. Merges reads split into multiple files.",
   "methods_template_url": "https://raw.githubusercontent.com/Duke-GCB/bespin-cwl/v0.9.3/workflows/exomeseq-methods.j2",
   "name": "Whole Exome Sequence preprocessing - GATK4/Human b37",
