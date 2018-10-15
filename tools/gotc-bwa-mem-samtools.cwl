@@ -11,7 +11,7 @@ requirements:
   listing:
     - entryname: bwa-mem-samtools.sh
       entry: |
-        /usr/gitc/bwa "$@" | samtools view -1 -
+        /usr/gitc/bwa mem $@ | samtools view -1 -
 baseCommand: bash
 arguments: [bwa-mem-samtools.sh]
 
