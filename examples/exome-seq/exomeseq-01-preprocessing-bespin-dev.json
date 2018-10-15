@@ -48,7 +48,7 @@
     "threads": 32
   },
   "vm_flavor_name": "m1.xxlarge",
-  "vm_settings_name": "lando_worker_cwltool_dev_20180918_183036",
+  "vm_settings_name": "lando_worker_cwltool_dev_20181012_151512",
   "volume_size_base": 3000,
   "volume_size_factor": 20,
   "workflow_version_number": 1,
