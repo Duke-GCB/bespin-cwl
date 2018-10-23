@@ -12,6 +12,7 @@ jobs:
       - &pyinstall run:
           name: install python dependencies
           command: |
+            apt-get install python-dev
             python3 -m venv venv
             . venv/bin/activate
             pip install --upgrade pip
