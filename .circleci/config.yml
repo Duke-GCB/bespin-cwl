@@ -1,3 +1,8 @@
+# Contains three jobs: build, pack, and deploy.
+# Job `build` is always run to validate workflows via ./scripts/validate-workflows.sh.
+# Jobs `pack` then `deploy` are run in sequence for version number tags.
+# The `pack` job packs workflows via ./scripts/pack-workflows.sh storing packed workflows in the workspace.
+# The `deploy` job creates a release on github using everything in the workspace.
 version: 2
 jobs:
   build:
