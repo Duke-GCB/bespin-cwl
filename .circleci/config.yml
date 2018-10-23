@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/python:3.4
+      - image: circleci/python:2.7
     steps:
       - checkout
 
@@ -12,25 +12,24 @@ jobs:
       - &pyinstall run:
           name: install python dependencies
           command: |
-            sudo apt-get install python-dev
-            python3 -m venv venv
-            . venv/bin/activate
+            virtualenv env
+            source env/bin/activate
             pip install --upgrade pip
             pip install -r requirements.txt
 
       - &pysavecache save_cache:
           key: v1-dependency-cache-{{ checksum "requirements.txt" }}
           paths:
-            - "venv"
+            - "env"
 
       - run:
           name: run tests
           command: |
-            . venv/bin/activate
+            source env/bin/activate
             ./scripts/validate-workflows.sh
   pack:
     docker:
-      - image: circleci/python:3.4
+      - image: circleci/python:2.7
     steps:
       - checkout
       - *pyrestorecache
