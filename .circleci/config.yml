@@ -5,23 +5,22 @@ jobs:
       - image: circleci/python:2.7
     steps:
       - checkout
-
-      - &pyrestorecache restore_cache:
+      - &restore_python_cache
+        restore_cache:
           key: v1-dependency-cache-{{ checksum "requirements.txt" }}
-
-      - &pyinstall run:
+      - &install_dependencies
+        run:
           name: install python dependencies
           command: |
             virtualenv env
             source env/bin/activate
             pip install --upgrade pip
             pip install -r requirements.txt
-
-      - &pysavecache save_cache:
+      - &save_python_cache
+        save_cache:
           key: v1-dependency-cache-{{ checksum "requirements.txt" }}
           paths:
             - "env"
-
       - run:
           name: run tests
           command: |
@@ -32,27 +31,29 @@ jobs:
       - image: circleci/python:2.7
     steps:
       - checkout
-      - *pyrestorecache
-      - *pyinstall
-      - *pysavecache
+      - *restore_python_cache
+      - *install_dependencies
+      - *save_python_cache
       - run:
           name: create packed workflows
           command: |
+            source env/bin/activate
             ./scripts/pack-workflows.sh
-      - store_artifacts:
-          path: ./build
+      - persist_to_workspace:
+          root: build
+          paths:
+            - "*"
   deploy:
     docker:
       - image: circleci/golang:1.8
     steps:
       - attach_workspace:
-          at: ./build
+          at: /tmp/workspace
       - run:
           name: "Publish Release on GitHub"
           command: |
             go get github.com/tcnksm/ghr
-            VERSION=$(my-binary --version)
-            ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} ${CIRCLE_TAG} ./build/
+            ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} ${CIRCLE_TAG} /tmp/workspace
 workflows:
   version: 2
   build_and_deploy:
