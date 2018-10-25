@@ -127,7 +127,19 @@ steps:
       threads: threads
     out:
       - output
-  mark_duplicates: # I thought this needed to be sorted but apparently not?
+  sort:
+    run: ../tools/GATK4-SortSam.cwl
+    requirements:
+      - class: ResourceRequirement
+        ramMin: 5000
+    in:
+      input_file: map/output
+      output_sorted_bam_filename: generate_sample_filenames/sorted_reads_output_filename
+      sort_order: { default: "coordinate" }
+      java_opt: { default: "-Xms4000m" }
+    out:
+      - output_sorted_bam
+  mark_duplicates:
     run: ../tools/GATK4-MarkDuplicates.cwl
     requirements:
       - class: ResourceRequirement
@@ -135,28 +147,16 @@ steps:
         outdirMin: 12000
         tmpdirMin: 12000
     in:
-      input_file: map/output
+      input_file: sort/output_sorted_bam
       output_filename: generate_sample_filenames/dedup_reads_output_filename
       metrics_filename: generate_sample_filenames/dedup_metrics_output_filename
       validation_stringency: { default: "SILENT" }
-      assume_sort_order: { default: "queryname" }
+      assume_sort_order: { default: "coordinate" }
       optical_duplicate_pixel_distance: { default: 2500 }
       java_opt: { default: "-Xms4000m" }
     out:
       - output_dedup_bam_file
       - output_metrics_file
-  sort:
-    run: ../tools/GATK4-SortSam.cwl
-    requirements:
-      - class: ResourceRequirement
-        ramMin: 5000
-    in:
-      input_file: mark_duplicates/output_dedup_bam_file
-      output_sorted_bam_filename: generate_sample_filenames/sorted_reads_output_filename
-      sort_order: { default: "coordinate" }
-      java_opt: { default: "-Xms4000m" }
-    out:
-      - output_sorted_bam
   fixtags:
     run: ../tools/GATK4-SetNmAndUqTags.cwl # what does this do?
     requirements:
