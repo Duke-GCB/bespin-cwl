@@ -54,7 +54,7 @@ inputs:
     - type: array
       items: int
       inputBinding:
-        prefix: -L
+        prefix: "--static-quantized-quals"
     doc:  Use static quantized quality scores to a given number of levels (with -bqsr)
   add_output_sam_program_record:
     type: boolean
