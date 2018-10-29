@@ -1,0 +1,5 @@
+- class: SoftwareRequirement
+  packages:
+      gatk:
+          version: [ "4.0.4.0" ]
+          https://schema.org/citation: https://doi.org/10.1101/gr.107524.110

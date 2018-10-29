@@ -1,0 +1,52 @@
+{
+  "cwl_url": "https://gist.githubusercontent.com/dleehr/9bd2155a6cbf5783c4f6c8d9c32d16e3/raw/a2db9f39ae4fdbd4aa8e6d9d7a7e27ffea920e03/exomeseq-gatk4-preprocessing.cwl",
+  "description": "WES-GATK4 01 - Preprocessing of Whole Exome sequencing following GATK4 best practices workflow. Germline SNP & Indel Discovery using b37 human genome assembly on samples sequenced with an xGen Exome Research Panel v1.0 capture kit. Merges reads split into multiple files.",
+  "methods_template_url": "https://raw.githubusercontent.com/Duke-GCB/bespin-cwl/v0.9.3/workflows/exomeseq-methods.j2",
+  "name": "Whole Exome Sequence preprocessing - GATK4/Human b37",
+  "share_group_name": "informatics",
+  "system_json": {
+    "target_intervals": [
+      {
+        "class": "File",
+        "path": "/data/exome-seq/capture/xgen-exome-research-panel-targetsae255a1532796e2eaa53ff00001c1b3c-trimmed-chr.bed"
+      }
+    ],
+    "known_sites": [
+      {
+        "class": "File",
+        "path": "/data/exome-seq/b37/dbsnp_138.b37.vcf"
+      },
+      {
+        "class": "File",
+        "path": "/data/exome-seq/b37/Mills_and_1000G_gold_standard.indels.b37.vcf"
+      },
+      {
+        "class": "File",
+        "path": "/data/exome-seq/b37/1000G_phase1.indels.b37.vcf"
+      }
+    ],
+    "platform": "Illumina",
+    "bait_intervals": [
+      {
+        "class": "File",
+        "path": "/data/exome-seq/capture/xgen-exome-research-panel-probesbe255a1532796e2eaa53ff00001c1b3c-trimmed-chr.bed"
+      }
+    ],
+    "reference_genome": {
+      "class": "File",
+      "path": "/data/exome-seq/b37/decoy/human_g1k_v37_decoy.fasta"
+    },
+    "resource_dbsnp": {
+      "class": "File",
+      "path": "/data/exome-seq/b37/dbsnp_138.b37.vcf"
+    },
+    "threads": 32
+  },
+  "vm_flavor_name": "m1.xxlarge",
+  "vm_settings_name": "lando_worker_cwltool_dev_20180918_183036",
+  "volume_size_base": 3000,
+  "volume_size_factor": 20,
+  "workflow_version_number": 1,
+  "workflow_tag": "wes-gatk4-preprocessing",
+  "type_tag": "b37-human-xgen"
+}
