@@ -6,7 +6,6 @@ requirements:
   - class: ScatterFeatureRequirement
   - $import: ../types/bespin-types.yml
 inputs:
-  # NOTE: How long is this expected to take?
   # Intervals should come from capture kit in bed format
   intervals: File[]?
   # target intervals in picard interval_list format (created from intervals bed file)
@@ -14,15 +13,11 @@ inputs:
   # bait intervals in picard interval_list format
   bait_interval_list: File
   # Read samples, fastq format
-  # NOTE: Broad recommends the illumina basecalls and converts to unmapped SAM
-  #   but do we typically have fastq?
+  # NOTE: GATK best practices recommends unmapped SAM/BAM files
   read_pair:
     type: ../types/bespin-types.yml#FASTQReadPairType
   # reference genome, fasta
   # NOTE: GATK can't handle compressed fasta reference genome
-  # NOTE: is b37 appropriate to use?
-  # NOTE: Indexed with bwa and avoided .64 files
-  # NOTE: For mapping, they recommend a merge step, but this may only apply to having raw basecalls
   reference_genome: File
   # Number of threads to use for mapping
   threads: int
