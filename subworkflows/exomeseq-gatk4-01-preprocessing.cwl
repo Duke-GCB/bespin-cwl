@@ -107,7 +107,7 @@ steps:
       - trimmed_reads
       - trim_reports
   map:
-    run: ../tools/gotc-bwa-mem-samtools.cwl
+    run: ../tools/gitc-bwa-mem-samtools.cwl
     requirements:
       - class: ResourceRequirement
         coresMin: $(inputs.threads)
