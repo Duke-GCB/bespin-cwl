@@ -70,7 +70,6 @@ steps:
       - recal_table_output_filename
       - raw_variants_output_filename
       - haplotypes_bam_output_filename
-      - fixedtag_reads_output_filename
   combine_reads:
     run: ../tools/concat-gz-files.cwl
     scatter: [files, output_filename]
@@ -152,18 +151,6 @@ steps:
     out:
       - output_dedup_bam_file
       - output_metrics_file
-  fixtags:
-    run: ../tools/GATK4-SetNmAndUqTags.cwl # what does this do?
-    requirements:
-      - class: ResourceRequirement
-        ramMin: 1000
-    in:
-      input_file: sort/output_sorted_bam
-      output_filename: generate_sample_filenames/fixedtag_reads_output_filename
-      reference: reference_genome
-      java_opt: { default: "-Xms500m" }
-    out:
-      - output_fixed_tags_bam
   # Now recalibrate
   recalibrate_01_analyze:
     run: ../tools/GATK4-BaseRecalibrator.cwl
@@ -172,7 +159,7 @@ steps:
         ramMin: 6000
     in:
       reference: reference_genome
-      input_bam: fixtags/output_fixed_tags_bam
+      input_bam: fixtags/output_dedup_bam_file
       use_original_qualities: { default: true }
       output_recalibration_report_filename: generate_sample_filenames/recal_table_output_filename
       known_sites: known_sites
@@ -187,7 +174,7 @@ steps:
         ramMin: 3500
     in:
       reference: reference_genome
-      input_bam: fixtags/output_fixed_tags_bam
+      input_bam: fixtags/output_dedup_bam_file
       output_recalibrated_bam_filename: generate_sample_filenames/recal_reads_output_filename
       intervals: intervals
       bqsr_report: recalibrate_01_analyze/output_recalibration_report
