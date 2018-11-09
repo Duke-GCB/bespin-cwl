@@ -160,7 +160,7 @@ steps:
         ramMin: 6000
     in:
       reference: reference_genome
-      input_bam: fixtags/output_dedup_bam_file
+      input_bam: mark_duplicates/output_dedup_bam_file
       output_recalibration_report_filename: generate_sample_filenames/recal_table_output_filename
       known_sites: known_sites
       intervals: intervals
@@ -175,7 +175,7 @@ steps:
         ramMin: 3500
     in:
       reference: reference_genome
-      input_bam: fixtags/output_dedup_bam_file
+      input_bam: mark_duplicates/output_dedup_bam_file
       output_recalibrated_bam_filename: generate_sample_filenames/recal_reads_output_filename
       intervals: intervals
       interval_padding: interval_padding
