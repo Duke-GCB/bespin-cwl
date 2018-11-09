@@ -8,6 +8,7 @@ requirements:
 inputs:
   # Intervals should come from capture kit in bed format
   intervals: File[]?
+  interval_padding: int?
   # target intervals in picard interval_list format (created from intervals bed file)
   target_interval_list: File
   # bait intervals in picard interval_list format
@@ -163,6 +164,7 @@ steps:
       output_recalibration_report_filename: generate_sample_filenames/recal_table_output_filename
       known_sites: known_sites
       intervals: intervals
+      interval_padding: interval_padding
       java_opt: { default: "-Xms4000m" }
     out:
       - output_recalibration_report
@@ -176,6 +178,7 @@ steps:
       input_bam: fixtags/output_dedup_bam_file
       output_recalibrated_bam_filename: generate_sample_filenames/recal_reads_output_filename
       intervals: intervals
+      interval_padding: interval_padding
       bqsr_report: recalibrate_01_analyze/output_recalibration_report
       static_quantized_quals: { default: [10, 20, 30]}
       add_output_sam_program_record: { default: true }

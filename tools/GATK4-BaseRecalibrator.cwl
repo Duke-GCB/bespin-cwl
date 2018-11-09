@@ -60,6 +60,11 @@ inputs:
       inputBinding:
         prefix: -L
     doc: One or more genomic intervals over which to operate
+  interval_padding:
+    type: int?
+    doc: "Amount of padding (in bp) to add to each interval you are including. Defaults to 0"
+    inputBinding:
+      prefix: "-ip"
   java_opt:
     type: string
     doc: "String of options to pass to JVM at runtime"
