@@ -160,7 +160,6 @@ steps:
     in:
       reference: reference_genome
       input_bam: fixtags/output_dedup_bam_file
-      use_original_qualities: { default: true }
       output_recalibration_report_filename: generate_sample_filenames/recal_table_output_filename
       known_sites: known_sites
       intervals: intervals
@@ -180,7 +179,6 @@ steps:
       bqsr_report: recalibrate_01_analyze/output_recalibration_report
       static_quantized_quals: { default: [10, 20, 30]}
       add_output_sam_program_record: { default: true }
-      use_original_qualities: { default: true }
       java_opt: { default: "-Xms3000m" }
     out:
       - output_recalibrated_bam
