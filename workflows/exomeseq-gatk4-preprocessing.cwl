@@ -13,6 +13,7 @@ inputs:
   target_intervals: File[]?
   # Intervals should come from capture kit (bait intervals) bed format
   bait_intervals: File[]?
+  interval_padding: int?
   # Named read pair in FASTQ format
   read_pair:
       type: ../types/bespin-types.yml#FASTQReadPairType
@@ -71,6 +72,7 @@ steps:
     run: ../subworkflows/exomeseq-gatk4-01-preprocessing.cwl
     in:
       intervals: target_intervals
+      interval_padding: interval_padding
       target_interval_list: prepare_reference_data/target_interval_list
       bait_interval_list: prepare_reference_data/bait_interval_list
       read_pair: read_pair
