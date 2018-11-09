@@ -180,7 +180,6 @@ steps:
       intervals: intervals
       interval_padding: interval_padding
       bqsr_report: recalibrate_01_analyze/output_recalibration_report
-      static_quantized_quals: { default: [10, 20, 30]}
       add_output_sam_program_record: { default: true }
       java_opt: { default: "-Xms3000m" }
     out:
