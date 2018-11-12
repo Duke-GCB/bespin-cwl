@@ -147,6 +147,7 @@ steps:
       metrics_filename: generate_sample_filenames/dedup_metrics_output_filename
       validation_stringency: { default: "SILENT" }
       assume_sort_order: { default: "coordinate" }
+      create_index: { default: true }
       optical_duplicate_pixel_distance: { default: 2500 }
       java_opt: { default: "-Xms4000m" }
     out:
