@@ -39,6 +39,10 @@ inputs:
     type: File[] # vcf files of known sites, with indexing
     secondaryFiles:
     - .idx
+  resource_dbsnp:
+    type: File
+    secondaryFiles:
+    - .idx
 outputs:
   fastqc_reports:
     type: File[]
@@ -89,6 +93,7 @@ steps:
       library: library
       platform: platform
       known_sites: known_sites
+      resource_dbsnp: resource_dbsnp
     out:
       - fastqc_reports
       - trim_reports

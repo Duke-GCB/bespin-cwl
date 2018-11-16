@@ -12,7 +12,6 @@ inputs:
   reference:
     type: File
     inputBinding:
-      position: 2
       prefix: -R
     secondaryFiles:
     - .amb
@@ -60,10 +59,14 @@ inputs:
       items: string
       inputBinding:
         prefix: -G
-    inputBinding:
-      position: 2
     doc: "One or more groups of annotations to apply to variant calls  This argument may be specified 0 or more times. Default value: [StandardAnnotation, StandardHCAnnotation]."
-  # dbsnp?
+  dbsnp:
+    type: File?
+    inputBinding:
+      prefix: "-D"
+    secondaryFiles:
+    - .idx
+    doc: "dbSNP file. Default value: null"
   emit_ref_confidence:
     type: string?
     inputBinding:

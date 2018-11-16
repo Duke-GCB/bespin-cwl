@@ -19,7 +19,16 @@ inputs:
     type: ../types/bespin-types.yml#FASTQReadPairType
   # reference genome, fasta
   # NOTE: GATK can't handle compressed fasta reference genome
-  reference_genome: File
+  reference_genome:
+    type: File
+    secondaryFiles:
+    - .amb
+    - .ann
+    - .bwt
+    - .pac
+    - .sa
+    - .fai
+    - ^.dict
   # Number of threads to use for mapping
   threads: int
   # Read Group annotations
@@ -27,7 +36,15 @@ inputs:
   library: string
   # e.g. Illumina
   platform: string
-  known_sites: File[] # vcf files of known sites, with indexing
+  known_sites:
+    type: File[] # vcf files of known sites, with indexing
+    secondaryFiles:
+    - .idx
+  resource_dbsnp:
+    type: File
+    secondaryFiles:
+    - .idx
+
 outputs:
   fastqc_reports:
     type: File[]
@@ -209,7 +226,7 @@ steps:
       intervals: intervals
       interval_padding: interval_padding
       annotation_groups: { default: ['StandardAnnotation','AS_StandardAnnotation'] }
-      # HaplotypeCaller in the best practices doesnt use dbsnp anymore
+      dbnsp: resource_dbsnp
       emit_ref_confidence: { default: "GVCF" }
       java_opt: { default: "-Xms7000m" }
     out:
