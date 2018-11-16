@@ -45,6 +45,15 @@ outputs:
   recalibrated_reads:
     type: File
     outputSource: recalibrate_02_apply_bqsr/output_recalibrated_bam
+  raw_variants:
+    type: File
+    outputSource: variant_calling/output_variants
+    doc: "VCF file from per sample variant calling"
+  haplotypes_bam:
+    type: File
+    outputSource: variant_calling/output_bam
+    doc: "BAM file containing assembled haplotypes and locally realigned reads"
+
 
 steps:
   file_pair_details:
@@ -185,4 +194,25 @@ steps:
       java_opt: { default: "-Xms3000m" }
     out:
       - output_recalibrated_bam
+  variant_calling:
+    run: ../tools/GATK4-HaplotypeCaller.cwl
+    requirements:
+      - class: ResourceRequirement
+        coresMin: 1
+        ramMin: 8192
+    in:
+      reference: reference_genome
+      input_bam: recalibrate_02_apply_bqsr/output_recalibrated_bam
+      # Naming your output file using the .g.vcf extension will automatically set the appropriate values  for --variant_index_type and --variant_index_parameter
+      output_variants_filename: generate_sample_filenames/raw_variants_output_filename
+      output_bam_filename: generate_sample_filenames/haplotypes_bam_output_filename
+      intervals: intervals
+      interval_padding: interval_padding
+      annotation_groups: { default: ['StandardAnnotation','AS_StandardAnnotation'] }
+      # HaplotypeCaller in the best practices doesnt use dbsnp anymore
+      emit_ref_confidence: { default: "GVCF" }
+      java_opt: { default: "-Xms7000m" }
+    out:
+      - output_variants
+      - output_bam
 

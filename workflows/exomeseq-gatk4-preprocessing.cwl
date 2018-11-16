@@ -57,7 +57,15 @@ outputs:
   recalibrated_reads:
     type: File
     outputSource: preprocessing/recalibrated_reads
-    doc: "BAM files containing recalibrated reads"
+    doc: "BAM file containing recalibrated reads"
+  haplotypes_bam:
+    type: File
+    outputSource: preprocessing/haplotypes_bam
+    doc: "BAM file containing assembled haplotypes"
+  raw_variants:
+    type: File
+    outputSource: preprocessing/raw_variants
+    doc: "Variants from HaplotypeCaller"
 steps:
   prepare_reference_data:
     run: ../subworkflows/exomeseq-00-prepare-reference-data.cwl
@@ -87,3 +95,5 @@ steps:
       - markduplicates_bam
       - recalibration_table
       - recalibrated_reads
+      - raw_variants
+      - haplotypes_bam
