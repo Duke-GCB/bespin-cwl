@@ -76,7 +76,7 @@
     }
   ],
   "object_name": "#main",
-  "url": "https://gist.githubusercontent.com/dleehr/9bd2155a6cbf5783c4f6c8d9c32d16e3/raw/8578e692884af216a080ee9dbfa8b03067829cc7/exomeseq-gatk4-preprocessing.cwl",
-  "version": 5,
+  "url": "https://gist.githubusercontent.com/dleehr/9bd2155a6cbf5783c4f6c8d9c32d16e3/raw/be95268f896725d8f3542fe911c37d620b7325a5/exomeseq-gatk4-preprocessing.cwl",
+  "version": 6,
   "workflow": 9
 }
