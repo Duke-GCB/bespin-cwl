@@ -85,7 +85,7 @@ outputs:
     outputBinding:
       glob: $(inputs.output_recalibrated_bam_filename)
     secondaryFiles:
-      - .bai
+      - ^.bai
 
 arguments:
 - valueFrom: ApplyBQSR

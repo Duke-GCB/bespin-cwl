@@ -92,7 +92,7 @@ outputs:
     outputBinding:
       glob: $(inputs.output_bam_filename)
     secondaryFiles:
-      - .bai
+      - ^.bai
 
 arguments:
 - valueFrom: HaplotypeCaller
