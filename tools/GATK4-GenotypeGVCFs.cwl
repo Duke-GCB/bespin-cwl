@@ -87,7 +87,7 @@ outputs:
     outputBinding:
       glob: $(inputs.output_vcf_filename)
     secondaryFiles:
-      - .tbi
+      - .idx
 
 arguments:
 - valueFrom: GenotypeGVCFs
