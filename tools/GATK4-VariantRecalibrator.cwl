@@ -66,18 +66,19 @@ inputs:
       prefix: --max-gaussians
       position: 8
     doc: "Max number of Gaussians for the positive model  Default value: 8."
-  resources:
+  resources: # This is a complex record type that cannot be represented into command-line args, so we mark input but produce binding as an expression
     type:
       type: array
       items:
         type: record
         name: resource
         fields:
-          name:
-            type: string
-            inputBinding:
-              prefix: "name"
-
+          name: { type: string }
+          known: { type: boolean }
+          training: { type: boolean }
+          truth: { type: boolean }
+          prior: { type: int }
+          file: { type: File }
   java_opt:
     type: string
     doc: "String of options to pass to JVM at runtime"
@@ -101,3 +102,17 @@ outputs:
 arguments:
 - valueFrom: VariantRecalibrator
   position: 0
+- valueFrom: >
+    ${
+      function makeResourceLine(resource) {
+        return '-resource ' + resource.name +
+        ',known=' + (resource.known ? 'true' : 'false') +
+        ',training=' + (resource.training ? 'true' : 'false') +
+        ',truth=' + (resource.truth ? 'true' : 'false') +
+        ',prior=' + resource.prior +
+        ':' + resource.file.basename;
+      }
+      var resourceLines = inputs.resources.map(makeResourceLine);
+      return resourceLines.join(' ');
+    }
+  position: 9
