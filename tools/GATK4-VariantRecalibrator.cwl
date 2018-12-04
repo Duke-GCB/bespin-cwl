@@ -91,7 +91,7 @@ inputs:
               ',training=' + (resource.training ? 'true' : 'false') +
               ',truth=' + (resource.truth ? 'true' : 'false') +
               ',prior=' + resource.prior +
-              ':' + resource.file.basename;
+              ':' + resource.file.path;
             }
             return makeResourceLine(self);
           }
