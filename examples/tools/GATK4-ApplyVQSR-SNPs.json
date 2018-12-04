@@ -1,0 +1,17 @@
+{
+  "java_opt": "-Xmx5g -Xms5g",
+  "output_recalibrated_variants_filename": "recal-snp.vcf",
+  "variants": {
+    "basename": "input-snp.vcf",
+    "class": "File",
+    "contents": "v1",
+    "secondaryFiles": [
+      { "basename": "input-snp.vcf.idx", "class": "File", "contents": "idx" }
+    ]
+  },
+  "recalibration_file": { "basename": "recal.snp", "class": "File", "contents": "recal-snp" },
+  "tranches_file" : { "basename": "tranches.snp", "class": "File", "contents": "tranches-snp" },
+  "truth_sensitivity_filter_level": 99.7,
+  "create_output_variant_index": true,
+  "mode": "SNP"
+}
