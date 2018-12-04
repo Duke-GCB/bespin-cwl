@@ -79,6 +79,21 @@ inputs:
           truth: { type: boolean }
           prior: { type: int }
           file: { type: File }
+      inputBinding:
+        position: 9
+        prefix: '-resource'
+        valueFrom: >
+          ${
+            function makeResourceLine(resource) {
+              return resource.name +
+              ',known=' + (resource.known ? 'true' : 'false') +
+              ',training=' + (resource.training ? 'true' : 'false') +
+              ',truth=' + (resource.truth ? 'true' : 'false') +
+              ',prior=' + resource.prior +
+              ':' + resource.file.basename;
+            }
+            return makeResourceLine(self);
+          }
   java_opt:
     type: string
     doc: "String of options to pass to JVM at runtime"
@@ -102,17 +117,3 @@ outputs:
 arguments:
 - valueFrom: VariantRecalibrator
   position: 0
-- valueFrom: >
-    ${
-      function makeResourceLine(resource) {
-        return '-resource ' + resource.name +
-        ',known=' + (resource.known ? 'true' : 'false') +
-        ',training=' + (resource.training ? 'true' : 'false') +
-        ',truth=' + (resource.truth ? 'true' : 'false') +
-        ',prior=' + resource.prior +
-        ':' + resource.file.basename;
-      }
-      var resourceLines = inputs.resources.map(makeResourceLine);
-      return resourceLines.join(' ');
-    }
-  position: 9
