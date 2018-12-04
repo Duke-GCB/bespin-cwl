@@ -67,6 +67,8 @@ inputs:
       position: 8
     doc: "Max number of Gaussians for the positive model  Default value: 8."
   resources: # This is a complex record type that cannot be represented into command-line args, so we mark input but produce binding as an expression
+    inputBinding:
+      position: 9
     type:
       type: array
       items:
@@ -80,7 +82,6 @@ inputs:
           prior: { type: int }
           file: { type: File }
       inputBinding:
-        position: 9
         prefix: '-resource'
         valueFrom: >
           ${
