@@ -12,7 +12,6 @@ def load_job_order_dict(job_order_file):
         return json.load(f)
 
 def print_command_line(cwl_tool_file, job_order):
-    print(job_order)
     context = LoadingContext({"construct_tool_object": default_make_tool,
                           "resolver": tool_resolver,
                           "disable_js_validation": True})
