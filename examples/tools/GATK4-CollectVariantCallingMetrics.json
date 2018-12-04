@@ -1,0 +1,19 @@
+{
+  "java_opt": "-Xmx6g -Xms6g",
+  "input_vcf": {
+    "basename": "input.vcf",
+    "class": "File",
+    "contents": "input-vcf",
+    "secondaryFiles": [ { "basename": "input.vcf.idx", "class": "File", "contents": "idx" } ]
+  },
+  "dbsnp": {
+    "basename": "dbSNP.vcf",
+    "class": "File",
+    "contents": "dbSNP",
+    "secondaryFiles": [ { "basename": "dbSNP.vcf.idx", "class": "File", "contents": "idx" } ]
+  },
+  "sequence_dictionary": { "basename": "hg38.dict", "class": "File", "contents": "dict" },
+  "output_metrics_filename_prefix": "vc-metrics",
+  "thread_count": 8,
+  "target_intervals": { "basename": "intervals.bed", "class": "File", "contents": "intervals" }
+}
