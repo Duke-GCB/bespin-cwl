@@ -41,17 +41,17 @@ inputs:
       items: string
       inputBinding:
         prefix: -G
-    doc: One or more groups of annotations to apply to variant calls  This argument may be specified 0 or more times. Default value: [StandardAnnotation].
-  only_output_calls_starting_in_intervals
+    doc: "One or more groups of annotations to apply to variant calls  This argument may be specified 0 or more times. Default value: [StandardAnnotation]."
+  only_output_calls_starting_in_intervals:
     type: boolean?
     inputBinding:
       prefix: --only_output_calls_starting_in_intervals
-    doc: Restrict variant output to sites that start within provided intervals  Default value: false.
+    doc: "Restrict variant output to sites that start within provided intervals  Default value: false."
   use_new_qual_calculator:
     type: boolean?
     inputBinding:
       prefix: --use-new-qual-calculator
-    doc:  If provided, we will use the new AF model instead of the so-called exact model  Default value: false.
+    doc: "If provided, we will use the new AF model instead of the so-called exact model  Default value: false."
   variants:
     type:
       type: array
@@ -60,7 +60,7 @@ inputs:
         prefix: -V
     inputBinding:
       position: 2
-    doc: One or more VCF files containing variants  Required.
+    doc: "One or more VCF files containing variants  Required."
   intervals:
     type:
     - 'null'
@@ -68,7 +68,7 @@ inputs:
       items: File
       inputBinding:
         prefix: -L
-    doc: One or more genomic intervals over which to operate
+    doc: "One or more genomic intervals over which to operate"
   interval_padding:
     type: int?
     doc: "Amount of padding (in bp) to add to each interval you are including. Defaults to 0"
