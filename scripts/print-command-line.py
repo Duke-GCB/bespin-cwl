@@ -2,10 +2,15 @@
 
 import sys
 import json
+import logging
+
 from cwltool.context import LoadingContext, RuntimeContext
 from cwltool.workflow import default_make_tool
 from cwltool.resolver import tool_resolver
 from cwltool.load_tool import load_tool
+
+logging.getLogger('cwltool').setLevel(logging.ERROR)
+logging.getLogger('salad').setLevel(logging.ERROR)
 
 def load_job_order_dict(job_order_file):
     with open(job_order_file, 'r') as f:
