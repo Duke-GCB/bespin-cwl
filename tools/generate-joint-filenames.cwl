@@ -30,7 +30,7 @@ expression: >
       snps_recalibrated_variants_filename: makeFilename(base, 'snps_recal_variants', 'vcf'),
       indels_recalibration_filename: makeFilename(base, 'indels_recal', 'out'),
       indels_tranches_filename: makeFilename(base, 'indels_tranches', 'out'),
-      indels_recalibrated_variants_filename: makeFilename(base, 'indels_recal_variants', 'vcf')
+      indels_recalibrated_variants_filename: makeFilename(base, 'indels_recal_variants', 'vcf'),
       combined_recalibrated_variants_filename: makeFilename(base, 'indels_snps_recal_variants', 'vcf')
     };
   }
