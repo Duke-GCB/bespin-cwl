@@ -10,11 +10,13 @@ doc: >
   annotation from the command line.
   From https://software.broadinstitute.org/gatk/documentation/article?id=1259
 requirements:
-  - class: InlineJavascriptRequirement
-  - $import: ../types/bespin-types.yml
+  InlineJavascriptRequirement: {}
+  SchemaDefRequirement:
+    types:
+      - $import: ../types/ExomeseqStudyType.yml
 inputs:
   study_type:
-    type: ../types/bespin-types.yml#ExomeseqStudyType
+    type: ../types/ExomeseqStudyType.yml#ExomeseqStudyType
   base_annotations: string[]
 outputs:
   annotations:

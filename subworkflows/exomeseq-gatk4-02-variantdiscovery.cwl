@@ -3,10 +3,12 @@
 cwlVersion: v1.0
 class: Workflow
 requirements:
-  - $import: ../types/bespin-types.yml
+  SchemaDefRequirement:
+    types:
+      - $import: ../types/ExomeseqStudyType.yml
 inputs:
   study_type:
-    type: ../types/bespin-types.yml#ExomeseqStudyType
+    type: ../types/ExomeseqStudyType.yml#ExomeseqStudyType
   name: string
   intervals: File[]?
   interval_padding: int?
@@ -153,7 +155,7 @@ steps:
       output_recalibrated_variants_filename: generate_joint_filenames/indels_recalibrated_variants_filename
       variants: joint_genotyping/output_vcf
       recalibration_file: variant_recalibration_indels/output_recalibration
-      tranches_File: variant_recalibration_indels/output_tranches
+      tranches_file: variant_recalibration_indels/output_tranches
       truth_sensitivity_filter_level: { default: 99.7 }
       create_output_variant_index: { default: true }
       mode: { default: "INDEL" }
@@ -166,9 +168,29 @@ steps:
       output_recalibrated_variants_filename: generate_joint_filenames/combined_recalibrated_variants_filename
       variants: apply_vqsr_indels/output_recalibrated_variants
       recalibration_file: variant_recalibration_indels/output_recalibration
-      tranches_File: variant_recalibration_indels/output_tranches
+      tranches_file: variant_recalibration_indels/output_tranches
       truth_sensitivity_filter_level: { default: 99.7 }
       create_output_variant_index: { default: true }
       mode: { default: "SNP" }
     out:
       - output_recalibrated_variants
+  extract_sequence_dict:
+    run: ../tools/extract-secondary-file.cwl
+    in:
+      file: reference_genome
+      pattern: { default: '.dict'}
+    out:
+      - extracted
+  collect_metrics:
+    run: ../tools/GATK4-CollectVariantCallingMetrics.cwl
+    in:
+      java_opt: { default: "-Xmx6g -Xms6g" }
+      input_vcf: apply_vqsr_snps/output_recalibrated_variants
+      dbsnp: resource_dbsnp
+      sequence_dictionary: extract_sequence_dict/extracted
+      output_metrics_filename_prefix: name
+      thread_count: { default: 8 }
+      target_intervals: intervals # Is this OK without interval padding?
+    out:
+      - output_detail_metrics
+      - output_summary_metrics
