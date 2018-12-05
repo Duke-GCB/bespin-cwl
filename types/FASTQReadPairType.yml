@@ -1,0 +1,10 @@
+type: record
+name: FASTQReadPairType
+fields:
+  - name: name
+    type: string
+  - name: read1_files
+    type: File[]
+  - name: read2_files
+    type: File[]
+

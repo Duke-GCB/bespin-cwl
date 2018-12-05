@@ -4,12 +4,14 @@ cwlVersion: v1.0
 class: ExpressionTool
 label: Given a FASTQReadPairType returns a 2D array of the files contained within
 requirements:
-  - class: InlineJavascriptRequirement
-  - $import: ../types/bespin-types.yml
+  InlineJavascriptRequirement: {}
+  SchemaDefRequirement:
+    types:
+      - $import: ../types/FASTQReadPairType.yml
 inputs:
   # Named read pairs in FASTQ format
   read_pair:
-      type: ../types/bespin-types.yml#FASTQReadPairType
+      type: ../types/FASTQReadPairType.yml#FASTQReadPairType
   library:
     type: string
   platform:
