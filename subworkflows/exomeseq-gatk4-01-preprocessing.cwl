@@ -226,7 +226,6 @@ steps:
       intervals: intervals
       interval_padding: interval_padding
       annotation_groups: { default: ['StandardAnnotation','AS_StandardAnnotation'] }
-      dbnsp: resource_dbsnp
       emit_ref_confidence: { default: "GVCF" }
       java_opt: { default: "-Xms7000m" }
     out:
