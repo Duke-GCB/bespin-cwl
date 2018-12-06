@@ -1,0 +1,20 @@
+{
+  "files": [
+    {
+      "basename": "file0.txt",
+      "class": "File",
+      "contents": "This is file 0"
+    },
+    {
+      "basename": "file1.txt",
+      "class": "File",
+      "contents": "This is file 1"
+    },
+    {
+      "basename": "file2.txt",
+      "class": "File",
+      "contents": "This is file 2"
+    }
+  ],
+  "index": 1
+}
