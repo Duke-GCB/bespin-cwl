@@ -7,7 +7,7 @@ requirements:
 
 inputs:
   files:
-    type: File[]
+    type: File[]?
   index:
     type: int
 outputs:
@@ -16,5 +16,9 @@ outputs:
 
 expression: >
   ${
-    return { "extracted" : inputs.files[inputs.index] };
+    if(inputs.files) {
+      return { "extracted" : inputs.files[inputs.index] };
+    } else {
+      return { "extracted" : null };
+    }
   }

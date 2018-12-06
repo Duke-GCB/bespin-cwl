@@ -29,7 +29,10 @@ inputs:
   snp_resource_omni: File
   snp_resource_1kg: File
   # Variant Recalibration - Common
-  resource_dbsnp: File
+  resource_dbsnp:
+    type: File
+    secondaryFiles:
+    - .idx
   # Variant Recalibration - Indels
   indel_resource_mills: File
   indel_resource_axiom_poly: File
@@ -181,6 +184,13 @@ steps:
       pattern: { default: '.dict'}
     out:
       - extracted
+  extract_intervals_file:
+    run: ../tools/extract-array-file.cwl
+    in:
+      files: intervals
+      index: { default: 0 }
+    out:
+      - extracted
   collect_metrics:
     run: ../tools/GATK4-CollectVariantCallingMetrics.cwl
     in:
@@ -190,7 +200,7 @@ steps:
       sequence_dictionary: extract_sequence_dict/extracted
       output_metrics_filename_prefix: name
       thread_count: { default: 8 }
-      target_intervals: intervals # Is this OK without interval padding?
+      target_intervals: extract_intervals_file/extracted # Is this OK without interval padding?
     out:
       - output_detail_metrics
       - output_summary_metrics
