@@ -57,7 +57,7 @@ outputs:
     type: File
     outputSource: variant_recalibration_indels/output_tranches
     doc: "The output tranches file used by ApplyVQSR in INDEL mode"
-  variant_recalibration_snps_indels_recal:
+  variant_recalibration_snps_indels_recalibration:
     type: File
     outputSource: variant_recalibration_indels/output_recalibration
     doc: "The output recalibration file used by ApplyVQSR in INDEL mode"
@@ -65,6 +65,12 @@ outputs:
     type: File
     outputSource: apply_vqsr_indels/output_recalibrated_variants
     doc: "The output VCF file after INDEL recalibration"
+  detail_metrics:
+    type: File
+    outputSource: collect_metrics/output_detail_metrics
+  summary_metrics:
+    type: File
+    outputSource: collect_metrics/output_summary_metrics
 steps:
   generate_joint_filenames:
     run: ../tools/generate-joint-filenames.cwl
