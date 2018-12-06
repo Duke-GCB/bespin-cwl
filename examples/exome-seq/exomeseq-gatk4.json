@@ -1,0 +1,117 @@
+{
+  "description": "WES-GATK4 - Whole Exome sequencing following GATK4 best practices workflow. Germline SNP & Indel Discovery. Merges reads split into multiple files.",
+  "fields": [
+    {
+      "name": "bait_intervals",
+      "type": [
+        "null",
+        {
+          "items": "File",
+          "type": "array"
+        }
+      ]
+    },
+    {
+      "name": "indel_resource_mills",
+      "secondaryFiles": [
+        ".idx"
+      ],
+      "type": "File"
+    },
+    {
+      "name": "interval_padding",
+      "type": [
+        "null",
+        "int"
+      ]
+    },
+    {
+      "name": "known_sites",
+      "secondaryFiles": [
+        ".idx"
+      ],
+      "type": {
+        "items": "File",
+        "type": "array"
+      }
+    },
+    {
+      "name": "library",
+      "type": "string"
+    },
+    {
+      "name": "platform",
+      "type": "string"
+    },
+    {
+      "name": "read_pairs",
+      "type": {
+        "items": "FASTQReadPairType",
+        "type": "array"
+      }
+    },
+    {
+      "name": "reference_genome",
+      "secondaryFiles": [
+        ".amb",
+        ".ann",
+        ".bwt",
+        ".pac",
+        ".sa",
+        ".fai",
+        "^.dict"
+      ],
+      "type": "File"
+    },
+    {
+      "name": "resource_dbsnp",
+      "secondaryFiles": [
+        ".idx"
+      ],
+      "type": "File"
+    },
+    {
+      "name": "snp_resource_1kg",
+      "secondaryFiles": [
+        ".idx"
+      ],
+      "type": "File"
+    },
+    {
+      "name": "snp_resource_hapmap",
+      "secondaryFiles": [
+        ".idx"
+      ],
+      "type": "File"
+    },
+    {
+      "name": "snp_resource_omni",
+      "secondaryFiles": [
+        ".idx"
+      ],
+      "type": "File"
+    },
+    {
+      "name": "study_type",
+      "type": "ExomeseqStudyType"
+    },
+    {
+      "name": "target_intervals",
+      "type": [
+        "null",
+        {
+          "items": "File",
+          "type": "array"
+        }
+      ]
+    },
+    {
+      "name": "threads",
+      "type": "int"
+    }
+  ],
+  "object_name": "#main",
+  "url": "https://gist.githubusercontent.com/dleehr/9bd2155a6cbf5783c4f6c8d9c32d16e3/raw/be95268f896725d8f3542fe911c37d620b7325a5/exomeseq-gatk4-preprocessing.cwl",
+  "version": 6,
+  "workflow": 9
+}
