@@ -69,10 +69,6 @@ inputs:
     type: File
     secondaryFiles:
     - .idx
-  indel_resource_axiom_poly:
-    type: File
-    secondaryFiles:
-    - .idx
 outputs:
   fastqc_reports_dir:
     type: Directory
@@ -152,7 +148,6 @@ steps:
       snp_resource_1kg: snp_resource_1kg
       resource_dbsnp: resource_dbsnp
       indel_resource_mills: indel_resource_mills
-      indel_resource_axiom_poly: indel_resource_axiom_poly
     out:
       - joint_raw_variants
       - variant_recalibration_snps_tranches

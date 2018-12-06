@@ -35,7 +35,6 @@ inputs:
     - .idx
   # Variant Recalibration - Indels
   indel_resource_mills: File
-  indel_resource_axiom_poly: File
 outputs:
   joint_raw_variants:
     type: File
@@ -133,7 +132,6 @@ steps:
       resources:
         default:
           - { name: "mills", known: false, training: true, truth: true, prior: 12, file: indel_resource_mills }
-          - { name: "axiomPoly", known: false, training: true, truth: false, prior: 10, file: indel_resource_axiom_poly }
           - { name: "dbsnp", known: true, training: false, truth: false, prior: 2, file: resource_dbsnp }
     out:
       - output_recalibration
