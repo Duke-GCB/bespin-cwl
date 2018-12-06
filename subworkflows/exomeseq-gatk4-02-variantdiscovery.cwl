@@ -121,6 +121,10 @@ steps:
       - annotations
   variant_recalibration_indels:
     run: ../tools/GATK4-VariantRecalibrator.cwl
+    requirements:
+      - class: ResourceRequirement
+        coresMin: 2
+        ramMin: 26624
     in:
       java_opt: { default: "-Xmx24g -Xms24g" }
       variants: joint_genotyping/output_vcf
@@ -138,6 +142,10 @@ steps:
       - output_tranches
   variant_recalibration_snps:
     run: ../tools/GATK4-VariantRecalibrator.cwl
+    requirements:
+      - class: ResourceRequirement
+        coresMin: 2
+        ramMin: 4096
     in:
       java_opt: { default: "-Xmx3g -Xms3g" }
       variants: joint_genotyping/output_vcf
@@ -157,6 +165,10 @@ steps:
       - output_tranches
   apply_vqsr_indels:
     run: ../tools/GATK4-ApplyVQSR.cwl
+    requirements:
+      - class: ResourceRequirement
+        coresMin: 1
+        ramMin: 7168
     in:
       java_opt: { default: "-Xmx5g -Xms5g" }
       output_recalibrated_variants_filename: generate_joint_filenames/indels_recalibrated_variants_filename
@@ -170,6 +182,10 @@ steps:
       - output_recalibrated_variants
   apply_vqsr_snps:
     run: ../tools/GATK4-ApplyVQSR.cwl
+    requirements:
+      - class: ResourceRequirement
+        coresMin: 1
+        ramMin: 7168
     in:
       java_opt: { default: "-Xmx5g -Xms5g" }
       output_recalibrated_variants_filename: generate_joint_filenames/combined_recalibrated_variants_filename
@@ -197,6 +213,10 @@ steps:
       - extracted
   collect_metrics:
     run: ../tools/GATK4-CollectVariantCallingMetrics.cwl
+    requirements:
+      - class: ResourceRequirement
+        coresMin: 2
+        ramMin: 7168
     in:
       java_opt: { default: "-Xmx6g -Xms6g" }
       input_vcf: apply_vqsr_snps/output_recalibrated_variants
