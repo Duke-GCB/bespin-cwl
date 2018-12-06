@@ -4,6 +4,7 @@ certifi==2018.11.29
 chardet==3.0.4
 cwltool==1.0.20181201184214
 decorator==4.3.0
+html5lib==1.0.1
 idna==2.7
 isodate==0.6.0
 lockfile==0.12.2
@@ -27,3 +28,4 @@ subprocess32==3.5.3
 typing==3.6.6
 typing-extensions==3.6.6
 urllib3==1.24.1
+webencodings==0.5.1
