@@ -89,7 +89,7 @@ steps:
     requirements:
       - class: ResourceRequirement
         coresMin: 2
-        ramMin: 7168
+        ramMin: 10240
     in:
       reference: reference_genome
       output_vcf_filename: generate_joint_filenames/raw_variants_filename
@@ -124,7 +124,7 @@ steps:
     requirements:
       - class: ResourceRequirement
         coresMin: 2
-        ramMin: 26624
+        ramMin: 49152
     in:
       java_opt: { default: "-Xmx24g -Xms24g" }
       variants: joint_genotyping/output_vcf
@@ -145,7 +145,7 @@ steps:
     requirements:
       - class: ResourceRequirement
         coresMin: 2
-        ramMin: 4096
+        ramMin: 6144
     in:
       java_opt: { default: "-Xmx3g -Xms3g" }
       variants: joint_genotyping/output_vcf
@@ -168,7 +168,7 @@ steps:
     requirements:
       - class: ResourceRequirement
         coresMin: 1
-        ramMin: 7168
+        ramMin: 10240
     in:
       java_opt: { default: "-Xmx5g -Xms5g" }
       output_recalibrated_variants_filename: generate_joint_filenames/indels_recalibrated_variants_filename
@@ -185,7 +185,7 @@ steps:
     requirements:
       - class: ResourceRequirement
         coresMin: 1
-        ramMin: 7168
+        ramMin: 10240
     in:
       java_opt: { default: "-Xmx5g -Xms5g" }
       output_recalibrated_variants_filename: generate_joint_filenames/combined_recalibrated_variants_filename
@@ -216,7 +216,7 @@ steps:
     requirements:
       - class: ResourceRequirement
         coresMin: 2
-        ramMin: 7168
+        ramMin: 12288
     in:
       java_opt: { default: "-Xmx6g -Xms6g" }
       input_vcf: apply_vqsr_snps/output_recalibrated_variants

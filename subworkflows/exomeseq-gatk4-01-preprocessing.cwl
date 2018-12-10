@@ -101,7 +101,7 @@ steps:
     requirements:
       - class: ResourceRequirement
         coresMin: 1
-        ramMin: 1000
+        ramMin: 1024
     scatter: [files, output_filename]
     scatterMethod: dotproduct
     in:
@@ -114,7 +114,7 @@ steps:
     requirements:
       - class: ResourceRequirement
         coresMin: 4
-        ramMin: 2500
+        ramMin: 3072
     scatter: input_fastq_file
     in:
       input_fastq_file: combine_reads/output
@@ -127,7 +127,7 @@ steps:
     requirements:
       - class: ResourceRequirement
         coresMin: 4
-        ramMin: 8000
+        ramMin: 8192
     in:
       reads: combine_reads/output
       paired:
@@ -140,9 +140,9 @@ steps:
     requirements:
       - class: ResourceRequirement
         coresMin: $(inputs.threads)
-        ramMin: 16000
-        outdirMin: 12000
-        tmpdirMin: 12000
+        ramMin: 16384
+        outdirMin: 12288
+        tmpdirMin: 12288
     in:
       reads: trim/trimmed_reads
       reference: reference_genome
@@ -155,21 +155,21 @@ steps:
     run: ../tools/GATK4-SortSam.cwl
     requirements:
       - class: ResourceRequirement
-        ramMin: 5000
+        ramMin: 8192
     in:
       input_file: map/output
       output_sorted_bam_filename: generate_sample_filenames/sorted_reads_output_filename
       sort_order: { default: "coordinate" }
-      java_opt: { default: "-Xms4000m" }
+      java_opt: { default: "-Xms4g" }
     out:
       - output_sorted_bam
   mark_duplicates:
     run: ../tools/GATK4-MarkDuplicates.cwl
     requirements:
       - class: ResourceRequirement
-        ramMin: 7000
-        outdirMin: 12000
-        tmpdirMin: 12000
+        ramMin: 8192
+        outdirMin: 12288
+        tmpdirMin: 12288
     in:
       input_file: sort/output_sorted_bam
       output_filename: generate_sample_filenames/dedup_reads_output_filename
@@ -178,7 +178,7 @@ steps:
       assume_sort_order: { default: "coordinate" }
       create_index: { default: "true" }
       optical_duplicate_pixel_distance: { default: 2500 }
-      java_opt: { default: "-Xms4000m" }
+      java_opt: { default: "-Xms4g" }
     out:
       - output_dedup_bam_file
       - output_metrics_file
@@ -187,7 +187,7 @@ steps:
     run: ../tools/GATK4-BaseRecalibrator.cwl
     requirements:
       - class: ResourceRequirement
-        ramMin: 6000
+        ramMin: 8192
     in:
       reference: reference_genome
       input_bam: mark_duplicates/output_dedup_bam_file
@@ -195,14 +195,14 @@ steps:
       known_sites: known_sites
       intervals: intervals
       interval_padding: interval_padding
-      java_opt: { default: "-Xms4000m" }
+      java_opt: { default: "-Xms4g" }
     out:
       - output_recalibration_report
   recalibrate_02_apply_bqsr:
     run: ../tools/GATK4-ApplyBQSR.cwl
     requirements:
       - class: ResourceRequirement
-        ramMin: 3500
+        ramMin: 6144
     in:
       reference: reference_genome
       input_bam: mark_duplicates/output_dedup_bam_file
@@ -211,7 +211,7 @@ steps:
       interval_padding: interval_padding
       bqsr_report: recalibrate_01_analyze/output_recalibration_report
       add_output_sam_program_record: { default: true }
-      java_opt: { default: "-Xms3000m" }
+      java_opt: { default: "-Xms3g" }
     out:
       - output_recalibrated_bam
   variant_calling:
@@ -219,7 +219,7 @@ steps:
     requirements:
       - class: ResourceRequirement
         coresMin: 1
-        ramMin: 8192
+        ramMin: 14336
     in:
       reference: reference_genome
       input_bam: recalibrate_02_apply_bqsr/output_recalibrated_bam
@@ -230,7 +230,7 @@ steps:
       interval_padding: interval_padding
       annotation_groups: { default: ['StandardAnnotation','AS_StandardAnnotation'] }
       emit_ref_confidence: { default: "GVCF" }
-      java_opt: { default: "-Xms7000m" }
+      java_opt: { default: "-Xms7g" }
     out:
       - output_variants
       - output_bam
