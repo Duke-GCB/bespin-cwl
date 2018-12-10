@@ -98,6 +98,10 @@ steps:
       - haplotypes_bam_output_filename
   combine_reads:
     run: ../tools/concat-gz-files.cwl
+    requirements:
+      - class: ResourceRequirement
+        coresMin: 1
+        ramMin: 1000
     scatter: [files, output_filename]
     scatterMethod: dotproduct
     in:
