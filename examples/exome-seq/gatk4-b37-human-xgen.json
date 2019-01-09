@@ -1,7 +1,7 @@
 {
   "default_vm_strategy": 1,
   "tag": "gatk4-b37-human-xgen",
-  "share_group": 3,
+  "share_group": 1,
   "system_job_order": {
     "bait_intervals": [
       {
@@ -57,5 +57,5 @@
     ],
     "threads": 32
   },
-  "workflow": 10
+  "workflow": 1
 }

@@ -113,5 +113,5 @@
   "object_name": "#main",
   "url": "https://gist.githubusercontent.com/dleehr/7ff15cccb3276bbe58cc67ec200f2740/raw/258ec818d916936de5f8f162c7662929adb5d307/exomeseq-gatk4.cwl",
   "version": 1,
-  "workflow": 10
+  "workflow": 1
 }
