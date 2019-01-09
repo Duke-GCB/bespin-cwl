@@ -155,7 +155,7 @@ steps:
     run: ../tools/GATK4-SortSam.cwl
     requirements:
       - class: ResourceRequirement
-        ramMin: 8192
+        ramMin: 16384
     in:
       input_file: map/output
       output_sorted_bam_filename: generate_sample_filenames/sorted_reads_output_filename
@@ -167,7 +167,7 @@ steps:
     run: ../tools/GATK4-MarkDuplicates.cwl
     requirements:
       - class: ResourceRequirement
-        ramMin: 8192
+        ramMin: 16384
         outdirMin: 12288
         tmpdirMin: 12288
     in:
