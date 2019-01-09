@@ -72,7 +72,7 @@ outputs:
     outputSource: collect_metrics/output_summary_metrics
 steps:
   generate_joint_filenames:
-    run: ../tools/generate-joint-filenames.cwl
+    run: ../tools/generate-joint-filenames-gatk4.cwl
     in:
       name: name
     out:

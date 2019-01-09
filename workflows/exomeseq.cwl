@@ -5,12 +5,15 @@ label: Whole Exome Sequencing
 doc: |
   Whole Exome Sequence analysis using GATK best practices - Germline SNP & Indel Discovery
 requirements:
-  - class: ScatterFeatureRequirement
-  - class: SubworkflowFeatureRequirement
-  - $import: ../types/bespin-types.yml
+  ScatterFeatureRequirement: {}
+  SubworkflowFeatureRequirement: {}
+  SchemaDefRequirement:
+    types:
+    - $import: ../types/ExomeseqStudyType.yml
+    - $import: ../types/FASTQReadPairType.yml
 inputs:
   study_type:
-    type: ../types/bespin-types.yml#ExomeseqStudyType
+    type: ../types/ExomeseqStudyType.yml#ExomeseqStudyType
   # Intervals should come from capture kit (target intervals) bed format
   target_intervals: File[]?
   # Intervals should come from capture kit (bait intervals) bed format
@@ -18,7 +21,7 @@ inputs:
   interval_padding: int?
   # Named read pairs in FASTQ format
   read_pairs:
-      type: ../types/bespin-types.yml#FASTQReadPairType[]
+      type: ../types/FASTQReadPairType.yml#FASTQReadPairType[]
   # reference genome, fasta
   reference_genome:
     type: File

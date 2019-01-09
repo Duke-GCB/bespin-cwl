@@ -3,10 +3,12 @@
 cwlVersion: v1.0
 class: Workflow
 requirements:
-  - $import: ../types/bespin-types.yml
+  SchemaDefRequirement:
+    types:
+      - $import: ../types/ExomeseqStudyType.yml
 inputs:
   study_type:
-    type: ../types/bespin-types.yml#ExomeseqStudyType
+    type: ../types/ExomeseqStudyType.yml#ExomeseqStudyType
   name: string
   intervals: File[]?
   interval_padding: int?
