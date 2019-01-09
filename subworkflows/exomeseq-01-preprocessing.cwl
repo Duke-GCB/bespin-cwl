@@ -3,8 +3,10 @@
 cwlVersion: v1.0
 class: Workflow
 requirements:
-  - class: ScatterFeatureRequirement
-  - $import: ../types/bespin-types.yml
+  ScatterFeatureRequirement: {}
+  SchemaDefRequirement:
+    types:
+      - $import: ../types/FASTQReadPairType.yml
 inputs:
   # Intervals should come from capture kit in bed format
   intervals: File[]?
@@ -16,7 +18,7 @@ inputs:
   # Read samples, fastq format
   # NOTE: GATK best practices recommends unmapped SAM/BAM files
   read_pair:
-    type: ../types/bespin-types.yml#FASTQReadPairType
+    type: ../types/FASTQReadPairType.yml#FASTQReadPairType
   # reference genome, fasta
   # NOTE: GATK can't handle compressed fasta reference genome
   reference_genome: File
