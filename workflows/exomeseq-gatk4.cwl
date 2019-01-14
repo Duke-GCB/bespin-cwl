@@ -1,13 +1,13 @@
 #!/usr/bin/env cwl-runner
 cwlVersion: v1.0
 class: Workflow
-label: Whole Exome Sequencing
+label:  WES GATK4
 doc: |
-  Whole Exome Sequence analysis using GATK best practices - Germline SNP & Indel Discovery
+  Whole Exome Sequence analysis GATK4 Preprocessing
 requirements:
-  ScatterFeatureRequirement: {}
-  SubworkflowFeatureRequirement: {}
-  SchemaDefRequirement:
+  - class: ScatterFeatureRequirement
+  - class: SubworkflowFeatureRequirement
+  - class: SchemaDefRequirement
     types:
     - $import: ../types/ExomeseqStudyType.yml
     - $import: ../types/FASTQReadPairType.yml
@@ -19,9 +19,11 @@ inputs:
   # Intervals should come from capture kit (bait intervals) bed format
   bait_intervals: File[]?
   interval_padding: int?
-  # Named read pairs in FASTQ format
+  # Named read pair in FASTQ format
   read_pairs:
-      type: ../types/FASTQReadPairType.yml#FASTQReadPairType[]
+      type:
+        type: array
+        items: ../types/FASTQReadPairType.yml#FASTQReadPairType
   # reference genome, fasta
   reference_genome:
     type: File
@@ -34,16 +36,13 @@ inputs:
     - .fai
     - ^.dict
   # Number of threads to use
-  threads: int?
+  threads: int
   # Read Group annotation
   # Can be the project name
   library: string
   # e.g. Illumina
   platform: string
-  # GATK
-  GATKJar:
-    type: File
-  knownSites:
+  known_sites:
     type: File[] # vcf files of known sites, with indexing
     secondaryFiles:
     - .idx
@@ -80,9 +79,6 @@ outputs:
   raw_variants_dir:
     type: Directory
     outputSource: organize_directories/raw_variants_dir
-  hs_metrics_dir:
-    type: Directory
-    outputSource: organize_directories/hs_metrics_dir
   bams_markduplicates_dir:
     type: Directory
     outputSource: organize_directories/bams_markduplicates_dir
@@ -97,8 +93,14 @@ outputs:
     doc: "GVCF file from joint genotyping calling"
   filtered_recalibrated_variants:
     type: File
-    outputSource: variant_discovery/variant_recalibration_snps_indels_vcf
+    outputSource: variant_discovery/variant_recalibration_combined_vcf
     doc: "The output filtered and recalibrated VCF file in which each variant is annotated with its VQSLOD value"
+  variant_calling_detail_metrics:
+    type: File
+    outputSource: variant_discovery/detail_metrics
+  variant_calling_summary_metrics:
+    type: File
+    outputSource: variant_discovery/summary_metrics
 steps:
   prepare_reference_data:
     run: ../subworkflows/exomeseq-00-prepare-reference-data.cwl
@@ -110,20 +112,19 @@ steps:
       - target_interval_list
       - bait_interval_list
   preprocessing:
-    run: ../subworkflows/exomeseq-01-preprocessing.cwl
+    run: ../subworkflows/exomeseq-gatk4-01-preprocessing.cwl
     scatter: read_pair
     in:
       intervals: target_intervals
+      interval_padding: interval_padding
       target_interval_list: prepare_reference_data/target_interval_list
       bait_interval_list: prepare_reference_data/bait_interval_list
-      interval_padding: interval_padding
       read_pair: read_pairs
       reference_genome: reference_genome
       threads: threads
       library: library
       platform: platform
-      GATKJar: GATKJar
-      knownSites: knownSites
+      known_sites: known_sites
       resource_dbsnp: resource_dbsnp
     out:
       - fastqc_reports
@@ -132,9 +133,9 @@ steps:
       - recalibration_table
       - recalibrated_reads
       - raw_variants
-      - hs_metrics
+      - haplotypes_bam
   variant_discovery:
-    run: ../subworkflows/exomeseq-02-variantdiscovery.cwl
+    run: ../subworkflows/exomeseq-gatk4-02-variantdiscovery.cwl
     in:
       study_type: study_type
       name: library
@@ -142,8 +143,6 @@ steps:
       interval_padding: interval_padding
       raw_variants: preprocessing/raw_variants
       reference_genome: reference_genome
-      threads: threads
-      GATKJar: GATKJar
       snp_resource_hapmap: snp_resource_hapmap
       snp_resource_omni: snp_resource_omni
       snp_resource_1kg: snp_resource_1kg
@@ -152,26 +151,24 @@ steps:
     out:
       - joint_raw_variants
       - variant_recalibration_snps_tranches
-      - variant_recalibration_snps_recal
-      - variant_recalibration_snps_rscript
-      - variant_recalibration_snps_vcf
-      - variant_recalibration_snps_indels_tranches
-      - variant_recalibration_snps_indels_recal
-      - variant_recalibration_snps_indels_rscript
-      - variant_recalibration_snps_indels_vcf
+      - variant_recalibration_snps_recalibration
+      - variant_recalibration_combined_vcf
+      - variant_recalibration_indels_tranches
+      - variant_recalibration_snps_indels_recalibration
+      - variant_recalibration_indels_vcf
+      - detail_metrics
+      - summary_metrics
   organize_directories:
-    run: ../subworkflows/exomeseq-03-organizedirectories.cwl
+    run: ../subworkflows/exomeseq-gatk4-03-organizedirectories.cwl
     in:
       fastqc_reports: preprocessing/fastqc_reports
       trim_reports: preprocessing/trim_reports
-      hs_metrics: preprocessing/hs_metrics
       bams_markduplicates: preprocessing/markduplicates_bam
       raw_variants: preprocessing/raw_variants
       bams_recalibrated: preprocessing/recalibrated_reads
     out:
       - fastqc_reports_dir
       - trim_reports_dir
-      - hs_metrics_dir
       - bams_markduplicates_dir
       - raw_variants_dir
       - bams_recalibrated_dir

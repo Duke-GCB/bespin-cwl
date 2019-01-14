@@ -1,0 +1,17 @@
+{
+  "java_opt": "-Xmx5g -Xms5g",
+  "output_recalibrated_variants_filename": "recal-indel.vcf",
+  "variants": {
+    "basename": "input-indel.vcf",
+    "class": "File",
+    "contents": "v1",
+    "secondaryFiles": [
+      { "basename": "input-indel.vcf.idx", "class": "File", "contents": "idx" }
+    ]
+  },
+  "recalibration_file": { "basename": "recal.indel", "class": "File", "contents": "recal-indel" },
+  "tranches_file" : { "basename": "tranches.indel", "class": "File", "contents": "tranches-indel" },
+  "truth_sensitivity_filter_level": 99.7,
+  "create_output_variant_index": true,
+  "mode": "INDEL"
+}

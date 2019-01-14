@@ -1,0 +1,45 @@
+{
+  "java_opt": "-Xmx24g -Xms24g",
+  "variants": {
+    "basename": "variant1.vcf",
+    "class": "File",
+    "contents": "v1",
+    "secondaryFiles": [
+      { "basename": "variant1.vcf.idx", "class": "File", "contents": "idx" }
+    ]
+  },
+  "output_recalibration_filename": "recal.out",
+  "output_tranches_filename": "tranches.out",
+  "trust_all_polymorphic": true,
+  "tranches": ["100.0", "99.95", "99.9", "99.5", "99.0", "97.0", "96.0", "95.0", "94.0", "93.5", "93.0", "92.0", "91.0", "90.0"],
+  "annotations": ["FS", "ReadPosRankSum", "MQRankSum", "QD", "SOR", "DP"],
+  "mode": "INDEL",
+  "max_gaussians": 4,
+  "resources": [
+    {
+      "name": "mills",
+      "known": false,
+      "training": true,
+      "truth": true,
+      "prior": 12,
+      "file": { "basename": "mills.vcf", "class": "File", "contents": "mills" }
+    },
+    {
+      "name": "axiomPoly",
+      "known": false,
+      "training": true,
+      "truth": false,
+      "prior": 10,
+      "file": { "basename": "axiomPoly.vcf", "class": "File", "contents": "axiomPoly" }
+    },
+    {
+      "name": "dbsnp",
+      "known": true,
+      "training": false,
+      "truth": false,
+      "prior":2,
+      "file": { "basename": "dbSNP.vcf", "class": "File", "contents": "dbSNP" }
+    }
+  ]
+
+}

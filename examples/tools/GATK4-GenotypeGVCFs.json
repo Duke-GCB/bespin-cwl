@@ -1,0 +1,37 @@
+{
+  "java_opt": "-Xmx5g -Xms5g",
+  "output_vcf_filename": "output.vcf",
+  "reference": {
+    "basename": "hg38.fa",
+    "class": "File",
+    "contents": ">chr1\nACCTG",
+    "secondaryFiles": [
+      { "basename": "hg38.fa.amb", "class": "File", "contents": "amb" },
+      { "basename": "hg38.fa.ann", "class": "File", "contents": "ann" },
+      { "basename": "hg38.fa.bwt", "class": "File", "contents": "bwt" },
+      { "basename": "hg38.fa.pac", "class": "File", "contents": "pac" },
+      { "basename": "hg38.fa.sa", "class": "File", "contents": "sa" },
+      { "basename": "hg38.fa.fai", "class": "File", "contents": "amb" },
+      { "basename": "hg38.dict", "class": "File", "contents": "dict" }
+    ]
+  },
+  "variants": [
+    { "basename": "variant1.vcf", "class": "File", "contents": "v1" },
+    { "basename": "variant2.vcf", "class": "File", "contents": "v2" }
+  ],
+  "dbsnp": {
+    "basename": "dbSNP.vcf",
+    "class": "File",
+    "contents": "dbsnp",
+    "secondaryFiles": [
+      { "basename": "dbSNP.vcf.idx", "class": "File", "contents": "idx" }
+    ]
+  },
+  "annotation_groups": ["StandardAnnotation","AS_StandardAnnotation"],
+  "only_output_calls_starting_in_intervals": true,
+  "use_new_qual_calculator": true,
+  "intervals": [
+    { "basename": "intervals.bed", "class": "File", "contents": "intervals" }
+  ],
+  "interval_padding": 100
+}

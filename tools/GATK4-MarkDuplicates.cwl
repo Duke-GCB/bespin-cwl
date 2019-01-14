@@ -37,6 +37,12 @@ inputs:
     type: string?
     inputBinding:
       prefix: "--ASSUME_SORT_ORDER"
+  create_index:
+    type: string
+    default: "false"
+    inputBinding:
+      prefix: "--CREATE_INDEX"
+    doc: "Create an index"
   remove_duplicates:
     type: string?
     doc: "If true do not write duplicates to the output file instead of writing them with appropriate flags set.  (Default true)."
@@ -50,7 +56,6 @@ inputs:
       prefix: "--java-options"
       position: -1 # before the tool name
       shellQuote: true
-    
 outputs:
   output_metrics_file:
     type: File

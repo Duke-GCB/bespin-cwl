@@ -1,0 +1,53 @@
+{
+  "java_opt": "-Xmx3g -Xms3g",
+  "variants": {
+    "basename": "variant1.vcf",
+    "class": "File",
+    "contents": "v1",
+    "secondaryFiles": [
+      { "basename": "variant1.vcf.idx", "class": "File", "contents": "idx" }
+    ]
+  },
+  "output_recalibration_filename": "recal.out",
+  "output_tranches_filename": "tranches.out",
+  "trust_all_polymorphic": true,
+  "tranches": ["100.0", "99.95", "99.9", "99.8", "99.6", "99.5", "99.4", "99.3", "99.0", "98.0", "97.0", "90.0"],
+  "annotations": ["QD", "MQRankSum", "ReadPosRankSum", "FS", "MQ", "SOR", "DP"],
+  "mode": "SNP",
+  "max_gaussians": 6,
+  "resources": [
+    {
+      "name": "hapmap",
+      "known": false,
+      "training": true,
+      "truth": true,
+      "prior":15,
+      "file": { "basename": "hapmap.vcf", "class": "File", "contents": "hapmap" }
+    },
+    {
+      "name": "omni",
+      "known": false,
+      "training": true,
+      "truth": true,
+      "prior":12,
+      "file": { "basename": "omni.vcf", "class": "File", "contents": "omni" }
+    },
+    {
+      "name": "1000G",
+      "known": false,
+      "training": true,
+      "truth": false,
+      "prior":10,
+      "file": { "basename": "1000genomes.vcf", "class": "File", "contents": "1000genomes" }
+    },
+    {
+      "name": "dbsnp",
+      "known": true,
+      "training": false,
+      "truth": false,
+      "prior":7,
+      "file": { "basename": "dbSNP.vcf", "class": "File", "contents": "dbSNP" }
+    }
+  ]
+
+}

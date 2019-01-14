@@ -5,17 +5,20 @@ label:  WES GATK4 Preprocessing
 doc: |
   Whole Exome Sequence analysis GATK4 Preprocessing
 requirements:
-  - class: ScatterFeatureRequirement
-  - class: SubworkflowFeatureRequirement
-  - $import: ../types/bespin-types.yml
+  ScatterFeatureRequirement: {}
+  SubworkflowFeatureRequirement: {}
+  SchemaDefRequirement:
+    types:
+      - $import: ../types/FASTQReadPairType.yml
 inputs:
   # Intervals should come from capture kit (target intervals) bed format
   target_intervals: File[]?
   # Intervals should come from capture kit (bait intervals) bed format
   bait_intervals: File[]?
+  interval_padding: int?
   # Named read pair in FASTQ format
   read_pair:
-      type: ../types/bespin-types.yml#FASTQReadPairType
+    type: ../types/FASTQReadPairType.yml#FASTQReadPairType
   # reference genome, fasta
   reference_genome:
     type: File
@@ -38,6 +41,10 @@ inputs:
     type: File[] # vcf files of known sites, with indexing
     secondaryFiles:
     - .idx
+  resource_dbsnp:
+    type: File
+    secondaryFiles:
+    - .idx
 outputs:
   fastqc_reports:
     type: File[]
@@ -56,7 +63,15 @@ outputs:
   recalibrated_reads:
     type: File
     outputSource: preprocessing/recalibrated_reads
-    doc: "BAM files containing recalibrated reads"
+    doc: "BAM file containing recalibrated reads"
+  haplotypes_bam:
+    type: File
+    outputSource: preprocessing/haplotypes_bam
+    doc: "BAM file containing assembled haplotypes"
+  raw_variants:
+    type: File
+    outputSource: preprocessing/raw_variants
+    doc: "Variants from HaplotypeCaller"
 steps:
   prepare_reference_data:
     run: ../subworkflows/exomeseq-00-prepare-reference-data.cwl
@@ -71,6 +86,7 @@ steps:
     run: ../subworkflows/exomeseq-gatk4-01-preprocessing.cwl
     in:
       intervals: target_intervals
+      interval_padding: interval_padding
       target_interval_list: prepare_reference_data/target_interval_list
       bait_interval_list: prepare_reference_data/bait_interval_list
       read_pair: read_pair
@@ -79,9 +95,12 @@ steps:
       library: library
       platform: platform
       known_sites: known_sites
+      resource_dbsnp: resource_dbsnp
     out:
       - fastqc_reports
       - trim_reports
       - markduplicates_bam
       - recalibration_table
       - recalibrated_reads
+      - raw_variants
+      - haplotypes_bam
