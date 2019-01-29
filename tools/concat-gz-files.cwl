@@ -5,7 +5,11 @@ requirements:
     listing:
       - entryname: combinefiles.sh
         entry: |
-          zcat "$@" | gzip
+          if [ "$#" -eq 1 ]; then
+            cat "$@"
+          else
+            zcat "$@" | gzip
+          fi
 baseCommand: bash
 arguments: [combinefiles.sh]
 inputs:
