@@ -1,0 +1,59 @@
+{
+  "output_filename": "output.bam",
+  "read_group_header": "@RG\\tID:foo\\tLB:library",
+  "reads": [
+    {
+      "basename": "read1.fq",
+      "class": "File",
+      "contents": "read1"
+    },
+    {
+      "basename": "read2.fq",
+      "class": "File",
+      "contents": "read2"
+    }
+  ],
+  "reference": {
+    "basename": "hg38.fa",
+    "class": "File",
+    "contents": ">chr1\nACCTG",
+    "secondaryFiles": [
+      {
+        "basename": "hg38.fa.amb",
+        "class": "File",
+        "contents": "amb"
+      },
+      {
+        "basename": "hg38.fa.ann",
+        "class": "File",
+        "contents": "ann"
+      },
+      {
+        "basename": "hg38.fa.bwt",
+        "class": "File",
+        "contents": "bwt"
+      },
+      {
+        "basename": "hg38.fa.pac",
+        "class": "File",
+        "contents": "pac"
+      },
+      {
+        "basename": "hg38.fa.sa",
+        "class": "File",
+        "contents": "sa"
+      },
+      {
+        "basename": "hg38.fa.fai",
+        "class": "File",
+        "contents": "amb"
+      },
+      {
+        "basename": "hg38.dict",
+        "class": "File",
+        "contents": "dict"
+      }
+    ]
+  },
+  "threads": 4
+}

@@ -11,6 +11,7 @@ requirements:
   listing:
     - entryname: bwa-mem-samtools.sh
       entry: |
+        set -o pipefail
         /usr/gitc/bwa mem $@ | samtools view -1 -
 baseCommand: bash
 arguments: [bwa-mem-samtools.sh]
@@ -71,7 +72,7 @@ inputs:
       position: 1
       prefix: -R
     doc: -R STR        read group header line such as '@RG\tID:foo\tSM:bar' [null]
-  
+
   smart_pairing:
     type: boolean
     default: false
