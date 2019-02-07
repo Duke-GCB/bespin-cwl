@@ -140,7 +140,7 @@ steps:
     requirements:
       - class: ResourceRequirement
         coresMin: $(inputs.threads)
-        ramMin: 16384
+        ramMin: 14336
         outdirMin: 12288
         tmpdirMin: 12288
     in:
