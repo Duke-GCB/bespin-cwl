@@ -43,7 +43,7 @@ jobs:
           name: "Pack and upload workflow to GitHub release"
           command: |
             source env/bin/activate
-            python scripts/pack_and_release_workflow.py ${GITHUB_TOKEN} ${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME} ${CIRCLE_TAG}
+            python scripts/pack-and-release-workflow.py ${GITHUB_TOKEN} ${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME} ${CIRCLE_TAG}
 workflows:
   version: 2
   build_and_deploy:
