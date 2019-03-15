@@ -31,7 +31,7 @@ jobs:
           command: |
             source env/bin/activate
             ./scripts/validate-workflows.sh
-  pack:
+  deploy:
     docker:
       - image: circleci/python:3.6-node
     steps:
@@ -40,25 +40,10 @@ jobs:
       - *install_dependencies
       - *save_python_cache
       - run:
-          name: create packed workflows
+          name: "Pack and upload workflow to GitHub release"
           command: |
             source env/bin/activate
-            ./scripts/pack-workflows.sh
-      - persist_to_workspace:
-          root: build
-          paths:
-            - "*"
-  deploy:
-    docker:
-      - image: circleci/golang:1.8
-    steps:
-      - attach_workspace:
-          at: /tmp/workspace
-      - run:
-          name: "Publish Release on GitHub"
-          command: |
-            go get github.com/tcnksm/ghr
-            ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} ${CIRCLE_TAG} /tmp/workspace
+            python scripts/pack_and_release_workflow.py ${GITHUB_TOKEN} ${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME} ${CIRCLE_TAG}
 workflows:
   version: 2
   build_and_deploy:
@@ -67,19 +52,11 @@ workflows:
           filters:
             tags:
               only: /.*/
-      - pack:
+      - deploy:
           requires:
             - build
           filters:
             tags:
-              only: /v[0-9]+(\.[0-9]+)*/
-            branches:
-              ignore: /.*/
-      - deploy:
-          requires:
-            - pack
-          filters:
-            tags:
-              only: /v[0-9]+(\.[0-9]+)*/
+              only: /.*-v[0-9]+/
             branches:
               ignore: /.*/
