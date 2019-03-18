@@ -23,8 +23,17 @@ then
    VERSION=0
 fi
 NEW_VERSION=$(($VERSION+1))
-echo $NEW_VERSION
 
-# add the new tag and push to github
+echo "Tagging branch with tag ${WORKFLOW_NAME}-v${NEW_VERSION}"
 git tag -a ${WORKFLOW_NAME}-v${NEW_VERSION} -m "${WORKFLOW_NAME} ${NEW_VERSION}"
+
+echo "Pushing tag to github to trigger build process for this workflow."
 git push --tags
+
+
+echo "Workflow tag pushed to github."
+echo "Once build process completes this workflow can be added to bespin-api by running:"
+echo "bespin workflow-version create --workflow ${WORKFLOW_NAME} \\"
+echo "  --url  https://github.com/Duke-GCB/bespin-cwl/releases/download/${WORKFLOW_NAME}-v${NEW_VERSION}/${WORKFLOW_NAME}.cwl \\ "
+echo "  --description ${WORKFLOW_NAME}-v${NEW_VERSION} \\ "
+echo "  --version 3 "
