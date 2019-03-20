@@ -1,0 +1,18 @@
+{
+  "demux_sequences_artifact": {
+    "class": "File",
+    "location": "/Users/jpb67/qiime2/demux.qza"
+  },
+  "dada2_trim_left": 0,
+  "dada2_trunc_len": 120,
+  "sample_metadata": {
+    "class": "File",
+    "location": "/Users/jpb67/qiime2/sample-metadata.tsv"
+  },
+  "taxonomic_classifier": {
+    "class": "File",
+    "location": "/Users/jpb67/qiime2/gg-13-8-99-515-806-nb-classifier.qza"
+  },
+  "ancom_collapse_level": 6,
+  "ancom_filter_sample_query": "\"BodySite='gut'\""
+}
