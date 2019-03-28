@@ -82,7 +82,7 @@ steps:
     requirements:
       - class: ResourceRequirement
         coresMin: 4
-        ramMin: 2500
+        ramMin: 3072
     scatter: input_fastq_file
     in:
       input_fastq_file: file_pair_details/reads
@@ -94,7 +94,7 @@ steps:
     requirements:
       - class: ResourceRequirement
         coresMin: 4
-        ramMin: 8000
+        ramMin: 8192
     in:
       reads: file_pair_details/reads
       paired:
@@ -121,7 +121,7 @@ steps:
     requirements:
       - class: ResourceRequirement
         coresMin: 8
-        ramMin: 24000
+        ramMin: 24576
         outdirMin: 12000
         tmpdirMin: 12000
     in:
@@ -137,7 +137,7 @@ steps:
     requirements:
       - class: ResourceRequirement
         coresMin: 1
-        ramMin: 6000
+        ramMin: 16384
         outdirMin: 12000
         tmpdirMin: 12000
     in:
@@ -150,7 +150,7 @@ steps:
     requirements:
       - class: ResourceRequirement
         coresMin: 1
-        ramMin: 6000
+        ramMin: 16384
         outdirMin: 12000
         tmpdirMin: 12000
     in:
@@ -165,7 +165,7 @@ steps:
     requirements:
       - class: ResourceRequirement
         coresMin: 1
-        ramMin: 6000
+        ramMin: 16384
         outdirMin: 12000
         tmpdirMin: 12000
     in:
@@ -182,7 +182,7 @@ steps:
     requirements:
       - class: ResourceRequirement
         coresMin: 8
-        ramMin: 4096
+        ramMin: 8192
     in:
       GATKJar: GATKJar
       inputBam_BaseRecalibrator: mark_duplicates/output_dedup_bam_file
@@ -200,7 +200,7 @@ steps:
     requirements:
       - class: ResourceRequirement
         coresMin: 8
-        ramMin: 4096
+        ramMin: 8192
     in:
       GATKJar: GATKJar
       inputBam_printReads: mark_duplicates/output_dedup_bam_file
