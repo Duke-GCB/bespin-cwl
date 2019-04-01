@@ -121,7 +121,7 @@ steps:
     requirements:
       - class: ResourceRequirement
         coresMin: 8
-        ramMin: 24576
+        ramMin: 32768
         outdirMin: 12000
         tmpdirMin: 12000
     in:
