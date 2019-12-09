@@ -37,9 +37,7 @@ inputs:
   demux_visualization_filename:
     type: string
     default: demux.qzv
-  output_filename_prefix:
-    type: string
-    default: ''
+
 outputs:
   sequences_artifact:
     type: File
@@ -63,11 +61,7 @@ steps:
     in:
       forward_sequences: forward_sequences
       reverse_sequences: reverse_sequences
-      sequences_artifact_filename:
-        source:
-          - output_filename_prefix
-          - sequences_artifact_filename
-        valueFrom: ${ return self[0] + self[1]; }
+      sequences_artifact_filename: sequences_artifact_filename
       barcodes: barcodes
     out:
       - sequences_artifact
@@ -77,16 +71,8 @@ steps:
       sequences_artifact: import_data/sequences_artifact
       sample_metadata: sample_metadata
       metadata_barcodes_column: metadata_barcodes_column
-      demux_sequences_filename:
-        source:
-          - output_filename_prefix
-          - demux_sequences_filename
-        valueFrom: ${ return self[0] + self[1]; }
-      demux_visualization_filename:
-        source:
-          - output_filename_prefix
-          - demux_visualization_filename
-        valueFrom: ${ return self[0] + self[1]; }
+      demux_sequences_filename: demux_sequences_filename
+      demux_visualization_filename: demux_visualization_filename
     out:
       - demux_sequences_artifact
       - demux_visualization_artifact
@@ -94,10 +80,8 @@ steps:
     run: ../subworkflows/qiime2-output-directories.cwl
     in:
       qza_files:
-        source:
-          - import_data/sequences_artifact
-          - demux/demux_sequences_artifact
-        valueFrom: ${ return [].slice.call(self); }
+        source: [import_data/sequences_artifact, demux/demux_sequences_artifact]
+        valueFrom: ${ return [self[0], self[1]]; }
       qzv_files:
         source: demux/demux_visualization_artifact
         valueFrom: ${ return [self]; }

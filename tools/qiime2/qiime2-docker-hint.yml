@@ -1,4 +1,3 @@
 class: DockerRequirement
 
-dockerPull: qiime2/core:2018.6
-
+dockerPull:  qiime2/core:2018.4

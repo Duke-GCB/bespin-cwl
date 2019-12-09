@@ -13,15 +13,6 @@ inputs:
   table: File
   classifier: File
   sample_metadata: File
-  taxonomy_filename:
-    type: string
-    default: taxonomy.qza
-  taxonomy_visualization_filename:
-    type: string
-    default: taxonomy.qzv
-  taxa_bar_plots_filename:
-    type: string
-    default: taxa-bar-plots.qzv
 
 outputs:
   taxonomy_artifact:
@@ -40,14 +31,16 @@ steps:
     in:
       rep_seqs: rep_seqs
       classifier: classifier
-      taxonomy_filename: taxonomy_filename
+      taxonomy_filename:
+        valueFrom: 'taxonomy.qza'
     out:
       - out_taxa
   tabulate_metadata:
     run: ../tools/qiime2/metadata-tabulate.cwl
     in:
       input_file: classify_features/out_taxa
-      visualization_filename: taxonomy_visualization_filename
+      visualization_filename:
+        valueFrom: 'taxonomy.qzv'
     out:
       - visualization_artifact
   taxa_barplot:
@@ -56,6 +49,7 @@ steps:
       table: table
       taxonomy: classify_features/out_taxa
       sample_metadata: sample_metadata
-      taxa_bar_plots_filename: taxa_bar_plots_filename
+      taxa_bar_plots_filename:
+        valueFrom: 'taxa-bar-plots.qzv'
     out:
       - taxa_bar_plots
